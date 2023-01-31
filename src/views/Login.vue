@@ -10,7 +10,8 @@
         <div class="form-group">
           <label for="username">Username</label>
           <input
-            v-model="username"
+            :rules="isRequired"
+            v-model="user.username"
             type="text"
             class="form-control"
             name="username"
@@ -19,7 +20,7 @@
         <div class="form-group">
           <label for="password">Password</label>
           <input
-            v-model="password"
+            v-model="user.password"
             type="password"
             class="form-control"
             name="password"
@@ -37,6 +38,7 @@
         <div class="form-group">
           <div v-if="message" class="alert alert-danger" role="alert">
             {{ message }}
+            {{ auth }}
           </div>
         </div>
       </form>
@@ -48,39 +50,57 @@
 import { useAuthStore } from "../stores/authStore";
 import User from "../models/user";
 import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+
+import { Field, Form } from "vee-validate";
 
 export default {
+  components: {
+    Field,
+    Form,
+  },
   setup() {
-    var authStore = useAuthStore();
+    var auth = useAuthStore();
     var user = new User("", "");
-    var loading = false;
-    var message = "";
-    var password = "";
+    var loading = ref(false);
+    var message = ref("");
+    const router = useRouter();
 
-    if (authStore.status.loggedIn) {
+    if (auth.status.loggedIn) {
       // can change this later
-      this.$router.push("/about");
+      router.push("/about");
+    } else {
+      console.log("not logged in");
     }
 
-    const handleLogin = () => {
-      console.log("store object is", authStore.login);
-      loading = true;
+    const handleLogin = async () => {
+      console.log("store object is", auth);
+      loading.value = true;
       //add in veevalidate here when solved
-      if (user && password) {
-        authStore.login(user).then(
-          () => {
-            this.$router.push("/about");
-            alert("successfully logged in!");
+      if (user.username && user.password) {
+        await auth.login(user).then(
+          (response) => {
+            console.log("response is ", response);
+            if (response) {
+              router.push("/about");
+              alert("successfully logged in!", response);
+            } else {
+              alert("something went wrong with logging you in");
+            }
+            loading.value = false;
           },
           (error) => {
-            this.loading = false;
-            this.message = alert(error);
+            loading.value = false;
+            message.value = error;
           }
         );
+      } else {
+        console.log("false input!");
+        loading.value = false;
       }
     };
 
-    return { handleLogin, user, loading, message, password };
+    return { handleLogin, user, loading, message, auth };
   },
 };
 </script>
