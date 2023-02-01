@@ -33,7 +33,7 @@ export const useAuthStore = defineStore("auth", {
     logout() {
       console.log("logout called");
       AuthService.logout().then(
-        (response) => {
+        () => {
           this.status.loggedIn = false;
           this.user = null;
       });

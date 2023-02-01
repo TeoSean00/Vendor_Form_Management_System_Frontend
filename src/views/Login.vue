@@ -80,7 +80,7 @@ export default {
       if (user.username && user.password) {
         await auth.login(user).then(
           () => {
-            alert("successfully logged in!", response);
+            alert("successfully logged in!");
             router.push("/profile");
           },
           (error) => {
