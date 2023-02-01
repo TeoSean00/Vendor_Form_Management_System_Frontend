@@ -71,14 +71,10 @@ export default {
       return false;
     };
 
-    const logOut = () => {
+    const logOut = async () => {
       console.log("logout called");
       console.log(auth);
-      auth.logout().then((response) => {
-        if (response) {
-          alert(response);
-        }
-      });
+      auth.logout();
     };
     return { currentUser, showAdminBoard, showModeratorBoard, logOut };
   },

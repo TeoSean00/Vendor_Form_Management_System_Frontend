@@ -20,20 +20,22 @@ export const useAuthStore = defineStore("auth", {
           this.status.loggedIn = true;
           globalThis.user = user;
           console.log("login success!");
+          return Promise.resolve(user);
         },
         (error) => {
           this.status.loggedIn = false;
           this.user = null;
           console.log("login failed!");
+          return Promise.reject(error);
         }
       );
     },
     logout() {
       console.log("logout called");
-      return AuthService.logout().then((response) => {
-        this.status.loggedIn = false;
-        this.user = null;
-        s;
+      AuthService.logout().then(
+        (response) => {
+          this.status.loggedIn = false;
+          this.user = null;
       });
     },
     register(user) {

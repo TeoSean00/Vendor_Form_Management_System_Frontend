@@ -82,9 +82,10 @@ export default {
           (response) => {
             console.log("response is ", response);
             if (response) {
-              router.push("/about");
+              console.log(response);
               alert("successfully logged in!", response);
             } else {
+              console.log(response);
               alert("something went wrong with logging you in");
             }
             loading.value = false;
