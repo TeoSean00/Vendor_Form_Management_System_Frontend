@@ -68,7 +68,7 @@ export default {
 
     if (auth.status.loggedIn) {
       // can change this later
-      router.push("/about");
+      router.push("/profile");
     } else {
       console.log("not logged in");
     }
@@ -79,25 +79,18 @@ export default {
       //add in veevalidate here when solved
       if (user.username && user.password) {
         await auth.login(user).then(
-          (response) => {
-            console.log("response is ", response);
-            if (response) {
-              console.log(response);
-              alert("successfully logged in!", response);
-            } else {
-              console.log(response);
-              alert("something went wrong with logging you in");
-            }
-            loading.value = false;
+          () => {
+            alert("successfully logged in!", response);
+            router.push("/profile");
           },
           (error) => {
             loading.value = false;
-            message.value = error;
+            message.value =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString();
           }
         );
-      } else {
-        console.log("false input!");
-        loading.value = false;
       }
     };
 

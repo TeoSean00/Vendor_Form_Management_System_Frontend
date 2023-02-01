@@ -1,4 +1,7 @@
 import axios from "axios";
+import authHeader from './authHeader';
+
+console.log(authHeader())
 
 const API_URL = "http://localhost:8080/api/auth/";
 
@@ -18,7 +21,7 @@ class AuthService {
     }
 
     logout(){
-        const response = axios.post(API_URL + 'logout').then(
+        const response = axios.post(API_URL + 'logout',{headers:authHeader()}).then(
             response=>{
                 if(response.data){
                     console.log(response.data.message)
@@ -27,6 +30,7 @@ class AuthService {
                 
             }
         )
+        return response
     }
 
     register(user){

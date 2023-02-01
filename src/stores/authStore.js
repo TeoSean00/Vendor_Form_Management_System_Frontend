@@ -41,12 +41,12 @@ export const useAuthStore = defineStore("auth", {
     register(user) {
       return AuthService.register(user).then(
         (response) => {
-          this.state.status.loggedIn = false;
+          this.status.loggedIn = false;
           console.log("registration success!");
           return Promise.resolve(response.data);
         },
         (error) => {
-          this.state.status.loggedIn = false;
+          this.status.loggedIn = false;
           console.log("registration failed!");
           return Promise.reject(error);
         }
