@@ -79,7 +79,8 @@ export default {
       //add in veevalidate here when solved
       if (user.username && user.password) {
         await auth.login(user).then(
-          () => {
+          (response) => {
+            console.log(response);
             alert("successfully logged in!", response);
             router.push("/profile");
           },

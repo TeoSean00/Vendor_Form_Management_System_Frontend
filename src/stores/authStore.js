@@ -16,9 +16,9 @@ export const useAuthStore = defineStore("auth", {
       console.log("current user is ", user);
       console.log("current state is", this.status);
       return AuthService.login(user).then(
-        (response) => {
+        user => {
           this.status.loggedIn = true;
-          globalThis.user = user;
+          this.user = user;
           console.log("login success!");
           return Promise.resolve(user);
         },
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore("auth", {
     logout() {
       console.log("logout called");
       AuthService.logout().then(
-        (response) => {
+        () => {
           this.status.loggedIn = false;
           this.user = null;
       });
