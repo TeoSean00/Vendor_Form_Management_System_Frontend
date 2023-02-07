@@ -11,6 +11,7 @@ components: {
   <div>
     <Navbar />
     <div class="container">
+      <h1 class="text-main-blue">Hi</h1>
       <RouterView />
     </div>
   </div>
