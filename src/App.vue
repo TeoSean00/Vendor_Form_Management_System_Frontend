@@ -1,25 +1,29 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
+import NavbarVertical from "./components/NavbarVertical.vue";
+import TopBanner from "./components/TopBanner.vue";
 
 components: {
   Navbar;
+  TopBanner;
+  NavbarVertical;
 }
 </script>
 
 <template>
-  <div>
-    <Navbar />
-    <div class="container">
-      <h1 class="text-main-blue">Hi</h1>
-      <RouterView />
-    </div>
+  <div class="container-fluid ">
+    <!-- <TopBanner/> -->
+    <!-- <Navbar />   -->
+    <!-- <NavbarVertical/> -->
+    <RouterView />
   </div>
 </template>
 
 <style scoped>
-.navbar {
+
+/* .navbar {
   background-color: lightgray;
   padding: 1.2rem;
-}
+} */
 </style>

@@ -1,6 +1,64 @@
 <template>
-  <div class="col-md-12">
-    <div class="card card-container">
+  <div class="col-md-12 login-bg-1 h-100">
+    <div class="row offset-3 col-6 justify-content-center align-items-center h-100">
+      <div class="card my-auto">
+        <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+        <h2 class="card-title text-center mt-5">Quantum Leap Incorporation</h2>
+        <div class="card-body">
+          <h5 class="card-title text-center my-2">Login</h5>
+          <!-- Form begins -->
+          <!-- Username -->
+          <div class="offset-3 col-6 text-center my-2">
+            <form name="form" @submit.prevent="handleLogin">
+              <div class="form-group">
+                <div class="form-floating my-4">
+                  <input
+                  :rules="isRequired"
+                  v-model="user.username"
+                  type="text"
+                  class="form-control form-control-sm"
+                  name="username"
+                  placeholder="Enter username." required
+                  />
+                  <label for="username">Username</label>
+                </div>
+              </div>
+              <!-- Password -->
+              <div class="form-group">
+                <div class="form-floating my-4">
+                  <input
+                    v-model="user.password"
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    placeholder="Enter password." required
+                  />
+                  <label for="password">Password</label>
+                </div>
+              </div>
+              <!-- Button -->
+              <div class="form-group ">
+                <button class="col-12 mb-5 btn btn-lg btn-main-blue btn-block" :disabled="loading">
+                  <span
+                    v-show="loading"
+                    class="spinner-border spinner-border-sm"
+                  ></span>
+                  <span>Login</span>
+                </button>
+              </div>
+              <div class="form-group">
+                <div v-if="message" class="alert alert-danger" role="alert">
+                  {{ message }}
+                  {{ auth }}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Form copied above already, not sure if needed or not  -->
+    <!-- <div class="card card-container">
       <img
         id="profile-img"
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -42,7 +100,7 @@
           </div>
         </div>
       </form>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -100,4 +158,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.login-bg-1 {
+  left: 0px;
+  position: fixed;
+  width: 110vw;
+  height: 110vh;
+  background: linear-gradient(
+    to right,
+    #0378a6 0%,
+    #0378a6 50%,
+    #54b5bf 50%,
+    #54b5bf 100%
+  );
+}
+</style>

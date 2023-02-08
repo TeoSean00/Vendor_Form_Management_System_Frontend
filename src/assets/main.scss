@@ -8,6 +8,9 @@
 
 // Then add additional custom code here
 //Putting in project colors below
+
+
+
 //Main Blue
 .bg-main-blue {
     background-color: #0378A6 !important;
@@ -16,184 +19,53 @@
 .text-main-blue {
 color: #0378A6 !important;
 }
-  
-  .btn-main-blue {
-    @include button-variant(#0378A6, #0378A6, #ffffff, #113555, #113555, #ffffff);
-  }
-  
-  //Secondary blue
-  .bg-secondary-blue {
-    background-color: #049DD9 !important;
-  }
-  
-  .text-secondary-blue {
-    color: #049DD9 !important;
-  }
-  
-  .btn-secondary-blue {
-    @include button-variant(#049DD9, #049DD9, #ffffff, #113555, #113555, #ffffff);
-  }
-  
-  //Turqouis
-  .bg-turqouise {
-    background-color: #54B5BF !important;
-  }
-  
-  .text-turqouise {
-    color: #54B5BF !important;
-  }
-  
-  .btn-turqouise {
-    @include button-variant(#54B5BF, #54B5BF, #ffffff, #113555, #113555, #ffffff);
-  }
 
+.btn-main-blue {
+  @include button-variant(#0378A6, #0378A6, #ffffff, #113555, #113555, #ffffff);
+}
+
+//Secondary blue
+.bg-secondary-blue {
+  background-color: #049DD9 !important;
+}
+
+.text-secondary-blue {
+  color: #049DD9 !important;
+}
+
+.btn-secondary-blue {
+  @include button-variant(#049DD9, #049DD9, #ffffff, #113555, #113555, #ffffff);
+}
+
+//Turqouis
+.bg-turqouise {
+  background-color: #54B5BF !important;
+}
+
+.text-turqouise {
+  color: #54B5BF !important;
+}
+
+.btn-turqouise {
+  @include button-variant(#54B5BF, #54B5BF, #ffffff, #113555, #113555, #ffffff);
+}
+
+//Dark Purple
+.bg-dark-purple {
+  background-color: #7972A6 !important;
+}
+
+.text-dark-purple {
+  color: #7972A6 !important;
+}
+
+//Light Grey
+.bg-light-grey {
+  background-color: #F7F7F7 !important;
+}
+
+//Dark Grey
+.bg-dark-grey {
+  background-color: #707070 !important;
+}
 //end
-// $btn-close-width: 0.8rem;
-// $h7-font-size: $font-size-base * 0.75;
-
-// $utilities: map-merge(
-//   $utilities,
-//   (
-//     "font-size":
-//       map-merge(
-//         map-get($utilities, "font-size"),
-//         (
-//           values:
-//             map-merge(
-//               map-get(map-get($utilities, "font-size"), "values"),
-//               (
-//                 7: $h7-font-size,
-//               )
-//             ),
-//         )
-//       ),
-//   )
-// );
-
-// $nav-link-padding-y: 0.5rem;
-// $nav-link-padding-x: 1rem;
-// $nav-link-font-size: null;
-// $nav-link-font-weight: null;
-// $nav-link-color: $gray-300;
-// $nav-link-hover-color: $gray-500;
-// $nav-link-transition: color 0.15s ease-in-out,
-//   background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-// $nav-link-disabled-color: $gray-600;
-
-// $nav-tabs-border-color: $gray-300;
-// $nav-tabs-border-width: $border-width;
-// $nav-tabs-border-radius: $border-radius;
-// $nav-tabs-link-hover-border-color: $gray-200 $gray-200 $nav-tabs-border-color;
-// $nav-tabs-link-active-color: $gray-700;
-// $nav-tabs-link-active-bg: $body-bg;
-// $nav-tabs-link-active-border-color: $gray-300 $gray-300 $nav-tabs-link-active-bg;
-
-// $nav-pills-border-radius: $border-radius;
-// $nav-pills-link-active-color: $gray-600;
-// $nav-pills-link-active-bg: transparent;
-
-// $btn-close-width: 1rem;
-
-// @import "bootstrap/scss/bootstrap";
-
-html,
-body,
-#app {
-  font-family: "Fredoka", sans-serif;
-}
-
-.wrapper {
-  overflow: scroll;
-  min-height: -webkit-fill-available;
-  -webkit-overflow-scrolling: touch;
-}
-
-.form-control::placeholder {
-  opacity: 0.4;
-}
-
-
-
-//Text colors
-
-// .bg-blue {
-//   background-color: #8dd1e9 !important;
-// }
-
-// .text-blue {
-//   color: #8dd1e9 !important;
-// }
-
-// .bg-light-blue {
-//   background-color: #d6f4ff !important;
-// }
-
-// .text-light-blue {
-//   color: #d6f4ff !important;
-// }
-
-// .btn-light-gray {
-//   @include button-variant(
-//     $gray-100,
-//     $gray-100,
-//     #6c757d,
-//     $gray-200,
-//     $gray-200,
-//     #6c757d,
-//     $gray-300,
-//     $gray-300,
-//     #6c757d
-//   );
-// }
-
-// .btn-gray {
-//   @include button-variant(
-//     $gray-200,
-//     $gray-200,
-//     #6c757d,
-//     $gray-300,
-//     $gray-300,
-//     #6c757d,
-//     $gray-400,
-//     $gray-400,
-//     #6c757d
-//   );
-// }
-
-// .bg-pink {
-//   background-color: #ff8397 !important;
-// }
-
-// .text-pink {
-//   color: #ff8397 !important;
-// }
-
-// .btn-pink {
-//   @include button-variant(
-//     #ff8397,
-//     #ff8397,
-//     #ffffff,
-//     #ff9cac,
-//     #ff9cac,
-//     #ffffff,
-//     #ff5c77,
-//     #ff5c77,
-//     #ffffff
-//   );
-// }
-
-// .icon-pink {
-//   color: #ff8397 !important;
-// }
-
-// .text-secondary-light {
-//   color: #a5a5a5 !important;
-// }
-
-// .text-secondary-lighter {
-//   color: $gray-200 !important;
-// }
-
-// .dp__select {
-//   color: #ff8397;
-// }

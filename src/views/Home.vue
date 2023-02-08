@@ -1,31 +1,45 @@
 <template>
-  <div class="container">
-    <header class="jumbotron">
+  <div >
+    <div class="row">
+      <div class="col-12 bg-main-blue">
+        <h1>Hello this is in home</h1>
+      </div>
+    </div>
+    <!-- <header class="jumbotron">
       <h3>{{ content }}</h3>
-    </header>
+    </header> -->
   </div>
 </template>
-<script>
+<script setup>
 import { ref } from "vue";
 import UserService from "../services/userService";
 
-export default {
-  setup() {
-    var content = ref("");
+import Navbar from "../components/Navbar.vue";
+import TopBanner from "../components/TopBanner.vue";
 
-    UserService.getPublicContent().then(
-      (response) => {
-        content.value = response.data;
-      },
-      (error) => {
-        content.value =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
-    );
-    return { content };
-  },
-};
+
+// export default {
+//   setup() {
+//     var content = ref("");
+
+//     UserService.getPublicContent().then(
+//       (response) => {
+//         content.value = response.data;
+//       },
+//       (error) => {
+//         content.value =
+//           (error.response && error.response.data) ||
+//           error.message ||
+//           error.toString();
+//       }
+//     );
+//     components: {
+//       Navbar;
+//       TopBanner;
+//     }
+ 
+//     return { content };
+//   },
+// };
 </script>
 t
