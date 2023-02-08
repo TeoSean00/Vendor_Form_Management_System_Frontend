@@ -1,17 +1,17 @@
 <template>
   <div class="col-md-12 login-bg-1 h-100">
-    <div class="row offset-3 col-6 justify-content-center align-items-center h-100">
-      <div class="card my-auto">
-        <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-        <h2 class="card-title text-center mt-5">Quantum Leap Incorporation</h2>
+    <div class="row offset-1 col-9 justify-content-center align-items-center h-100" >
+      <div class="card my-auto" style="height:75vh">
+        <!-- <img class="card-img-top" src="../assets/Quantum Logo.PNG" style="scale: 0.1;"> -->
+        <h2 class="card-title text-center mt-5 pt-3 text-main-blue" >Quantum Leap Incorporation</h2>
         <div class="card-body">
-          <h5 class="card-title text-center my-2">Login</h5>
+          <!-- <h5 class="card-title text-center my-2 pt-3 text-secondary-blue">Login</h5> -->
           <!-- Form begins -->
           <!-- Username -->
-          <div class="offset-3 col-6 text-center my-2">
+          <div class="offset-3 col-6 text-center my-2 pt-3">
             <form name="form" @submit.prevent="handleLogin">
-              <div class="form-group">
-                <div class="form-floating my-4">
+              <div class="form-group text-dark-purple">
+                <div class="form-floating my-4 ">
                   <input
                   :rules="isRequired"
                   v-model="user.username"
@@ -24,8 +24,8 @@
                 </div>
               </div>
               <!-- Password -->
-              <div class="form-group">
-                <div class="form-floating my-4">
+              <div class="form-group text-dark-purple">
+                <div class="form-floating my-4 ">
                   <input
                     v-model="user.password"
                     type="password"
