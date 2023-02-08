@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand navbar-light ">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a href="" class="navbar-brand" @click.prevent>smartForm</a>
     <div class="navbar-nav mr-auto">
       <li class="nav-item">

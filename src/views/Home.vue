@@ -1,13 +1,14 @@
 <template>
   <div >
-    <div class="row">
-      <div class="col-12 bg-main-blue">
-        <h1>Hello this is in home</h1>
+      <Navbar/>
+      <div class="row px-5 pt-3">
+        <p class="text-secondary-blue">Welcome back, <span class="text-main-blue fw-bold">{{ user }}</span> !</p>
       </div>
-    </div>
-    <!-- <header class="jumbotron">
+      <div class="row"></div>
+
+    <header class="jumbotron">
       <h3>{{ content }}</h3>
-    </header> -->
+    </header>
   </div>
 </template>
 <script setup>
@@ -17,6 +18,7 @@ import UserService from "../services/userService";
 import Navbar from "../components/Navbar.vue";
 import TopBanner from "../components/TopBanner.vue";
 
+const user = "Admin XXX";
 
 // export default {
 //   setup() {

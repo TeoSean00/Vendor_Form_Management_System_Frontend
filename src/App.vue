@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
-import NavbarVertical from "./components/NavbarVertical.vue";
+import NavbarVertical from "./components/NavBarBackup.vue";
 import TopBanner from "./components/TopBanner.vue";
 
 components: {
