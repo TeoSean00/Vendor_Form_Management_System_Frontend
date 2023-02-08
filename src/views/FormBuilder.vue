@@ -2,8 +2,8 @@
     <Navbar/>
     <div class="row mx-5">
         <div class="col-10">
-            <div v-for="item in formItems" ref="formComponents">
-                <FormComponent :type="item" />
+            <div v-for="(item,index) in formItems" ref="formComponents">
+                <FormComponent :type="item" :idx='index'/>
             </div>
         </div>
         
@@ -46,7 +46,7 @@ export default {
         }
         );
        
-        const formItems = ref(["item1"]);
+        const formItems = ref([]);
         const formComponents = ref([null]);
         return { content, formItems, addText, addTextInput, test, formComponents};
     },
