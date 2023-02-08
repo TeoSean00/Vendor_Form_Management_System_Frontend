@@ -14,7 +14,7 @@ export default {
     emits: ["updateQuestion"],
     setup(props, context) {
         const title = ref();
-        return {props, context, updateQuestion, title, emits};
+        return {props, context, updateQuestion, title};
     },
 };
 
@@ -24,8 +24,8 @@ function updateQuestion(){
         "order" : this.props.idx,
         "text" : this.title,
     }
-    this.context.emit('update:question', componentInfo);
-    console.log(componentInfo);
+    this.context.emit('updateQuestion', componentInfo);
+    // console.log(componentInfo);
 }
 
 

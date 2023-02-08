@@ -2,8 +2,8 @@
     <Navbar/>
     <div class="row mx-5">
         <div class="col-10">
-            <div v-for="(item,index) in formItems" ref="formComponents">
-                <FormComponent :type="item" :idx='index'/>
+            <div v-for="(item,index) in formItems"  >
+                <FormComponent :type="item" :idx='index' @updateQuestion="update"/>
             </div>
         </div>
         
@@ -47,8 +47,8 @@ export default {
         );
        
         const formItems = ref([]);
-        const formComponents = ref([null]);
-        return { content, formItems, addText, addTextInput, test, formComponents};
+        const formOutput = ref([]);
+        return { content, formItems, formOutput, addText, addTextInput, update};
     },
 };
 
@@ -61,12 +61,11 @@ function addTextInput(){
     this.formItems.push("text");
 };
 
-function test(){
-    console.log(this.formComponents);
-    console.log(typeof this.formComponents);
-    for (const components in this.formComponents){
-        console.log(this.formComponents[components]);
-    }
-    
+function update(data){
+    console.log(data);
+    console.log(this.formItems);
+    console.log(this.formOutput);
+    // this.formOutput.push(data);
+
 }
 </script>
