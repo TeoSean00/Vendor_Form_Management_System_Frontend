@@ -47,8 +47,8 @@ export default {
         );
        
         const formItems = ref([]);
-        const formOutput = ref([]);
-        return { content, formItems, formOutput, addText, addTextInput, update};
+        // const formOutput = ref([]);
+        return { content, formItems, addText, addTextInput, update};
     },
 };
 
@@ -63,8 +63,7 @@ function addTextInput(){
 
 function update(data){
     console.log(data);
-    console.log(this.formItems);
-    console.log(this.formOutput);
+    // console.log(this.formItems);
     // this.formOutput.push(data);
 
 }
