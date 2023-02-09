@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
-import Home from "../views/Home.vue"
-import Register from "../views/Register.vue"
-
+import Home from "../views/Home.vue";
+import Register from "../views/Register.vue";
+import FormBuilder from "../views/FormBuilder.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +46,11 @@ const router = createRouter({
       path: "/user",
       name: "user",
       component: () => import("../views/BoardUser.vue"),
+    },
+    {
+      path: "/formbuilder",
+      name: "formbuilder",
+      component: FormBuilder,
     },
     // {
     //   path: "/about",
