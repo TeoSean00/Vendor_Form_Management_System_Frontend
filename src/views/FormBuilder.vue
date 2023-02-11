@@ -4,7 +4,7 @@
     <div class="col-10">
       <div v-for="(item, index) in formItems" :key="index">
         <FormComponent
-          :type="item"
+          :itemInfo="item"
           :idx="index"
           @updateQuestion="update"
           @remove="removeQuestion"
@@ -63,17 +63,15 @@ export default {
       //   formItems.value.push("Sample Headers");
     }
     function addTextInput() {
-      formItems.value.push("text");
+      formItems.value.push({
+        type: "text",
+        order: formItems.value.length,
+        text: "",
+      });
     }
 
     function update(data) {
-      formOutput.value[data.order] = data;
-      //   for (item in formItems.value) {
-      //     console.log(data);
-      //     console.log(formItems.value);
-      //     console.log(formOutput.value);
-      //   }
-      // this.formOutput.push(data);
+      console.log("parent checking the state of the form", formItems);
     }
 
     // Text, Text,  Radio
@@ -81,15 +79,7 @@ export default {
     function removeQuestion(questionKey) {
       //Remove from formItems first
       console.log("Removing " + questionKey);
-    //   console.log(formItems.value);
       formItems.value.splice(questionKey, 1);
-    //   console.log(formItems.value);
-      //   //Remove from formOutput
-      console.log(formOutput);
-      console.log(Object.keys(formOutput));
-      console.log(formOutput.value);
-      delete formOutput.value[questionKey];
-      console.log(formOutput.value);
     }
 
     function exportForm() {

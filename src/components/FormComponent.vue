@@ -1,6 +1,7 @@
 <template>
-  <div v-if="type == 'text'">
+  <div v-if="itemInfo.type == 'text'">
     <TextInput
+      :itemInfo="itemInfo"
       :idx="idx"
       @updateText="updateQuestion"
       @removeQuestion="remove"
@@ -14,7 +15,7 @@ import { ref } from "vue";
 import TextInput from "./formComponents/TextInput.vue";
 
 export default {
-  props: ["type", "idx"],
+  props: ["itemInfo", "idx"],
   emits: ["updateQuestion", "remove"],
   components: {
     TextInput,
@@ -23,11 +24,6 @@ export default {
     const title = ref();
 
     function updateQuestion(componentInfo) {
-      // const componentInfo = {
-      //   type: props.type,
-      //   order: props.idx,
-      //   text: title.value,
-      // };
       context.emit("updateQuestion", componentInfo);
     }
 

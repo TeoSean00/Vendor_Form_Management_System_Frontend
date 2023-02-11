@@ -1,8 +1,8 @@
 <template>
-  <input 
+  <input
     type="text"
     placeholder="Key in title"
-    v-model="title"
+    v-model="itemInfo.text"
     @input="updateText"
   />
   <span>{{ idx }} Input field here</span>
@@ -12,30 +12,20 @@
 <script>
 import { ref } from "vue";
 
-    export default {
-    props: ["type", "idx"],
-    emits: ["updateText", "removeQuestion"],
-    setup(props, context) {
-        const title = ref();
-        
-        function updateText() {
-            const componentInfo = {
-                type: "text",
-                order: props.idx,
-                text: title.value,
-            };
-            //Passes from TextInput > FormComponent
-            context.emit("updateText", componentInfo);
-            // console.log("Text Input component emitting: ");
-            // console.log({componentInfo});
-        }
-        
-        function removeQuestion(){
-            //Passes from TextInput > FormComponent
-            context.emit("removeQuestion", props.idx);
-        }
+export default {
+  props: ["itemInfo", "idx"],
+  emits: ["updateText", "removeQuestion"],
+  setup(props, context) {
+    function updateText() {
+      context.emit("updateText", props.itemInfo);
+    }
 
-        return { props, context, title, updateText, removeQuestion };
-    },
-    };
+    function removeQuestion() {
+      //Passes from TextInput > FormComponent
+      context.emit("removeQuestion", props.idx);
+    }
+
+    return { props, context, updateText, removeQuestion };
+  },
+};
 </script>
