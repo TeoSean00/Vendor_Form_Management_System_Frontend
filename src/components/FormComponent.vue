@@ -1,35 +1,38 @@
 <template>
-  <div v-if="type == 'text'">
-    <input
-      type="text"
-      placeholder="Key in title"
-      v-model="title"
-      @input="updateQuestion"
+  <div v-if="itemInfo.type == 'text'">
+    <TextInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
     />
-    <span>{{ idx }} Input field here</span>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
 
+import TextInput from "./formComponents/TextInput.vue";
+
 export default {
-  props: ["type", "idx"],
-  emits: ["updateQuestion"],
+  props: ["itemInfo", "idx"],
+  emits: ["updateQuestion", "remove"],
+  components: {
+    TextInput,
+  },
   setup(props, context) {
     const title = ref();
 
-    function updateQuestion() {
-      const componentInfo = {
-        type: props.type,
-        order: props.idx,
-        text: title.value,
-      };
+    function updateQuestion(componentInfo) {
       context.emit("updateQuestion", componentInfo);
-      // console.log(componentInfo);
     }
 
-    return { props, context, updateQuestion, title };
+    function remove(questionKey) {
+      //Passes from FormComponent > ForBuilder
+      context.emit("remove", questionKey);
+    }
+
+    return { props, context, title, updateQuestion, remove };
   },
 };
 </script>

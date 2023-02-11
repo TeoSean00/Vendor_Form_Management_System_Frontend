@@ -3,7 +3,12 @@
   <div class="row mx-5">
     <div class="col-10">
       <div v-for="(item, index) in formItems" :key="index">
-        <FormComponent :type="item" :idx="index" @updateQuestion="update" />
+        <FormComponent
+          :itemInfo="item"
+          :idx="index"
+          @updateQuestion="update"
+          @remove="removeQuestion"
+        />
       </div>
     </div>
 
@@ -15,7 +20,9 @@
         </button>
       </div>
       <div class="row">
-        <button @click="test" class="btn btn-turqouise">Export Form</button>
+        <button @click="exportForm" class="btn btn-turqouise">
+          Export Form
+        </button>
       </div>
     </div>
   </div>
@@ -46,33 +53,51 @@ export default {
           error.toString();
       }
     );
-
     var formItems = ref([]);
     var formOutput = ref({});
 
-    addText();
-    addTextInput();
+    // addText();
+    // addTextInput();
 
     function addText() {
-      formItems.value.push("Sample Headers");
+      //   formItems.value.push("Sample Headers");
     }
     function addTextInput() {
-      formItems.value.push("text");
+      formItems.value.push({
+        type: "text",
+        order: formItems.value.length,
+        text: "",
+      });
     }
 
     function update(data) {
-      console.log(data);
-      formOutput.value[data.order] = data;
-      //   for (item in formItems.value) {
-      //     console.log(data);
-      //     console.log(formItems.value);
-      //     console.log(formOutput.value);
-      //   }
-      // this.formOutput.push(data);
-      console.log(formOutput.value);
+      console.log("parent checking the state of the form", formItems);
     }
 
-    return { content, formItems, addText, addTextInput, update };
+    // Text, Text,  Radio
+    // Text, Radio
+    function removeQuestion(questionKey) {
+      //Remove from formItems first
+      console.log("Removing " + questionKey);
+      formItems.value.splice(questionKey, 1);
+    }
+
+    function exportForm() {
+      console.log("-----------------------------------------");
+      console.log("Form has been exported, details below:");
+      console.log(formOutput.value);
+      console.log("-----------------------------------------");
+    }
+
+    return {
+      content,
+      formItems,
+      addText,
+      addTextInput,
+      update,
+      removeQuestion,
+      exportForm,
+    };
   },
 };
 </script>
