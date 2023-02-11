@@ -49,9 +49,6 @@ export default {
        
         const formItems = ref([]);
         // const formOutput = ref([]);
-        //Save the output as a dictionary, key is the order 
-        // { 0: {info}, 1:{info}} as compared to [{key}, {key}]
-        
         return { content, formItems, addText, addTextInput, update};
     },
 };
@@ -67,6 +64,7 @@ function addTextInput(){
 
 function update(data){
     console.log(data);
+    // console.log(this.formItems);
     // this.formOutput.push(data);
     // console.log(this.formOutput);
 }
