@@ -76,12 +76,14 @@ export default {
       // this.formOutput.push(data);
     }
 
+    // Text, Text,  Radio
+    // Text, Radio
     function removeQuestion(questionKey) {
       //Remove from formItems first
       console.log("Removing " + questionKey);
-      console.log(formItems.value);
+    //   console.log(formItems.value);
       formItems.value.splice(questionKey, 1);
-      console.log(formItems.value);
+    //   console.log(formItems.value);
       //   //Remove from formOutput
       console.log(formOutput);
       console.log(Object.keys(formOutput));
