@@ -3,6 +3,7 @@
         <input type="text" placeholder="Key in title" v-model="title" @input="updateQuestion"/> 
         <span>{{idx}} Input field here</span>
     </div>
+
     
 </template>
 
@@ -19,6 +20,7 @@ export default {
 };
 
 function updateQuestion(){
+    // 0 : {type, order, text}
     const componentInfo = {
         "type" : this.props.type,
         "order" : this.props.idx,

@@ -3,6 +3,7 @@
     <div class="row mx-5">
         <div class="col-10">
             <div v-for="(item,index) in formItems"  >
+                <!-- TextInput, Radio Button, TextInput -->
                 <FormComponent :type="item" :idx='index' @updateQuestion="update"/>
             </div>
         </div>
@@ -47,8 +48,11 @@ export default {
         );
        
         const formItems = ref([]);
-        const formOutput = ref([]);
-        return { content, formItems, formOutput, addText, addTextInput, update};
+        // const formOutput = ref([]);
+        //Save the output as a dictionary, key is the order 
+        // { 0: {info}, 1:{info}} as compared to [{key}, {key}]
+        
+        return { content, formItems, addText, addTextInput, update};
     },
 };
 
@@ -63,9 +67,7 @@ function addTextInput(){
 
 function update(data){
     console.log(data);
-    console.log(this.formItems);
-    console.log(this.formOutput);
     // this.formOutput.push(data);
-
+    // console.log(this.formOutput);
 }
 </script>
