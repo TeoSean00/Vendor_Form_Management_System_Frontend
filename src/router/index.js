@@ -3,6 +3,7 @@ import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import Register from "../views/Register.vue";
 import FormBuilder from "../views/FormBuilder.vue";
+import ViewForm from "../views/ViewForm.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,11 @@ const router = createRouter({
       name: "formbuilder",
       component: FormBuilder,
     },
+    {
+      path: "/viewForm",
+      name: "viewForm",
+      component: ViewForm,
+    }
     // {
     //   path: "/about",
     //   name: "about",
