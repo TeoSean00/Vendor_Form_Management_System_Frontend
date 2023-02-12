@@ -17,28 +17,28 @@
   </div>
   <div v-if="itemInfo.type == 'checkbox'">
     <CheckboxInput
-    :itemInfo="itemInfo"
-    :idx="idx"
-    @updateText="updateQuestion"
-    @removeQuestion="remove"
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
     />
   </div>
   <div v-if="itemInfo.type == 'radio'">
     <RadioInput
-    :itemInfo="itemInfo"
-    :idx="idx"
-    @updateText="updateQuestion"
-    @removeQuestion="remove"
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
     />
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import CheckboxInput from "./formComponents/CheckboxInput.vue";
-import TextInput from "./formComponents/TextInput.vue";
-import RadioInput from "./formComponents/RadioInput.vue";
-import HeaderText from "./formComponents/HeaderText.vue";
+import CheckboxInput from "./CheckboxInput.vue";
+import TextInput from "./TextInput.vue";
+import RadioInput from "./RadioInput.vue";
+import HeaderText from "./HeaderText.vue";
 
 export default {
   props: ["itemInfo", "idx"],
@@ -54,7 +54,7 @@ export default {
 
     function updateQuestion(componentInfo) {
       context.emit("updateQuestion", componentInfo);
-      console.log(componentInfo)
+      console.log(componentInfo);
     }
 
     function remove(questionKey) {

@@ -22,7 +22,7 @@ export default {
     const templateData = {
       1: { type: "text", order: 1, label: "Company’s Name" },
       2: { type: "text", order: 2, label: "Company’s Registration No" },
-      3: { type: "text", order: 3, label: "GST Registered (Yes/No)" }, //this should be radio
+      3: { type: "checkbox", order: 3, label: "GST Registered (Yes/No)" }, //this should be radio
       4: { type: "text", order: 4, label: "Office Address" },
       5: { type: "text", order: 5, label: "Tel" },
       6: { type: "text", order: 6, label: "Fax" },
