@@ -14,9 +14,15 @@
 
     <div class="col-2">
       <div class="row">
-        <button @click="addText" class="btn btn-main-blue">Add Text</button>
+        <button @click="addHeaderText" class="btn btn-main-blue">Add Header</button>
         <button @click="addTextInput" class="btn btn-main-blue">
           Add Text Input
+        </button>
+        <button @click="addCheckboxInput" class="btn btn-main-blue">
+          Add Checkbox Input
+        </button>
+        <button @click="addRadioInput" class="btn btn-main-blue">
+          Add Radio Input
         </button>
       </div>
       <div class="row">
@@ -56,17 +62,38 @@ export default {
     var formItems = ref([]);
     var formOutput = ref({});
 
-    // addText();
-    // addTextInput();
-
-    function addText() {
-      //   formItems.value.push("Sample Headers");
-    }
     function addTextInput() {
       formItems.value.push({
         type: "text",
         order: formItems.value.length,
         text: "",
+      });
+    }
+
+    function addCheckboxInput() {
+      formItems.value.push({
+        type: "checkbox",
+        order: formItems.value.length,
+        text: "",
+        options:[],
+      });
+    }
+
+    function addRadioInput() {
+      formItems.value.push({
+        type: "radio",
+        order: formItems.value.length,
+        text: "",
+        options:[],
+      });
+    }
+
+    function addHeaderText() {
+      formItems.value.push({
+        type: "header",
+        order: formItems.value.length,
+        text: "",
+        style: "h1",
       });
     }
 
@@ -92,8 +119,10 @@ export default {
     return {
       content,
       formItems,
-      addText,
       addTextInput,
+      addHeaderText,
+      addCheckboxInput,
+      addRadioInput,
       update,
       removeQuestion,
       exportForm,

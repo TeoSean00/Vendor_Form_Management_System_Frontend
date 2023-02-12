@@ -1,4 +1,12 @@
 <template>
+  <div v-if="itemInfo.type == 'header'">
+    <HeaderText
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
   <div v-if="itemInfo.type == 'text'">
     <TextInput
       :itemInfo="itemInfo"
@@ -7,24 +15,46 @@
       @removeQuestion="remove"
     />
   </div>
+  <div v-if="itemInfo.type == 'checkbox'">
+    <CheckboxInput
+    :itemInfo="itemInfo"
+    :idx="idx"
+    @updateText="updateQuestion"
+    @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'radio'">
+    <RadioInput
+    :itemInfo="itemInfo"
+    :idx="idx"
+    @updateText="updateQuestion"
+    @removeQuestion="remove"
+    />
+  </div>
 </template>
 
 <script>
 import { ref } from "vue";
-
-import TextInput from "./TextInput.vue";
+import CheckboxInput from "./formComponents/CheckboxInput.vue";
+import TextInput from "./formComponents/TextInput.vue";
+import RadioInput from "./formComponents/RadioInput.vue";
+import HeaderText from "./formComponents/HeaderText.vue";
 
 export default {
   props: ["itemInfo", "idx"],
   emits: ["updateQuestion", "remove"],
   components: {
     TextInput,
+    HeaderText,
+    CheckboxInput,
+    RadioInput,
   },
   setup(props, context) {
     const title = ref();
 
     function updateQuestion(componentInfo) {
       context.emit("updateQuestion", componentInfo);
+      console.log(componentInfo)
     }
 
     function remove(questionKey) {
