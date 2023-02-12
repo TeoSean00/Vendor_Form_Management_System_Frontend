@@ -1,6 +1,5 @@
 <template>
   <div>
-    I will take in the template json and transform it into a form!
     <!-- <div>{{ newForm }}</div> -->
     <div class="form-floating my-2">
       <template v-for="(sectionData, index) in newForm" :key="index">
@@ -20,7 +19,7 @@ export default {
   components: { FormSection },
   setup() {
     const templateData = {
-      1: { type: "text", order: 1, label: "Company’s Name" },
+      1: { type: "header", order: 1, text: "Company’s Name", style: "h1" },
       2: { type: "text", order: 2, label: "Company’s Registration No" },
       3: {
         type: "radio",
@@ -61,6 +60,13 @@ export default {
             input: [],
             options: templateData[key].options,
             type: type,
+          });
+        } else if (type == "header") {
+          newForm.value.push({
+            type: type,
+            style: templateData[key].style,
+            text: templateData[key].text,
+            order: templateData[key].order,
           });
         }
       }

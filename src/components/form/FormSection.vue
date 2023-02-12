@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="mb-3">
+    <template v-if="sectionData.type == 'header'">
+      <p :class="sectionData.style">{{ sectionData.text }}</p>
+    </template>
     <template v-if="sectionData.type == 'text'">
-      <p>{{ sectionData }}</p>
+      <!-- <p>{{ sectionData }}</p> -->
       <label for="email">{{ sectionData.label }}</label>
       <input
         :type="sectionData.type"
@@ -15,7 +18,8 @@
     <template
       v-if="sectionData.type == 'radio' || sectionData.type == 'checkbox'"
     >
-      <p>{{ sectionData }}</p>
+      <!-- <p>{{ sectionData }}</p> -->
+      <label for="email">{{ sectionData.label }}</label>
       <template v-for="(data, index) in sectionData.options" :key="index"
         ><div class="form-check">
           <input
