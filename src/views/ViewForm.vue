@@ -22,11 +22,21 @@ export default {
     const templateData = {
       1: { type: "text", order: 1, label: "Company’s Name" },
       2: { type: "text", order: 2, label: "Company’s Registration No" },
-      3: { type: "checkbox", order: 3, label: "GST Registered (Yes/No)" }, //this should be radio
+      3: {
+        type: "radio",
+        order: 3,
+        label: "GST Registered (Yes/No)",
+        options: ["Yes", "No"],
+      }, //this should be radio
       4: { type: "text", order: 4, label: "Office Address" },
       5: { type: "text", order: 5, label: "Tel" },
       6: { type: "text", order: 6, label: "Fax" },
-      7: { type: "text", order: 7, label: "Type of Business" }, // this should be radio button select
+      7: {
+        type: "checkbox",
+        order: 7,
+        label: "Type of Business",
+        options: ["shady", "not shady", "quite shady"],
+      }, // this should be radio button select
       8: { type: "text", order: 8, label: "Contact Person" }, // requires name,tel,designation of person
       9: { type: "text", order: 9, label: "Nature of Business" }, // this should be multiselect
       10: { type: "text", order: 10, label: "Product/Services" },
@@ -36,12 +46,23 @@ export default {
     var newForm = ref([]);
     const createForm = () => {
       for (let key in templateData) {
-        newForm.value.push({
-          order: templateData[key].order,
-          label: templateData[key].label,
-          input: "",
-          type: templateData[key].type,
-        });
+        var type = templateData[key].type;
+        if (type == "text") {
+          newForm.value.push({
+            order: templateData[key].order,
+            label: templateData[key].label,
+            input: "",
+            type: type,
+          });
+        } else if (type == "radio" || type == "checkbox") {
+          newForm.value.push({
+            order: templateData[key].order,
+            label: templateData[key].label,
+            input: [],
+            options: templateData[key].options,
+            type: type,
+          });
+        }
       }
     };
     createForm();

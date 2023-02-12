@@ -1,15 +1,36 @@
 <template>
   <div>
-    <p>{{ sectionData }}</p>
-    <label for="email">{{ sectionData.label }}</label>
-    <input
-      :type="sectionData.type"
-      id="email"
-      class="form-control form-control-sm"
-      :placeholder="sectionData.label"
-      required
-      v-model="sectionData.input"
-    />
+    <template v-if="sectionData.type == 'text'">
+      <p>{{ sectionData }}</p>
+      <label for="email">{{ sectionData.label }}</label>
+      <input
+        :type="sectionData.type"
+        id="email"
+        class="form-control form-control-sm"
+        :placeholder="sectionData.label"
+        required
+        v-model="sectionData.input"
+      />
+    </template>
+    <template
+      v-if="sectionData.type == 'radio' || sectionData.type == 'checkbox'"
+    >
+      <p>{{ sectionData }}</p>
+      <template v-for="(data, index) in sectionData.options" :key="index"
+        ><div class="form-check">
+          <input
+            class="form-check-input"
+            :type="sectionData.type"
+            :value="data"
+            id="flexCheckDefault"
+            v-model="sectionData.input"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ data }}
+          </label>
+        </div>
+      </template>
+    </template>
   </div>
 
   <!-- <div class="form-floating my-2">
