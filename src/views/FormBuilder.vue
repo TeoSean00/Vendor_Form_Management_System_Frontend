@@ -14,9 +14,20 @@
 
     <div class="col-2">
       <div class="row">
-        <button @click="addHeaderText" class="btn btn-main-blue">Add Header</button>
+        <button @click="addHeaderText" class="btn btn-main-blue">
+          Add Header
+        </button>
         <button @click="addTextInput" class="btn btn-main-blue">
           Add Text Input
+        </button>
+        <button @click="addNumberInput" class="btn btn-main-blue">
+          Add Number Input
+        </button>
+        <button @click="addBooleanInput" class="btn btn-main-blue">
+          Add BooleanInput
+        </button>
+        <button @click="addDateInput" class="btn btn-main-blue">
+          Add DateInput
         </button>
         <button @click="addCheckboxInput" class="btn btn-main-blue">
           Add Checkbox Input
@@ -60,7 +71,6 @@ export default {
       }
     );
     var formItems = ref([]);
-    var formOutput = ref({});
 
     function addTextInput() {
       formItems.value.push({
@@ -97,22 +107,45 @@ export default {
       });
     }
 
-    function update(data) {
-      console.log("parent checking the state of the form", formItems);
+    function addBooleanInput(){
+      formItems.value.push({
+        type: "boolean",
+        order: formItems.value.length,
+        text: "",
+      });
+    }
+    
+    function addDateInput(){
+      formItems.value.push({
+        type: "date",
+        order: formItems.value.length,
+        text: "",
+      });
+    }
+    
+    function addNumberInput(){
+      formItems.value.push({
+        type: "number",
+        order: formItems.value.length,
+        text: "",
+      });
+    }
+    function update() {
+      //Uncomment this out to check
+      // console.log("parent checking the state of the form", formItems);
     }
 
     // Text, Text,  Radio
     // Text, Radio
     function removeQuestion(questionKey) {
       //Remove from formItems first
-      console.log("Removing " + questionKey);
       formItems.value.splice(questionKey, 1);
     }
 
     function exportForm() {
       console.log("-----------------------------------------");
       console.log("Form has been exported, details below:");
-      console.log(formOutput.value);
+      console.log(formItems.value);
       console.log("-----------------------------------------");
     }
 
@@ -123,6 +156,9 @@ export default {
       addHeaderText,
       addCheckboxInput,
       addRadioInput,
+      addBooleanInput,
+      addDateInput,
+      addNumberInput,
       update,
       removeQuestion,
       exportForm,

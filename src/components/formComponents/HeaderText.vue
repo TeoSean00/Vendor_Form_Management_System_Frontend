@@ -1,15 +1,17 @@
 <template>
+    Order No: {{ idx }}
+    <br>
     <input
       type="text"
       placeholder="Key in title"
       v-model="itemInfo.text"
       @input="updateText"
     />
-    <select v-model="style"> 
+    <select v-model="itemInfo.style"> 
         <option value="h1">h1</option>
         <option value="h2">h2</option>
         <option value="h3">h3</option>
-    </select> {{ style }}
+    </select>
     <button @click="removeQuestion">Delete header</button>
   </template>
   
@@ -22,7 +24,6 @@
     setup(props, context) {
         var style = ref("h1");
       function updateText() {
-          console.log(props.itemInfo.style);
         context.emit("updateText", props.itemInfo);
       }
   

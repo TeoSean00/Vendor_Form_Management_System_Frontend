@@ -28,7 +28,6 @@
     props: ["itemInfo", "idx"],
     emits: ["updateText", "removeQuestion"],
     setup(props, context) {
-        console.log(props);
         var noOfOptions = ref(1);
 
       function updateText() {

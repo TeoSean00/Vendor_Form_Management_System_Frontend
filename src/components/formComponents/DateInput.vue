@@ -7,13 +7,12 @@
     v-model="itemInfo.text"
     @input="updateText"
   />
-  <span>Input field here</span>
+  
+  <span>Date Input Here</span>
   <button @click="removeQuestion">Delete question</button>
 </template>
 
 <script>
-import { ref } from "vue";
-
 export default {
   props: ["itemInfo", "idx"],
   emits: ["updateText", "removeQuestion"],
