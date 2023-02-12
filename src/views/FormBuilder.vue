@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue";
+import Navbar from "../components/navbar/Navbar.vue";
 import UserService from "../services/userService";
-import FormComponent from "../components/FormComponent.vue";
+import FormComponent from "../components/form/FormComponent.vue";
 import { ref } from "vue";
 
 export default {

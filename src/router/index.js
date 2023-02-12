@@ -33,21 +33,21 @@ const router = createRouter({
       name: "profile",
       component: () => import("../views/Profile.vue"),
     },
-    {
-      path: "/admin",
-      name: "admin",
-      component: () => import("../views/BoardAdmin.vue"),
-    },
-    {
-      path: "/mod",
-      name: "mod",
-      component: () => import("../views/BoardModerator.vue"),
-    },
-    {
-      path: "/user",
-      name: "user",
-      component: () => import("../views/BoardUser.vue"),
-    },
+    // {
+    //   path: "/admin",
+    //   name: "admin",
+    //   component: () => import("../views/BoardAdmin.vue"),
+    // },
+    // {
+    //   path: "/mod",
+    //   name: "mod",
+    //   component: () => import("../views/BoardModerator.vue"),
+    // },
+    // {
+    //   path: "/user",
+    //   name: "user",
+    //   component: () => import("../views/BoardUser.vue"),
+    // },
     {
       path: "/formbuilder",
       name: "formbuilder",

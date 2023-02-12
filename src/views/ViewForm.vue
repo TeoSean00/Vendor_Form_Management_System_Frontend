@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import FormSection from "../components/FormSection.vue";
+import FormSection from "../components/form/FormSection.vue";
 import { ref } from "vue";
 export default {
   components: { FormSection },

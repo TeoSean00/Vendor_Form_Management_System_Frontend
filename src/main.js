@@ -12,6 +12,7 @@ import {
   faSignInAlt,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import MaterialDashboard from "./components/dashboard/material-dashboard";
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
@@ -24,6 +25,7 @@ const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
+app.use(MaterialDashboard);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 app.mount("#app");
