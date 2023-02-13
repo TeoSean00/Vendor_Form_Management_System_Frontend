@@ -7,7 +7,7 @@
     v-model="itemInfo.text"
     @input="updateText"
   />
-  <span>Input field here</span>
+  <span>Numeric field here</span>
   <button @click="removeQuestion">Delete question</button>
 </template>
 

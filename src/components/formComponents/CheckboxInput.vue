@@ -3,7 +3,7 @@
     <br>
     <input
         type="text"
-        placeholder="Radiobutton"
+        placeholder="Key in question"
         v-model="itemInfo.text"
         @input="updateText"
     />
@@ -28,7 +28,7 @@
     props: ["itemInfo", "idx"],
     emits: ["updateText", "removeQuestion"],
     setup(props, context) {
-        var noOfOptions = ref(1);
+      var noOfOptions = ref(1);
 
       function updateText() {
         context.emit("updateText", props.itemInfo.value);

@@ -15,6 +15,30 @@
       @removeQuestion="remove"
     />
   </div>
+  <div v-if="itemInfo.type == 'number'">
+    <NumericInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'boolean'">
+    <BooleanInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'date'">
+    <DateInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
   <div v-if="itemInfo.type == 'checkbox'">
     <CheckboxInput
       :itemInfo="itemInfo"
@@ -35,10 +59,13 @@
 
 <script>
 import { ref } from "vue";
-import CheckboxInput from "./CheckboxInput.vue";
-import TextInput from "./TextInput.vue";
-import RadioInput from "./RadioInput.vue";
-import HeaderText from "./HeaderText.vue";
+import CheckboxInput from "./formComponents/CheckboxInput.vue";
+import TextInput from "./formComponents/TextInput.vue";
+import RadioInput from "./formComponents/RadioInput.vue";
+import HeaderText from "./formComponents/HeaderText.vue";
+import BooleanInput from "./formComponents/BooleanInput.vue";
+import DateInput from "./formComponents/DateInput.vue";
+import NumericInput from "./formComponents/NumericInput.vue";
 
 export default {
   props: ["itemInfo", "idx"],
@@ -48,13 +75,15 @@ export default {
     HeaderText,
     CheckboxInput,
     RadioInput,
-  },
+    BooleanInput,
+    DateInput,
+    NumericInput
+},
   setup(props, context) {
     const title = ref();
 
     function updateQuestion(componentInfo) {
       context.emit("updateQuestion", componentInfo);
-      console.log(componentInfo);
     }
 
     function remove(questionKey) {
