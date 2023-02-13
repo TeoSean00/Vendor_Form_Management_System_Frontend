@@ -1,0 +1,97 @@
+<template>
+  <div v-if="itemInfo.type == 'header'">
+    <HeaderText
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'text'">
+    <TextInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'number'">
+    <NumericInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'boolean'">
+    <BooleanInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'date'">
+    <DateInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'checkbox'">
+    <CheckboxInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+  <div v-if="itemInfo.type == 'radio'">
+    <RadioInput
+      :itemInfo="itemInfo"
+      :idx="idx"
+      @updateText="updateQuestion"
+      @removeQuestion="remove"
+    />
+  </div>
+</template>
+
+<script>
+import { ref } from "vue";
+import CheckboxInput from "./CheckboxInput.vue";
+import TextInput from "./TextInput.vue";
+import RadioInput from "./RadioInput.vue";
+import HeaderText from "./HeaderText.vue";
+import BooleanInput from "./BooleanInput.vue";
+import DateInput from "./DateInput.vue";
+import NumericInput from "./NumericInput.vue";
+
+export default {
+  props: ["itemInfo", "idx"],
+  emits: ["updateQuestion", "remove"],
+  components: {
+    TextInput,
+    HeaderText,
+    CheckboxInput,
+    RadioInput,
+    BooleanInput,
+    DateInput,
+    NumericInput,
+  },
+  setup(props, context) {
+    const title = ref();
+
+    function updateQuestion(componentInfo) {
+      context.emit("updateQuestion", componentInfo);
+    }
+
+    function remove(questionKey) {
+      //Passes from FormComponent > ForBuilder
+      context.emit("remove", questionKey);
+    }
+
+    return { props, context, title, updateQuestion, remove };
+  },
+};
+</script>

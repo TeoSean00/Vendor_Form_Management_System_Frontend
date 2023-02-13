@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Register from "../views/Register.vue";
 import FormBuilder from "../views/FormBuilder.vue";
 import ViewForm from "../views/ViewForm.vue";
+import WorkflowView from "../views/WorkflowView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,20 +35,20 @@ const router = createRouter({
       component: () => import("../views/Profile.vue"),
     },
     {
-      path: "/admin",
-      name: "admin",
-      component: () => import("../views/BoardAdmin.vue"),
+      path: "/workflow",
+      name: "workflow",
+      component: WorkflowView,
     },
-    {
-      path: "/mod",
-      name: "mod",
-      component: () => import("../views/BoardModerator.vue"),
-    },
-    {
-      path: "/user",
-      name: "user",
-      component: () => import("../views/BoardUser.vue"),
-    },
+    // {
+    //   path: "/mod",
+    //   name: "mod",
+    //   component: () => import("../views/BoardModerator.vue"),
+    // },
+    // {
+    //   path: "/user",
+    //   name: "user",
+    //   component: () => import("../views/BoardUser.vue"),
+    // },
     {
       path: "/formbuilder",
       name: "formbuilder",

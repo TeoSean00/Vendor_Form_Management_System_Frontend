@@ -21,16 +21,7 @@ class AuthService {
     }
 
     logout(){
-        const response = axios.post(API_URL + 'logout',{headers:authHeader()}).then(
-            response=>{
-                if(response.data){
-                    console.log(response.data.message)
-                    localStorage.removeItem('user');
-                }
-                
-            }
-        )
-        return response
+        localStorage.removeItem('user');
     }
 
     register(user){

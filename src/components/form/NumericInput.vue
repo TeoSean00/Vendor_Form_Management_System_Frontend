@@ -1,11 +1,13 @@
 <template>
+    Order No: {{ idx }}
+    <br>
   <input
     type="text"
     placeholder="Key in title"
     v-model="itemInfo.text"
     @input="updateText"
   />
-  <span>{{ idx }} Input field here</span>
+  <span>Numeric field here</span>
   <button @click="removeQuestion">Delete question</button>
 </template>
 

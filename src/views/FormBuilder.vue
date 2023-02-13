@@ -2,21 +2,67 @@
   <Navbar />
   <div class="row mx-5">
     <div class="col-10">
-      <div v-for="(item, index) in formItems" :key="index">
-        <FormComponent
-          :itemInfo="item"
-          :idx="index"
-          @updateQuestion="update"
-          @remove="removeQuestion"
-        />
+      <div class="row m-1 p-2 border border-dark border-3">
+        <h1 class="text-main-blue">Form Builder</h1>
+        <div class="row">
+          <span class="text-secondary-blue"
+            >Form Name:
+            <input
+              class="col-6"
+              type="text"
+              placeholder="Give this form a name!"
+              v-model="formName"
+            />
+          </span>
+        </div>
+        <div class="row">
+          <span class="text-secondary-blue"
+            >Assigned to:
+            <select v-model="assignedTo">
+              <option>Vendor</option>
+              <option>Admin</option>
+            </select>
+          </span>
+        </div>
+        <div class="row">
+          <span class="text-secondary-blue">Description: </span>
+          <textarea v-model="desc" rows="2" cols="1"></textarea>
+        </div>
+      </div>
+      <div class="row m-1 p-2 border border-dark border-3">
+        <div v-for="(item, index) in formItems" :key="index">
+          <FormComponent
+            :itemInfo="item"
+            :idx="index"
+            @updateQuestion="update"
+            @remove="removeQuestion"
+          />
+        </div>
       </div>
     </div>
 
     <div class="col-2">
-      <div class="row">
-        <button @click="addText" class="btn btn-main-blue">Add Text</button>
-        <button @click="addTextInput" class="btn btn-main-blue">
+      <div class="row m-1 p-1 border border-dark border-3">
+        <button @click="addHeaderText" class="my-1 btn btn-main-blue">
+          Add Header
+        </button>
+        <button @click="addTextInput" class="my-1 btn btn-main-blue">
           Add Text Input
+        </button>
+        <button @click="addNumberInput" class="my-1 btn btn-main-blue">
+          Add Number Input
+        </button>
+        <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
+          Add BooleanInput
+        </button>
+        <button @click="addDateInput" class="my-1 btn btn-main-blue">
+          Add DateInput
+        </button>
+        <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
+          Add Checkbox Input
+        </button>
+        <button @click="addRadioInput" class="my-1 btn btn-main-blue">
+          Add Radio Input
         </button>
       </div>
       <div class="row">
@@ -29,9 +75,10 @@
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue";
+import Navbar from "../components/navbar/Navbar.vue";
 import UserService from "../services/userService";
-import FormComponent from "../components/FormComponent.vue";
+import FormComponent from "../components/form/FormComponent.vue";
+import { useTemplateStore } from "../stores/templateStore";
 import { ref } from "vue";
 
 export default {
@@ -45,6 +92,7 @@ export default {
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
+        console.log("Userboard response is " + response.data);
       },
       (error) => {
         content.value =
@@ -53,15 +101,15 @@ export default {
           error.toString();
       }
     );
+
+    var templates = useTemplateStore();
+    console.log("current templates are", templates);
+
+    var formName = ref("");
+    var assignedTo = ref("Vendor");
+    var desc = ref("Enter form description here.");
     var formItems = ref([]);
-    var formOutput = ref({});
 
-    // addText();
-    // addTextInput();
-
-    function addText() {
-      //   formItems.value.push("Sample Headers");
-    }
     function addTextInput() {
       formItems.value.push({
         type: "text",
@@ -70,30 +118,106 @@ export default {
       });
     }
 
-    function update(data) {
-      console.log("parent checking the state of the form", formItems);
+    function addCheckboxInput() {
+      formItems.value.push({
+        type: "checkbox",
+        order: formItems.value.length,
+        text: "",
+        options: [],
+      });
+    }
+
+    function addRadioInput() {
+      formItems.value.push({
+        type: "radio",
+        order: formItems.value.length,
+        text: "",
+        options: [],
+      });
+    }
+
+    function addHeaderText() {
+      formItems.value.push({
+        type: "header",
+        order: formItems.value.length,
+        text: "",
+        style: "h1",
+      });
+    }
+
+    function addBooleanInput() {
+      formItems.value.push({
+        type: "boolean",
+        order: formItems.value.length,
+        text: "",
+      });
+    }
+
+    function addDateInput() {
+      formItems.value.push({
+        type: "date",
+        order: formItems.value.length,
+        text: "",
+      });
+    }
+
+    function addNumberInput() {
+      formItems.value.push({
+        type: "number",
+        order: formItems.value.length,
+        text: "",
+      });
+    }
+    function update() {
+      //Uncomment this out to check
+      // console.log("parent checking the state of the form", formItems);
     }
 
     // Text, Text,  Radio
     // Text, Radio
     function removeQuestion(questionKey) {
       //Remove from formItems first
-      console.log("Removing " + questionKey);
       formItems.value.splice(questionKey, 1);
     }
 
     function exportForm() {
-      console.log("-----------------------------------------");
-      console.log("Form has been exported, details below:");
-      console.log(formOutput.value);
-      console.log("-----------------------------------------");
+      //Packages the form content into a JSON string
+      const outputObj = {
+        templateInfo: {
+          templateName: formName.value,
+          assignedTo: assignedTo.value,
+          templateDesc: desc.value,
+        },
+        templateContents: formItems.value,
+      };
+
+      const outputJson = JSON.stringify(outputObj);
+      console.log(outputJson);
+
+      templates.addTemplate(outputObj);
+      // console.log("-----------------------------------------");
+      // console.log("Form has been exported, details below:");
+      // console.log("Form name: " + formName.value);
+      // console.log("Form assigned to: " + assignedTo.value);
+      // console.log("Form desc: " + desc.value);
+      // console.log("--------------Form Contents--------------");
+      // console.log(formItems.value);
+      // console.log("-----------------------------------------");
     }
 
     return {
       content,
       formItems,
-      addText,
+      formName,
+      assignedTo,
+      desc,
       addTextInput,
+      addHeaderText,
+      addCheckboxInput,
+      addRadioInput,
+      addBooleanInput,
+      addDateInput,
+      addNumberInput,
       update,
       removeQuestion,
       exportForm,
