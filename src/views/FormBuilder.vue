@@ -78,6 +78,7 @@
 import Navbar from "../components/navbar/Navbar.vue";
 import UserService from "../services/userService";
 import FormComponent from "../components/form/FormComponent.vue";
+import { useTemplateStore } from "../stores/templateStore";
 import { ref } from "vue";
 
 export default {
@@ -91,6 +92,7 @@ export default {
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
+        console.log("Userboard response is " + response.data);
       },
       (error) => {
         content.value =
@@ -99,6 +101,9 @@ export default {
           error.toString();
       }
     );
+
+    var templates = useTemplateStore();
+    console.log("current templates are", templates);
 
     var formName = ref("");
     var assignedTo = ref("Vendor");
@@ -178,16 +183,18 @@ export default {
     function exportForm() {
       //Packages the form content into a JSON string
       const outputObj = {
-        formInfo: {
-          formName: formName.value,
+        templateInfo: {
+          templateName: formName.value,
           assignedTo: assignedTo.value,
-          formDesc: desc.value,
+          templateDesc: desc.value,
         },
-        contents: formItems.value,
+        templateContents: formItems.value,
       };
-      
+
       const outputJson = JSON.stringify(outputObj);
       console.log(outputJson);
+
+      templates.addTemplate(outputObj);
       // console.log("-----------------------------------------");
       // console.log("Form has been exported, details below:");
       // console.log("Form name: " + formName.value);

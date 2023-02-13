@@ -32,11 +32,7 @@ export const useAuthStore = defineStore("auth", {
     },
     logout() {
       console.log("logout called");
-      AuthService.logout().then(
-        () => {
-          this.status.loggedIn = false;
-          this.user = null;
-      });
+      AuthService.logout();
     },
     register(user) {
       return AuthService.register(user).then(
