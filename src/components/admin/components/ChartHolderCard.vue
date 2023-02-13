@@ -5,7 +5,7 @@
     >
       <div
         class="border-radius-lg py-3 pe-1"
-        :class="`bg-gradient-${color} shadow-${color}`"
+        :class="`bg-gradient bg-${color} shadow`"
       >
         <slot />
       </div>
@@ -41,7 +41,7 @@ export default {
     },
     color: {
       type: String,
-      default: "primary",
+      default: "default",
     },
   },
 };

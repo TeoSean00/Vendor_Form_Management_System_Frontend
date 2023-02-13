@@ -3,58 +3,13 @@
     <div class="row mb-4">
       <div class="col-lg-12 position-relative z-index-2">
         <!-- Commented out the statistics stuff -->
-        <!-- <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <mini-statistics-card
-              :title="{ text: 'Today\'s Workflows', value: '$53k' }"
-              detail="<span class='text-success text-sm font-weight-bolder'>+55%</span> than last week"
-              :icon="{
-                name: 'weekend',
-                color: 'text-white',
-                background: 'dark',
-              }"
-            />
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-statistics-card
-              :title="{ text: 'Today\'s Users', value: '2,300' }"
-              detail="<span class='text-success text-sm font-weight-bolder'>+3%</span> than last month"
-              :icon="{
-                name: 'leaderboard',
-                color: 'text-white',
-                background: 'primary',
-              }"
-            />
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-statistics-card
-              :title="{ text: 'New Clients', value: '3,462' }"
-              detail="<span class='text-danger text-sm font-weight-bolder'>-2%</span> than yesterday"
-              :icon="{
-                name: 'person',
-                color: 'text-white',
-                background: 'success',
-              }"
-            />
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-statistics-card
-              :title="{ text: 'Sales', value: '$103,430' }"
-              detail="<span class='text-success text-sm font-weight-bolder'>+5%</span> Just updated"
-              :icon="{
-                name: 'weekend',
-                color: 'text-white',
-                background: 'info',
-              }"
-            />
-          </div>
-        </div> -->
-        <div class="row mt-4">
+        <div class="row">
           <div class="col-lg-4 col-md-6 mt-4">
             <chart-holder-card
               title="Form Completion"
               subtitle="Progress of forms"
               update="updated 4 min ago"
+              color="primary"
             >
               <reports-bar-chart
                 :chart="{
@@ -95,7 +50,38 @@
               />
             </chart-holder-card>
           </div>
-          <div class="col-lg-4 mt-4">
+          <div class="row mt-4">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <mini-statistics-card
+                :title="{ text: 'Manage Workflow', value: '$53k' }"
+                detail="<span class='text-success text-sm font-weight-bolder'>+55%</span> than last week"
+                :icon="{
+                  name: 'weekend',
+                  color: 'text-white',
+                  background: 'dark',
+                  symbol: 'fa-clipboard',
+                  height: 2,
+                }"
+                @click="toggleWorkflow"
+              />
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+              <mini-statistics-card
+                :title="{ text: 'Manager Users', value: '2,300' }"
+                detail="<span class='text-success text-sm font-weight-bolder'>+3%</span> than last month"
+                :icon="{
+                  name: 'leaderboard',
+                  color: 'text-white',
+                  background: 'primary',
+                  symbol: 'user',
+                }"
+              />
+            </div>
+          </div>
+
+          <!-- old workflow chart-->
+
+          <!-- <div class="col-lg-4 mt-4">
             <chart-holder-card
               title="Number of Workflows"
               subtitle="Last Campaign Performance"
@@ -123,7 +109,7 @@
                 }"
               />
             </chart-holder-card>
-          </div>
+            </div> -->
         </div>
       </div>
     </div>
@@ -239,6 +225,8 @@ import ChartHolderCard from "./components/ChartHolderCard.vue";
 import ReportsBarChart from "./components/charts/ReportsBarChart.vue";
 import ReportsLineChart from "./components/charts/ReportsLineChart.vue";
 
+import { useRouter } from "vue-router";
+
 export default {
   components: {
     MiniStatisticsCard,
@@ -246,6 +234,14 @@ export default {
     ReportsBarChart,
     ReportsLineChart,
   },
-  setup() {},
+  setup() {
+    const router = useRouter();
+
+    const toggleWorkflow = () => {
+      router.push("/workflow");
+    };
+
+    return { toggleWorkflow };
+  },
 };
 </script>

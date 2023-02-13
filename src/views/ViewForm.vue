@@ -1,6 +1,9 @@
 <template>
   <div>
     <!-- <div>{{ newForm }}</div> -->
+    <div class="m-2">
+      {{ newForm }}
+    </div>
     <div class="form-floating my-2">
       <template v-for="(sectionData, index) in newForm" :key="index">
         <FormSection :sectionData="sectionData" />

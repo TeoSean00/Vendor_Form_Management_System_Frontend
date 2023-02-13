@@ -8,36 +8,6 @@
       </p>
     </div>
     <AdminView />
-    <div class="row"></div>
-    <header class="jumbotron">
-      <h3>{{ content }}</h3>
-    </header>
-
-    <div class="container">
-      <div v-for="workflow in workflows" :key="workflow">
-        <div class="text-main-blue workflow">
-          <span class="hover" @click="toggleCollapse(workflow)">
-            Workflow {{ workflow.workflowId }}
-          </span>
-        </div>
-        <div
-          v-for="form in workflow.forms"
-          :key="form.formId"
-          :class="{ collapse: !workflow.collapse }"
-          class="list-group"
-        >
-          <div
-            class="container my-2 form-option rounded-2 d-flex justify-content-between list-group-item list-group-item-action"
-          >
-            <div>
-              <div>Form Id: {{ form.formId }}</div>
-              <div>Form Name: {{ form.formName }}</div>
-            </div>
-            <div>Form Status: {{ form.status }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
