@@ -2,37 +2,66 @@
   <Navbar />
   <div class="row mx-5">
     <div class="col-10">
-      <div v-for="(item, index) in formItems" :key="index">
-        <FormComponent
-          :itemInfo="item"
-          :idx="index"
-          @updateQuestion="update"
-          @remove="removeQuestion"
-        />
+      <div class="row m-1 p-2 border border-dark border-3">
+        <h1 class="text-main-blue">Form Builder</h1>
+        <div class="row">
+          <span class="text-secondary-blue"
+            >Form Name:
+            <input
+              class="col-6"
+              type="text"
+              placeholder="Give this form a name!"
+              v-model="formName"
+            />
+          </span>
+        </div>
+        <div class="row">
+          <span class="text-secondary-blue"
+            >Assigned to:
+            <select v-model="assignedTo">
+              <option>Vendor</option>
+              <option>Admin</option>
+            </select>
+          </span>
+        </div>
+        <div class="row">
+          <span class="text-secondary-blue">Description: </span>
+          <textarea v-model="desc" rows="2" cols="1"></textarea>
+        </div>
+      </div>
+      <div class="row m-1 p-2 border border-dark border-3">
+        <div v-for="(item, index) in formItems" :key="index">
+          <FormComponent
+            :itemInfo="item"
+            :idx="index"
+            @updateQuestion="update"
+            @remove="removeQuestion"
+          />
+        </div>
       </div>
     </div>
 
     <div class="col-2">
-      <div class="row">
-        <button @click="addHeaderText" class="btn btn-main-blue">
+      <div class="row m-1 p-1 border border-dark border-3">
+        <button @click="addHeaderText" class="my-1 btn btn-main-blue">
           Add Header
         </button>
-        <button @click="addTextInput" class="btn btn-main-blue">
+        <button @click="addTextInput" class="my-1 btn btn-main-blue">
           Add Text Input
         </button>
-        <button @click="addNumberInput" class="btn btn-main-blue">
+        <button @click="addNumberInput" class="my-1 btn btn-main-blue">
           Add Number Input
         </button>
-        <button @click="addBooleanInput" class="btn btn-main-blue">
+        <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
           Add BooleanInput
         </button>
-        <button @click="addDateInput" class="btn btn-main-blue">
+        <button @click="addDateInput" class="my-1 btn btn-main-blue">
           Add DateInput
         </button>
-        <button @click="addCheckboxInput" class="btn btn-main-blue">
+        <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
           Add Checkbox Input
         </button>
-        <button @click="addRadioInput" class="btn btn-main-blue">
+        <button @click="addRadioInput" class="my-1 btn btn-main-blue">
           Add Radio Input
         </button>
       </div>
@@ -70,6 +99,10 @@ export default {
           error.toString();
       }
     );
+
+    var formName = ref("");
+    var assignedTo = ref("Vendor");
+    var desc = ref("Enter form description here.");
     var formItems = ref([]);
 
     function addTextInput() {
@@ -85,7 +118,7 @@ export default {
         type: "checkbox",
         order: formItems.value.length,
         text: "",
-        options:[],
+        options: [],
       });
     }
 
@@ -94,7 +127,7 @@ export default {
         type: "radio",
         order: formItems.value.length,
         text: "",
-        options:[],
+        options: [],
       });
     }
 
@@ -107,23 +140,23 @@ export default {
       });
     }
 
-    function addBooleanInput(){
+    function addBooleanInput() {
       formItems.value.push({
         type: "boolean",
         order: formItems.value.length,
         text: "",
       });
     }
-    
-    function addDateInput(){
+
+    function addDateInput() {
       formItems.value.push({
         type: "date",
         order: formItems.value.length,
         text: "",
       });
     }
-    
-    function addNumberInput(){
+
+    function addNumberInput() {
       formItems.value.push({
         type: "number",
         order: formItems.value.length,
@@ -143,15 +176,34 @@ export default {
     }
 
     function exportForm() {
-      console.log("-----------------------------------------");
-      console.log("Form has been exported, details below:");
-      console.log(formItems.value);
-      console.log("-----------------------------------------");
+      //Packages the form content into a JSON string
+      const outputObj = {
+        formInfo: {
+          formName: formName.value,
+          assignedTo: assignedTo.value,
+          formDesc: desc.value,
+        },
+        contents: formItems.value,
+      };
+      
+      const outputJson = JSON.stringify(outputObj);
+      console.log(outputJson);
+      // console.log("-----------------------------------------");
+      // console.log("Form has been exported, details below:");
+      // console.log("Form name: " + formName.value);
+      // console.log("Form assigned to: " + assignedTo.value);
+      // console.log("Form desc: " + desc.value);
+      // console.log("--------------Form Contents--------------");
+      // console.log(formItems.value);
+      // console.log("-----------------------------------------");
     }
 
     return {
       content,
       formItems,
+      formName,
+      assignedTo,
+      desc,
       addTextInput,
       addHeaderText,
       addCheckboxInput,
