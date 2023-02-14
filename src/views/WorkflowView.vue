@@ -33,11 +33,14 @@
     </div>
 
     <div class="p-3">
-      <button class="btn btn-primary mx-2" @click="toggleFormview">
+      <button class="btn btn-primary me-2" @click="toggleFormview">
         View Templates
       </button>
-      <button class="btn btn-primary" @click="toggleFormbuilder">
+      <button class="btn btn-primary me-2" @click="toggleFormbuilder">
         Create Form
+      </button>
+      <button class="btn btn-primary" @click="toggleFormbuilder">
+        Manage Users
       </button>
     </div>
   </div>
