@@ -1,68 +1,70 @@
 <template>
-  <div v-if="itemInfo.type == 'header'">
-    <HeaderText
+  <div class="row mt-2 p-2  border rounded border-light border-1 bg-white shadow-sm">
+    <div v-if="itemInfo.type == 'header'">
+      <HeaderText
+        :itemInfo="itemInfo"
+        :idx="idx"
+        @updateText="updateQuestion"
+        @removeQuestion="remove"
+      />
+    </div>
+    <div v-if="itemInfo.type == 'text'">
+      <TextInput
+        :itemInfo="itemInfo"
+        :idx="idx"
+        @updateText="updateQuestion"
+        @removeQuestion="remove"
+      />
+    </div>
+    <div v-if="itemInfo.type == 'number'">
+      <NumericInput
+        :itemInfo="itemInfo"
+        :idx="idx"
+        @updateText="updateQuestion"
+        @removeQuestion="remove"
+      />
+    </div>
+    <div v-if="itemInfo.type == 'boolean'">
+      <BooleanInput
+        :itemInfo="itemInfo"
+        :idx="idx"
+        @updateText="updateQuestion"
+        @removeQuestion="remove"
+      />
+    </div>
+    <div v-if="itemInfo.type == 'date'">
+      <DateInput
+        :itemInfo="itemInfo"
+        :idx="idx"
+        @updateText="updateQuestion"
+        @removeQuestion="remove"
+      />
+    </div>
+    <div v-if="itemInfo.type == 'checkbox'">
+      <CheckboxInput
       :itemInfo="itemInfo"
       :idx="idx"
       @updateText="updateQuestion"
       @removeQuestion="remove"
-    />
-  </div>
-  <div v-if="itemInfo.type == 'text'">
-    <TextInput
+      />
+    </div>
+    <div v-if="itemInfo.type == 'radio'">
+      <RadioInput
       :itemInfo="itemInfo"
       :idx="idx"
       @updateText="updateQuestion"
       @removeQuestion="remove"
-    />
-  </div>
-  <div v-if="itemInfo.type == 'number'">
-    <NumericInput
+      />
+    </div>
+    <div v-if="itemInfo.type == 'likertGroup'">
+      <LikertGroupInput
       :itemInfo="itemInfo"
       :idx="idx"
       @updateText="updateQuestion"
       @removeQuestion="remove"
-    />
-  </div>
-  <div v-if="itemInfo.type == 'boolean'">
-    <BooleanInput
-      :itemInfo="itemInfo"
-      :idx="idx"
-      @updateText="updateQuestion"
-      @removeQuestion="remove"
-    />
-  </div>
-  <div v-if="itemInfo.type == 'date'">
-    <DateInput
-      :itemInfo="itemInfo"
-      :idx="idx"
-      @updateText="updateQuestion"
-      @removeQuestion="remove"
-    />
-  </div>
-  <div v-if="itemInfo.type == 'checkbox'">
-    <CheckboxInput
-    :itemInfo="itemInfo"
-    :idx="idx"
-    @updateText="updateQuestion"
-    @removeQuestion="remove"
-    />
-  </div>
-  <div v-if="itemInfo.type == 'radio'">
-    <RadioInput
-    :itemInfo="itemInfo"
-    :idx="idx"
-    @updateText="updateQuestion"
-    @removeQuestion="remove"
-    />
-  </div>
-  <div v-if="itemInfo.type == 'likertGroup'">
-    <LikertGroupInput
-    :itemInfo="itemInfo"
-    :idx="idx"
-    @updateText="updateQuestion"
-    @removeQuestion="remove"
-    />
-  </div>
+      />
+    </div>
+</div>
 </template>
 
 <script>
