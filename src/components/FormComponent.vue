@@ -55,6 +55,14 @@
     @removeQuestion="remove"
     />
   </div>
+  <div v-if="itemInfo.type == 'likertGroup'">
+    <LikertGroupInput
+    :itemInfo="itemInfo"
+    :idx="idx"
+    @updateText="updateQuestion"
+    @removeQuestion="remove"
+    />
+  </div>
 </template>
 
 <script>
@@ -66,6 +74,7 @@ import HeaderText from "./formComponents/HeaderText.vue";
 import BooleanInput from "./formComponents/BooleanInput.vue";
 import DateInput from "./formComponents/DateInput.vue";
 import NumericInput from "./formComponents/NumericInput.vue";
+import LikertGroupInput from "./formComponents/LikertGroupInput.vue";
 
 export default {
   props: ["itemInfo", "idx"],
@@ -77,7 +86,8 @@ export default {
     RadioInput,
     BooleanInput,
     DateInput,
-    NumericInput
+    NumericInput,
+    LikertGroupInput
 },
   setup(props, context) {
     const title = ref();

@@ -64,6 +64,9 @@
         <button @click="addRadioInput" class="my-1 btn btn-main-blue">
           Add Radio Input
         </button>
+        <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
+          Add Likert Group
+        </button>
       </div>
       <div class="row">
         <button @click="exportForm" class="btn btn-turqouise">
@@ -163,6 +166,16 @@ export default {
         text: "",
       });
     }
+
+    function addLikertGroupInput() {
+      formItems.value.push({
+        type: "likertGroup",
+        order: formItems.value.length,
+        text: "",
+        options:[]
+      });
+    }
+
     function update() {
       //Uncomment this out to check
       // console.log("parent checking the state of the form", formItems);
@@ -177,6 +190,7 @@ export default {
 
     function exportForm() {
       //Packages the form content into a JSON string
+      //This is where we write the ajax code
       const outputObj = {
         formInfo: {
           formName: formName.value,
@@ -211,6 +225,7 @@ export default {
       addBooleanInput,
       addDateInput,
       addNumberInput,
+      addLikertGroupInput,
       update,
       removeQuestion,
       exportForm,
