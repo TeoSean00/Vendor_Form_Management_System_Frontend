@@ -4,7 +4,7 @@
     <div class="row px-5 pt-3">
       <p class="text-secondary-blue">
         Welcome back,
-        <span class="text-main-blue fw-bold">{{ user }}</span> !
+        <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </p>
     </div>
 
@@ -33,11 +33,14 @@
     </div>
 
     <div class="p-3">
-      <button class="btn btn-primary mx-2" @click="toggleFormview">
+      <button class="btn btn-primary me-2" @click="toggleFormview">
         View Templates
       </button>
-      <button class="btn btn-primary" @click="toggleFormbuilder">
+      <button class="btn btn-primary me-2" @click="toggleFormbuilder">
         Create Form
+      </button>
+      <button class="btn btn-primary" @click="toggleFormbuilder">
+        Manage Users
       </button>
     </div>
   </div>
@@ -52,8 +55,6 @@ import { useRouter } from "vue-router";
 export default {
   components: { Navbar },
   setup() {
-    const user = ref("Admin XXX");
-
     var workflows = ref([
       {
         workflowId: 1,
@@ -134,7 +135,6 @@ export default {
       workflows,
       toggleCollapse,
       currentUser,
-      user,
       toggleFormbuilder,
       toggleFormview,
     };

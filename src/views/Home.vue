@@ -4,7 +4,8 @@
 
     <div class="row px-5 pt-3">
       <p class="text-secondary-blue">
-        Welcome back, <span class="text-main-blue fw-bold">{{ user }}</span> !
+        Welcome back,
+        <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </p>
     </div>
     <AdminView />
@@ -18,6 +19,8 @@ import Navbar from "../components/navbar/Navbar.vue";
 import TopBanner from "../components/navbar/TopBanner.vue";
 import AdminView from "./AdminView.vue";
 
+import { useAuthStore } from "../stores/authStore";
+
 export default {
   components: {
     Navbar,
@@ -26,7 +29,6 @@ export default {
   },
   setup() {
     var content = ref("");
-    const user = ref("Admin XXX");
     var workflows = ref([
       {
         workflowId: 1,
@@ -85,22 +87,15 @@ export default {
       },
     ]);
 
-    function toggleCollapse(workflow) {
+    var toggleCollapse = (workflow) => {
       workflow.collapse = !workflow.collapse;
       console.log("Toggle Collapse");
-    }
-    // UserService.getPublicContent().then(
-    //   (response) => {
-    //     content.value = response.data;
-    //   },
-    //   (error) => {
-    //     content.value =
-    //       (error.response && error.response.data) ||
-    //       error.message ||
-    //       error.toString();
-    //   }
-    // );
-    return { content, user, workflows, toggleCollapse: toggleCollapse };
+    };
+
+    var auth = useAuthStore();
+    var currentUser = auth.user;
+
+    return { content, workflows, toggleCollapse, currentUser };
   },
 };
 </script>

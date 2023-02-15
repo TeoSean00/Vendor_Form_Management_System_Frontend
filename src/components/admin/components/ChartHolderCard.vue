@@ -1,12 +1,7 @@
 <template>
   <div class="card z-index-2">
-    <div
-      class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent"
-    >
-      <div
-        class="border-radius-lg py-3 pe-1"
-        :class="`bg-gradient bg-${color} shadow`"
-      >
+    <div class="card-header p-0 position-relative mt-n4 mx-3 bg-transparent">
+      <div class="rounded py-3 pe-1" :class="`bg-gradient bg-${color} shadow`">
         <slot />
       </div>
     </div>

@@ -24,7 +24,7 @@
 
 #statisticCard:hover {
   color: white;
-  background: #0378a6;
+  background: #54b5bf;
   border: none;
 }
 
