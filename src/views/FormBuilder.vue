@@ -2,7 +2,7 @@
   <Navbar />
   <div class="row mx-5">
     <div class="col-10">
-      <div class="row m-1 p-2 border border-dark border-3">
+      <div class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm">
         <h1 class="text-main-blue">Form Builder</h1>
         <div class="row">
           <span class="text-secondary-blue"
@@ -29,7 +29,7 @@
           <textarea v-model="desc" rows="2" cols="1"></textarea>
         </div>
       </div>
-      <div class="row m-1 p-2 border border-dark border-3">
+      <div class="row m-1 ">
         <div v-for="(item, index) in formItems" :key="index">
           <FormComponent
             :itemInfo="item"
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="col-2">
+    <div class="col-lg-2">
       <div class="row m-1 p-1 border border-dark border-3">
         <button @click="addHeaderText" class="my-1 btn btn-main-blue">
           Add Header
@@ -63,6 +63,9 @@
         </button>
         <button @click="addRadioInput" class="my-1 btn btn-main-blue">
           Add Radio Input
+        </button>
+        <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
+          Add Likert Group
         </button>
       </div>
       <div class="row">
@@ -168,6 +171,16 @@ export default {
         text: "",
       });
     }
+
+    function addLikertGroupInput() {
+      formItems.value.push({
+        type: "likertGroup",
+        order: formItems.value.length,
+        text: "",
+        options:[]
+      });
+    }
+
     function update() {
       //Uncomment this out to check
       // console.log("parent checking the state of the form", formItems);
@@ -182,6 +195,7 @@ export default {
 
     function exportForm() {
       //Packages the form content into a JSON string
+      //This is where we write the ajax code
       const outputObj = {
         templateInfo: {
           templateName: formName.value,
@@ -218,6 +232,7 @@ export default {
       addBooleanInput,
       addDateInput,
       addNumberInput,
+      addLikertGroupInput,
       update,
       removeQuestion,
       exportForm,
