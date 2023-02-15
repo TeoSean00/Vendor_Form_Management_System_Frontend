@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <div class="m-2">
-      {{ newForm }}
-    </div> -->
+    <div class="m-2">
+      {{ templateData }}
+    </div>
     <div class="form-floating my-2">
       <div class="bg-secondary-blue">
         <h4>Form Details</h4>
@@ -61,6 +61,12 @@ export default {
             "Partnership Agreement",
             "Others",
           ],
+        },
+        {
+          type: "header",
+          order: 0,
+          text: "Contact Person",
+          style: "h1",
         },
         { type: "text", order: 8, text: "Contact Name" },
         { type: "number", order: 9, text: "Contact Tel" },
