@@ -1,10 +1,21 @@
 <template>
   <div>
-    <!-- <div>{{ newForm }}</div> -->
-    <div class="m-2">
+    <!-- <div class="m-2">
       {{ newForm }}
-    </div>
+    </div> -->
     <div class="form-floating my-2">
+      <div class="bg-secondary-blue">
+        <h4>Form Details</h4>
+        <template
+          v-for="(info, index) in templateData.templateInfo"
+          :key="index"
+        >
+          <p>
+            <b>{{ index }}</b
+            >: {{ info }}
+          </p>
+        </template>
+      </div>
       <template v-for="(sectionData, index) in newForm" :key="index">
         <FormSection :sectionData="sectionData" />
       </template>
@@ -22,54 +33,83 @@ export default {
   components: { FormSection },
   setup() {
     const templateData = {
-      1: { type: "header", order: 1, text: "Company’s Name", style: "h1" },
-      2: { type: "text", order: 2, label: "Company’s Registration No" },
-      3: {
-        type: "radio",
-        order: 3,
-        label: "GST Registered (Yes/No)",
-        options: ["Yes", "No"],
-      }, //this should be radio
-      4: { type: "text", order: 4, label: "Office Address" },
-      5: { type: "text", order: 5, label: "Tel" },
-      6: { type: "text", order: 6, label: "Fax" },
-      7: {
-        type: "checkbox",
-        order: 7,
-        label: "Type of Business",
-        options: ["shady", "not shady", "quite shady"],
-      }, // this should be radio button select
-      8: { type: "text", order: 8, label: "Contact Person" }, // requires name,tel,designation of person
-      9: { type: "text", order: 9, label: "Nature of Business" }, // this should be multiselect
-      10: { type: "text", order: 10, label: "Product/Services" },
+      templateInfo: {
+        templateName: "New Vendor Assessment Form",
+        assignedTo: "Vendor",
+        templateDesc: "Assessment for new vendors",
+      },
+      templateContents: [
+        {
+          type: "header",
+          order: 0,
+          text: "NEW VENDOR ASSESSMENT FORM",
+          style: "h1",
+        },
+        { type: "text", order: 1, text: "Company's Name" },
+        { type: "number", order: 2, text: "Company Registration No:" },
+        { type: "text", order: 3, text: "Office Address" },
+        { type: "boolean", order: 4, text: "GST Registered" },
+        { type: "number", order: 5, text: "Tel" },
+        { type: "text", order: 6, text: "Fax" },
+        {
+          type: "checkbox",
+          order: 7,
+          text: "Type of business License/Registration",
+          options: [
+            "Sole Proprietorship",
+            "Limited Company",
+            "Partnership Agreement",
+            "Others",
+          ],
+        },
+        { type: "text", order: 8, text: "Contact Name" },
+        { type: "number", order: 9, text: "Contact Tel" },
+        { type: "text", order: 10, text: "Contact Designation" },
+        {
+          type: "checkbox",
+          order: 11,
+          text: "Nature of Business",
+          options: ["Manufacturing", "Agent/dealer", "Distributor", "Others"],
+        },
+        {
+          type: "text",
+          order: 12,
+          text: "If you picked Others please specify the nature of your business",
+        },
+      ],
     };
+
+    const templates = [templateData];
 
     //Building the form from the templateData
     var newForm = ref([]);
     const createForm = () => {
-      for (let key in templateData) {
-        var type = templateData[key].type;
+      var info = templateData.templateInfo;
+      var content = templateData.templateContents;
+      for (let key in content) {
+        console.log("KEY IS ", key);
+        var type = content[key].type;
         if (type == "text") {
           newForm.value.push({
-            order: templateData[key].order,
-            label: templateData[key].label,
+            order: content[key].order,
+            label: content[key].text,
             input: "",
             type: type,
           });
         } else if (type == "radio" || type == "checkbox") {
           newForm.value.push({
-            order: templateData[key].order,
-            label: templateData[key].label,
+            order: content[key].order,
+            label: content[key].text,
             input: [],
-            options: templateData[key].options,
+            options: content[key].options,
             type: type,
           });
         } else if (type == "header") {
           newForm.value.push({
             type: type,
-            style: templateData[key].style,
-            text: templateData[key].text,
-            order: templateData[key].order,
+            style: content[key].style,
+            text: content[key].text,
+            order: content[key].order,
           });
         }
       }

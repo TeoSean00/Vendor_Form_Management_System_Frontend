@@ -4,7 +4,7 @@
     <div class="row px-5 pt-3">
       <p class="text-secondary-blue">
         Welcome back,
-        <span class="text-main-blue fw-bold">{{ user }}</span> !
+        <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </p>
     </div>
 
@@ -55,8 +55,6 @@ import { useRouter } from "vue-router";
 export default {
   components: { Navbar },
   setup() {
-    const user = ref("Admin XXX");
-
     var workflows = ref([
       {
         workflowId: 1,
@@ -137,7 +135,6 @@ export default {
       workflows,
       toggleCollapse,
       currentUser,
-      user,
       toggleFormbuilder,
       toggleFormview,
     };

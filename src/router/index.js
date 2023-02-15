@@ -5,6 +5,7 @@ import Register from "../views/Register.vue";
 import FormBuilder from "../views/FormBuilder.vue";
 import ViewForm from "../views/ViewForm.vue";
 import WorkflowView from "../views/WorkflowView.vue";
+import ManageUserView from "../views/ManageUserView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       name: "workflow",
       component: WorkflowView,
     },
+    {
+      path: "/users",
+      name: "users",
+      component: ManageUserView,
+    },
     // {
     //   path: "/mod",
     //   name: "mod",
@@ -58,7 +64,7 @@ const router = createRouter({
       path: "/viewForm",
       name: "viewForm",
       component: ViewForm,
-    }
+    },
     // {
     //   path: "/about",
     //   name: "about",

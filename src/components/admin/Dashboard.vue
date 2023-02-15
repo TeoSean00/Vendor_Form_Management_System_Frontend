@@ -27,7 +27,7 @@
               title="Number of Users"
               subtitle="(<span class='font-weight-bolder'>+15%</span>) increase in users this month."
               update="updated 4 min ago"
-              color="success"
+              color="secondary-blue"
             >
               <reports-line-chart
                 :chart="{
@@ -75,6 +75,7 @@
                   background: 'primary',
                   symbol: 'user',
                 }"
+                @click="toggleUserView"
               />
             </div>
           </div>
@@ -241,7 +242,11 @@ export default {
       router.push("/workflow");
     };
 
-    return { toggleWorkflow };
+    const toggleUserView = () => {
+      router.push("/users");
+    };
+
+    return { toggleWorkflow, toggleUserView };
   },
 };
 </script>
