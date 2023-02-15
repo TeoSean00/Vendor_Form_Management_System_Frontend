@@ -9,10 +9,20 @@
     </div>
 
     <div v-for="workflow in workflows" :key="workflow">
-      <div class="text-main-blue workflow">
+      <div class="text-main-blue workflow d-flex justify-content-between">
         <span class="hover" @click="toggleCollapse(workflow)">
-          Workflow {{ workflow.workflowId }}
+          <span v-if="workflow.workflowName == null">
+            Workflow {{ workflow.workflowId }}
+          </span>
+          <span v-else>
+            {{ workflow.workflowName }}
+          </span>
         </span>
+        <div>
+          ADD ASSIGN BUTTON (Make it a popup)
+          <font-awesome-icon icon="pen-to-square" class="hover mx-2 mt-1" @click="toggleEditWorkflow(workflow)"/> 
+          <font-awesome-icon icon="plus" class="hover mx-2 mt-1" @click="toggleFormbuilder" /> 
+        </div>
       </div>
       <div
         v-for="form in workflow.forms"
@@ -36,8 +46,8 @@
       <button class="btn btn-primary me-2" @click="toggleFormview">
         View Templates
       </button>
-      <button class="btn btn-primary me-2" @click="toggleFormbuilder">
-        Create Form
+      <button class="btn btn-primary me-2" @click="toggleNewWorkflow">
+        Create Workflow
       </button>
       <button class="btn btn-primary" @click="toggleFormbuilder">
         Manage Users
@@ -58,6 +68,7 @@ export default {
     var workflows = ref([
       {
         workflowId: 1,
+        workflowName: "Test Workflow Name",
         forms: [
           {
             formId: 1,
@@ -73,6 +84,7 @@ export default {
       },
       {
         workflowId: 2,
+        workflowName: null,
         forms: [
           {
             formId: 1,
@@ -83,6 +95,7 @@ export default {
       },
       {
         workflowId: 3,
+        workflowName: null,
         forms: [
           {
             formId: 1,
@@ -93,6 +106,7 @@ export default {
       },
       {
         workflowId: 4,
+        workflowName: null,
         forms: [
           {
             formId: 1,
@@ -131,12 +145,28 @@ export default {
       router.push("/viewform");
     };
 
+    const toggleNewWorkflow = () => {
+      var newWorkflow = {
+        workflowId: workflows._rawValue.length + 1,
+        forms : []
+      }
+      workflows.value.push(newWorkflow);
+    };
+
+    const toggleEditWorkflow = (workflow) => {
+      console.log(workflow.workflowId);
+      var newName = prompt("Enter new workflow name!");
+      workflow.workflowName = newName;
+    };
+
     return {
       workflows,
       toggleCollapse,
       currentUser,
       toggleFormbuilder,
       toggleFormview,
+      toggleNewWorkflow,
+      toggleEditWorkflow
     };
   },
 };
