@@ -239,7 +239,7 @@ export default {
     const router = useRouter();
 
     const toggleWorkflow = () => {
-      router.push("/workflow");
+      router.push("/vendors");
     };
 
     const toggleUserView = () => {

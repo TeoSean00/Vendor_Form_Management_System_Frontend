@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Register from "../views/Register.vue";
 import FormBuilder from "../views/FormBuilder.vue";
 import ViewForm from "../views/ViewForm.vue";
-import WorkflowView from "../views/WorkflowView.vue";
+import ManageVendorView from "../views/ManageVendorView.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 
 const router = createRouter({
@@ -36,9 +36,9 @@ const router = createRouter({
       component: () => import("../views/Profile.vue"),
     },
     {
-      path: "/workflow",
-      name: "workflow",
-      component: WorkflowView,
+      path: "/vendors",
+      name: "vendors",
+      component: ManageVendorView,
     },
     {
       path: "/users",
