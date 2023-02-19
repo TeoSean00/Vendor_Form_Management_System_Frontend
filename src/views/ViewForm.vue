@@ -42,7 +42,7 @@ export default {
         {
           type: "header",
           order: 0,
-          text: "NEW VENDOR ASSESSMENT FORM",
+          text: "Part A Particulars of applicant (Certificate holder)",
           style: "h1",
         },
         { type: "text", order: 1, text: "Company's Name" },

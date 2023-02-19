@@ -63,6 +63,7 @@
 <script>
 import { ref } from "vue";
 import { useAuthStore } from "../../stores/authStore";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     var auth = useAuthStore();
@@ -81,6 +82,8 @@ export default {
       }
       return false;
     };
+
+    const router = useRouter();
 
     const logOut = async () => {
       console.log("logout called");
