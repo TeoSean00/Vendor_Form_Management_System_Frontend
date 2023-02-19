@@ -10,7 +10,12 @@
               class="bg-gradient bg-main-blue shadow-success rounded pt-4 pb-3 d-flex"
             >
               <h6 class="text-white text-capitalize ps-3">Manager Users</h6>
-              <button class="btn btn-light ms-auto me-2">Create User</button>
+              <button
+                class="btn btn-light ms-auto me-2"
+                @click="toggleCreateUser"
+              >
+                Create User
+              </button>
             </div>
           </div>
           <div class="card-body px-0 pb-2">
@@ -107,6 +112,7 @@
 
 <script>
 import Navbar from "../components/navbar/Navbar.vue";
+import { useRouter } from "vue-router";
 export default {
   components: { Navbar },
   setup() {
@@ -142,7 +148,13 @@ export default {
         roles: ["ROLE_USER"],
       },
     ];
-    return { users };
+
+    var router = useRouter();
+
+    var toggleCreateUser = () => {
+      router.push("/createUser");
+    };
+    return { users, toggleCreateUser };
   },
 };
 </script>

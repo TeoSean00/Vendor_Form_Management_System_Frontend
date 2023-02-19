@@ -72,12 +72,12 @@
 <script>
 import { ref } from "vue";
 import CheckboxInput from "../formComponents/CheckboxInput.vue";
-import TextInput from "./TextInput.vue";
-import RadioInput from "./RadioInput.vue";
-import HeaderText from "./HeaderText.vue";
-import BooleanInput from "./BooleanInput.vue";
-import DateInput from "./DateInput.vue";
-import NumericInput from "./NumericInput.vue";
+import TextInput from "../formComponents/TextInput.vue";
+import RadioInput from "../formComponents/RadioInput.vue";
+import HeaderText from "../formComponents/HeaderText.vue";
+import BooleanInput from "../formComponents/BooleanInput.vue";
+import DateInput from "../formComponents/DateInput.vue";
+import NumericInput from "../formComponents/NumericInput.vue";
 import LikertGroupInput from "../formComponents/LikertGroupInput.vue";
 
 export default {

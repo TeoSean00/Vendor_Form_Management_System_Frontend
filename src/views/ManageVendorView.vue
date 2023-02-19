@@ -20,8 +20,16 @@
         </span>
         <div>
           ADD ASSIGN BUTTON (Make it a popup)
-          <font-awesome-icon icon="pen-to-square" class="hover mx-2 mt-1" @click="toggleEditWorkflow(workflow)"/> 
-          <font-awesome-icon icon="plus" class="hover mx-2 mt-1" @click="toggleFormbuilder" /> 
+          <font-awesome-icon
+            icon="pen-to-square"
+            class="hover mx-2 mt-1"
+            @click="toggleEditWorkflow(workflow)"
+          />
+          <font-awesome-icon
+            icon="plus"
+            class="hover mx-2 mt-1"
+            @click="toggleFormbuilder"
+          />
         </div>
       </div>
       <div
@@ -50,7 +58,7 @@
         Create Workflow
       </button>
       <button class="btn btn-primary" @click="toggleFormbuilder">
-        Manage Users
+        Create Form
       </button>
     </div>
   </div>
@@ -148,8 +156,8 @@ export default {
     const toggleNewWorkflow = () => {
       var newWorkflow = {
         workflowId: workflows._rawValue.length + 1,
-        forms : []
-      }
+        forms: [],
+      };
       workflows.value.push(newWorkflow);
     };
 
@@ -166,7 +174,7 @@ export default {
       toggleFormbuilder,
       toggleFormview,
       toggleNewWorkflow,
-      toggleEditWorkflow
+      toggleEditWorkflow,
     };
   },
 };

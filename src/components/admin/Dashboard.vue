@@ -53,7 +53,7 @@
           <div class="row mt-4">
             <div class="col-lg-4 col-md-6 col-sm-6">
               <mini-statistics-card
-                :title="{ text: 'Manage Workflow', value: '$53k' }"
+                :title="{ text: 'Manage Vendors', value: '$53k' }"
                 detail="<span class='text-success text-sm font-weight-bolder'>+55%</span> than last week"
                 :icon="{
                   name: 'weekend',
