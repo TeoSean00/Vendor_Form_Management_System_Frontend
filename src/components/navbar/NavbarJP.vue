@@ -1,7 +1,7 @@
 <template>
     <div class="row bluebg">
       <div class="col-1">
-        <img src="../assets/Logo.png" alt="" style="width: 100px; height: 100px;" class="mt-2 mx-5">
+        <img src="../../assets/Logo.png" alt="" style="width: 100px; height: 100px;" class="mt-2 mx-5">
       </div>
       <div class="col-7" >
         <h3 class="text-light mt-5 mx-5">
