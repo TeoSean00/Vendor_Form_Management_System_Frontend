@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <NavbarJP />
   <div class="container">
     <div class="row pt-3 mb-5">
 
@@ -107,12 +107,12 @@
 
 <script>
 import { ref } from "vue";
-import Navbar from "../components/navbar/Navbar.vue";
+import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
 
 export default {
-  components: { Navbar },
+  components: { NavbarJP },
   setup() {
     var showModal = false;
     var workflows = ref([
