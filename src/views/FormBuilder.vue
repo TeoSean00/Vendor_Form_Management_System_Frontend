@@ -140,7 +140,7 @@ export default {
     );
 
     //temporary template data
-    var templates = [
+    var templates = ref([
       {
         templateInfo: {
           templateName: "New Vendor Assessment Form",
@@ -272,13 +272,12 @@ export default {
           },
         ],
       },
-    ];
+    ]);
 
     // var templates = useTemplateStore();
     console.log("current templates are", templates);
 
     var formName = ref("");
-    var assignedTo = ref("Vendor");
     var desc = ref("Enter form description here.");
     var formSections = ref([]);
 
@@ -306,10 +305,10 @@ export default {
       }
     };
 
-    // function update() {
-    //   //Uncomment this out to check
-    //   console.log("parent checking the state of the form", formItems);
-    // }
+    function update() {
+      //Uncomment this out to check
+      // console.log("parent checking the state of the form", formItems);
+    }
 
     function exportForm() {
       //Packages the form content into a JSON string
@@ -317,7 +316,6 @@ export default {
       const outputObj = {
         templateInfo: {
           templateName: formName.value,
-          assignedTo: assignedTo.value,
           templateDesc: desc.value,
         },
         templateContents: formSections.value,
@@ -342,7 +340,6 @@ export default {
     var previewObj = ref({
       templateInfo: {
         templateName: formName.value,
-        assignedTo: assignedTo.value,
         templateDesc: desc.value,
       },
       templateContents: formSections.value,
@@ -357,10 +354,10 @@ export default {
       previewObj,
       content,
       formName,
-      assignedTo,
       desc,
       templates,
       formSections,
+      update,
       exportForm,
       addTemplate,
       addAdminSection,
