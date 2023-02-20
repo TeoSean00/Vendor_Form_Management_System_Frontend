@@ -73,7 +73,7 @@
 export default {
   props: ["sectionData"],
   setup(props, context) {
-    console.log(props);
+    // console.log(props);
 
     return {};
   },

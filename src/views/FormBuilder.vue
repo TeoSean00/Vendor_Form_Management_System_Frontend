@@ -85,11 +85,23 @@
       </div>
 
       <div class="row">
-        <button @click="exportForm" class="btn btn-turqouise">
+        <button @click="exportForm" class="btn btn-turqouise mb-3">
           Export Form
+        </button>
+        <button
+          type="button"
+          class="btn btn-turqouise"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          @click="togglePreview"
+        >
+          Preview Form
         </button>
       </div>
     </div>
+
+    <!-- Modal -->
+    <TemplatePreview :previewData="previewObj" />
   </div>
 </template>
 
@@ -99,6 +111,7 @@ import Navbar from "../components/navbar/Navbar.vue";
 import UserService from "../services/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
+import TemplatePreview from "../components/template/TemplatePreview.vue";
 import { useTemplateStore } from "../stores/templateStore";
 import { ref } from "vue";
 
@@ -108,6 +121,7 @@ export default {
     FormComponent,
     TemplateList,
     SectionComponent,
+    TemplatePreview,
   },
   setup() {
     var content = ref("");
@@ -266,7 +280,6 @@ export default {
     var formName = ref("");
     var assignedTo = ref("Vendor");
     var desc = ref("Enter form description here.");
-    var formItems = ref([]);
     var formSections = ref([]);
 
     var addAdminSection = () => {
@@ -279,67 +292,6 @@ export default {
         vendor: [],
       });
     };
-
-    function addTextInput() {
-      formItems.value.push({
-        type: "text",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addCheckboxInput() {
-      formItems.value.push({
-        type: "checkbox",
-        order: formItems.value.length,
-        text: "",
-        options: [],
-      });
-    }
-    function addRadioInput() {
-      formItems.value.push({
-        type: "radio",
-        order: formItems.value.length,
-        text: "",
-        options: [],
-      });
-    }
-    function addHeaderText() {
-      formItems.value.push({
-        type: "header",
-        order: formItems.value.length,
-        text: "",
-        style: "h1",
-      });
-    }
-    function addBooleanInput() {
-      formItems.value.push({
-        type: "boolean",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addDateInput() {
-      formItems.value.push({
-        type: "date",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addNumberInput() {
-      formItems.value.push({
-        type: "number",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addLikertGroupInput() {
-      formItems.value.push({
-        type: "likertGroup",
-        order: formItems.value.length,
-        text: "",
-        options: [],
-      });
-    }
 
     var addTemplate = (template) => {
       // console.log("template received is", template);
@@ -356,14 +308,7 @@ export default {
 
     function update() {
       //Uncomment this out to check
-      console.log("parent checking the state of the form", formSections);
-    }
-
-    // Text, Text,  Radio
-    // Text, Radio
-    function removeQuestion(questionKey) {
-      //Remove from formItems first
-      formItems.value.splice(questionKey, 1);
+      console.log("parent checking the state of the form", formItems);
     }
 
     function exportForm() {
@@ -394,28 +339,34 @@ export default {
       // console.log("-----------------------------------------");
     }
 
+    var previewObj = ref({
+      templateInfo: {
+        templateName: formName.value,
+        assignedTo: assignedTo.value,
+        templateDesc: desc.value,
+      },
+      templateContents: formSections.value,
+    });
+
+    var togglePreview = () => {
+      console.log("Preview Toggled");
+      console.log("updated previewObj", previewObj.value);
+    };
+
     return {
+      previewObj,
       content,
-      formItems,
       formName,
       assignedTo,
       desc,
       templates,
       formSections,
-      addTextInput,
-      addHeaderText,
-      addCheckboxInput,
-      addRadioInput,
-      addBooleanInput,
-      addDateInput,
-      addNumberInput,
-      addLikertGroupInput,
       update,
-      removeQuestion,
       exportForm,
       addTemplate,
       addAdminSection,
       addVendorSection,
+      togglePreview,
     };
   },
 };
