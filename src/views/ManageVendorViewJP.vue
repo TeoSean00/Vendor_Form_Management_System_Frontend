@@ -3,23 +3,23 @@
   <div class="container">
     <div class="row pt-3 mb-5">
 
-      <div class="col-7">
+      <div class="col-10">
         <h5 class="text-secondary-blue">
           Welcome back,
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </h5>
       </div>
 
-      <div class="col-5">
-        <button class="btn btn-primary me-2" @click="toggleFormview" >
+      <div class="col-2">
+        <!-- <button class="btn btn-primary me-2" @click="toggleFormview" >
         View Templates
-      </button>
+      </button> -->
       <button class="btn btn-primary me-2" @click="toggleNewWorkflow">
         Create Workflow
       </button>
-      <button class="btn btn-primary" @click="toggleFormbuilder">
+      <!-- <button class="btn btn-primary" @click="toggleFormbuilder">
         Create Form
-      </button>
+      </button> -->
       </div>
       
     </div>
@@ -28,7 +28,7 @@
       <div class="text-main-blue workflow d-flex justify-content-between mb-4">
         <span class="hover" @click="toggleCollapse(workflow)">
           <span v-if="workflow.workflowName == null">
-            <h3>Workflow {{ workflow.workflowId }}</h3>
+            <h3>Company {{ workflow.workflowId }}</h3>
           </span>
           <span v-else>
             <h3>{{ workflow.workflowName }}</h3>

@@ -15,9 +15,10 @@ import {
   faPlus,
   faPenToSquare,
   faUsers,
+  faBell
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell);
 
 import App from "./App.vue";
 import router from "./router";

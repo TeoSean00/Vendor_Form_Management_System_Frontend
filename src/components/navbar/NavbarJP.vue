@@ -1,12 +1,12 @@
 <template>
     <div class="row bluebg">
       <div class="col-1">
-        <img src="../../assets/Logo.png" alt="" style="width: 100px; height: 100px;" class="mt-2 mx-5">
+        <img src="../../assets/Logo.png" alt="" style="width: 80px; height: 80px;" class="mt-3 mx-5">
       </div>
       <div class="col-7" >
-        <h3 class="text-light mt-5 mx-5">
+        <!-- <h3 class="text-light mt-5 mx-5">
           Admin
-        </h3>
+        </h3> -->
       </div>
       <div class="col-4">
         <nav class="navbar navbar-expand navbar-light mt-5 px-0">
@@ -17,22 +17,22 @@
   
             <li class="nav-item ">
               <router-link to="/home" class="nav-link text-light">
-                <font-awesome-icon class="text-light" style="width: 30px; height: 30px; " icon="home"/>
+                <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="home"/>
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to="#" class="nav-link text-light">
-                <font-awesome-icon class="text-light" style="width: 30px; height: 30px; " icon="bell" />
+                <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="bell" />
               </router-link>
             </li>
             <li class="nav-item ">
               <router-link to="/formbuilder" class="nav-link text-light">
-                <font-awesome-icon class="text-light" style="width: 30px; height: 30px; " icon="clipboard" />
+                <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="clipboard" />
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to="/profile" class="nav-link text-light">
-                <font-awesome-icon class="text-light" style="width: 30px; height: 30px; " icon="user" />
+                <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="user" />
               </router-link>
             </li>
             <!-- <li v-if="showAdminBoard" class="nav-item">
@@ -41,11 +41,11 @@
             <li v-if="showModeratorBoard" class="nav-item">
               <router-link to="/mod" class="nav-link">Moderator Board</router-link>
             </li> -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link v-if="currentUser" to="/user" class="nav-link"
                 >User</router-link
               >
-            </li>
+            </li> -->
           </div>
     
           <div v-if="!currentUser" class="navbar-nav ml-auto">
@@ -64,14 +64,13 @@
           </div>
     
           <div v-if="currentUser" class="navbar-nav ml-auto">
-            <!-- <li class="nav-item">
-              <router-link to="/profile" class="nav-link">
-                <font-awesome-icon icon="user" />
+            <li class="nav-item">
+              <router-link to="/profile" class="nav-link text-light">
                 {{ currentUser.username }}
               </router-link>
-            </li> -->
+            </li>
             <li class="nav-item">
-              <a class="nav-link" href @click.prevent="logOut">
+              <a class="nav-link text-light" href @click.prevent="logOut">
                 <!-- <font-awesome-icon icon="sign-out-alt" /> -->
                 LogOut
               </a>
