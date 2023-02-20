@@ -43,12 +43,10 @@ export default {
   components: { FormSection },
   props: ["previewData"],
   setup(props) {
-    watch(
-      () => props.previewData,
-      () => {
-        console.log("previewData updated!", props.previewData);
-      }
-    );
+    watch(props.previewData, (newValue, oldValue) => {
+      console.log("previewData updated!", props.previewData);
+    });
+
     console.log("received previewData", props.previewData);
 
     const templateData = {
@@ -104,7 +102,7 @@ export default {
       ],
     };
 
-    const templates = [templateData];
+    const templates = [props.previewData];
 
     //Building the form from the templateData
     var newForm = ref([]);

@@ -306,10 +306,10 @@ export default {
       }
     };
 
-    function update() {
-      //Uncomment this out to check
-      console.log("parent checking the state of the form", formItems);
-    }
+    // function update() {
+    //   //Uncomment this out to check
+    //   console.log("parent checking the state of the form", formItems);
+    // }
 
     function exportForm() {
       //Packages the form content into a JSON string
@@ -361,7 +361,6 @@ export default {
       desc,
       templates,
       formSections,
-      update,
       exportForm,
       addTemplate,
       addAdminSection,
