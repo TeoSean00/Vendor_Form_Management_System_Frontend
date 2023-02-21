@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import UserService from "../services/userService";
+import UserService from "../../services/userService";
 import { ref } from "vue";
 export default {
   setup() {
     var content = ref("");
 
-    UserService.getModeratorBoard().then(
+    UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
       },

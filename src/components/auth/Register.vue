@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import User from "../models/user";
+import User from "../../models/user";
 import { ref } from "vue";
-import { useAuthStore } from "../stores/authStore";
+import { useAuthStore } from "../../stores/authStore";
 import { useRouter } from "vue-router";
 
 export default {
@@ -64,13 +64,6 @@ export default {
     var message = ref("");
     var auth = useAuthStore();
     var router = useRouter();
-
-    if (auth.status.loggedIn) {
-      // can change this later
-      router.push("/profile");
-    } else {
-      console.log("not logged in");
-    }
 
     const handleRegister = async () => {
       message.value = "";

@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../src/assets/main.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
@@ -10,9 +11,12 @@ import {
   faUserPlus,
   faSignInAlt,
   faSignOutAlt,
+  faClipboard,
+  faPlus,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare);
 
 import App from "./App.vue";
 import router from "./router";

@@ -1,12 +1,37 @@
-#app {
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  background-color: #F7F7F7;
+}
+
+input{
+  border: none !important;
+}
+
+/* Form styling */
+.template-text-input{
+  color: #707070;
+  background-color: #F7F7F7 ;
+  border-bottom: #707070 solid 2px !important ; 
+}
+
+.template-text-answer{
+  color: #707070;
+  border-bottom: #707070 dotted 2px !important ; 
+}
+/* #app {
   max-width: 1280px;
+  max-width: 100vw;
   margin: 0 auto;
   padding: 2rem;
 
   font-weight: normal;
-}
+} */
 
-a,
+/* a,
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
@@ -30,4 +55,4 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
-}
+} */

@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div class="container-flex">
+    <Navbar />
     <header class="jumbotron">
       <h3>
         <strong>{{ currentUser.username }}</strong> Profile
@@ -30,7 +31,9 @@
 <script>
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
+import Navbar from "../components/navbar/Navbar.vue";
 export default {
+  components: { Navbar },
   setup() {
     var auth = useAuthStore();
     var router = useRouter();

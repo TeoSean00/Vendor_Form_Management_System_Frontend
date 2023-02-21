@@ -1,0 +1,95 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
+//Putting in project colors below
+
+//Main Blue
+.bg-main-blue {
+  background-color: #0378a6 !important;
+}
+
+.text-main-blue {
+  color: #0378a6 !important;
+}
+
+.btn-main-blue {
+  @include button-variant(#0378a6, #0378a6, #ffffff, #113555, #113555, #ffffff);
+}
+
+
+
+//Secondary blue
+.bg-secondary-blue {
+  background-color: #049dd9 !important;
+}
+
+.text-secondary-blue {
+  color: #049dd9 !important;
+}
+
+.btn-secondary-blue {
+  @include button-variant(#049dd9, #049dd9, #ffffff, #113555, #113555, #ffffff);
+}
+
+//Turqouis
+.bg-turqouise {
+  background-color: #54b5bf !important;
+}
+
+.text-turqouise {
+  color: #54b5bf !important;
+}
+
+.btn-turqouise {
+  @include button-variant(#54b5bf, #54b5bf, #ffffff, #113555, #113555, #ffffff);
+}
+
+//Dark Purple
+.bg-dark-purple {
+  background-color: #7972a6 !important;
+}
+
+.text-dark-purple {
+  color: #7972a6 !important;
+}
+
+//Light Grey
+.bg-light-grey {
+  background-color: #f7f7f7 !important;
+}
+
+//Dark Grey
+.bg-dark-grey {
+  background-color: #707070 !important;
+}
+
+//Form Stuff
+
+// Tyler Stuff 
+//Hover
+.hover:hover {
+  font-weight: 900;
+  cursor: grab;
+}
+
+.workflow {
+  border-bottom: 3px solid;
+}
+
+.mt-n1 {
+  margin-top: -0.25rem !important;
+}
+
+.mt-n4 {
+  margin-top: -1rem !important;
+}
+
+
+
+//end
