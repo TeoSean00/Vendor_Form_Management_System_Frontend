@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import Home from "../views/Home.vue"
 import Register from "../views/Register.vue"
+import Dashboard from "../views/DashboardView.vue"
 
 
 const router = createRouter({
@@ -46,6 +47,11 @@ const router = createRouter({
       path: "/user",
       name: "user",
       component: () => import("../views/BoardUser.vue"),
+    },
+    {
+      path: "/dashboard",
+      name: Dashboard,
+      component: () => import("../views/DashboardView.vue"),
     },
     // {
     //   path: "/about",
