@@ -6,6 +6,9 @@
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
         <h1 class="text-main-blue">Form Builder</h1>
+        {{ previewObj }}
+        {{ formName }}
+        {{ desc }}
         <div class="row">
           <span class="text-secondary-blue"
             >Form Name:
@@ -28,7 +31,12 @@
         </div> -->
         <div class="row">
           <span class="text-secondary-blue">Description: </span>
-          <textarea v-model="desc" rows="2" cols="1"></textarea>
+          <textarea
+            placeholder="Enter Form Description"
+            v-model="desc"
+            rows="2"
+            cols="1"
+          ></textarea>
         </div>
       </div>
       <div class="row m-1">
@@ -113,7 +121,7 @@ import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
 import { useTemplateStore } from "../stores/templateStore";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export default {
   components: {
@@ -123,7 +131,8 @@ export default {
     SectionComponent,
     TemplatePreview,
   },
-  setup() {
+  props: ["vendorId"],
+  setup(props) {
     var content = ref("");
 
     UserService.getUserBoard().then(
@@ -138,6 +147,8 @@ export default {
           error.toString();
       }
     );
+
+    console.log("vendorId Received", props.vendorId);
 
     //temporary template data
     var templates = ref([
@@ -278,7 +289,7 @@ export default {
     console.log("current templates are", templates);
 
     var formName = ref("");
-    var desc = ref("Enter form description here.");
+    var desc = ref("");
     var formSections = ref([]);
 
     var addAdminSection = () => {
@@ -339,10 +350,10 @@ export default {
 
     var previewObj = ref({
       templateInfo: {
-        templateName: formName.value,
-        templateDesc: desc.value,
+        templateName: formName,
+        templateDesc: desc,
       },
-      templateContents: formSections.value,
+      templateContents: formSections,
     });
 
     var togglePreview = () => {

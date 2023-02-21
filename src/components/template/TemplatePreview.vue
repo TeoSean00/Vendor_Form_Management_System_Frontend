@@ -14,14 +14,14 @@
         <div class="form-floating m-4">
           <div class="">
             <h4>Form Details</h4>
+            <hr class="border border-dark border-2 mt-2 opacity-75" />
+
             <template
               v-for="(info, index) in previewData.templateInfo"
               :key="index"
             >
-              <p>
-                <b>{{ index }}</b
-                >: {{ info }}
-              </p>
+              <b>{{ index }}</b
+              >: {{ info }}<br />
             </template>
           </div>
           <template v-for="(sectionData, index) in newForm" :key="index">

@@ -7,35 +7,37 @@
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </p>
     </div>
-
-    <div v-for="workflow in workflows" :key="workflow">
+    {{ vendors }}
+    <div v-for="vendor in vendors.vendors" :key="vendor">
       <div class="text-main-blue workflow d-flex justify-content-between">
-        <span class="hover" @click="toggleCollapse(workflow)">
-          <span v-if="workflow.workflowName == null">
-            Workflow {{ workflow.workflowId }}
+        <span class="hover" @click="toggleCollapse(vendor)">
+          <span v-if="vendor.vendorName == null">
+            Vendor {{ vendor.vendorId }}
           </span>
           <span v-else>
-            {{ workflow.workflowName }}
+            {{ vendor.vendorName }}
           </span>
         </span>
-        <div>
+        <div class="m-3">
           ADD ASSIGN BUTTON (Make it a popup)
           <font-awesome-icon
             icon="pen-to-square"
             class="hover mx-2 mt-1"
-            @click="toggleEditWorkflow(workflow)"
+            @click="toggleEditVendor(vendor)"
           />
-          <font-awesome-icon
-            icon="plus"
-            class="hover mx-2 mt-1"
-            @click="toggleFormbuilder"
-          />
+          <button
+            class="btn btn-main-blue mx-2 mt-1"
+            @click="toggleFormbuilder(vendor, vendor.vendorId)"
+          >
+            Create Form
+            <font-awesome-icon icon="plus" />
+          </button>
         </div>
       </div>
       <div
-        v-for="form in workflow.forms"
+        v-for="form in vendor.forms"
         :key="form.formId"
-        :class="{ collapse: !workflow.collapse }"
+        :class="{ collapse: !vendor.collapse }"
         class="list-group"
       >
         <div
@@ -54,8 +56,8 @@
       <button class="btn btn-primary me-2" @click="toggleFormview">
         View Templates
       </button>
-      <button class="btn btn-primary me-2" @click="toggleNewWorkflow">
-        Create Workflow
+      <button class="btn btn-primary me-2" @click="toggleNewVendor">
+        Create Vendor
       </button>
       <button class="btn btn-primary" @click="toggleFormbuilder">
         Create Form
@@ -69,74 +71,76 @@ import { ref } from "vue";
 import Navbar from "../components/navbar/Navbar.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
+import { useVendorStore } from "../stores/vendorStore";
 
 export default {
   components: { Navbar },
   setup() {
-    var workflows = ref([
-      {
-        workflowId: 1,
-        workflowName: "Test Workflow Name",
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-          {
-            formId: 2,
-            formName: "Form 2",
-            status: "Pending",
-          },
-        ],
-      },
-      {
-        workflowId: 2,
-        workflowName: null,
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-        ],
-      },
-      {
-        workflowId: 3,
-        workflowName: null,
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-        ],
-      },
-      {
-        workflowId: 4,
-        workflowName: null,
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-          {
-            formId: 2,
-            formName: "Form 2",
-            status: "Pending",
-          },
-          {
-            formId: 3,
-            formName: "Form 3",
-            status: "Pending",
-          },
-        ],
-      },
-    ]);
+    var vendors = useVendorStore();
+    // var vendors = ref([
+    //   {
+    //     vendorId: 1,
+    //     vendorName: "Test Workflow Name",
+    //     forms: [
+    //       {
+    //         formId: 1,
+    //         formName: "Form 1",
+    //         status: "Pending",
+    //       },
+    //       {
+    //         formId: 2,
+    //         formName: "Form 2",
+    //         status: "Pending",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     vendorId: 2,
+    //     vendorName: null,
+    //     forms: [
+    //       {
+    //         formId: 1,
+    //         formName: "Form 1",
+    //         status: "Pending",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     vendorId: 3,
+    //     vendorName: null,
+    //     forms: [
+    //       {
+    //         formId: 1,
+    //         formName: "Form 1",
+    //         status: "Pending",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     vendorId: 4,
+    //     vendorName: null,
+    //     forms: [
+    //       {
+    //         formId: 1,
+    //         formName: "Form 1",
+    //         status: "Pending",
+    //       },
+    //       {
+    //         formId: 2,
+    //         formName: "Form 2",
+    //         status: "Pending",
+    //       },
+    //       {
+    //         formId: 3,
+    //         formName: "Form 3",
+    //         status: "Pending",
+    //       },
+    //     ],
+    //   },
+    // ]);
 
-    function toggleCollapse(workflow) {
-      workflow.collapse = !workflow.collapse;
+    function toggleCollapse(vendor) {
+      vendor.collapse = !vendor.collapse;
       console.log("Toggle Collapse");
     }
 
@@ -145,36 +149,40 @@ export default {
 
     const router = useRouter();
 
-    const toggleFormbuilder = () => {
-      router.push("/formbuilder");
+    const toggleFormbuilder = (vendorName, vendorId) => {
+      console.log("toggled vendorID", vendorId, "and vendorName", vendorName);
+      router.push({
+        name: "formbuilder",
+        params: { name: vendorName },
+        query: { vendorId: vendorId },
+      });
     };
 
     const toggleFormview = () => {
       router.push("/viewform");
     };
 
-    const toggleNewWorkflow = () => {
-      var newWorkflow = {
-        workflowId: workflows._rawValue.length + 1,
-        forms: [],
+    const toggleNewVendor = () => {
+      var newVendor = {
+        name: [],
       };
-      workflows.value.push(newWorkflow);
+      vendors.value.push(newVendor);
     };
 
-    const toggleEditWorkflow = (workflow) => {
-      console.log(workflow.workflowId);
+    const toggleEditVendor = (vendor) => {
+      console.log(vendor.vendorId);
       var newName = prompt("Enter new workflow name!");
-      workflow.workflowName = newName;
+      vendor.vendorName = newName;
     };
 
     return {
-      workflows,
+      vendors,
       toggleCollapse,
       currentUser,
       toggleFormbuilder,
       toggleFormview,
-      toggleNewWorkflow,
-      toggleEditWorkflow,
+      toggleNewVendor,
+      toggleEditVendor,
     };
   },
 };

@@ -1,31 +1,23 @@
 <template>
-    <Dashboard />
-    {{ data }}
-    {{ getValue }}
+  <Dashboard />
+  {{ data }}
+  {{ getValue }}
 </template>
 
 <script>
-import { Dashboard } from "../components/Dashboard.vue";
+import Dashboard from "../components/Dashboard.vue";
 
 export default {
   setup() {
     // data syntax
-    const data = ref(
-      {1:1,
-      2:2},
-      ['hi'],
-    )
-
-
+    const data = ref({ 1: 1, 2: 2 }, ["hi"]);
 
     // method syntax
     const getValue = () => {
-      pass
-    }
+      pass;
+    };
 
-
-
-    return { getValue, data }
+    return { getValue, data };
     // var content = ref("");
 
     // UserService.getPublicContent().then(
