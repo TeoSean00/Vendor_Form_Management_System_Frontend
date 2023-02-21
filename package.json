@@ -8,16 +8,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "axios": "^1.2.6",
     "bootstrap": "^5.2.3",
+    "chart.js": "3.6.0",
     "pinia": "^2.0.28",
     "vee-validate": "^4.7.3",
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6",
-    "chart.js": "3.6.0"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

@@ -50,11 +50,11 @@ const router = createRouter({
     //   name: "mod",
     //   component: () => import("../views/BoardModerator.vue"),
     // },
-    // {
-    //   path: "/user",
-    //   name: "user",
-    //   component: () => import("../views/BoardUser.vue"),
-    // },
+    {
+      path: "/user",
+      name: "user",
+      component: () => import("../views/BoardUser.vue"),
+    },
     {
       path: "/formbuilder",
       name: "formbuilder",
