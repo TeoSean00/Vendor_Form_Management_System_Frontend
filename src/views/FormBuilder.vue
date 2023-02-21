@@ -100,7 +100,7 @@
           type="button"
           class="btn btn-turqouise"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#templatePreview"
           @click="togglePreview"
         >
           Preview Form

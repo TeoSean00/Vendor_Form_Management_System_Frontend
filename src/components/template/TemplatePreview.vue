@@ -1,6 +1,6 @@
 <template>
   <div
-    id="exampleModal"
+    id="templatePreview"
     class="modal fade"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"

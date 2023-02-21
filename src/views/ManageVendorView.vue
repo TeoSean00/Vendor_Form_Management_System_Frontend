@@ -56,12 +56,76 @@
       <button class="btn btn-primary me-2" @click="toggleFormview">
         View Templates
       </button>
-      <button class="btn btn-primary me-2" @click="toggleNewVendor">
+      <button
+        type="button"
+        class="btn btn-primary me-2"
+        data-bs-toggle="modal"
+        data-bs-target="#vendorPopup"
+      >
         Create Vendor
       </button>
-      <button class="btn btn-primary" @click="toggleFormbuilder">
-        Create Form
-      </button>
+    </div>
+  </div>
+
+  <!-- Create Vendor Popup -->
+  <div
+    class="modal fade"
+    id="vendorPopup"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Create New Vendor
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Vendor Name</label
+              >
+              <input
+                type="name"
+                placeholder="Vendor name here"
+                class="form-control"
+                id="vendorName"
+                required
+                v-model="vendorName"
+              />
+              <div id="formHelp" class="form-text">
+                Note that this is the name of the vendor you are looking to
+                onboard.
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="toggleNewVendor"
+          >
+            Create Vendor
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +140,7 @@ import { useVendorStore } from "../stores/vendorStore";
 export default {
   components: { Navbar },
   setup() {
+    var vendorName = ref("");
     var vendors = useVendorStore();
     // var vendors = ref([
     //   {
@@ -162,11 +227,17 @@ export default {
       router.push("/viewform");
     };
 
-    const toggleNewVendor = () => {
+    const toggleNewVendor = async () => {
+      console.log("vendorname is", vendorName.value);
       var newVendor = {
-        name: [],
+        name: vendorName.value,
       };
-      vendors.value.push(newVendor);
+      try {
+        vendors.addVendor(newVendor);
+      } catch (error) {
+        console.log("ERROR,", error.message);
+      }
+      vendorName.value = "";
     };
 
     const toggleEditVendor = (vendor) => {
@@ -177,6 +248,7 @@ export default {
 
     return {
       vendors,
+      vendorName,
       toggleCollapse,
       currentUser,
       toggleFormbuilder,

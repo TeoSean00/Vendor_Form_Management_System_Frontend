@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import VendorService from "../services/vendor/vendorService";
 
+
+
 export const useVendorStore = defineStore("vendors", {
   state: () => {
     return { vendors: [] };
@@ -12,14 +14,14 @@ export const useVendorStore = defineStore("vendors", {
   },
   actions: {
     addVendor(vendorObject) {
-      VendorService.addTemplate(vendorObject)
+      VendorService.addVendor(vendorObject)
         .then((response) => {
-          this.templates.push(vendorObject);
+          this.vendors.push(vendorObject);
           console.log("form output added!");
-          console.log("templates now is ", this.vendors);
+          console.log("vendors now is ", this.vendors);
         })
         .catch((error) => {
-          console.log("error at templateStore", error);
+          console.log("error at vendorStore", error);
         });
     },
   },

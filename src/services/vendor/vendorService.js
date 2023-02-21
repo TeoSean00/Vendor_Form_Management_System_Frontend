@@ -3,7 +3,7 @@ import authHeader from "../authHeader";
 
 console.log(authHeader());
 
-const API_URL = "http://localhost:8080/api/vendor";
+const API_URL = "http://localhost:8080/api/vendor/";
 
 class VendorService {
   addVendor(vendorObject) {
