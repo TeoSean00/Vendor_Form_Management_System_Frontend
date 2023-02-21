@@ -98,4 +98,5 @@ export default {
     return { content, workflows, toggleCollapse, currentUser };
   },
 };
+
 </script>
