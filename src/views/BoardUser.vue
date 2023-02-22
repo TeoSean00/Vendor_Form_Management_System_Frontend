@@ -1,13 +1,30 @@
 <template>
   <Navbar />
 
+
+
   <section id="forms" class="forms">
-      <div class="container" data-aos="fade-up">
+      <div class="container">
 
         <div class="section-title">
           <h1 class="text-main-blue">{company name}</h1>
           <h2 class="my-4">All forms</h2>
         </div>
+
+
+        <!-- <div v-for="(form, index) in formlist" :key="index">
+          <div class="row">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" >
+            <div class="icon-box">
+              <div class="icon"><font-awesome-icon icon="fa-file" /></div>
+              <h4><a href="">{{ form.company }}</a></h4>
+              <p>--------------------------------------------------------</p>
+              <h4>Progress: {{form.progress}}</h4>
+            </div>
+          </div>
+        </div> -->
+
+
 
         <div class="row">
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch" >
