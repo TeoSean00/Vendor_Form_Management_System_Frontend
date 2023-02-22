@@ -40,8 +40,7 @@
             <font-awesome-icon
             icon="users"
             class="hover mx-2 mt-1"
-            @click="showModalFn()"
-            data-toggle="modal" data-target="#exampleModal"
+            data-bs-toggle="modal" data-bs-target="#exampleModal"
           />
           </span>
           
@@ -80,28 +79,47 @@
 
   </div>
 
-  <!-- <modal v-if="showModal" @close="showModal = false">
-        <h3 slot="header">custom header</h3>
-  </modal> -->
-  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+  <!-- <div class="accordion" id="accordionExample">
+  <div v-for="workflow in workflows"  class="accordion-item">
+    <h2 class="accordion-header  text-main-blue" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + 'workflow'+ workflow.workflowId" aria-expanded="false" :aria-controls="'workflow' + workflow.workflowId">
+        Company {{workflow.workflowId}}
+      </button>
+    </h2>
+
+    <div :id="'workflow' + workflow.workflowId" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        
       </div>
     </div>
   </div>
 </div> -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Assign Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li  v-for="user in users" style="list-style-type: none;">
+            <input :id="user" type="checkbox" :name="user"> {{ user.userName }}
+          </li>
+        </ul>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </template>
 
@@ -114,7 +132,30 @@ import { useRouter } from "vue-router";
 export default {
   components: { NavbarJP },
   setup() {
-    var showModal = false;
+    var users = ref([
+      {
+        userId: 1,
+        userName: "John@gmail.com",
+      },
+      {
+        userId: 2,
+        userName: "Kevan",
+      },
+      {
+        userId: 3,
+        userName: "Johnson",
+      },
+      {
+        userId: 4,
+        userName: "Timbre",
+      },
+      {
+        userId: 5,
+        userName: "Jadon",
+      },
+
+    ])
+
     var workflows = ref([
       {
         workflowId: 1,
@@ -215,7 +256,7 @@ export default {
     };
 
     return {
-      showModal,
+      users,
       workflows,
       toggleCollapse,
       currentUser,
