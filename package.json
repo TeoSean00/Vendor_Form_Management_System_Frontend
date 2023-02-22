@@ -13,11 +13,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "axios": "^1.2.6",
     "bootstrap": "^5.2.3",
-<<<<<<< HEAD
-    "chart.js": "3.6.0",
-=======
     "chart.js": "^4.2.1",
->>>>>>> master
     "pinia": "^2.0.28",
     "vee-validate": "^4.7.3",
     "vue": "^3.2.45",
