@@ -14,9 +14,13 @@ import {
   faClipboard,
   faPlus,
   faPenToSquare,
+  faFile,
+  faUsers,
+  faBell
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
+
 
 import App from "./App.vue";
 import router from "./router";

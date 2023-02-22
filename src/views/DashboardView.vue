@@ -1,21 +1,15 @@
 <template>
-  <Dashboard />
-  {{ data }}
-  {{ getValue }}
+  <AdminHomeDashboard />
 </template>
 
 <script>
-import Dashboard from "../components/dashboard/Dashboard.vue";
+import AdminHomeDashboard from "../components/dashboard/AdminHomePage/AdminHomeDashboard.vue";
+import { ref } from "vue";
 
 export default {
-  setup() {
-    // data syntax
-    const data = ref({ 1: 1, 2: 2 }, ["hi"]);
-    // method syntax
-    const getValue = () => {
-      pass;
-    };
-    return { getValue, data };
+  components: {
+    AdminHomeDashboard,
   },
+  setup() {},
 };
 </script>
