@@ -7,15 +7,13 @@
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </p>
     </div>
-    {{ vendors }}
-    <div v-for="vendor in vendors.vendors" :key="vendor">
+    <!-- {{vendors.vendor}} -->
+    <div v-for="vendor in vendors" :key="vendor">
       <div class="text-main-blue workflow d-flex justify-content-between">
         <span class="hover" @click="toggleCollapse(vendor)">
-          <span v-if="vendor.vendorName == null">
-            Vendor {{ vendor.vendorId }}
-          </span>
+          <span v-if="vendor.name == null"> Vendor {{ vendor.vendorId }} </span>
           <span v-else>
-            {{ vendor.vendorName }}
+            {{ vendor.name }}
           </span>
         </span>
         <div class="m-3">
@@ -27,7 +25,7 @@
           />
           <button
             class="btn btn-main-blue mx-2 mt-1"
-            @click="toggleFormbuilder(vendor, vendor.vendorId)"
+            @click="toggleFormbuilder(vendor, vendor.id)"
           >
             Create Form
             <font-awesome-icon icon="plus" />
@@ -121,6 +119,7 @@
             type="button"
             class="btn btn-primary"
             @click="toggleNewVendor"
+            data-bs-dismiss="modal"
           >
             Create Vendor
           </button>
@@ -131,7 +130,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import Navbar from "../components/navbar/Navbar.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
@@ -141,68 +140,25 @@ export default {
   components: { Navbar },
   setup() {
     var vendorName = ref("");
-    var vendors = useVendorStore();
-    // var vendors = ref([
-    //   {
-    //     vendorId: 1,
-    //     vendorName: "Test Workflow Name",
-    //     forms: [
-    //       {
-    //         formId: 1,
-    //         formName: "Form 1",
-    //         status: "Pending",
-    //       },
-    //       {
-    //         formId: 2,
-    //         formName: "Form 2",
-    //         status: "Pending",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     vendorId: 2,
-    //     vendorName: null,
-    //     forms: [
-    //       {
-    //         formId: 1,
-    //         formName: "Form 1",
-    //         status: "Pending",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     vendorId: 3,
-    //     vendorName: null,
-    //     forms: [
-    //       {
-    //         formId: 1,
-    //         formName: "Form 1",
-    //         status: "Pending",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     vendorId: 4,
-    //     vendorName: null,
-    //     forms: [
-    //       {
-    //         formId: 1,
-    //         formName: "Form 1",
-    //         status: "Pending",
-    //       },
-    //       {
-    //         formId: 2,
-    //         formName: "Form 2",
-    //         status: "Pending",
-    //       },
-    //       {
-    //         formId: 3,
-    //         formName: "Form 3",
-    //         status: "Pending",
-    //       },
-    //     ],
-    //   },
-    // ]);
+    //commented out for frontend
+    // var vendors = useVendorStore();
+    // vendors.getVendors();
+
+    var vendors = ref([
+      {
+        id: "63f562319ed0555520964e17",
+        name: "One bear",
+        users: [],
+        forms: [],
+      },
+      {
+        id: "63f562af9ed0555520964e18",
+        name: "Two Bears",
+        users: [],
+        forms: [],
+      },
+      { id: "63f562b49ed0555520964e19", name: "Three", users: [], forms: [] },
+    ]);
 
     function toggleCollapse(vendor) {
       vendor.collapse = !vendor.collapse;
@@ -232,10 +188,21 @@ export default {
       var newVendor = {
         name: vendorName.value,
       };
+      var error = null;
       try {
-        vendors.addVendor(newVendor);
+        // commented out for frontend
+        // await vendors.addVendor(newVendor);
+        vendors.value.push({
+          id: "63f562319ed0555520964e17",
+          name: "One bear",
+          users: [],
+          forms: [],
+        });
       } catch (error) {
-        console.log("ERROR,", error.message);
+        alert("ERROR,", error.message);
+      }
+      if (!error) {
+        alert("Vendor Added Successfully");
       }
       vendorName.value = "";
     };

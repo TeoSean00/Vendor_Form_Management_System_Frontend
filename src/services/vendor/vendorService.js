@@ -22,13 +22,13 @@ class VendorService {
   }
   getVendors() {
     const response = axios
-      .get(API_URL + "/all", data, { headers: authHeader() })
+      .get(API_URL + "all", { headers: authHeader() })
       .then((response) => {
-        console.log("post request successful!");
+        console.log("get request successful!", response);
         return response.data;
       })
       .catch((error) => {
-        console.log("post request unsuccessful", error);
+        console.log("get request unsuccessful", error);
         return error;
       });
     return response;
