@@ -16,7 +16,7 @@
           <div class="navbar-nav mr-auto mx-4">
   
             <li class="nav-item ">
-              <router-link to="/home" class="nav-link text-light">
+              <router-link to="/" class="nav-link text-light">
                 <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="home"/>
               </router-link>
             </li>
