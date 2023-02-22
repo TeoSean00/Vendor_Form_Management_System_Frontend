@@ -7,6 +7,10 @@ body{
   background-color: #F7F7F7;
 }
 
+.bluebg{
+  background-color: #0378A6;
+}
+
 input{
   border: none !important;
 }
