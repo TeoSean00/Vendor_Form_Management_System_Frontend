@@ -8,6 +8,7 @@ import ViewForm from "../views/ViewForm.vue";
 import ManageVendorViewJP from "../views/ManageVendorViewJP.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 import CreateUser from "../views/CreateUser.vue";
+import Test from "../views/Test.vue";
 
 const requireAuth = (to, from, next) => {
   let user = JSON.parse(localStorage.getItem("user"));
@@ -97,6 +98,12 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import("../views/AboutView.vue"),
     // },
+    {
+      path: "/test",
+      name: Test,
+      component: () => import("../views/Test.vue"),
+      beforeEnter: requireAuth,
+    },
   ],
 });
 
