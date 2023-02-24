@@ -1,13 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 // import Register from "../views/Register.vue"
-import Dashboard from "../views/DashboardView.vue"
+import Dashboard from "../views/DashboardView.vue";
 import Home from "../views/Home.vue";
 import FormBuilder from "../views/FormBuilder.vue";
 import ViewForm from "../views/ViewForm.vue";
 import ManageVendorViewJP from "../views/ManageVendorViewJP.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 import CreateUser from "../views/CreateUser.vue";
+import Test from "../views/Test.vue";
+
+const requireAuth = (to, from, next) => {
+  let user = JSON.parse(localStorage.getItem("user"));
+  console.log("current user in auth guard: ", user);
+  // if (!user && to.name != "Home") next({ name: "Home" });
+  if (!user) next({ name: "login" });
+  else next();
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +25,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: Home,
+      beforeEnter: requireAuth,
     },
     // {
     //   path: "/home",
@@ -31,21 +41,25 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: () => import("../views/Profile.vue"),
+      beforeEnter: requireAuth,
     },
     {
       path: "/vendors",
       name: "vendors",
       component: ManageVendorViewJP,
+      beforeEnter: requireAuth,
     },
     {
       path: "/users",
       name: "users",
       component: ManageUserView,
+      beforeEnter: requireAuth,
     },
     {
       path: "/createUser",
       name: "createUser",
       component: CreateUser,
+      beforeEnter: requireAuth,
     },
     // {
     //   path: "/mod",
@@ -61,16 +75,20 @@ const router = createRouter({
       path: "/formbuilder",
       name: "formbuilder",
       component: FormBuilder,
+      props: (route) => ({ vendorId: route.query.vendorId }),
+      beforeEnter: requireAuth,
     },
     {
       path: "/viewForm",
       name: "viewForm",
       component: ViewForm,
+      beforeEnter: requireAuth,
     },
     {
       path: "/dashboard",
       name: Dashboard,
       component: () => import("../views/DashboardView.vue"),
+      beforeEnter: requireAuth,
     },
     // {
     //   path: "/about",
@@ -80,6 +98,12 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import("../views/AboutView.vue"),
     // },
+    {
+      path: "/test",
+      name: Test,
+      component: () => import("../views/Test.vue"),
+      beforeEnter: requireAuth,
+    },
   ],
 });
 

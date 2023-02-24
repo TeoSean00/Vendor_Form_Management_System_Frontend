@@ -54,7 +54,7 @@ export default {
   props: ["sectionInfo"],
   setup(props, context) {
     var formItems = ref(props.sectionInfo[Object.keys(props.sectionInfo)[0]]);
-    console.log(formItems.value);
+    // console.log(formItems.value);
     function addTextInput() {
       formItems.value.push({
         type: "text",

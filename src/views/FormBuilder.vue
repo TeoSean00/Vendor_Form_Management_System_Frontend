@@ -6,6 +6,9 @@
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
         <h1 class="text-main-blue">Form Builder</h1>
+        {{ previewObj }}
+        {{ formName }}
+        {{ desc }}
         <div class="row">
           <span class="text-secondary-blue"
             >Form Name:
@@ -28,7 +31,12 @@
         </div> -->
         <div class="row">
           <span class="text-secondary-blue">Description: </span>
-          <textarea v-model="desc" rows="2" cols="1"></textarea>
+          <textarea
+            placeholder="Enter Form Description"
+            v-model="desc"
+            rows="2"
+            cols="1"
+          ></textarea>
         </div>
       </div>
       <div class="row m-1">
@@ -85,11 +93,23 @@
       </div>
 
       <div class="row">
-        <button @click="exportForm" class="btn btn-turqouise">
+        <button @click="exportForm" class="btn btn-turqouise mb-3">
           Export Form
+        </button>
+        <button
+          type="button"
+          class="btn btn-turqouise"
+          data-bs-toggle="modal"
+          data-bs-target="#templatePreview"
+          @click="togglePreview"
+        >
+          Preview Form
         </button>
       </div>
     </div>
+
+    <!-- Modal -->
+    <TemplatePreview :previewData="previewObj" />
   </div>
 </template>
 
@@ -99,8 +119,9 @@ import Navbar from "../components/navbar/Navbar.vue";
 import UserService from "../services/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
+import TemplatePreview from "../components/template/TemplatePreview.vue";
 import { useTemplateStore } from "../stores/templateStore";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export default {
   components: {
@@ -108,8 +129,10 @@ export default {
     FormComponent,
     TemplateList,
     SectionComponent,
+    TemplatePreview,
   },
-  setup() {
+  props: ["vendorId"],
+  setup(props) {
     var content = ref("");
 
     UserService.getUserBoard().then(
@@ -125,8 +148,10 @@ export default {
       }
     );
 
+    console.log("vendorId Received", props.vendorId);
+
     //temporary template data
-    var templates = [
+    var templates = ref([
       {
         templateInfo: {
           templateName: "New Vendor Assessment Form",
@@ -258,15 +283,13 @@ export default {
           },
         ],
       },
-    ];
+    ]);
 
     // var templates = useTemplateStore();
     console.log("current templates are", templates);
 
     var formName = ref("");
-    var assignedTo = ref("Vendor");
-    var desc = ref("Enter form description here.");
-    var formItems = ref([]);
+    var desc = ref("");
     var formSections = ref([]);
 
     var addAdminSection = () => {
@@ -279,67 +302,6 @@ export default {
         vendor: [],
       });
     };
-
-    function addTextInput() {
-      formItems.value.push({
-        type: "text",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addCheckboxInput() {
-      formItems.value.push({
-        type: "checkbox",
-        order: formItems.value.length,
-        text: "",
-        options: [],
-      });
-    }
-    function addRadioInput() {
-      formItems.value.push({
-        type: "radio",
-        order: formItems.value.length,
-        text: "",
-        options: [],
-      });
-    }
-    function addHeaderText() {
-      formItems.value.push({
-        type: "header",
-        order: formItems.value.length,
-        text: "",
-        style: "h1",
-      });
-    }
-    function addBooleanInput() {
-      formItems.value.push({
-        type: "boolean",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addDateInput() {
-      formItems.value.push({
-        type: "date",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addNumberInput() {
-      formItems.value.push({
-        type: "number",
-        order: formItems.value.length,
-        text: "",
-      });
-    }
-    function addLikertGroupInput() {
-      formItems.value.push({
-        type: "likertGroup",
-        order: formItems.value.length,
-        text: "",
-        options: [],
-      });
-    }
 
     var addTemplate = (template) => {
       // console.log("template received is", template);
@@ -356,14 +318,7 @@ export default {
 
     function update() {
       //Uncomment this out to check
-      console.log("parent checking the state of the form", formSections);
-    }
-
-    // Text, Text,  Radio
-    // Text, Radio
-    function removeQuestion(questionKey) {
-      //Remove from formItems first
-      formItems.value.splice(questionKey, 1);
+      // console.log("parent checking the state of the form", formItems);
     }
 
     function exportForm() {
@@ -372,7 +327,6 @@ export default {
       const outputObj = {
         templateInfo: {
           templateName: formName.value,
-          assignedTo: assignedTo.value,
           templateDesc: desc.value,
         },
         templateContents: formSections.value,
@@ -394,28 +348,32 @@ export default {
       // console.log("-----------------------------------------");
     }
 
+    var previewObj = ref({
+      templateInfo: {
+        templateName: formName,
+        templateDesc: desc,
+      },
+      templateContents: formSections,
+    });
+
+    var togglePreview = () => {
+      console.log("Preview Toggled");
+      console.log("updated previewObj", previewObj.value);
+    };
+
     return {
+      previewObj,
       content,
-      formItems,
       formName,
-      assignedTo,
       desc,
       templates,
       formSections,
-      addTextInput,
-      addHeaderText,
-      addCheckboxInput,
-      addRadioInput,
-      addBooleanInput,
-      addDateInput,
-      addNumberInput,
-      addLikertGroupInput,
       update,
-      removeQuestion,
       exportForm,
       addTemplate,
       addAdminSection,
       addVendorSection,
+      togglePreview,
     };
   },
 };

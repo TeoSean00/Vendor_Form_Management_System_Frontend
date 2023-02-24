@@ -17,13 +17,12 @@
               <div class="form-group text-dark-purple">
                 <div class="form-floating my-4">
                   <input
-                    :rules="isRequired"
+                    required
                     v-model="user.username"
                     type="text"
                     class="form-control form-control-sm"
                     name="username"
                     placeholder="Enter username."
-                    required
                   />
                   <label for="username">Username</label>
                 </div>
