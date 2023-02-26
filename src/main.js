@@ -16,10 +16,11 @@ import {
   faPenToSquare,
   faFile,
   faUsers,
-  faBell
+  faBell,
+  faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
+library.add(faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
 
 
 import App from "./App.vue";

@@ -8,15 +8,26 @@
     v-model="itemInfo.text"
     @input="updateText"
   />
-  <br>
+</div>
+
   <div class="row">
-    <p class="col-6 template-text-answer p-3 my-1 ml-5 mr-5">User's Answer Here</p>
-    <button class="col-1 borderless-button" @click="removeQuestion">
-      <font-awesome-icon icon="fa-solid fa-trash" />
-    </button>
+    <div class="col-4 template-text-answer px-3 ">
+      Short Answer Here.
+    </div>
   </div>
 
-</div>
+  <hr>
+  <div class="row">
+    <div class="col-12 text-end px-5 py-1">
+      <span >
+        Required
+        <input class="form-check-input bg-dark-grey mx-2" type="checkbox">
+        <button class="borderless-button mx-2" @click="removeQuestion">
+          <font-awesome-icon icon="fa-solid fa-trash" />
+        </button>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>

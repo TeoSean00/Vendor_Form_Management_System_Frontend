@@ -1,6 +1,7 @@
 <template>
   <Navbar />
-  <div class="row mx-5">
+  
+  <div class="row mx-5 ">
     <div class="col-10">
       <div
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
