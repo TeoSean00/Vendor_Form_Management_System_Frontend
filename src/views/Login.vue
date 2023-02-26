@@ -1,9 +1,13 @@
 <template>
   <div class="col-md-12 login-bg-1 h-100">
-    <div class="row offset-1 col-9 justify-content-center align-items-center h-100" >
-      <div class="card my-auto" style="height:75vh">
+    <div
+      class="row offset-1 col-9 justify-content-center align-items-center h-100"
+    >
+      <div class="card my-auto" style="height: 75vh">
         <!-- <img class="card-img-top" src="../assets/Quantum Logo.PNG" style="scale: 0.1;"> -->
-        <h2 class="card-title text-center mt-5 pt-3 text-main-blue" >Quantum Leap Incorporation</h2>
+        <h2 class="card-title text-center mt-5 pt-3 text-main-blue">
+          Quantum Leap Incorporation
+        </h2>
         <div class="card-body">
           <!-- <h5 class="card-title text-center my-2 pt-3 text-secondary-blue">Login</h5> -->
           <!-- Form begins -->
@@ -11,34 +15,38 @@
           <div class="offset-3 col-6 text-center my-2 pt-3">
             <form name="form" @submit.prevent="handleLogin">
               <div class="form-group text-dark-purple">
-                <div class="form-floating my-4 ">
+                <div class="form-floating my-4">
                   <input
-                  :rules="isRequired"
-                  v-model="user.username"
-                  type="text"
-                  class="form-control form-control-sm"
-                  name="username"
-                  placeholder="Enter username." required
+                    required
+                    v-model="user.username"
+                    type="text"
+                    class="form-control form-control-sm"
+                    name="username"
+                    placeholder="Enter username."
                   />
                   <label for="username">Username</label>
                 </div>
               </div>
               <!-- Password -->
               <div class="form-group text-dark-purple">
-                <div class="form-floating my-4 ">
+                <div class="form-floating my-4">
                   <input
                     v-model="user.password"
                     type="password"
                     class="form-control"
                     name="password"
-                    placeholder="Enter password." required
+                    placeholder="Enter password."
+                    required
                   />
                   <label for="password">Password</label>
                 </div>
               </div>
               <!-- Button -->
-              <div class="form-group ">
-                <button class="col-12 mb-5 btn btn-lg btn-main-blue btn-block" :disabled="loading">
+              <div class="form-group">
+                <button
+                  class="col-12 mb-5 btn btn-lg btn-main-blue btn-block"
+                  :disabled="loading"
+                >
                   <span
                     v-show="loading"
                     class="spinner-border spinner-border-sm"
@@ -126,7 +134,7 @@ export default {
 
     if (auth.status.loggedIn) {
       // can change this later
-      router.push("/profile");
+      router.push("/");
     } else {
       console.log("not logged in");
     }
@@ -140,7 +148,7 @@ export default {
           (response) => {
             console.log(response);
             alert("successfully logged in!", response);
-            router.push("/profile");
+            router.push("/");
           },
           (error) => {
             loading.value = false;

@@ -9,61 +9,59 @@
 // Then add additional custom code here
 //Putting in project colors below
 
-
-
 //Main Blue
 .bg-main-blue {
-    background-color: #0378A6 !important;
-  }
-  
+  background-color: #0378a6 !important;
+}
+
 .text-main-blue {
-color: #0378A6 !important;
+  color: #0378a6 !important;
 }
 
 .btn-main-blue {
-  @include button-variant(#0378A6, #0378A6, #ffffff, #113555, #113555, #ffffff);
+  @include button-variant(#0378a6, #0378a6, #ffffff, #113555, #113555, #ffffff);
 }
 
 
 
 //Secondary blue
 .bg-secondary-blue {
-  background-color: #049DD9 !important;
+  background-color: #049dd9 !important;
 }
 
 .text-secondary-blue {
-  color: #049DD9 !important;
+  color: #049dd9 !important;
 }
 
 .btn-secondary-blue {
-  @include button-variant(#049DD9, #049DD9, #ffffff, #113555, #113555, #ffffff);
+  @include button-variant(#049dd9, #049dd9, #ffffff, #113555, #113555, #ffffff);
 }
 
 //Turqouis
 .bg-turqouise {
-  background-color: #54B5BF !important;
+  background-color: #54b5bf !important;
 }
 
 .text-turqouise {
-  color: #54B5BF !important;
+  color: #54b5bf !important;
 }
 
 .btn-turqouise {
-  @include button-variant(#54B5BF, #54B5BF, #ffffff, #113555, #113555, #ffffff);
+  @include button-variant(#54b5bf, #54b5bf, #ffffff, #113555, #113555, #ffffff);
 }
 
 //Dark Purple
 .bg-dark-purple {
-  background-color: #7972A6 !important;
+  background-color: #7972a6 !important;
 }
 
 .text-dark-purple {
-  color: #7972A6 !important;
+  color: #7972a6 !important;
 }
 
 //Light Grey
 .bg-light-grey {
-  background-color: #F7F7F7 !important;
+  background-color: #f7f7f7 !important;
 }
 
 //Dark Grey
@@ -83,5 +81,15 @@ color: #0378A6 !important;
 .workflow {
   border-bottom: 3px solid;
 }
+
+.mt-n1 {
+  margin-top: -0.25rem !important;
+}
+
+.mt-n4 {
+  margin-top: -1rem !important;
+}
+
+
 
 //end

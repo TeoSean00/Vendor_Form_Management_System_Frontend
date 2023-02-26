@@ -1,8 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import Navbar from "./components/Navbar.vue";
-import NavbarVertical from "./components/NavBarBackup.vue";
-import TopBanner from "./components/TopBanner.vue";
+import Navbar from "./components/navbar/Navbar.vue";
+import NavbarVertical from "./components/navbar/NavBarBackup.vue";
+import TopBanner from "./components/navbar/TopBanner.vue";
 
 components: {
   Navbar;

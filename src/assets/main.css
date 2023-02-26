@@ -7,6 +7,10 @@ body{
   background-color: #F7F7F7;
 }
 
+.bluebg{
+  background-color: #0378A6;
+}
+
 input{
   border: none !important;
 }
@@ -61,3 +65,63 @@ input{
     padding: 0 2rem;
   }
 } */
+
+
+
+
+
+
+/* vendor page  */
+.forms .icon-box {
+  text-align: center;
+  border: 1px solid #ebebeb;
+  padding: 80px 20px;
+  transition: all ease-in-out 0.3s;
+  background: #fff;
+}
+
+.forms .icon-box .icon {
+  margin: 0 auto;
+  width: 64px;
+  height: 64px;
+  background: #ffc451;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.forms .icon-box .icon i {
+  color: #151515;
+  font-size: 28px;
+  transition: ease-in-out 0.3s;
+}
+
+.forms .icon-box h4 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.forms .icon-box h4 a {
+  color: #151515;
+  transition: ease-in-out 0.3s;
+}
+
+.forms .icon-box h4 a:hover {
+  color: #ffc451;
+}
+
+.forms .icon-box p {
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.forms .icon-box:hover {
+  border-color: #fff;
+  box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+}
