@@ -14,13 +14,13 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-2">
-        <div class="row m-1 p-1 border border-dark border-3">
-          <button @click="addHeaderText" class="my-1 btn btn-main-blue">
-            Add Header
+      <div class="col-1 text-center">
+        <div class="row m-1 p-1">
+          <button @click="addHeaderText" class="borderless-button">
+            <font-awesome-icon icon="fa-solid fa-circle-h" class="fa-2xl" />
           </button>
           <button @click="addTextInput" class="my-1 btn btn-main-blue">
-            Add Text Input
+            <font-awesome-icon icon="fa-solid fa-circle-t" />
           </button>
           <button @click="addNumberInput" class="my-1 btn btn-main-blue">
             Add Number Input
