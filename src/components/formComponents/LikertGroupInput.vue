@@ -1,19 +1,39 @@
 <template>
-  Order No: {{ idx }} Likert Group
-  <br />
   <input
     type="text"
-    placeholder="Key in question"
+    placeholder="Untitled Likert Group"
+    class="col-8 template-text-input p-3 my-1 ml-5 mr-5"
     v-model="itemInfo.text"
     @input="updateText"
   />
-  <button @click="addOption">Option +</button>
-  <button @click="removeQuestion">Delete question</button>
+  <button class="px-3 borderless-button" @click="addOption" > 
+      <font-awesome-icon icon="fa-solid fa-circle-plus" />
+  </button>
   <br />
-  <p v-for="(i, index) in noOfOptions" :key="index">
-    <input type="text" placeholder="Option" v-model="itemInfo.options[i - 1]" />
-    <button @click="removeOption(i)">[X]</button>
-  </p>
+  <span v-for="(i, index) in noOfOptions" :key="index">
+    <input 
+        type="text" 
+        placeholder="Option" 
+        class="col-6 bg-light-grey p-2 my-3 rounded"
+        v-model="itemInfo.options[i - 1]" 
+    />
+    [1,2,3,4,5]
+        <button @click="removeOption(i)" class="borderless-button px-3">  
+        <font-awesome-icon icon="fa-solid fa-xmark" />
+    </button>
+  </span>
+  <hr>
+  <div class="row">
+    <div class="col-12 text-end px-5 py-1">
+      <span >
+        Required
+        <input class="form-check-input bg-dark-grey mx-2" type="checkbox">
+        <button class="borderless-button mx-2" @click="removeQuestion">
+          <font-awesome-icon icon="fa-solid fa-trash" />
+        </button>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
