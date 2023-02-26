@@ -1,14 +1,22 @@
 <template>
-    Order No: {{ idx }}
-    <br>
+    <!-- Order No: {{ idx }} -->
+<div class="row p-3">
   <input
     type="text"
-    placeholder="Key in title"
+    class="col-8 template-text-input p-3 my-1 ml-5 mr-5"
+    placeholder="Untitled Question"
     v-model="itemInfo.text"
     @input="updateText"
   />
-  <span>Input field here</span>
-  <button @click="removeQuestion">Delete question</button>
+  <br>
+  <div class="row">
+    <p class="col-6 template-text-answer p-3 my-1 ml-5 mr-5">User's Answer Here</p>
+    <button class="col-1 borderless-button" @click="removeQuestion">
+      <font-awesome-icon icon="fa-solid fa-trash" />
+    </button>
+  </div>
+
+</div>
 </template>
 
 <script>
