@@ -9,6 +9,7 @@ import ManageVendorViewJP from "../views/ManageVendorViewJP.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 import CreateUser from "../views/CreateUser.vue";
 import Test from "../views/Test.vue";
+import VendorForm from "../views/VendorForm.vue";
 
 const requireAuth = (to, from, next) => {
   let user = JSON.parse(localStorage.getItem("user"));
@@ -102,6 +103,12 @@ const router = createRouter({
       path: "/test",
       name: Test,
       component: () => import("../views/Test.vue"),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: "/vendorForm",
+      name: VendorForm,
+      component: () => import("../views/VendorForm.vue"),
       beforeEnter: requireAuth,
     },
   ],
