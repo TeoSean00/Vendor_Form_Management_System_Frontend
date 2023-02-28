@@ -106,6 +106,14 @@
           Preview Form
         </button>
       </div>
+      <!-- Tyler button to go Do Form page-->
+      <div class="row mt-4">
+        <router-link to="/vendorForm">
+          <button class="btn btn-turqouise mb-3">
+            Do Form (TYLER)
+          </button>
+        </router-link>
+      </div>
     </div>
 
     <!-- Modal -->
@@ -170,7 +178,7 @@ export default {
               { type: "text", order: 1, text: "Company's Name" },
               { type: "number", order: 2, text: "Company Registration No:" },
               { type: "text", order: 3, text: "Office Address" },
-              { type: "boolean", order: 4, text: "GST Registered" },
+              { type: "boolean", order: 4, text: "GST Registered", "options": [ "Yes", "No" ]  },
               { type: "number", order: 5, text: "Tel" },
               { type: "text", order: 6, text: "Fax" },
               {
@@ -219,21 +227,22 @@ export default {
                 text: "NEW VENDOR ASSESSMENT FORM",
                 style: "h1",
               },
-              { type: "boolean", order: 2, text: "ISO 9001 Certification" },
+              { type: "boolean", order: 2, text: "ISO 9001 Certification", options: ["Yes", "No"] },
               { type: "text", order: 3, text: "Certification Body" },
               {
                 type: "boolean",
                 order: 4,
                 text: "Accreditation of Laboratory",
+                options: ["Yes", "No"]
               },
               { type: "text", order: 5, text: "Accreditation Body" },
-              { type: "boolean", order: 6, text: "Product Certification" },
+              { type: "boolean", order: 6, text: "Product Certification", options: ["Yes", "No"] },
               {
                 type: "text",
                 order: 7,
                 text: "Product Markings (e.g. PSB, UL, TUV)",
               },
-              { type: "boolean", order: 8, text: "Site Evaluation Results" },
+              { type: "boolean", order: 8, text: "Site Evaluation Results", options: ["Yes", "No"] },
               {
                 type: "checkbox",
                 order: 9,
@@ -244,6 +253,7 @@ export default {
                 type: "boolean",
                 order: 10,
                 text: "Results of Samples/Product Evaluation",
+                options: ["Yes", "No"]
               },
               {
                 type: "checkbox",
@@ -251,7 +261,7 @@ export default {
                 text: "Results of Samples/Product Evaluation",
                 options: ["Satisfactory", "Unsatisfactory"],
               },
-              { type: "boolean", order: 12, text: "Results of First Deal" },
+              { type: "boolean", order: 12, text: "Results of First Deal", options: ["Yes", "No"] },
               {
                 type: "checkbox",
                 order: 13,
@@ -262,6 +272,7 @@ export default {
                 type: "boolean",
                 order: 14,
                 text: "Track Record Review/ Customer Reference",
+                options: ["Yes", "No"]
               },
               {
                 type: "checkbox",
@@ -273,6 +284,7 @@ export default {
                 type: "boolean",
                 order: 16,
                 text: "Other Evaluation",
+                options: ["Yes", "No"]
               },
               {
                 type: "text",

@@ -91,6 +91,7 @@ export default {
         type: "boolean",
         order: formItems.value.length,
         text: "",
+        options: ["Yes", "No"],
       });
     }
     function addDateInput() {
