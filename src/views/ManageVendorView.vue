@@ -1,167 +1,185 @@
 <template>
-  <Navbar />
+  <NavbarJP />
   <div class="container">
-    <div class="row px-5 pt-3">
-      <p class="text-secondary-blue">
-        Welcome back,
+    <div class="row pt-3 mb-5">
+
+      <div class="col-10">
+        <h5 class="text-secondary-blue">
+          Welcome back,
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
-      </p>
+      </h5>
+      </div>
+
+      <div class="col-2">
+
+      <button class="btn btn-primary me-2" @click="toggleNewWorkflow">
+        Create Workflow
+      </button>
+      </div>
+      
     </div>
-    <!-- {{vendors.vendor}} -->
-    <div v-for="vendor in vendors" :key="vendor">
-      <div class="text-main-blue workflow d-flex justify-content-between">
-        <span class="hover" @click="toggleCollapse(vendor)">
-          <span v-if="vendor.name == null"> Vendor {{ vendor.vendorId }} </span>
-          <span v-else>
-            {{ vendor.name }}
-          </span>
+    
+    <form action="">
+      <div class="mb-3">
+        <input type="text" class="p-3" v-model="searchName">
+      </div>
+    </form>
+
+    <div class="list-group flex">
+      
+      <a v-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
+
+        
+        <span v-if="workflow.workflowName == null">
+          <h3>Company {{ workflow.workflowId }}</h3>
         </span>
-        <div class="m-3">
-          ADD ASSIGN BUTTON (Make it a popup)
-          <font-awesome-icon
-            icon="pen-to-square"
-            class="hover mx-2 mt-1"
-            @click="toggleEditVendor(vendor)"
-          />
-          <button
-            class="btn btn-main-blue mx-2 mt-1"
-            @click="toggleFormbuilder(vendor, vendor.id)"
-          >
-            Create Form
-            <font-awesome-icon icon="plus" />
-          </button>
+        <span v-else>
+          <h3>{{ workflow.workflowName }}</h3>
+        </span>
+        <div class="float-right">
+          <span class="badge bluebg mx-1 mt-2" >In Progress</span>
+          <span class="badge text-bg-info">Total</span>
         </div>
-      </div>
-      <div
-        v-for="form in vendor.forms"
-        :key="form.formId"
-        :class="{ collapse: !vendor.collapse }"
-        class="list-group"
-      >
-        <div
-          class="container my-2 form-option rounded-2 d-flex justify-content-between list-group-item list-group-item-action"
-        >
-          <div>
-            <div>Form Id: {{ form.formId }}</div>
-            <div>Form Name: {{ form.formName }}</div>
-          </div>
-          <div>Form Status: {{ form.status }}</div>
-        </div>
-      </div>
+        
+      </a>
+      
+      
     </div>
 
-    <div class="p-3">
-      <button class="btn btn-primary me-2" @click="toggleFormview">
-        View Templates
-      </button>
-      <button
-        type="button"
-        class="btn btn-primary me-2"
-        data-bs-toggle="modal"
-        data-bs-target="#vendorPopup"
-      >
-        Create Vendor
-      </button>
-    </div>
   </div>
 
-  <!-- Create Vendor Popup -->
-  <div
-    class="modal fade"
-    id="vendorPopup"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            Create New Vendor
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label"
-                >Vendor Name</label
-              >
-              <input
-                type="name"
-                placeholder="Vendor name here"
-                class="form-control"
-                id="vendorName"
-                required
-                v-model="vendorName"
-              />
-              <div id="formHelp" class="form-text">
-                Note that this is the name of the vendor you are looking to
-                onboard.
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            @click="toggleNewVendor"
-            data-bs-dismiss="modal"
-          >
-            Create Vendor
-          </button>
-        </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Assign Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li  v-for="user in users" style="list-style-type: none;">
+            <input :id="user" type="checkbox" :name="user"> {{ user.userName }}
+          </li>
+        </ul>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
+</div>
+
 </template>
 
 <script>
-import { ref, watch } from "vue";
-import Navbar from "../components/navbar/Navbar.vue";
+import { ref } from "vue";
+import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
-import { useVendorStore } from "../stores/vendorStore";
 
 export default {
-  components: { Navbar },
+  components: { NavbarJP },
   setup() {
-    var vendorName = ref("");
-    //commented out for frontend
-    // var vendors = useVendorStore();
-    // vendors.getVendors();
+    var searchName = ""
+    var users = ref([
+      {
+        userId: 1,
+        userName: "John@gmail.com",
+      },
+      {
+        userId: 2,
+        userName: "Kevan",
+      },
+      {
+        userId: 3,
+        userName: "Johnson",
+      },
+      {
+        userId: 4,
+        userName: "Timbre",
+      },
+      {
+        userId: 5,
+        userName: "Jadon",
+      },
 
-    var vendors = ref([
+    ])
+
+    var workflows = ref([
       {
-        id: "63f562319ed0555520964e17",
-        name: "One bear",
-        users: [],
-        forms: [],
+        workflowId: 1,
+        workflowName: "Test Workflow Name",
+        forms: [
+          {
+            formId: 1,
+            formName: "Form 1",
+            status: "Pending",
+          },
+          {
+            formId: 2,
+            formName: "Form 2",
+            status: "Pending",
+          },
+        ],
       },
       {
-        id: "63f562af9ed0555520964e18",
-        name: "Two Bears",
-        users: [],
-        forms: [],
+        workflowId: 2,
+        workflowName: null,
+        forms: [
+          {
+            formId: 1,
+            formName: "Form 1",
+            status: "Pending",
+          },
+        ],
       },
-      { id: "63f562b49ed0555520964e19", name: "Three", users: [], forms: [] },
+      {
+        workflowId: 3,
+        workflowName: null,
+        forms: [
+          {
+            formId: 1,
+            formName: "Form 1",
+            status: "Pending",
+          },
+        ],
+      },
+      {
+        workflowId: 4,
+        workflowName: null,
+        forms: [
+          {
+            formId: 1,
+            formName: "Form 1",
+            status: "Pending",
+          },
+          {
+            formId: 2,
+            formName: "Form 2",
+            status: "Pending",
+          },
+          {
+            formId: 3,
+            formName: "Form 3",
+            status: "Pending",
+          },
+        ],
+      },
     ]);
+    
+    function showModalFn(){
+      showModal = true;
+      console.log("Shown Modal");
+    }
 
-    function toggleCollapse(vendor) {
-      vendor.collapse = !vendor.collapse;
+    function toggleCollapse(workflow) {
+      workflow.collapse = !workflow.collapse;
       console.log("Toggle Collapse");
     }
 
@@ -170,58 +188,39 @@ export default {
 
     const router = useRouter();
 
-    const toggleFormbuilder = (vendorName, vendorId) => {
-      console.log("toggled vendorID", vendorId, "and vendorName", vendorName);
-      router.push({
-        name: "formbuilder",
-        params: { name: vendorName },
-        query: { vendorId: vendorId },
-      });
+    const toggleFormbuilder = () => {
+      router.push("/formbuilder");
     };
 
     const toggleFormview = () => {
       router.push("/viewform");
     };
 
-    const toggleNewVendor = async () => {
-      console.log("vendorname is", vendorName.value);
-      var newVendor = {
-        name: vendorName.value,
+    const toggleNewWorkflow = () => {
+      var newWorkflow = {
+        workflowId: workflows._rawValue.length + 1,
+        forms: [],
       };
-      var error = null;
-      try {
-        // commented out for frontend
-        // await vendors.addVendor(newVendor);
-        vendors.value.push({
-          id: "63f562319ed0555520964e17",
-          name: "One bear",
-          users: [],
-          forms: [],
-        });
-      } catch (error) {
-        alert("ERROR,", error.message);
-      }
-      if (!error) {
-        alert("Vendor Added Successfully");
-      }
-      vendorName.value = "";
+      workflows.value.push(newWorkflow);
     };
 
-    const toggleEditVendor = (vendor) => {
-      console.log(vendor.vendorId);
+    const toggleEditWorkflow = (workflow) => {
+      console.log(workflow.workflowId);
       var newName = prompt("Enter new workflow name!");
-      vendor.vendorName = newName;
+      workflow.workflowName = newName;
     };
 
     return {
-      vendors,
-      vendorName,
+      users,
+      workflows,
       toggleCollapse,
       currentUser,
       toggleFormbuilder,
       toggleFormview,
-      toggleNewVendor,
-      toggleEditVendor,
+      toggleNewWorkflow,
+      toggleEditWorkflow,
+      showModalFn,
+      searchName
     };
   },
 };
