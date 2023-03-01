@@ -1,7 +1,7 @@
 <template>
   <NavbarJP />
   <div class="container">
-    <div class="row pt-3 mb-5">
+    <div class="row pt-3 mb-3">
 
       <div class="col-10">
         <h5 class="text-secondary-blue">
@@ -12,22 +12,22 @@
 
       <div class="col-2">
 
-      <button class="btn btn-primary me-2" @click="toggleNewWorkflow">
+      <button class="btn btn-primary" @click="toggleNewWorkflow">
         Create Workflow
       </button>
       </div>
       
     </div>
-    
+ 
     <form action="">
-      <div class="mb-3">
-        <input type="text" class="p-3" v-model="searchName">
+      <div class="input-group mb-2">
+        <span class="input-group-text bluebg text-light" id="basic-addon3">Search</span>
+        <input v-model="searchName" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
       </div>
     </form>
 
-    <div class="list-group flex">
-      
-      <a v-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
+    <div v-if="searchName != ''" class="list-group flex">
+      <a vv-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
 
         
         <span v-if="workflow.workflowName == null">
@@ -44,6 +44,23 @@
       </a>
       
       
+    </div>
+    <div v-else class="list-group flex">
+      <a v-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
+
+        
+        <span v-if="workflow.workflowName == null">
+          <h3>Company {{ workflow.workflowId }}</h3>
+        </span>
+        <span v-else>
+          <h3>{{ workflow.workflowName }}</h3>
+        </span>
+        <div class="float-right">
+          <span class="badge bluebg mx-1 mt-2" >In Progress</span>
+          <span class="badge text-bg-info">Total</span>
+        </div>
+        
+      </a>
     </div>
 
   </div>
@@ -82,6 +99,8 @@ import { ref } from "vue";
 import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
+
+
 
 export default {
   components: { NavbarJP },
