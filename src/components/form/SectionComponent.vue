@@ -2,7 +2,12 @@
   <div class="mt-2 p-2 border rounded border-light border-1 bg-white shadow-sm">
     <div class="row">
       <div class="col-10">
-        <!-- {{ sectionInfo }} -->
+       {{ Object.keys(sectionInfo)[0] }}
+        
+        <button class="text-end borderless-button mx-2" @click="removeSection(order)">
+          <font-awesome-icon icon="fa-solid fa-trash" />
+        </button>
+
         <div class="row m-1">
           <div v-for="(item, index) in formItems" :key="index">
             <FormComponent
@@ -52,7 +57,7 @@ import FormComponent from "../form/FormComponent.vue";
 import { ref } from "vue";
 export default {
   components: { FormComponent },
-  props: ["sectionInfo"],
+  props: ["sectionInfo", "order"],
   setup(props, context) {
     var formItems = ref(props.sectionInfo[Object.keys(props.sectionInfo)[0]]);
     // console.log(formItems.value);
@@ -128,6 +133,10 @@ export default {
       formItems.value.splice(questionKey, 1);
     }
 
+    function removeSection(toRemove){
+      context.emit("removeSection",toRemove);
+    }
+
     return {
       formItems,
       addCheckboxInput,
@@ -139,6 +148,7 @@ export default {
       addLikertGroupInput,
       addTextInput,
       removeQuestion,
+      removeSection,
       update,
     };
   },
