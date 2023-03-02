@@ -14,34 +14,34 @@
           </div>
         </div>
       </div>
-      <div class="col-1">
-        <div class="row m-1 p-1 border border-dark border-3">
-          <button @click="addHeaderText" class="my-1 btn btn-main-blue btn-circle ">
-            <font-awesome-icon icon="fa-solid fa-h" />
-          </button>
-          <button @click="addTextInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-t" />
-          </button>
-          <button @click="addNumberInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-1" />
-          </button>
-          <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-t" />
-            <font-awesome-icon icon="fa-solid fa-f" />
-          </button>
-          <button @click="addDateInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-calendar" />
-          </button>
-          <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-circle-check" />
-          </button>
-          <button @click="addRadioInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-radio" />
-          </button>
-          <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-object-group" />
-          </button>
-        </div>
+    </div>
+    <div class="col-12 sticky-bottom text-center d-flex justify-content-center border rounded border-light border-1 bg-white shadow-sm">
+      <div class="row m-1 p-1 ">
+        <button @click="addHeaderText" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Header">
+          <font-awesome-icon icon="fa-solid fa-h" />
+        </button>
+        <button @click="addTextInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Text Input">
+          <font-awesome-icon icon="fa-solid fa-t" />
+        </button>
+        <button @click="addNumberInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Number Input">
+          <font-awesome-icon icon="fa-solid fa-1" />
+        </button>
+        <button @click="addBooleanInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add True False">
+          <font-awesome-icon icon="fa-solid fa-t" />
+          <font-awesome-icon icon="fa-solid fa-f" />
+        </button>
+        <button @click="addDateInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Date">
+          <font-awesome-icon icon="fa-solid fa-calendar" />
+        </button>
+        <button @click="addCheckboxInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Checkbox Group">
+          <font-awesome-icon icon="fa-solid fa-circle-check" />
+        </button>
+        <button @click="addRadioInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Radio Group">
+          <font-awesome-icon icon="fa-solid fa-radio" />
+        </button>
+        <button @click="addLikertGroupInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Likert Group">
+          <font-awesome-icon icon="fa-solid fa-object-group" />
+        </button>
       </div>
     </div>
   </div>
