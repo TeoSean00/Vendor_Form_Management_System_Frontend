@@ -21,11 +21,19 @@ import {
   faXmark,
   faSquare,
   faCirclePlus,
+  faH,
+  faT,
+  fa1,
+  faF,
+  faCalendar,
+  faCircleCheck,
+  faRadio,
+  faObjectGroup
 } from "@fortawesome/free-solid-svg-icons";
 
 
 
-library.add(faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
+library.add(fa1,faF,faCalendar,faCircleCheck,faRadio,faObjectGroup,faH, faT, faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
 
 
 import App from "./App.vue";

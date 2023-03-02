@@ -14,31 +14,32 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-2">
+      <div class="col-1">
         <div class="row m-1 p-1 border border-dark border-3">
-          <button @click="addHeaderText" class="my-1 btn btn-main-blue">
-            Add Header
+          <button @click="addHeaderText" class="my-1 btn btn-main-blue btn-circle ">
+            <font-awesome-icon icon="fa-solid fa-h" />
           </button>
           <button @click="addTextInput" class="my-1 btn btn-main-blue">
-            Add Text Input
+            <font-awesome-icon icon="fa-solid fa-t" />
           </button>
           <button @click="addNumberInput" class="my-1 btn btn-main-blue">
-            Add Number Input
+            <font-awesome-icon icon="fa-solid fa-1" />
           </button>
           <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
-            Add BooleanInput
+            <font-awesome-icon icon="fa-solid fa-t" />
+            <font-awesome-icon icon="fa-solid fa-f" />
           </button>
           <button @click="addDateInput" class="my-1 btn btn-main-blue">
-            Add DateInput
+            <font-awesome-icon icon="fa-solid fa-calendar" />
           </button>
           <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
-            Add Checkbox Input
+            <font-awesome-icon icon="fa-solid fa-circle-check" />
           </button>
           <button @click="addRadioInput" class="my-1 btn btn-main-blue">
-            Add Radio Input
+            <font-awesome-icon icon="fa-solid fa-radio" />
           </button>
           <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
-            Add Likert Group
+            <font-awesome-icon icon="fa-solid fa-object-group" />
           </button>
         </div>
       </div>
