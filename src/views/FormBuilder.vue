@@ -29,7 +29,7 @@
       </div>
       <div class="row m-1">
         <div v-for="(section, index) in formSections" :key="index">
-          <SectionComponent :sectionInfo="section" @updateSection="update" />
+          <SectionComponent :order="index" :sectionInfo="section"  @updateSection="update" @removeSection="removeSection"/>
         </div>
         <!-- <div v-for="(item, index) in formItems" :key="index">
           <FormComponent
@@ -319,6 +319,10 @@ export default {
       // console.log("parent checking the state of the form", formItems);
     }
 
+    function removeSection(toRemove){
+      formSections.value.splice(toRemove,1);
+
+    }
     function exportForm() {
       //Packages the form content into a JSON string
       //This is where we write the ajax code
@@ -452,6 +456,7 @@ export default {
       addTemplate,
       addAdminSection,
       addVendorSection,
+      removeSection,
       togglePreview,
       sendForm,
     };

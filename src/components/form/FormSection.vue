@@ -1,6 +1,5 @@
 <template>
   <div class="mb-3">
-
     <!-- Header -->
     <template v-if="sectionData.type == 'header'">
       <p :class="sectionData.style">{{ sectionData.label }}</p>

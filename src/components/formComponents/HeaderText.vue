@@ -21,7 +21,7 @@
       <div class="col-12 text-end px-5 py-1">
         <span >
           Required
-          <input class="form-check-input bg-dark-grey mx-2" type="checkbox">
+          <input v-model="itemInfo.required" class="form-check-input bg-dark-grey mx-2" type="checkbox">
           <button class="borderless-button mx-2" @click="removeQuestion">
             <font-awesome-icon icon="fa-solid fa-trash" />
           </button>

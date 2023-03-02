@@ -66,6 +66,7 @@ export default {
         type: "text",
         order: formItems.value.length,
         text: "",
+        required : false,
       });
     }
     function addCheckboxInput() {
@@ -74,6 +75,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
+        required : false,
       });
     }
     function addRadioInput() {
@@ -82,6 +84,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
+        required : false,
       });
     }
     function addHeaderText() {
@@ -90,6 +93,7 @@ export default {
         order: formItems.value.length,
         text: "",
         style: "h1",
+        required : false,
       });
     }
     function addBooleanInput() {
@@ -98,6 +102,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: ["Yes", "No"],
+        required : false,
       });
     }
     function addDateInput() {
@@ -105,6 +110,7 @@ export default {
         type: "date",
         order: formItems.value.length,
         text: "",
+        required : false,
       });
     }
     function addNumberInput() {
@@ -112,6 +118,7 @@ export default {
         type: "number",
         order: formItems.value.length,
         text: "",
+        required : false,
       });
     }
     function addLikertGroupInput() {
@@ -120,6 +127,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
+        required : false,
       });
     }
 
