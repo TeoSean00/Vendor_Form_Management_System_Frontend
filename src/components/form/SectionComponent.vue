@@ -1,14 +1,13 @@
 <template>
-  <div class="mt-2 p-2 border rounded border-light border-1 bg-white shadow-sm">
+  <div class="mt-2 p-2 border rounded border-light border-1 bg-dark-purple shadow-sm">
     <div class="row">
-      <div class="col-10">
-       {{ Object.keys(sectionInfo)[0] }}
-        
-        <button class="text-end borderless-button mx-2" @click="removeSection(order)">
-          <font-awesome-icon icon="fa-solid fa-trash" />
-        </button>
-
-        <div class="row m-1">
+      <div class="col-12">
+        {{ assignTo }} Section 
+          <button class="text-center borderless-button mx-2" @click="removeSection(order)">
+            Remove Section <font-awesome-icon icon="fa-solid fa-trash" />
+          </button>
+      </div>
+        <div class="row">
           <div v-for="(item, index) in formItems" :key="index">
             <FormComponent
               :itemInfo="item"
@@ -18,9 +17,12 @@
             />
           </div>
         </div>
-      </div>
+      
     </div>
-    <div class="col-12 sticky-bottom text-center d-flex justify-content-center border rounded border-light border-1 bg-white shadow-sm">
+    <div class="col-6 offset-3 sticky-bottom d-flex justify-content-center border rounded border-light border-1 bg-light-grey shadow-lg">
+      <div class="row " >
+        
+      </div>
       <div class="row m-1 p-1 ">
         <button @click="addHeaderText" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Header">
           <font-awesome-icon icon="fa-solid fa-h" />
@@ -54,13 +56,21 @@
 
 <script>
 import FormComponent from "../form/FormComponent.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 export default {
   components: { FormComponent },
   props: ["sectionInfo", "order"],
   setup(props, context) {
     var formItems = ref(props.sectionInfo[Object.keys(props.sectionInfo)[0]]);
     // console.log(formItems.value);
+    const assignTo = computed(()=>{
+      if (Object.keys(props.sectionInfo)[0] == "admin") {
+        return "Admin";
+      } else {
+        return "Vendor";
+      }
+    })
+
     function addTextInput() {
       formItems.value.push({
         type: "text",
@@ -147,6 +157,7 @@ export default {
 
     return {
       formItems,
+      assignTo,
       addCheckboxInput,
       addRadioInput,
       addHeaderText,

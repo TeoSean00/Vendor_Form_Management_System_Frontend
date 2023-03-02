@@ -1,6 +1,6 @@
 <template>
   <div
-    class="row mt-2 p-2 border rounded border-light border-1 bg-white shadow-sm"
+    class="m-2 px-2 border rounded border-light border-1 bg-white shadow-sm"
   >
     <div v-if="itemInfo.type == 'header'">
       <HeaderText
