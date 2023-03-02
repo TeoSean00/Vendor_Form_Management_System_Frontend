@@ -8,11 +8,282 @@
   <section id="forms" class="forms">
       <div class="container">
 
-        <div class="section-title">
-          <h1 class="text-main-blue">{company name}</h1>
+        <div class="section-title d-flex justify-content-between">
+          <h1 class="text-main-blue">{company name}</h1>   
+          <div class="btn-group mt-auto shadow-0" role="group" aria-label="Button group with nested dropdown">
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" href="#allusers">All Users</button>
+
+            <div class="modal fade" id="allusers" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="allusersLabel">List of Users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body" id="usermodal">
+                    <table class="table align-middle mb-0 bg-white" id="usertable">
+                      <thead class="bg-light">
+                        <tr>
+                          <th>#</th>
+                          <th>Name</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <p class="fw-normal mb-1">1</p>
+                          </td>
+                          <td>  
+                              <p class="fw-bold mb-1">John Doe</p>
+                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="fw-normal mb-1">2</p>
+                          </td>
+                          <td>             
+                                <p class="fw-bold mb-1">John Doe</p>
+                                <p class="text-muted mb-0">john.doe@gmail.com</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="fw-normal mb-1">1</p>
+                          </td>
+                          <td>  
+                              <p class="fw-bold mb-1">John Doe</p>
+                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="fw-normal mb-1">1</p>
+                          </td>
+                          <td>  
+                              <p class="fw-bold mb-1">John Doe</p>
+                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="fw-normal mb-1">1</p>
+                          </td>
+                          <td>  
+                              <p class="fw-bold mb-1">John Doe</p>
+                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#addusers" data-bs-toggle="modal" data-bs-dismiss="modal">Add users</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="addusers" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addusersLabel">Add users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center">
+                    <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
+                                <datalist id="datalistOptions">
+                                  <option value="john"></option>
+                                  <option value="Mary"></option>
+                                  <option value="may"></option>
+                                  <option value="ss"></option>
+                                  <option value="iii"></option>
+                                </datalist>
+
+                    <button class="btn btn-outline-primary mt-3 px-5" data-bs-toggle="modal" data-bs-dismiss="modal" @click="addUsers">Add</button>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#allusers" >See users</button>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" href="#addusers">Add Users</button>
+
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Add Forms
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <li><a class="dropdown-item" href="/formbuilder">Create new form</a></li>
+                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#templatelist" >Choose from templates</a></li>
+              </ul>
+            </div>
+          </div>   
+        </div>
+
+        <!-- Modal for templates -->
+        <div class="modal fade" id="templatelist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="choosetemplateLabel">Choose Template</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="templatemodal">
+                <div class="box">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div><div class="col">
+            <div class="card template-box">
+              <div class="card-body">
+                  <h6 class="card-title">Form 1231</h6>
+                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
+              </div>
+            </div>
+          </div>
+      </div>	
+    </div>
+</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add template</button>
+              </div>
+            </div>
+          </div>
         </div>
 
 
+
+
+
+
+
+
+
+        
         
         <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
             <div class="card-body"><h4 class="text-white m-0">Assigned (Vendor fill in Stage) | Waiting for vendor response</h4></div>
@@ -50,7 +321,7 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Save changes</button>
                               </div>
                             </div>
                           </div>

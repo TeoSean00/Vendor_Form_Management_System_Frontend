@@ -145,3 +145,34 @@ input{
   background: #f1f1f1;
   color: #00748b;
 }
+
+#usermodal {    
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+#usertable td,th{
+  text-align: center;
+}
+
+.box{
+  padding:60px 0px;
+}
+
+.template-box{
+  background:#f0eded;
+  border-radius:0;
+  margin:5px 0px;
+  height: 100px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
+#templatemodal {    
+  overflow-y: auto;
+  max-height: 700px;
+}
