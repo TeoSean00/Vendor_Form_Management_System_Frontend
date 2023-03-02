@@ -61,28 +61,59 @@ export default {
           let type = row.type;
           console.log("row is", row, "type is", type);
           if (type == "text") {
-            newForm.value.push({
-              order: row.order,
-              label: row.text,
-              input: "",
-              type: type,
-            });
-          } else if (type == "radio" || type == "checkbox") {
-            newForm.value.push({
-              order: row.order,
-              label: row.text,
-              input: [],
-              options: row.options,
-              type: type,
-            });
-          } else if (type == "header") {
-            newForm.value.push({
-              type: type,
-              style: row.style,
-              text: row.text,
-              order: row.order,
-            });
-          }
+          newForm.value.push({
+            order: row.order,
+            label: row.text,
+            input: "",
+            type: type,
+          });
+        } else if (type == "radio" || type == "checkbox") {
+          newForm.value.push({
+            order: row.order,
+            label: row.text,
+            input: [],
+            options: row.options,
+            type: type,
+          });
+        } else if (type == "header") {
+          newForm.value.push({
+            order: row.order,
+            label: row.text,
+            style: row.style,
+            type: type,
+          });
+        } else if (type == "number") {
+          newForm.value.push({
+            order: row.order,
+            label: row.text,
+            input: "",
+            type: type,
+          });
+        } else if (type == "boolean") {
+          newForm.value.push({
+            order: row.order,
+            label: row.text,
+            input: [],
+            options: row.options,
+            type: "radio",
+          });
+        } else if (type == "date") {
+          newForm.value.push({
+            order: row.order,
+            label: row.text,
+            input: "",
+            options: row.options,
+            type: type,
+          });
+        }else if (type == "likertGroup") {
+          newForm.value.push({
+            order: row.order,
+            label: row.text,
+            input: [],
+            options: row.options,
+            type: type,
+          });
+        }
         }
       }
     };
