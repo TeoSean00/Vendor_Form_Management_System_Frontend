@@ -26,8 +26,8 @@
       </div>
     </form>
 
-    <div v-if=" searchName != '' " class="list-group flex">
-      <a vv-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
+    <div v-if = "!searchName" class="list-group flex">
+      <a v-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
 
         
         <span v-if="workflow.workflowName == null">
@@ -45,16 +45,20 @@
       
       
     </div>
-    <div v-else class="list-group flex">
-      <a v-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
+    <div v-if="searchName" class="list-group flex">
+      <a v-for="workflow in workflows"  href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
 
         
-        <span v-if="workflow.workflowName == null">
-          <h3>Company {{ workflow.workflowId }}</h3>
+        <span v-if="workflow.workflowName.includes(searchName)" >
+          <h3>{{workflow.workflowName}}</h3>
         </span>
-        <span v-else>
+        <span>
+          {{ searchName }}
+        </span> -->
+        <!-- <span v-else>
           <h3>{{ workflow.workflowName }}</h3>
-        </span>
+        </span> -->
+
         <div class="float-right">
           <span class="badge bluebg mx-1 mt-2" >In Progress</span>
           <span class="badge text-bg-info">Total</span>
