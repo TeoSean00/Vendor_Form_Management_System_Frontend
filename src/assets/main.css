@@ -120,3 +120,59 @@ input{
   box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.1);
   transform: translateY(-10px);
 }
+
+.card-footer .col-6:first-child {
+  border-right: 1px solid #d7d7d7;
+  padding-right: 0;
+}
+
+.card-footer .col-6:last-child .btn-link {
+  border-bottom-right-radius: 3px;
+}
+
+.card-footer .btn-link {
+  background: #f6f6f6;
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #505050;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card-footer .btn-link:hover {
+  background: #f1f1f1;
+  color: #00748b;
+}
+
+#usermodal {    
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+#usertable td,th{
+  text-align: center;
+}
+
+.box{
+  padding:60px 0px;
+}
+
+.template-box{
+  background:#f0eded;
+  border-radius:0;
+  margin:5px 0px;
+  height: 100px;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
+
+#templatemodal {    
+  overflow-y: auto;
+  max-height: 700px;
+}
