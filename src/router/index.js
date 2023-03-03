@@ -5,7 +5,7 @@ import Dashboard from "../views/DashboardView.vue";
 import Home from "../views/Home.vue";
 import FormBuilder from "../views/FormBuilder.vue";
 import ViewForm from "../views/ViewForm.vue";
-import ManageVendorViewJP from "../views/ManageVendorViewJP.vue";
+import ManageVendorView from "../views/ManageVendorView.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 import CreateUser from "../views/CreateUser.vue";
 import Test from "../views/Test.vue";
@@ -47,7 +47,7 @@ const router = createRouter({
     {
       path: "/vendors",
       name: "vendors",
-      component: ManageVendorViewJP,
+      component: ManageVendorView,
       beforeEnter: requireAuth,
     },
     {
