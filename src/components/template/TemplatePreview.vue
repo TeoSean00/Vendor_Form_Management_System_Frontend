@@ -97,59 +97,6 @@ export default {
     console.log("received previewData", props.previewData);
     createForm();
 
-    // const templateData = {
-    //   templateInfo: {
-    //     templateName: "New Vendor Assessment Form",
-    //     assignedTo: "Vendor",
-    //     templateDesc: "Assessment for new vendors",
-    //   },
-    //   templateContents: [
-    //     {
-    //       type: "header",
-    //       order: 0,
-    //       text: "Part A Particulars of applicant (Certificate holder)",
-    //       style: "h1",
-    //     },
-    //     { type: "text", order: 1, text: "Company's Name" },
-    //     { type: "number", order: 2, text: "Company Registration No:" },
-    //     { type: "text", order: 3, text: "Office Address" },
-    //     { type: "boolean", order: 4, text: "GST Registered" },
-    //     { type: "number", order: 5, text: "Tel" },
-    //     { type: "text", order: 6, text: "Fax" },
-    //     {
-    //       type: "checkbox",
-    //       order: 7,
-    //       text: "Type of business License/Registration",
-    //       options: [
-    //         "Sole Proprietorship",
-    //         "Limited Company",
-    //         "Partnership Agreement",
-    //         "Others",
-    //       ],
-    //     },
-    //     {
-    //       type: "header",
-    //       order: 0,
-    //       text: "Contact Person",
-    //       style: "h1",
-    //     },
-    //     { type: "text", order: 8, text: "Contact Name" },
-    //     { type: "number", order: 9, text: "Contact Tel" },
-    //     { type: "text", order: 10, text: "Contact Designation" },
-    //     {
-    //       type: "checkbox",
-    //       order: 11,
-    //       text: "Nature of Business",
-    //       options: ["Manufacturing", "Agent/dealer", "Distributor", "Others"],
-    //     },
-    //     {
-    //       type: "text",
-    //       order: 12,
-    //       text: "If you picked Others please specify the nature of your business",
-    //     },
-    //   ],
-    // };
-
     // const handleSubmit = () => {
     //   console.log("submit called");
     //   console.log(newForm.value);

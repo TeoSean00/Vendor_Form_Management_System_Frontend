@@ -107,7 +107,7 @@
       </div>
       <div class="modal-body">
         <ul>
-          <li  v-for="user in users" style="list-style-type: none;">
+          <li  v-for="user in users" :key="user" style="list-style-type: none;">
             <input :id="user" type="checkbox" :name="user"> {{ user.userName }}
           </li>
         </ul>
