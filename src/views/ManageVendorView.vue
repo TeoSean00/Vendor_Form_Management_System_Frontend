@@ -13,7 +13,7 @@
       <div class="col-2">
 
       <button class="btn btn-primary" @click="toggleNewWorkflow">
-        Create Workflow
+        Add Vendor
       </button>
       </div>
       
@@ -21,7 +21,7 @@
  
     <form action="">
       <div class="input-group mb-2">
-        <span class="input-group-text bluebg text-light" id="basic-addon3">Search</span>
+        <span class="input-group-text bluebg text-light" @click="filter" id="basic-addon3">Search</span>
         <input v-model="searchName" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
       </div>
     </form>
@@ -45,35 +45,30 @@
       
       
     </div>
-    <div v-if="searchName" class="list-group flex">
+    <!-- <div v-else class="list-group flex">
       <a v-for="workflow in workflows"  href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
 
         
         <span v-if="workflow.workflowName.includes(searchName)" >
           <h3>{{workflow.workflowName}}</h3>
         </span>
-        <span>
-          {{ searchName }}
-        </span> -->
-        <!-- <span v-else>
-          <h3>{{ workflow.workflowName }}</h3>
-        </span> -->
-
+        
         <div class="float-right">
           <span class="badge bluebg mx-1 mt-2" >In Progress</span>
           <span class="badge text-bg-info">Total</span>
         </div>
         
       </a>
-    </div>
 
+    </div> -->
+    {{ searchName }}
   </div>
 
-
+<!-- {{workflow.forms._rawValue.length}} -->
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -94,7 +89,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 </template>
 
@@ -137,7 +132,7 @@ export default {
     var workflows = ref([
       {
         workflowId: 1,
-        workflowName: "Test Workflow Name",
+        workflowName: "SMU",
         forms: [
           {
             formId: 1,
@@ -195,12 +190,6 @@ export default {
         ],
       },
     ]);
-    
-    function showModalFn(){
-      showModal = true;
-      console.log("Shown Modal");
-    }
-
     function toggleCollapse(workflow) {
       workflow.collapse = !workflow.collapse;
       console.log("Toggle Collapse");
@@ -242,8 +231,7 @@ export default {
       toggleFormview,
       toggleNewWorkflow,
       toggleEditWorkflow,
-      showModalFn,
-      searchName
+      searchName,
     };
   },
 };
