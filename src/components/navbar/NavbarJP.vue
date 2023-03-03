@@ -72,7 +72,7 @@
             <li class="nav-item">
               <a class="nav-link text-light" href @click.prevent="logOut">
                 <!-- <font-awesome-icon icon="sign-out-alt" /> -->
-                LogOut
+                Log Out
               </a>
             </li>
           </div>
