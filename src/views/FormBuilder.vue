@@ -26,6 +26,7 @@
           <textarea placeholder="Enter Form Description" v-model="desc" rows="2" cols="1"></textarea>
         </div>
       </div>
+      {{ newForm }}
       <div class="row m-1">
         <div v-for="(section, index) in formSections" :key="index">
           <SectionComponent :sectionInfo="section" @updateSection="update" />
@@ -360,29 +361,30 @@ export default {
 
     var newForm = ref([]);
     function sendForm(previewObj) {
-      console.log("Checking previewdata in createform", previewObj.value);
+      console.log("Checking previewdata in createform", previewObj);
       var content = previewObj.templateContents;
       console.log("content is ", content);
       for (let key in content) {
-        // console.log("KEY IS ", key);
+        console.log("KEY IS ", key);
         var section = content[key];
         console.log("section is", section);
 
         var sectionKey = Object.keys(section)[0];
-        // console.log(sectionKey);
-
+        console.log("section key is" + sectionKey);
+        var temp = {};
+        temp[sectionKey] = [];
         for (let row of section[sectionKey]) {
           let type = row.type;
           console.log("row is", row, "type is", type);
           if (type == "text") {
-            newForm.value.push({
+            temp[sectionKey].push({
               order: row.order,
               label: row.text,
               input: "",
               type: type,
             });
           } else if (type == "radio" || type == "checkbox") {
-            newForm.value.push({
+            temp[sectionKey].push({
               order: row.order,
               label: row.text,
               input: [],
@@ -390,21 +392,21 @@ export default {
               type: type,
             });
           } else if (type == "header") {
-            newForm.value.push({
+            temp[sectionKey].push({
               order: row.order,
               label: row.text,
               style: row.style,
               type: type,
             });
           } else if (type == "number") {
-            newForm.value.push({
+            temp[sectionKey].push({
               order: row.order,
               label: row.text,
               input: "",
               type: type,
             });
           } else if (type == "boolean") {
-            newForm.value.push({
+            temp[sectionKey].push({
               order: row.order,
               label: row.text,
               input: [],
@@ -412,7 +414,7 @@ export default {
               type: "radio",
             });
           } else if (type == "date") {
-            newForm.value.push({
+            temp[sectionKey].push({
               order: row.order,
               label: row.text,
               input: "",
@@ -420,7 +422,7 @@ export default {
               type: type,
             });
           } else if (type == "likertGroup") {
-            newForm.value.push({
+            temp[sectionKey].push({
               order: row.order,
               label: row.text,
               input: [],
@@ -429,6 +431,7 @@ export default {
             });
           }
         }
+        newForm.value.push(temp);
       }
       console.log(newForm.value);
       alert(newForm.value)
@@ -453,6 +456,7 @@ export default {
       addVendorSection,
       togglePreview,
       sendForm,
+      newForm,
     };
   },
 };
