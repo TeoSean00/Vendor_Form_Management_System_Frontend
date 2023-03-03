@@ -26,7 +26,7 @@
       </div>
     </form>
 
-    <div v-if="searchName != ''" class="list-group flex">
+    <div v-if=" searchName != '' " class="list-group flex">
       <a vv-for="workflow in workflows" :key="workflow" href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
 
         
