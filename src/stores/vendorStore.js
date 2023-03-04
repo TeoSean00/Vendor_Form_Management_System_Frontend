@@ -1,17 +1,13 @@
 import { defineStore } from "pinia";
 import VendorService from "../services/vendor/vendorService";
 
-export const useVendorStore = defineStore("vendors", {
-  state: () => {
-    return { vendors: [] };
-  },
-  getters: {
-    allTemplates() {
-      return this.vendors;
-    },
-  },
+export const useVendorStore = defineStore("vendorStore", {
+  state: () => ({
+    vendors: [],
+  }),
+  getters: {},
   actions: {
-    addVendor(vendorObject) {
+    async addVendor(vendorObject) {
       VendorService.addVendor(vendorObject)
         .then(() => {
           console.log("updated after adding");
@@ -21,17 +17,10 @@ export const useVendorStore = defineStore("vendors", {
           console.log("error at vendorStore", error);
         });
     },
-    getVendors() {
-      console.log("get vendors called!");
-      VendorService.getVendors()
-        .then((response) => {
-          console.log("store received vendors", response);
-          this.vendors = response;
-          return response.data;
-        })
-        .catch((error) => {
-          console.log("error at vendorStore", error);
-        });
+    async getVendors() {
+      console.log("get vendors called!", this.vendors);
+      this.vendors = await VendorService.getVendors();
+      console.log("this.vendors is", this.vendors);
     },
   },
 });
