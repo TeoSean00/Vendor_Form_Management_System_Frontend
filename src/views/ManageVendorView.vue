@@ -41,24 +41,26 @@
     </form>
 
     <div v-if="!searchName" class="list-group flex">
-      <a
-        v-for="vendor in vendorList"
-        :key="vendor"
-        href="#"
-        class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
-        aria-current="true"
-      >
-        <span v-if="vendor.name == null">
-          <h3>Company {{ vendor.vendorId }}</h3>
-        </span>
-        <span v-else>
-          <h3>{{ vendor.name }}</h3>
-        </span>
-        <div class="float-right">
-          <span class="badge bluebg mx-1 mt-2">In Progress</span>
-          <span class="badge text-bg-info">Total</span>
-        </div>
-      </a>
+      <template v-for="vendor in vendorList" :key="vendor">
+        <a
+          href="#"
+          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
+          aria-current="true"
+          @click="toggleVendorPage(vendor.name, vendor.id)"
+        >
+          <!-- <span v-if="vendor.name == null">
+            <h3>Company {{ vendor.vendorId }}</h3>
+          </span> -->
+          <span>
+            <h3>{{ vendor.name }}</h3>
+            <p>{{ vendor.id }}</p>
+          </span>
+          <div class="float-right">
+            <span class="badge bluebg mx-1 mt-2">In Progress</span>
+            <span class="badge text-bg-info">Total</span>
+          </div>
+        </a>
+      </template>
     </div>
     <!-- <div v-else class="list-group flex">
       <a v-for="workflow in workflows"  href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
@@ -241,13 +243,25 @@ export default {
       vendor.name = newName;
     };
 
-    const toggleFormbuilder = () => {
-      router.push("/formbuilder");
+    const toggleVendorPage = (vendorName, vendorId) => {
+      router.push({
+        name: "AdminVendor",
+        params: {
+          name: vendorName,
+        },
+        query: {
+          vendorId: vendorId,
+        },
+      });
     };
 
-    const toggleFormview = () => {
-      router.push("/viewform");
-    };
+    // const toggleFormbuilder = () => {
+    //   router.push("/formbuilder");
+    // };
+
+    // const toggleFormview = () => {
+    //   router.push("/viewform");
+    // };
 
     return {
       users,
@@ -255,10 +269,9 @@ export default {
       newVendorName,
       newVendorNote,
       currentUser,
-      toggleFormbuilder,
-      toggleFormview,
       toggleNewVendor,
       toggleEditVendor,
+      toggleVendorPage,
       searchName,
     };
   },
