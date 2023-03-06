@@ -3,10 +3,14 @@
 
   <section id="forms" class="forms">
     <div class="container">
+      <div>
+        Data dump section
+        <p>{{ vendorInfo }}</p>
+        <p>{{ templateList }}</p>
+      </div>
+
       <div class="section-title d-flex justify-content-between">
-        <p>Test display data here</p>
-        {{ test }} is here
-        <h1 class="text-main-blue">{company name}</h1>
+        <h1 v-if="vendorInfo" class="text-main-blue">{{ vendorInfo.name }}</h1>
         <div
           class="btn-group mt-auto shadow-0"
           role="group"
@@ -1462,6 +1466,7 @@ import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import { useTemplateStore } from "../stores/templateStore";
 import { onMounted, ref, watch } from "vue";
+import VendorService from "../services/vendor/vendorService";
 
 export default {
   components: {
@@ -1470,8 +1475,20 @@ export default {
     TemplateList,
     SectionComponent,
   },
+  props: ["vendorId"],
   setup(props) {
-    const countryDetails = ref(props.details);
+    const currId = ref(props.vendorId);
+    console.log("vendorDetails is", currId);
+
+    var vendorInfo = ref(null);
+
+    var getVendorInfo = async () => {
+      vendorInfo.value = await VendorService.getVendor(currId.value);
+    };
+
+    getVendorInfo();
+
+    console.log(vendorInfo);
 
     var content = ref("");
 
@@ -1489,151 +1506,14 @@ export default {
     );
 
     //get template data from templatestore
-    var templates = useTemplateStore();
-    var test = ref(null);
-    templates.getTemplates();
+    var templateStore = useTemplateStore();
+    var templateList = ref([]);
+    templateStore.getTemplates();
 
-    watch((test) => {});
-
-    test.value = templates.getTemplates();
-
-    //temporary template data
-    // var templates = [
-    //   {
-    //     templateInfo: {
-    //       templateName: "New Vendor Assessment Form",
-    //       assignedTo: "Vendor",
-    //       templateDesc: "Assessment for new vendors",
-    //     },
-    //     templateContents: [
-    //       {
-    //         Vendor: [
-    //           {
-    //             type: "header",
-    //             order: 0,
-    //             text: "NEW VENDOR ASSESSMENT FORM",
-    //             style: "h1",
-    //           },
-    //           { type: "text", order: 1, text: "Company's Name" },
-    //           { type: "number", order: 2, text: "Company Registration No:" },
-    //           { type: "text", order: 3, text: "Office Address" },
-    //           { type: "boolean", order: 4, text: "GST Registered" },
-    //           { type: "number", order: 5, text: "Tel" },
-    //           { type: "text", order: 6, text: "Fax" },
-    //           {
-    //             type: "checkbox",
-    //             order: 7,
-    //             text: "Type of business License/Registration",
-    //             options: [
-    //               "Sole Proprietorship",
-    //               "Limited Company",
-    //               "Partnership Agreement",
-    //               "Others",
-    //             ],
-    //           },
-    //           {
-    //             type: "header",
-    //             order: 0,
-    //             text: "Contact Person",
-    //             style: "h1",
-    //           },
-    //           { type: "text", order: 8, text: "Contact Name" },
-    //           { type: "number", order: 9, text: "Contact Tel" },
-    //           { type: "text", order: 10, text: "Contact Designation" },
-    //           {
-    //             type: "checkbox",
-    //             order: 11,
-    //             text: "Nature of Business",
-    //             options: [
-    //               "Manufacturing",
-    //               "Agent/dealer",
-    //               "Distributor",
-    //               "Others",
-    //             ],
-    //           },
-    //           {
-    //             type: "text",
-    //             order: 12,
-    //             text: "If you picked Others please specify the nature of your business",
-    //           },
-    //         ],
-    //       },
-    //       {
-    //         Admin: [
-    //           {
-    //             type: "header",
-    //             order: 0,
-    //             text: "NEW VENDOR ASSESSMENT FORM",
-    //             style: "h1",
-    //           },
-    //           { type: "boolean", order: 2, text: "ISO 9001 Certification" },
-    //           { type: "text", order: 3, text: "Certification Body" },
-    //           {
-    //             type: "boolean",
-    //             order: 4,
-    //             text: "Accreditation of Laboratory",
-    //           },
-    //           { type: "text", order: 5, text: "Accreditation Body" },
-    //           { type: "boolean", order: 6, text: "Product Certification" },
-    //           {
-    //             type: "text",
-    //             order: 7,
-    //             text: "Product Markings (e.g. PSB, UL, TUV)",
-    //           },
-    //           { type: "boolean", order: 8, text: "Site Evaluation Results" },
-    //           {
-    //             type: "checkbox",
-    //             order: 9,
-    //             text: "Site Evaluation Results",
-    //             options: ["Satisfactory", "Unsatisfactory"],
-    //           },
-    //           {
-    //             type: "boolean",
-    //             order: 10,
-    //             text: "Results of Samples/Product Evaluation",
-    //           },
-    //           {
-    //             type: "checkbox",
-    //             order: 11,
-    //             text: "Results of Samples/Product Evaluation",
-    //             options: ["Satisfactory", "Unsatisfactory"],
-    //           },
-    //           { type: "boolean", order: 12, text: "Results of First Deal" },
-    //           {
-    //             type: "checkbox",
-    //             order: 13,
-    //             text: "Results of First Deal",
-    //             options: ["Satisfactory", "Unsatisfactory"],
-    //           },
-    //           {
-    //             type: "boolean",
-    //             order: 14,
-    //             text: "Track Record Review/ Customer Reference",
-    //           },
-    //           {
-    //             type: "checkbox",
-    //             order: 15,
-    //             text: "Track Record Review/ Customer Reference",
-    //             options: ["Satisfactory", "Unsatisfactory"],
-    //           },
-    //           {
-    //             type: "boolean",
-    //             order: 16,
-    //             text: "Other Evaluation",
-    //           },
-    //           {
-    //             type: "text",
-    //             order: 17,
-    //             text: "Specify: Product Markings (e.g. PSB, UL, TUV)",
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   },
-    // ];
-
-    // var templates = useTemplateStore();
-    console.log("current templates are", templates);
+    watch(templateStore.$state, (state) => {
+      console.log("CHANGE DETECTED", state);
+      templateList.value = state.templates;
+    });
 
     var formName = ref("");
     var assignedTo = ref("Vendor");
@@ -1767,7 +1647,9 @@ export default {
     }
 
     return {
-      test,
+      vendorInfo,
+      currId,
+      templateList,
       content,
       formItems,
       formName,

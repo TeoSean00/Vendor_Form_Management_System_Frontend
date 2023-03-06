@@ -115,7 +115,7 @@ const router = createRouter({
     {
       path: "/admin/:name",
       name: "AdminVendor",
-      component: () => import("../views/AdminVendor.vue"),
+      component: AdminVendor,
       props: (route) => ({ vendorId: route.query.vendorId }),
       beforeEnter: requireAuth,
     },
