@@ -3,7 +3,7 @@ import authHeader from "../authHeader";
 
 console.log(authHeader());
 
-const API_URL = "http://localhost:8080/api/vendor";
+const API_URL = "http://localhost:8080/api/vendor/";
 
 class VendorService {
   addVendor(vendorObject) {
@@ -22,7 +22,7 @@ class VendorService {
   }
   getVendors() {
     const response = axios
-      .get(API_URL + "/all", { headers: authHeader() })
+      .get(API_URL + "all", { headers: authHeader() })
       .then((response) => {
         console.log("get request successful!", response);
         return response.data;

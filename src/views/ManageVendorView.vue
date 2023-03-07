@@ -76,7 +76,6 @@
       </a>
 
     </div> -->
-    {{ searchName }}
   </div>
 
   <div
