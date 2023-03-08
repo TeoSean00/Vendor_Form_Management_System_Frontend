@@ -173,11 +173,21 @@ export default {
     vendorStore.getVendors();
 
     var searchName = ref("");
+    var filteredNames = ref([]);
 
-    const filteredNames = computed(() => {
-      console.log(vendorList);
-      vendorList.value.filter(function (vendor) {
-        return vendor.name.includes(searchName);
+    //watching the vendorStore state for changes
+    watch(vendorStore.$state, (state) => {
+      console.log("CHANGE DETECTED", state);
+      vendorList.value = state.vendors;
+
+      //   filteredNames.value = computed(() =>{
+      //   return vendorList.filter(function(vendor){
+      //     vendor.name.includes(searchName)
+      //   })
+      // });
+
+      filteredNames.value = vendorList.value.filter(function (vendor) {
+        vendor.name.includes(searchName);
       });
     });
 
