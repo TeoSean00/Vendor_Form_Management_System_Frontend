@@ -39,6 +39,7 @@
         />
       </div>
     </form>
+    <p>Filtered names are</p>
     <p>{{ filteredNames }}</p>
 
     <div v-if="!searchName" class="list-group flex">
@@ -62,10 +63,10 @@
           </div>
         </a>
       </template>
-      <div class="list-group flex">
+    </div>
+    <div v-else class="list-group flex">
+      <template v-for="vendor in filteredNames" :key="vendor">
         <a
-          v-for="vendor in vendorList"
-          :key="vendor"
           href="#"
           class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
           aria-current="true"
@@ -81,7 +82,7 @@
             <span class="badge text-bg-info">Total</span>
           </div>
         </a>
-      </div>
+      </template>
     </div>
 
     <div
@@ -165,7 +166,6 @@ export default {
     var vendorStore = useVendorStore();
 
     var vendorList = ref([]);
-    var filteredNames = ref([]);
 
     console.log("vendors value is", vendorStore.vendors);
     console.log("vendorList is an " + typeof vendorList);
@@ -173,30 +173,25 @@ export default {
     vendorStore.getVendors();
 
     var searchName = ref("");
-    var filteredNames = ref([]);
 
     //watching the vendorStore state for changes
     watch(vendorStore.$state, (state) => {
       console.log("CHANGE DETECTED", state);
       vendorList.value = state.vendors;
-
-      //   filteredNames.value = computed(() =>{
-      //   return vendorList.filter(function(vendor){
-      //     vendor.name.includes(searchName)
-      //   })
-      // });
-
-      filteredNames.value = vendorList.value.filter(function (vendor) {
-        vendor.name.includes(searchName);
-      });
     });
 
-    watch(searchName, (searchName) => {
-      console.log("searchName change!", searchName);
-      filteredNames.value = vendorList.value.filter(function (vendor) {
-        return vendor.name.includes(searchName);
+    const filteredNames = computed(() => {
+      let matchList = [];
+      matchList = vendorList.value.filter(function (vendor) {
+        console.log("matching with vendor", vendor, searchName.value);
+        if (
+          vendor.name.toLowerCase().includes(searchName.value.toLowerCase())
+        ) {
+          console.log("MATCHED", vendor.name, searchName.value);
+          return vendor;
+        }
       });
-      console.log(filteredNames.value);
+      return matchList;
     });
 
     console.log("vendors value is", vendorStore.vendors);
