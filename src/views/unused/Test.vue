@@ -18,7 +18,7 @@
 
 <script>
 import axios from "axios";
-import authHeader from "../services/authHeader";
+import authHeader from "../../services/authHeader";
 import { ref } from "vue";
 export default {
   setup() {
