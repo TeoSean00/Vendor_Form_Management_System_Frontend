@@ -1,7 +1,8 @@
 <template>
   <Navbar />
-  <div class="row mx-5">
-    <div class="col-10">
+  
+  <div class="row justify-content-center bg-light-grey ">
+    <div class="col-8">
       <div class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm">
         <h1 class="text-main-blue">Form Builder</h1>
         {{ previewObj }}
@@ -27,9 +28,9 @@
         </div>
       </div>
       {{ newForm }}
-      <div class="row m-1">
+      <div class="row p-1 mt-1">
         <div v-for="(section, index) in formSections" :key="index">
-          <SectionComponent :sectionInfo="section" @updateSection="update" />
+          <SectionComponent :order="index" :sectionInfo="section"  @updateSection="update" @removeSection="removeSection"/>
         </div>
         <!-- <div v-for="(item, index) in formItems" :key="index">
           <FormComponent
@@ -41,45 +42,22 @@
         </div> -->
       </div>
     </div>
-
-    <div class="col-lg-2">
-      <div class="row m-1 p-1 border border-dark border-3">
-        <!-- <button @click="addHeaderText" class="my-1 btn btn-main-blue">
-          Add Header
-        </button>
-        <button @click="addTextInput" class="my-1 btn btn-main-blue">
-          Add Text Input
-        </button>
-        <button @click="addNumberInput" class="my-1 btn btn-main-blue">
-          Add Number Input
-        </button>
-        <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
-          Add BooleanInput
-        </button>
-        <button @click="addDateInput" class="my-1 btn btn-main-blue">
-          Add DateInput
-        </button>
-        <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
-          Add Checkbox Input
-        </button>
-        <button @click="addRadioInput" class="my-1 btn btn-main-blue">
-          Add Radio Input
-        </button>
-        <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
-          Add Likert Group
-        </button>
-        <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
-        <button @click="addAdminSection" class="my-1 btn btn-main-blue">
+    <div class="col-8 justify-content-center text-center">
+    
+        <button @click="addAdminSection" class="col-4 m-3 btn btn-main-blue ">
           Add Admin Section
         </button>
-        <button @click="addVendorSection" class="my-1 btn btn-main-blue">
+        <button @click="addVendorSection" class="col-4 m-3 btn btn-main-blue">
           Add Vendor Section
         </button>
-        <hr class="border border-dark border-2 mt-2 opacity-75" />
-
+        <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
+ 
+      <div class="col-6 m-1 p-1">
         <TemplateList :list="templates" @addTemplate="addTemplate" />
       </div>
+    </div>
 
+    <div class="col-10">
       <div class="row">
         <button @click="exportForm" class="btn btn-turqouise mb-3">
           Export Form
@@ -319,6 +297,10 @@ export default {
       // console.log("parent checking the state of the form", formItems);
     }
 
+    function removeSection(toRemove){
+      formSections.value.splice(toRemove,1);
+
+    }
     function exportForm() {
       //Packages the form content into a JSON string
       //This is where we write the ajax code
@@ -454,6 +436,7 @@ export default {
       addTemplate,
       addAdminSection,
       addVendorSection,
+      removeSection,
       togglePreview,
       sendForm,
       newForm,
