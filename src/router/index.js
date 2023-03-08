@@ -99,12 +99,12 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import("../views/AboutView.vue"),
     // },
-    {
-      path: "/test",
-      name: "Test",
-      component: () => import("../views/Test.vue"),
-      beforeEnter: requireAuth,
-    },
+    // {
+    //   path: "/test",
+    //   name: "Test",
+    //   component: () => import("../views/Test.vue"),
+    //   beforeEnter: requireAuth,
+    // },
     {
       path: "/vendorForm",
       name: "VendorForm",

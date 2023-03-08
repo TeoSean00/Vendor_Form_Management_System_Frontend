@@ -166,7 +166,6 @@ export default {
     var vendorStore = useVendorStore();
 
     var vendorList = ref([]);
-    var filteredNames = ref([]);
 
     console.log("vendors value is", vendorStore.vendors);
     console.log("vendorList is an " + typeof vendorList);
