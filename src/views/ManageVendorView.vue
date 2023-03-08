@@ -39,26 +39,50 @@
         />
       </div>
     </form>
+    <p>Filtered names are</p>
+    <p>{{ filteredNames }}</p>
 
     <div v-if="!searchName" class="list-group flex">
-      <a
-        v-for="vendor in vendorList"
-        :key="vendor"
-        href="#"
-        class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
-        aria-current="true"
-      >
-        <span v-if="vendor.name == null">
-          <h3>Company {{ vendor.vendorId }}</h3>
-        </span>
-        <span v-else>
-          <h3>{{ vendor.name }}</h3>
-        </span>
-        <div class="float-right">
-          <span class="badge bluebg mx-1 mt-2">In Progress</span>
-          <span class="badge text-bg-info">Total</span>
-        </div>
-      </a>
+      <template v-for="vendor in vendorList" :key="vendor">
+        <a
+          href="#"
+          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
+          aria-current="true"
+          @click="toggleVendorPage(vendor.name, vendor.id)"
+        >
+          <!-- <span v-if="vendor.name == null">
+            <h3>Company {{ vendor.vendorId }}</h3>
+          </span> -->
+          <span>
+            <h3>{{ vendor.name }}</h3>
+            <p>{{ vendor.id }}</p>
+          </span>
+          <div class="float-right">
+            <span class="badge bluebg mx-1 mt-2">In Progress</span>
+            <span class="badge text-bg-info">Total</span>
+          </div>
+        </a>
+      </template>
+    </div>
+    <div v-else class="list-group flex">
+      <template v-for="vendor in filteredNames" :key="vendor">
+        <a
+          href="#"
+          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
+          aria-current="true"
+        >
+          <span v-if="vendor.name == null">
+            <h3>Company {{ vendor.vendorId }}</h3>
+          </span>
+          <span v-else>
+            <h3>{{ vendor.name }}</h3>
+          </span>
+          <div class="float-right">
+            <span class="badge bluebg mx-1 mt-2">In Progress</span>
+            <span class="badge text-bg-info">Total</span>
+          </div>
+        </a>
+      </template>
     </div>
     <!-- <div v-else class="list-group flex">
       <a v-for="workflow in workflows"  href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
@@ -167,7 +191,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useVendorStore } from "../stores/vendorStore";
@@ -209,10 +233,26 @@ export default {
 
     vendorStore.getVendors();
 
+    var searchName = ref("");
+
     //watching the vendorStore state for changes
     watch(vendorStore.$state, (state) => {
       console.log("CHANGE DETECTED", state);
       vendorList.value = state.vendors;
+    });
+
+    const filteredNames = computed(() => {
+      let matchList = [];
+      matchList = vendorList.value.filter(function (vendor) {
+        console.log("matching with vendor", vendor, searchName.value);
+        if (
+          vendor.name.toLowerCase().includes(searchName.value.toLowerCase())
+        ) {
+          console.log("MATCHED", vendor.name, searchName.value);
+          return vendor;
+        }
+      });
+      return matchList;
     });
 
     console.log("vendors value is", vendorStore.vendors);
@@ -250,6 +290,7 @@ export default {
 
     return {
       users,
+      filteredNames,
       vendorList,
       newVendorName,
       newVendorNote,
