@@ -12,27 +12,64 @@
             </div>
 
             <!-- 2nd chart -->
-            <div class="col my-auto mx-auto">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                      <h5 class="card-title">Updates Today</h5>
-                      <p class="card-text">New updates for Vendor SGXChange today, {{ dateToday }}</p>
+            <div class="col my-auto">
+                <div id="carouselExampleIndicators" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card mx-auto" style="width: 88%;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Updates Today</h5>
+                                    <p class="card-text">{{dataSize}} new updates for Vendor SGXChange today, {{ dateToday }}</p>
+                                    <div v-if="dataSize == 0">
+                                        <p>There are no new updates for today!</p>
+                                    </div>
+                                    <div v-else>
+                                        <!-- first page to do list -->
+                                        <ul class="list-group list-group-flush">
+                                            <div v-for="(status, form, index) in dummyData">
+                                                <li v-if="index<4" class="list-group-item" style="font-size: 0.85em; padding: 12px;">
+                                                    {{ form }} - {{ status }}
+                                                    <a href="#" class="btn btn-sm btn-primary">Go to Form</a>
+                                                </li>
+                                            </div>
+                                        </ul>  
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>  
+
+                        <!-- second page onwards to do list -->
+                        <div v-if="dataSize > 4">
+                            <div class="carousel-item">
+                                <div class="card mx-auto" style="width: 90%;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Updates Today</h5>
+                                        <p class="card-text">{{dataSize}} new updates for Vendor SGXChange today, {{ dateToday }}</p>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <div v-for="(status, form, index) in dummyData">
+                                            <li v-if="index>3" class="list-group-item">
+                                                {{ form }} - {{ status }}
+                                                <a href="#" class="btn btn-sm btn-primary">Go to Form</a>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>   
+                            </div>
+                        </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">
-                        Form A submitted from vendor SGXChange for evaluation
-                        <a href="#" class="btn btn-primary">Go to Form</a>
-                      </li>
-                      <li class="list-group-item">
-                        Form B rejected from approver
-                        <a href="#" class="btn btn-primary">Go to Form</a>
-                      </li>
-                      <li class="list-group-item">
-                        Form C submitted from vendor SGXChange for evaluation
-                        <a href="#" class="btn btn-primary">Go to Form</a>
-                      </li>
-                    </ul>
-                  </div>
+                    
+                    <div v-if="dataSize > 4">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- 3rd chart -->
@@ -46,6 +83,10 @@
         </div>
     </div>
 </template>
+
+<style>
+@import 'AdminVendorPageDashboard.css';
+</style>
 
 <script>
 import { computed, ref } from 'vue';
@@ -88,7 +129,7 @@ export default {
         })
 
 
-        // ------------------------------------------------------------Bar Chart for Forms Statuses------------------------------------------------------------
+        // ------------------------------------------------------------Bar Chart for To Do List Today Chart------------------------------------------------------------
         const dateToday = computed(() => {
             const date = new Date()
             let day = date.getDate();
@@ -101,6 +142,27 @@ export default {
             let currentDate = `${day}/${month}/${year}, ${dayOfWeek}`;
             return currentDate
         })
+
+        const dummyData = ref({
+            formA : "Awaiting Vendor",
+            formB : "Awaiting Admin",
+            formC : "Awaiting Approver",
+            formD : "Awaiting Vendor",
+            formE : "Awaiting Admin",
+            formF : "Awaiting Approver",
+            formG : "Awaiting Approver",
+        })
+
+        const dataSize = computed(() => {
+            const value = dummyData.value
+            let count = 0
+            for(let v in value) {
+                count += 1
+            }
+            console.log(count)
+            return count
+        })
+
 
 
         // ------------------------------------------------------------Bar Chart for Forms Deadlines------------------------------------------------------------
@@ -161,7 +223,7 @@ export default {
             }
         })
 
-        return { FileStatusBarChart, FileStatusBarChartOptions, dateToday, FormDeadlineBarChart, FormDeadlineBarChartOptions, FormDeadlineBarChartSort }
+        return { FileStatusBarChart, FileStatusBarChartOptions, dateToday, dummyData, dataSize, FormDeadlineBarChart, FormDeadlineBarChartOptions, FormDeadlineBarChartSort }
     }
 }
 </script>
