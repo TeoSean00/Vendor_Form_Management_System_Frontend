@@ -1,14 +1,33 @@
 <template>
-    Order No: {{ idx }}
-    <br>
+    <!-- Order No: {{ idx }} -->
+<div class="row p-3">
   <input
     type="text"
-    placeholder="Key in title"
+    class="col-8 template-text-input p-3 my-1 ml-5 mr-5"
+    placeholder="Untitled Question"
     v-model="itemInfo.text"
     @input="updateText"
   />
-  <span>Input field here</span>
-  <button @click="removeQuestion">Delete question</button>
+</div>
+
+  <div class="row">
+    <div class="col-4 template-text-answer px-3 ">
+      Short Answer Here.
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <div class="col-12 text-end px-5 py-1">
+      <span >
+        Required
+        <input v-model="itemInfo.required" class="form-check-input bg-dark-grey mx-2" type="checkbox">
+        <button class="borderless-button mx-2" @click="removeQuestion">
+          <font-awesome-icon icon="fa-solid fa-trash" />
+        </button>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -17,8 +17,18 @@ import {
   faFile,
   faUsers,
   faBell,
-  faMagnifyingGlass,
+  faTrash,
+  faXmark,
+  faSquare,
+  faCirclePlus,
+  faCircleH,
+  faMagnifyingGlass
 } from "@fortawesome/free-solid-svg-icons";
+
+
+
+library.add(faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
+
 
 library.add(faMagnifyingGlass,faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
 

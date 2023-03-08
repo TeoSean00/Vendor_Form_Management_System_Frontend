@@ -24,7 +24,12 @@ input{
 
 .template-text-answer{
   color: #707070;
-  border-bottom: #707070 dotted 2px !important ; 
+  /* border-bottom: #707070 dotted 2px !important ;  */
+}
+
+.borderless-button{
+  border: 0px;
+  background-color: rgba(0,0,0,0);
 }
 /* #app {
   max-width: 1280px;

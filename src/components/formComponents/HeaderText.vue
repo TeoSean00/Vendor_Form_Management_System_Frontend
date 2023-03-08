@@ -5,7 +5,7 @@
       <input
         class="col-8 template-text-input p-3 my-1 ml-5 mr-5"
         type="text"
-        placeholder="Question"
+        placeholder="Header"
         v-model="itemInfo.text"
         @input="updateText"
       />
@@ -15,12 +15,20 @@
           <option value="h3">h3</option>
       </select>
     </div>
-    <div class="row p-3">
-      <p class="col-6 template-text-answer">
-        Short-answer text
-      </p>
-      <button class="col-1" @click="removeQuestion">X</button>
+  <!-- Bottom part is the delete butotn -->
+  <hr>
+    <div class="row">
+      <div class="col-12 text-end px-5 py-1">
+        <span >
+          Required
+          <input v-model="itemInfo.required" class="form-check-input bg-dark-grey mx-2" type="checkbox">
+          <button class="borderless-button mx-2" @click="removeQuestion">
+            <font-awesome-icon icon="fa-solid fa-trash" />
+          </button>
+        </span>
+      </div>
     </div>
+
   </template>
   
   <script>
