@@ -87,7 +87,7 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
-      name: Dashboard,
+      name: "Dashboard",
       component: () => import("../views/DashboardView.vue"),
       beforeEnter: requireAuth,
     },
@@ -99,22 +99,23 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import("../views/AboutView.vue"),
     // },
-    // {
-    //   path: "/test",
-    //   name: Test,
-    //   component: () => import("../views/Test.vue"),
-    //   beforeEnter: requireAuth,
-    // },
+    {
+      path: "/test",
+      name: "Test",
+      component: () => import("../views/Test.vue"),
+      beforeEnter: requireAuth,
+    },
     {
       path: "/vendorForm",
-      name: VendorForm,
+      name: "VendorForm",
       component: () => import("../views/VendorForm.vue"),
       beforeEnter: requireAuth,
     },
     {
-      path: "/admin/vendor",
-      name: AdminVendor,
-      component: () => import("../views/AdminVendor.vue"),
+      path: "/admin/:name",
+      name: "AdminVendor",
+      component: AdminVendor,
+      props: (route) => ({ vendorId: route.query.vendorId }),
       beforeEnter: requireAuth,
     },
   ],
