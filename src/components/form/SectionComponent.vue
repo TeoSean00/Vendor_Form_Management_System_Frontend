@@ -1,9 +1,13 @@
 <template>
-  <div class="mt-2 p-2 border rounded border-light border-1 bg-white shadow-sm">
+  <div class="mt-2 p-2 border rounded border-light border-1 bg-dark-purple shadow-sm">
     <div class="row">
-      <div class="col-10">
-        <!-- {{ sectionInfo }} -->
-        <div class="row m-1">
+      <div class="col-12">
+        {{ assignTo }} Section 
+          <button class="text-center borderless-button mx-2" @click="removeSection(order)">
+            Remove Section <font-awesome-icon icon="fa-solid fa-trash" />
+          </button>
+      </div>
+        <div class="row">
           <div v-for="(item, index) in formItems" :key="index">
             <FormComponent
               :itemInfo="item"
@@ -13,7 +17,41 @@
             />
           </div>
         </div>
+      
+    </div>
+    <div class="col-6 offset-3 sticky-bottom d-flex justify-content-center border rounded border-light border-1 bg-light-grey shadow-lg">
+      <div class="row " >
+        
       </div>
+      <div class="row m-1 p-1 ">
+        <button @click="addHeaderText" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Header">
+          <font-awesome-icon icon="fa-solid fa-h" />
+        </button>
+        <button @click="addTextInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Text Input">
+          <font-awesome-icon icon="fa-solid fa-t" />
+        </button>
+        <button @click="addNumberInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Number Input">
+          <font-awesome-icon icon="fa-solid fa-1" />
+        </button>
+        <button @click="addBooleanInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add True False">
+          <font-awesome-icon icon="fa-solid fa-t" />
+          <font-awesome-icon icon="fa-solid fa-f" />
+        </button>
+        <button @click="addDateInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Date">
+          <font-awesome-icon icon="fa-solid fa-calendar" />
+        </button>
+        <button @click="addCheckboxInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Checkbox Group">
+          <font-awesome-icon icon="fa-solid fa-circle-check" />
+        </button>
+        <button @click="addRadioInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Radio Group">
+          <font-awesome-icon icon="fa-solid fa-radio" />
+        </button>
+        <button @click="addLikertGroupInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Likert Group">
+          <font-awesome-icon icon="fa-solid fa-object-group" />
+        </button>
+      </div>
+    </div>
+  </div>
       <div class="col-1 text-center">
         <div class="row m-1 p-1">
           <button @click="addHeaderText" class="borderless-button">
@@ -48,18 +86,27 @@
 
 <script>
 import FormComponent from "../form/FormComponent.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 export default {
   components: { FormComponent },
-  props: ["sectionInfo"],
+  props: ["sectionInfo", "order"],
   setup(props, context) {
     var formItems = ref(props.sectionInfo[Object.keys(props.sectionInfo)[0]]);
     // console.log(formItems.value);
+    const assignTo = computed(()=>{
+      if (Object.keys(props.sectionInfo)[0] == "admin") {
+        return "Admin";
+      } else {
+        return "Vendor";
+      }
+    })
+
     function addTextInput() {
       formItems.value.push({
         type: "text",
         order: formItems.value.length,
         text: "",
+        required : false,
       });
     }
     function addCheckboxInput() {
@@ -68,6 +115,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
+        required : false,
       });
     }
     function addRadioInput() {
@@ -76,6 +124,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
+        required : false,
       });
     }
     function addHeaderText() {
@@ -84,6 +133,7 @@ export default {
         order: formItems.value.length,
         text: "",
         style: "h1",
+        required : false,
       });
     }
     function addBooleanInput() {
@@ -91,6 +141,8 @@ export default {
         type: "boolean",
         order: formItems.value.length,
         text: "",
+        options: ["Yes", "No"],
+        required : false,
       });
     }
     function addDateInput() {
@@ -98,6 +150,7 @@ export default {
         type: "date",
         order: formItems.value.length,
         text: "",
+        required : false,
       });
     }
     function addNumberInput() {
@@ -105,6 +158,7 @@ export default {
         type: "number",
         order: formItems.value.length,
         text: "",
+        required : false,
       });
     }
     function addLikertGroupInput() {
@@ -113,6 +167,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
+        required : false,
       });
     }
 
@@ -126,8 +181,13 @@ export default {
       formItems.value.splice(questionKey, 1);
     }
 
+    function removeSection(toRemove){
+      context.emit("removeSection",toRemove);
+    }
+
     return {
       formItems,
+      assignTo,
       addCheckboxInput,
       addRadioInput,
       addHeaderText,
@@ -137,6 +197,7 @@ export default {
       addLikertGroupInput,
       addTextInput,
       removeQuestion,
+      removeSection,
       update,
     };
   },
