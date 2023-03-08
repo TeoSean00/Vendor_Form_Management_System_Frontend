@@ -20,19 +20,6 @@ class TemplateService {
         });
         return response
     }
-    getTemplates(){
-        const response = axios
-            .get(API_URL + "all",{headers:authHeader()})
-            .then((response) => {
-                console.log("get request successful!",response);
-                return response.data;
-            })
-            .catch((error) => {
-                console.log("get request unsuccessful", error);
-                return error;
-            });
-        return response;
-    }
 }
 
 export default new TemplateService();
