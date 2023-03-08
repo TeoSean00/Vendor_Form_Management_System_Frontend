@@ -88,7 +88,11 @@
         >
           Preview Form
         </button>
-        <button @click="toggleCreateForm" class="btn btn-main-blue mb-3">
+        <button
+          class="btn btn-main-blue mb-3"
+          data-bs-toggle="modal"
+          data-bs-target="#createFormModal"
+        >
           Create Form
         </button>
       </div>
@@ -102,6 +106,61 @@
 
     <!-- Modal -->
     <TemplatePreview :previewData="previewObj" />
+
+    <!-- Modal for selecting vendor to create form for -->
+    <div
+      class="modal fade"
+      id="createFormModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <label class="form-label">Select Vendor</label>
+            <hr />
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="selectedVendor"
+            >
+              <template v-for="(vendor, index) in vendors" :key="index">
+                <option :value="vendor">{{ vendor.name }}</option>
+              </template>
+            </select>
+            <div v-if="selectedVendor" class="alert alert-warning" role="alert">
+              You selected {{ selectedVendor.name }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="toggleCreateForm"
+            >
+              Create form
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -114,6 +173,8 @@ import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
 import { useTemplateStore } from "../stores/templateStore";
 import { ref, watch } from "vue";
+import FormService from "../services/form/formService";
+import VendorService from "../services/vendor/vendorService";
 
 export default {
   components: {
@@ -392,7 +453,37 @@ export default {
       createForm();
       console.log("createform called!,newform is ", newForm.value);
     });
+
+    var vendors = ref(null);
+    var selectedVendor = ref(null);
+
+    var getVendors = async () => {
+      vendors.value = await VendorService.getVendors();
+    };
+
+    getVendors();
+
+    var toggleCreateForm = async () => {
+      console.log("selected Vendor is", selectedVendor);
+      var newFormObject = {
+        vendorName: selectedVendor.value.name,
+        creationDate: Date.now(),
+        content: newForm.value,
+        vendorId: selectedVendor.value.id,
+      };
+      await FormService.addForm(newFormObject)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     return {
+      selectedVendor,
+      vendors,
+      toggleCreateForm,
       previewObj,
       content,
       formName,
