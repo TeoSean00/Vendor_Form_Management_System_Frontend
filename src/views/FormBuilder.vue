@@ -1,16 +1,24 @@
 <template>
   <Navbar />
-  
-  <div class="row justify-content-center bg-light-grey ">
+
+  <div class="row justify-content-center bg-light-grey">
     <div class="col-8">
-      <div class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm">
+      <div
+        class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
+      >
         <h1 class="text-main-blue">Form Builder</h1>
         {{ previewObj }}
         {{ formName }}
         {{ desc }}
         <div class="row">
-          <span class="text-secondary-blue">Form Name:
-            <input class="col-6" type="text" placeholder="Give this form a name!" v-model="formName" />
+          <span class="text-secondary-blue"
+            >Form Name:
+            <input
+              class="col-6"
+              type="text"
+              placeholder="Give this form a name!"
+              v-model="formName"
+            />
           </span>
         </div>
         <!-- <div class="row">
@@ -24,13 +32,23 @@
         </div> -->
         <div class="row">
           <span class="text-secondary-blue">Description: </span>
-          <textarea placeholder="Enter Form Description" v-model="desc" rows="2" cols="1"></textarea>
+          <textarea
+            placeholder="Enter Form Description"
+            v-model="desc"
+            rows="2"
+            cols="1"
+          ></textarea>
         </div>
       </div>
       {{ newForm }}
       <div class="row p-1 mt-1">
         <div v-for="(section, index) in formSections" :key="index">
-          <SectionComponent :order="index" :sectionInfo="section"  @updateSection="update" @removeSection="removeSection"/>
+          <SectionComponent
+            :order="index"
+            :sectionInfo="section"
+            @updateSection="update"
+            @removeSection="removeSection"
+          />
         </div>
         <!-- <div v-for="(item, index) in formItems" :key="index">
           <FormComponent
@@ -43,15 +61,14 @@
       </div>
     </div>
     <div class="col-8 justify-content-center text-center">
-    
-        <button @click="addAdminSection" class="col-4 m-3 btn btn-main-blue ">
-          Add Admin Section
-        </button>
-        <button @click="addVendorSection" class="col-4 m-3 btn btn-main-blue">
-          Add Vendor Section
-        </button>
-        <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
- 
+      <button @click="addAdminSection" class="col-4 m-3 btn btn-main-blue">
+        Add Admin Section
+      </button>
+      <button @click="addVendorSection" class="col-4 m-3 btn btn-main-blue">
+        Add Vendor Section
+      </button>
+      <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
+
       <div class="col-6 m-1 p-1">
         <TemplateList :list="templates" @addTemplate="addTemplate" />
       </div>
@@ -62,21 +79,24 @@
         <button @click="exportForm" class="btn btn-turqouise mb-3">
           Export Form
         </button>
-        <button type="button" class="btn btn-turqouise" data-bs-toggle="modal" data-bs-target="#templatePreview"
-          @click="togglePreview">
+        <button
+          type="button"
+          class="btn btn-secondary-blue mb-3"
+          data-bs-toggle="modal"
+          data-bs-target="#templatePreview"
+          @click="togglePreview"
+        >
           Preview Form
+        </button>
+        <button @click="toggleCreateForm" class="btn btn-main-blue mb-3">
+          Create Form
         </button>
       </div>
       <!-- Tyler button to go Do Form page-->
       <div class="row mt-4">
         <router-link to="/vendorForm">
-          <button class="btn btn-turqouise mb-3">
-            Go to Form (TYLER)
-          </button>
+          <button class="btn btn-turqouise mb-3">Go to Form (TYLER)</button>
         </router-link>
-        <button @click="sendForm(previewObj)" class="btn btn-turqouise mb-3">
-          Send Form (TYLER)
-        </button>
       </div>
     </div>
 
@@ -142,7 +162,12 @@ export default {
               { type: "text", order: 1, text: "Company's Name" },
               { type: "number", order: 2, text: "Company Registration No:" },
               { type: "text", order: 3, text: "Office Address" },
-              { type: "boolean", order: 4, text: "GST Registered", "options": ["Yes", "No"] },
+              {
+                type: "boolean",
+                order: 4,
+                text: "GST Registered",
+                options: ["Yes", "No"],
+              },
               { type: "number", order: 5, text: "Tel" },
               { type: "text", order: 6, text: "Fax" },
               {
@@ -191,22 +216,37 @@ export default {
                 text: "NEW VENDOR ASSESSMENT FORM",
                 style: "h1",
               },
-              { type: "boolean", order: 2, text: "ISO 9001 Certification", options: ["Yes", "No"] },
+              {
+                type: "boolean",
+                order: 2,
+                text: "ISO 9001 Certification",
+                options: ["Yes", "No"],
+              },
               { type: "text", order: 3, text: "Certification Body" },
               {
                 type: "boolean",
                 order: 4,
                 text: "Accreditation of Laboratory",
-                options: ["Yes", "No"]
+                options: ["Yes", "No"],
               },
               { type: "text", order: 5, text: "Accreditation Body" },
-              { type: "boolean", order: 6, text: "Product Certification", options: ["Yes", "No"] },
+              {
+                type: "boolean",
+                order: 6,
+                text: "Product Certification",
+                options: ["Yes", "No"],
+              },
               {
                 type: "text",
                 order: 7,
                 text: "Product Markings (e.g. PSB, UL, TUV)",
               },
-              { type: "boolean", order: 8, text: "Site Evaluation Results", options: ["Yes", "No"] },
+              {
+                type: "boolean",
+                order: 8,
+                text: "Site Evaluation Results",
+                options: ["Yes", "No"],
+              },
               {
                 type: "checkbox",
                 order: 9,
@@ -217,7 +257,7 @@ export default {
                 type: "boolean",
                 order: 10,
                 text: "Results of Samples/Product Evaluation",
-                options: ["Yes", "No"]
+                options: ["Yes", "No"],
               },
               {
                 type: "checkbox",
@@ -225,7 +265,12 @@ export default {
                 text: "Results of Samples/Product Evaluation",
                 options: ["Satisfactory", "Unsatisfactory"],
               },
-              { type: "boolean", order: 12, text: "Results of First Deal", options: ["Yes", "No"] },
+              {
+                type: "boolean",
+                order: 12,
+                text: "Results of First Deal",
+                options: ["Yes", "No"],
+              },
               {
                 type: "checkbox",
                 order: 13,
@@ -236,7 +281,7 @@ export default {
                 type: "boolean",
                 order: 14,
                 text: "Track Record Review/ Customer Reference",
-                options: ["Yes", "No"]
+                options: ["Yes", "No"],
               },
               {
                 type: "checkbox",
@@ -248,7 +293,7 @@ export default {
                 type: "boolean",
                 order: 16,
                 text: "Other Evaluation",
-                options: ["Yes", "No"]
+                options: ["Yes", "No"],
               },
               {
                 type: "text",
@@ -297,9 +342,8 @@ export default {
       // console.log("parent checking the state of the form", formItems);
     }
 
-    function removeSection(toRemove){
-      formSections.value.splice(toRemove,1);
-
+    function removeSection(toRemove) {
+      formSections.value.splice(toRemove, 1);
     }
     function exportForm() {
       //Packages the form content into a JSON string
@@ -341,83 +385,7 @@ export default {
       console.log("updated previewObj", previewObj.value);
     };
 
-    var newForm = ref([]);
-    function sendForm(previewObj) {
-      console.log("Checking previewdata in createform", previewObj);
-      var content = previewObj.templateContents;
-      console.log("content is ", content);
-      for (let key in content) {
-        console.log("KEY IS ", key);
-        var section = content[key];
-        console.log("section is", section);
-
-        var sectionKey = Object.keys(section)[0];
-        console.log("section key is" + sectionKey);
-        var temp = {};
-        temp[sectionKey] = [];
-        for (let row of section[sectionKey]) {
-          let type = row.type;
-          console.log("row is", row, "type is", type);
-          if (type == "text") {
-            temp[sectionKey].push({
-              order: row.order,
-              label: row.text,
-              input: "",
-              type: type,
-            });
-          } else if (type == "radio" || type == "checkbox") {
-            temp[sectionKey].push({
-              order: row.order,
-              label: row.text,
-              input: [],
-              options: row.options,
-              type: type,
-            });
-          } else if (type == "header") {
-            temp[sectionKey].push({
-              order: row.order,
-              label: row.text,
-              style: row.style,
-              type: type,
-            });
-          } else if (type == "number") {
-            temp[sectionKey].push({
-              order: row.order,
-              label: row.text,
-              input: "",
-              type: type,
-            });
-          } else if (type == "boolean") {
-            temp[sectionKey].push({
-              order: row.order,
-              label: row.text,
-              input: [],
-              options: row.options,
-              type: "radio",
-            });
-          } else if (type == "date") {
-            temp[sectionKey].push({
-              order: row.order,
-              label: row.text,
-              input: "",
-              options: row.options,
-              type: type,
-            });
-          } else if (type == "likertGroup") {
-            temp[sectionKey].push({
-              order: row.order,
-              label: row.text,
-              input: [],
-              options: row.options,
-              type: type,
-            });
-          }
-        }
-        newForm.value.push(temp);
-      }
-      console.log(newForm.value);
-      alert(newForm.value)
-    }
+    var newForm = ref({});
     watch(newForm, () => {
       console.log("previewData updated!", props.previewData);
       newForm.value = [];
@@ -438,7 +406,6 @@ export default {
       addVendorSection,
       removeSection,
       togglePreview,
-      sendForm,
       newForm,
     };
   },

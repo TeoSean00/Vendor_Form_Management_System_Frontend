@@ -11,9 +11,7 @@
       <div class="form-floating m-4">
         <div class="">
           <h4>Form Details</h4>
-          <button @click="testUser" class="btn btn-primary">
-            Change user
-          </button>
+          <button @click="testUser" class="btn btn-primary">Change user</button>
           <hr class="border border-dark border-2 mt-2 opacity-75" />
         </div>
         <form onsubmit="return false;">
@@ -23,14 +21,12 @@
                 {{ sect }}
                 <FormSection :sectionData="sect" />
               </template>
-              
             </template>
           </template>
           <button class="btn btn-primary" @click="submitForm">
             Submit Form
           </button>
         </form>
-
       </div>
     </div>
   </div>
@@ -47,103 +43,88 @@ export default {
   },
   props: [],
   setup() {
-
-
     // Current user test
     var currentUser = ref("vendor");
-
     var content = ref("");
+    var newForm = ref([
+      {
+        admin: [
+          { order: 0, label: "Admin header", style: "h1", type: "header" },
+          { order: 1, label: "Admin text", input: "", type: "text" },
+          { order: 2, label: "Admin Number", input: "", type: "number" },
+          {
+            order: 3,
+            label: "Admin Boolean",
+            input: [],
+            options: ["Yes", "No"],
+            type: "radio",
+          },
+          { order: 4, label: "Admin Date", input: "", type: "date" },
+          {
+            order: 5,
+            label: "Admin Checkbox",
+            input: [],
+            options: ["Admin check 1", "Admin check 2"],
+            type: "checkbox",
+          },
+          {
+            order: 6,
+            label: "Admin Radio",
+            input: [],
+            options: ["Admin radio 1", "Admin radio 2"],
+            type: "radio",
+          },
+          {
+            order: 7,
+            label: "Admin likert ",
+            input: [],
+            options: ["admin likert 1", "Admin likert 2"],
+            type: "likertGroup",
+          },
+        ],
+      },
+      {
+        vendor: [
+          { order: 0, label: "Vendor header", style: "h1", type: "header" },
+          { order: 1, label: "Vendor text", input: "", type: "text" },
+          { order: 2, label: "Vendor numn", input: "", type: "number" },
+          {
+            order: 3,
+            label: "Vendor bool",
+            input: [],
+            options: ["Yes", "No"],
+            type: "radio",
+          },
+          { order: 4, label: "Vendor date", input: "", type: "date" },
+          {
+            order: 5,
+            label: "Vendor check ",
+            input: [],
+            options: ["Vendor cvhck 1", "Vendor chek 2"],
+            type: "checkbox",
+          },
+          {
+            order: 6,
+            label: "Vendor radio",
+            input: [],
+            options: ["Vendor rad 1", "Vendor rad 2"],
+            type: "radio",
+          },
+          {
+            order: 7,
+            label: "Vendor likert ",
+            input: [],
+            options: ["Vendor lik 1", "Vendor lik 2"],
+            type: "likertGroup",
+          },
+        ],
+      },
+    ]);
 
-    //temporary template data
-    // var templates = ref([
-    //   {
-    //     status: "", // Assigned, awaiting evaluation, awaiting approval
-    //     templateInfo: {
-    //       templateName: "New Vendor Assessment Form",
-    //       assignedTo: "Vendor",
-    //       templateDesc: "Assessment for new vendors",
-    //     },
-    //     templateContents: [ { "admin": [ { "type": "header", "order": 0, "text": "Admin Form", "style": "h1" }, { "type": "text", "order": 1, "text": "Text Input" }, { "type": "number", "order": 2, "text": "Num Input" }, { "type": "boolean", "order": 3, "text": "Bool Input", "options": [ "Yes", "No" ] }, { "type": "date", "order": 4, "text": "Date Input" }, { "type": "checkbox", "order": 5, "text": "Checkbox input", "options": [ "1", "2", "3" ] }, { "type": "radio", "order": 6, "text": "Radio Input", "options": [ "1", "2" ] }, { "type": "likertGroup", "order": 7, "text": "Likert Input", "options": [ "1", "2" ] } ] },
-    //     { "vendor": [ { "type": "header", "order": 0, "text": "Vendor Form", "style": "h1" }, { "type": "text", "order": 1, "text": "Vendor Text" }, { "type": "number", "order": 2, "text": "Vendor Num" }, { "type": "boolean", "order": 3, "text": "Vendor Bool", "options": [ "Yes", "No" ] }, { "type": "date", "order": 4, "text": "Vendor Date" }, { "type": "checkbox", "order": 5, "text": "Vendor checkbox", "options": [ "1", "2", "3" ] }, { "type": "radio", "order": 6, "text": "Vendor Radio", "options": [ "1", "2" ] }, { "type": "likertGroup", "order": 7, "text": "Vendor Likert", "options": [ "1", "2", "3" ] } ] } ],
-    //   },
-    // ]);
-
-    var newForm = ref(
-      [ { "admin": [ { "order": 0, "label": "Admin header", "style": "h1", "type": "header" }, { "order": 1, "label": "Admin text", "input": "", "type": "text" }, { "order": 2, "label": "Admin Number", "input": "", "type": "number" }, { "order": 3, "label": "Admin Boolean", "input": [], "options": [ "Yes", "No" ], "type": "radio" }, { "order": 4, "label": "Admin Date", "input": "", "type": "date" }, { "order": 5, "label": "Admin Checkbox", "input": [], "options": [ "Admin check 1", "Admin check 2" ], "type": "checkbox" }, { "order": 6, "label": "Admin Radio", "input": [], "options": [ "Admin radio 1", "Admin radio 2" ], "type": "radio" }, { "order": 7, "label": "Admin likert ", "input": [], "options": [ "admin likert 1", "Admin likert 2" ], "type": "likertGroup" } ] }, { "vendor": [ { "order": 0, "label": "Vendor header", "style": "h1", "type": "header" }, { "order": 1, "label": "Vendor text", "input": "", "type": "text" }, { "order": 2, "label": "Vendor numn", "input": "", "type": "number" }, { "order": 3, "label": "Vendor bool", "input": [], "options": [ "Yes", "No" ], "type": "radio" }, { "order": 4, "label": "Vendor date", "input": "", "type": "date" }, { "order": 5, "label": "Vendor check ", "input": [], "options": [ "Vendor cvhck 1", "Vendor chek 2" ], "type": "checkbox" }, { "order": 6, "label": "Vendor radio", "input": [], "options": [ "Vendor rad 1", "Vendor rad 2" ], "type": "radio" }, { "order": 7, "label": "Vendor likert ", "input": [], "options": [ "Vendor lik 1", "Vendor lik 2" ], "type": "likertGroup" } ] } ]      
-      );
-    // var content = templates.value[0].templateContents;
-    // for (let key in content) {
-    //   // console.log("KEY IS ", key);
-    //   var section = content[key];
-    //   console.log("section is", section);
-
-    //   var sectionKey = currentUser.value;
-    //   // console.log(sectionKey);
-    //   if (sectionKey in section){
-    //     for (let row of section[sectionKey]) {
-    //       let type = row.type;
-    //       console.log("row is", row, "type is", type);
-    //       if (type == "text") {
-    //         newForm.value.push({
-    //           order: row.order,
-    //           label: row.text,
-    //           input: "",
-    //           type: type,
-    //         });
-    //       } else if (type == "radio" || type == "checkbox") {
-    //         newForm.value.push({
-    //           order: row.order,
-    //           label: row.text,
-    //           input: [],
-    //           options: row.options,
-    //           type: type,
-    //         });
-    //       } else if (type == "header") {
-    //         newForm.value.push({
-    //           order: row.order,
-    //           label: row.text,
-    //           style: row.style,
-    //           type: type,
-    //         });
-    //       } else if (type == "number") {
-    //         newForm.value.push({
-    //           order: row.order,
-    //           label: row.text,
-    //           input: "",
-    //           type: type,
-    //         });
-    //       } else if (type == "boolean") {
-    //         newForm.value.push({
-    //           order: row.order,
-    //           label: row.text,
-    //           input: [],
-    //           type: "radio",
-    //         });
-    //       } else if (type == "date") {
-    //         newForm.value.push({
-    //           order: row.order,
-    //           label: row.text,
-    //           input: "",
-    //           type: type,
-    //         });
-    //       }else if (type == "likertGroup") {
-    //         newForm.value.push({
-    //           order: row.order,
-    //           label: row.text,
-    //           input: [],
-    //           options: row.options,
-    //           type: type,
-    //         });
-    //       }
-    //     }
-    //   }
-
-    // }
     function submitForm() {
       console.log(newForm.value);
       console.log("Form Submitted");
     }
-
 
     return {
       newForm,

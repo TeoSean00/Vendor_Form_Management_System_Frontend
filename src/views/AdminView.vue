@@ -35,7 +35,7 @@ export default {
     };
 
     const toggleFormBuilder = () => {
-      router.push("/vendorForm");
+      router.push("/formbuilder");
     };
 
     return { toggleWorkflow, toggleUserView, toggleFormBuilder };

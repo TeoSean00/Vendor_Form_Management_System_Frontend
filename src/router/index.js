@@ -8,7 +8,6 @@ import ViewForm from "../views/ViewForm.vue";
 import ManageVendorView from "../views/ManageVendorView.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 import CreateUser from "../views/CreateUser.vue";
-import Test from "../views/Test.vue";
 import VendorForm from "../views/VendorForm.vue";
 import AdminVendor from "../views/AdminVendor.vue";
 
@@ -100,12 +99,12 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import("../views/AboutView.vue"),
     // },
-    {
-      path: "/test",
-      name: Test,
-      component: () => import("../views/Test.vue"),
-      beforeEnter: requireAuth,
-    },
+    // {
+    //   path: "/test",
+    //   name: Test,
+    //   component: () => import("../views/Test.vue"),
+    //   beforeEnter: requireAuth,
+    // },
     {
       path: "/vendorForm",
       name: VendorForm,
