@@ -40,7 +40,7 @@
       </div>
     </form>
 
-    <div v-if="!searchName" class="list-group flex">
+    <div class="list-group flex">
       <a
         v-for="vendor in vendorList"
         :key="vendor"
@@ -60,22 +60,6 @@
         </div>
       </a>
     </div>
-    <!-- <div v-else class="list-group flex">
-      <a v-for="workflow in workflows"  href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
-
-        
-        <span v-if="workflow.name.includes(searchName)" >
-          <h3>{{workflow.name}}</h3>
-        </span>
-        
-        <div class="float-right">
-          <span class="badge bluebg mx-1 mt-2" >In Progress</span>
-          <span class="badge text-bg-info">Total</span>
-        </div>
-        
-      </a>
-
-    </div> -->
   </div>
 
   <div
@@ -141,33 +125,10 @@
 
   <!-- {{workflow.forms._rawValue.length}} -->
 
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Assign Users</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul>
-          <li  v-for="user in users" style="list-style-type: none;">
-            <input :id="user" type="checkbox" :name="user"> {{ user.userName }}
-          </li>
-        </ul>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useVendorStore } from "../stores/vendorStore";
@@ -176,36 +137,19 @@ import { useRouter } from "vue-router";
 export default {
   components: { NavbarJP },
   setup() {
-    var searchName = "";
-    var users = ref([
-      {
-        userId: 1,
-        userName: "John@gmail.com",
-      },
-      {
-        userId: 2,
-        userName: "Kevan",
-      },
-      {
-        userId: 3,
-        userName: "Johnson",
-      },
-      {
-        userId: 4,
-        userName: "Timbre",
-      },
-      {
-        userId: 5,
-        userName: "Jadon",
-      },
-    ]);
+    var searchName = ref("");
+    
 
     //get vendor data
     var vendorStore = useVendorStore();
 
     var vendorList = ref([]);
+    var filteredNames = ref([]);
 
     console.log("vendors value is", vendorStore.vendors);
+    console.log("vendorList is an " + typeof vendorList)
+
+    
 
     vendorStore.getVendors();
 
@@ -213,7 +157,18 @@ export default {
     watch(vendorStore.$state, (state) => {
       console.log("CHANGE DETECTED", state);
       vendorList.value = state.vendors;
+      
+    //   filteredNames.value = computed(() =>{
+    //   return vendorList.filter(function(vendor){
+    //     vendor.name.includes(searchName)
+    //   })
+    // });
+
+      filteredNames.value = vendorList.value.filter(function(vendor){
+        vendor.name.includes(searchName);
+      });
     });
+    
 
     console.log("vendors value is", vendorStore.vendors);
 
@@ -248,8 +203,9 @@ export default {
       router.push("/viewform");
     };
 
+    console.log(filteredNames)
+
     return {
-      users,
       vendorList,
       newVendorName,
       newVendorNote,
@@ -259,6 +215,7 @@ export default {
       toggleNewVendor,
       toggleEditVendor,
       searchName,
+      filteredNames
     };
   },
 };
