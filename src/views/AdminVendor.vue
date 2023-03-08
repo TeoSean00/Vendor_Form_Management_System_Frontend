@@ -1,842 +1,1461 @@
-
-
 <template>
   <Navbar />
 
-
-
   <section id="forms" class="forms">
-      <div class="container">
-
-        <div class="section-title d-flex justify-content-between">
-          <h1 class="text-main-blue">{company name}</h1>   
-          <div class="btn-group mt-auto shadow-0" role="group" aria-label="Button group with nested dropdown">
-            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" href="#allusers">All Users</button>
-
-            <div class="modal fade" id="allusers" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="allusersLabel">List of Users</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" id="usermodal">
-                    <table class="table align-middle mb-0 bg-white" id="usertable">
-                      <thead class="bg-light">
-                        <tr>
-                          <th>#</th>
-                          <th>Name</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <p class="fw-normal mb-1">1</p>
-                          </td>
-                          <td>  
-                              <p class="fw-bold mb-1">John Doe</p>
-                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="fw-normal mb-1">2</p>
-                          </td>
-                          <td>             
-                                <p class="fw-bold mb-1">John Doe</p>
-                                <p class="text-muted mb-0">john.doe@gmail.com</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="fw-normal mb-1">1</p>
-                          </td>
-                          <td>  
-                              <p class="fw-bold mb-1">John Doe</p>
-                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="fw-normal mb-1">1</p>
-                          </td>
-                          <td>  
-                              <p class="fw-bold mb-1">John Doe</p>
-                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <p class="fw-normal mb-1">1</p>
-                          </td>
-                          <td>  
-                              <p class="fw-bold mb-1">John Doe</p>
-                              <p class="text-muted mb-0">john.doe@gmail.com</p>                     
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#addusers" data-bs-toggle="modal" data-bs-dismiss="modal">Add users</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal fade" id="addusers" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-              <div class="modal-dialog modal-dialog-centered ">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="addusersLabel">Add users</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body text-center">
-                    <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-
-                    <button class="btn btn-outline-primary mt-3 px-5" data-bs-toggle="modal" data-bs-dismiss="modal" @click="addUsers">Add</button>
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#allusers" >See users</button>
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" href="#addusers">Add Users</button>
-
-            <div class="btn-group" role="group">
-              <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Add Forms
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <li><a class="dropdown-item" href="/formbuilder">Create new form</a></li>
-                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#templatelist" >Choose from templates</a></li>
-              </ul>
-            </div>
-          </div>   
-        </div>
-
-        <!-- Modal for templates -->
-        <div class="modal fade" id="templatelist" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="choosetemplateLabel">Choose Template</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body" id="templatemodal">
-                <div class="box">
     <div class="container">
+      <div>
+        Data dump section
+        <p>{{ vendorInfo }}</p>
+        <p>{{ templateList }}</p>
+      </div>
+
+      <div class="section-title d-flex justify-content-between">
+        <h1 v-if="vendorInfo" class="text-main-blue">{{ vendorInfo.name }}</h1>
+        <div
+          class="btn-group mt-auto shadow-0"
+          role="group"
+          aria-label="Button group with nested dropdown"
+        >
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-toggle="modal"
+            href="#allusers"
+          >
+            All Users
+          </button>
+
+          <div
+            class="modal fade"
+            id="allusers"
+            aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1"
+          >
+            <div
+              class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+            >
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="allusersLabel">List of Users</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body" id="usermodal">
+                  <table
+                    class="table align-middle mb-0 bg-white"
+                    id="usertable"
+                  >
+                    <thead class="bg-light">
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p class="fw-normal mb-1">1</p>
+                        </td>
+                        <td>
+                          <p class="fw-bold mb-1">John Doe</p>
+                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p class="fw-normal mb-1">2</p>
+                        </td>
+                        <td>
+                          <p class="fw-bold mb-1">John Doe</p>
+                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p class="fw-normal mb-1">1</p>
+                        </td>
+                        <td>
+                          <p class="fw-bold mb-1">John Doe</p>
+                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p class="fw-normal mb-1">1</p>
+                        </td>
+                        <td>
+                          <p class="fw-bold mb-1">John Doe</p>
+                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p class="fw-normal mb-1">1</p>
+                        </td>
+                        <td>
+                          <p class="fw-bold mb-1">John Doe</p>
+                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    class="btn btn-primary"
+                    data-bs-target="#addusers"
+                    data-bs-toggle="modal"
+                    data-bs-dismiss="modal"
+                  >
+                    Add users
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal fade"
+            id="addusers"
+            aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel2"
+            tabindex="-1"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addusersLabel">Add users</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body text-center">
+                  <input
+                    class="form-control"
+                    list="datalistOptions"
+                    id="users"
+                    placeholder="Type to search..."
+                  />
+                  <datalist id="datalistOptions">
+                    <option value="john"></option>
+                    <option value="Mary"></option>
+                    <option value="may"></option>
+                    <option value="ss"></option>
+                    <option value="iii"></option>
+                  </datalist>
+
+                  <button
+                    class="btn btn-outline-primary mt-3 px-5"
+                    data-bs-toggle="modal"
+                    data-bs-dismiss="modal"
+                    @click="addUsers"
+                  >
+                    Add
+                  </button>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-dismiss="modal"
+                    data-bs-target="#allusers"
+                  >
+                    See users
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-toggle="modal"
+            href="#addusers"
+          >
+            Add Users
+          </button>
+
+          <div class="btn-group" role="group">
+            <button
+              id="btnGroupDrop1"
+              type="button"
+              class="btn btn-outline-secondary dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Add Forms
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+              <li>
+                <a class="dropdown-item" href="/formbuilder">Create new form</a>
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  data-bs-toggle="modal"
+                  data-bs-target="#templatelist"
+                  >Choose from templates</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal for templates -->
+      <div
+        class="modal fade"
+        id="templatelist"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="choosetemplateLabel">
+                Choose Template
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body" id="templatemodal">
+              <div class="box">
+                <div class="container">
+                  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card template-box">
+                        <div class="card-body">
+                          <h6 class="card-title">Form 1231</h6>
+                          <p class="card-text">
+                            Form description: <br />Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Rem magni quas ex
+                            numqu.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Add template
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
+        <div class="card-body">
+          <h4 class="text-white m-0">
+            Assigned (Vendor fill in Stage) | Waiting for vendor response
+          </h4>
+        </div>
+      </div>
+
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
         <div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
             </div>
-          </div>
-          <div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card template-box">
-              <div class="card-body">
-                  <h6 class="card-title">Form 1231</h6>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numqu.</p>
-              </div>
-            </div>
-          </div>
-      </div>	
-    </div>
-</div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add template</button>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          data-bs-dismiss="modal"
+                        >
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-        
-        
-        <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
-            <div class="card-body"><h4 class="text-white m-0">Assigned (Vendor fill in Stage) | Waiting for vendor response</h4></div>
-        </div>
-        
-        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-
-              </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
             </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
                     </div>
-
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-
-        <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
-            <div class="card-body"><h4 class="text-white m-0">Awaiting Evaluation (Admin stage) | Waiting for both admin to fill and evaluate</h4></div>
-        </div>
-
-        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-
-              </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
             </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
                     </div>
-
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
-        <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
-            <div class="card-body"><h4 class="text-white m-0">Awaiting Approval (approver stage) | Waiting for approval to approve, completed / rejected</h4></div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-
-              </div>
-            </div>
-          </div><div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                  <h2 class="card-title">Form 1231</h2>
-                  <p class="card-text">Form description: <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                        <div class="col-6 pr-0">
-                            <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#assign">Assign</button>
-                        </div>
-                        <!-- modal -->
-                        <div class="modal fade" id="assign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Assign To</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <input class="form-control" list="datalistOptions" id="users" placeholder="Type to search...">
-                                <datalist id="datalistOptions">
-                                  <option value="john"></option>
-                                  <option value="Mary"></option>
-                                  <option value="may"></option>
-                                  <option value="ss"></option>
-                                  <option value="iii"></option>
-                                </datalist>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-6 pl-0">
-                            <button class="btn btn-link btn-block">Delete</button>
-                        </div>
-                    </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col mt-4"></div> <!-- empty column -->
-        </div>
-
-
-
       </div>
-    </section>
+
+      <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
+        <div class="card-body">
+          <h4 class="text-white m-0">
+            Awaiting Evaluation (Admin stage) | Waiting for both admin to fill
+            and evaluate
+          </h4>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
+        <div class="card-body">
+          <h4 class="text-white m-0">
+            Awaiting Approval (approver stage) | Waiting for approval to
+            approve, completed / rejected
+          </h4>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title">Form 1231</h2>
+              <p class="card-text">
+                Form description: <br />Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Rem magni quas ex numquam, maxime minus quam
+                molestias corporis quod, ea minima accusamus.
+              </p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-6 pr-0">
+                  <button
+                    class="btn btn-link btn-block"
+                    data-bs-toggle="modal"
+                    data-bs-target="#assign"
+                  >
+                    Assign
+                  </button>
+                </div>
+                <!-- modal -->
+                <div
+                  class="modal fade"
+                  id="assign"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Assign To
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          class="form-control"
+                          list="datalistOptions"
+                          id="users"
+                          placeholder="Type to search..."
+                        />
+                        <datalist id="datalistOptions">
+                          <option value="john"></option>
+                          <option value="Mary"></option>
+                          <option value="may"></option>
+                          <option value="ss"></option>
+                          <option value="iii"></option>
+                        </datalist>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 pl-0">
+                  <button class="btn btn-link btn-block">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col mt-4"></div>
+        <!-- empty column -->
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -846,7 +1465,8 @@ import UserService from "../services/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import { useTemplateStore } from "../stores/templateStore";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import VendorService from "../services/vendor/vendorService";
 
 export default {
   components: {
@@ -855,7 +1475,21 @@ export default {
     TemplateList,
     SectionComponent,
   },
-  setup() {
+  props: ["vendorId"],
+  setup(props) {
+    const currId = ref(props.vendorId);
+    console.log("vendorDetails is", currId);
+
+    var vendorInfo = ref(null);
+
+    var getVendorInfo = async () => {
+      vendorInfo.value = await VendorService.getVendor(currId.value);
+    };
+
+    getVendorInfo();
+
+    console.log(vendorInfo);
+
     var content = ref("");
 
     UserService.getUserBoard().then(
@@ -871,143 +1505,15 @@ export default {
       }
     );
 
-    //temporary template data
-    var templates = [
-      {
-        templateInfo: {
-          templateName: "New Vendor Assessment Form",
-          assignedTo: "Vendor",
-          templateDesc: "Assessment for new vendors",
-        },
-        templateContents: [
-          {
-            Vendor: [
-              {
-                type: "header",
-                order: 0,
-                text: "NEW VENDOR ASSESSMENT FORM",
-                style: "h1",
-              },
-              { type: "text", order: 1, text: "Company's Name" },
-              { type: "number", order: 2, text: "Company Registration No:" },
-              { type: "text", order: 3, text: "Office Address" },
-              { type: "boolean", order: 4, text: "GST Registered" },
-              { type: "number", order: 5, text: "Tel" },
-              { type: "text", order: 6, text: "Fax" },
-              {
-                type: "checkbox",
-                order: 7,
-                text: "Type of business License/Registration",
-                options: [
-                  "Sole Proprietorship",
-                  "Limited Company",
-                  "Partnership Agreement",
-                  "Others",
-                ],
-              },
-              {
-                type: "header",
-                order: 0,
-                text: "Contact Person",
-                style: "h1",
-              },
-              { type: "text", order: 8, text: "Contact Name" },
-              { type: "number", order: 9, text: "Contact Tel" },
-              { type: "text", order: 10, text: "Contact Designation" },
-              {
-                type: "checkbox",
-                order: 11,
-                text: "Nature of Business",
-                options: [
-                  "Manufacturing",
-                  "Agent/dealer",
-                  "Distributor",
-                  "Others",
-                ],
-              },
-              {
-                type: "text",
-                order: 12,
-                text: "If you picked Others please specify the nature of your business",
-              },
-            ],
-          },
-          {
-            Admin: [
-              {
-                type: "header",
-                order: 0,
-                text: "NEW VENDOR ASSESSMENT FORM",
-                style: "h1",
-              },
-              { type: "boolean", order: 2, text: "ISO 9001 Certification" },
-              { type: "text", order: 3, text: "Certification Body" },
-              {
-                type: "boolean",
-                order: 4,
-                text: "Accreditation of Laboratory",
-              },
-              { type: "text", order: 5, text: "Accreditation Body" },
-              { type: "boolean", order: 6, text: "Product Certification" },
-              {
-                type: "text",
-                order: 7,
-                text: "Product Markings (e.g. PSB, UL, TUV)",
-              },
-              { type: "boolean", order: 8, text: "Site Evaluation Results" },
-              {
-                type: "checkbox",
-                order: 9,
-                text: "Site Evaluation Results",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              {
-                type: "boolean",
-                order: 10,
-                text: "Results of Samples/Product Evaluation",
-              },
-              {
-                type: "checkbox",
-                order: 11,
-                text: "Results of Samples/Product Evaluation",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              { type: "boolean", order: 12, text: "Results of First Deal" },
-              {
-                type: "checkbox",
-                order: 13,
-                text: "Results of First Deal",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              {
-                type: "boolean",
-                order: 14,
-                text: "Track Record Review/ Customer Reference",
-              },
-              {
-                type: "checkbox",
-                order: 15,
-                text: "Track Record Review/ Customer Reference",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              {
-                type: "boolean",
-                order: 16,
-                text: "Other Evaluation",
-              },
-              {
-                type: "text",
-                order: 17,
-                text: "Specify: Product Markings (e.g. PSB, UL, TUV)",
-              },
-            ],
-          },
-        ],
-      },
-    ];
+    //get template data from templatestore
+    var templateStore = useTemplateStore();
+    var templateList = ref([]);
+    templateStore.getTemplates();
 
-    // var templates = useTemplateStore();
-    console.log("current templates are", templates);
+    watch(templateStore.$state, (state) => {
+      console.log("CHANGE DETECTED", state);
+      templateList.value = state.templates;
+    });
 
     var formName = ref("");
     var assignedTo = ref("Vendor");
@@ -1141,12 +1647,14 @@ export default {
     }
 
     return {
+      vendorInfo,
+      currId,
+      templateList,
       content,
       formItems,
       formName,
       assignedTo,
       desc,
-      templates,
       formSections,
       addTextInput,
       addHeaderText,
