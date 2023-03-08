@@ -191,7 +191,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useVendorStore } from "../stores/vendorStore";
@@ -290,6 +290,7 @@ export default {
 
     return {
       users,
+      filteredNames,
       vendorList,
       newVendorName,
       newVendorNote,
