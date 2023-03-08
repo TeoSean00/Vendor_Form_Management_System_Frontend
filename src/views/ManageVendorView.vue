@@ -62,91 +62,91 @@
           </div>
         </a>
       </template>
-    <div class="list-group flex">
-      <a
-        v-for="vendor in vendorList"
-        :key="vendor"
-        href="#"
-        class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
-        aria-current="true"
-      >
-        <span v-if="vendor.name == null">
-          <h3>Company {{ vendor.vendorId }}</h3>
-        </span>
-        <span v-else>
-          <h3>{{ vendor.name }}</h3>
-        </span>
-        <div class="float-right">
-          <span class="badge bluebg mx-1 mt-2">In Progress</span>
-          <span class="badge text-bg-info">Total</span>
-        </div>
-      </a>
+      <div class="list-group flex">
+        <a
+          v-for="vendor in vendorList"
+          :key="vendor"
+          href="#"
+          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
+          aria-current="true"
+        >
+          <span v-if="vendor.name == null">
+            <h3>Company {{ vendor.vendorId }}</h3>
+          </span>
+          <span v-else>
+            <h3>{{ vendor.name }}</h3>
+          </span>
+          <div class="float-right">
+            <span class="badge bluebg mx-1 mt-2">In Progress</span>
+            <span class="badge text-bg-info">Total</span>
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
 
-  <div
-    class="modal fade"
-    id="createVendor"
-    tabindex="-1"
-    aria-labelledby="createVendorLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create Vendor</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div>
-            <label for="vendorName" class="form-label">Vendor Name</label>
-            <input
-              type="username"
-              class="form-control"
-              v-model="newVendorName"
-              placeholder="Vendor name here"
-            />
+    <div
+      class="modal fade"
+      id="createVendor"
+      tabindex="-1"
+      aria-labelledby="createVendorLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create Vendor</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
-          <div class="mb-3">
-            <label for="vendorNotes" class="form-label"
-              >Additional Details</label
+          <div class="modal-body">
+            <div>
+              <label for="vendorName" class="form-label">Vendor Name</label>
+              <input
+                type="username"
+                class="form-control"
+                v-model="newVendorName"
+                placeholder="Vendor name here"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="vendorNotes" class="form-label"
+                >Additional Details</label
+              >
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                v-model="newVendorNote"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
             >
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              v-model="newVendorNote"
-            ></textarea>
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="toggleNewVendor(newVendorName)"
+            >
+              Create Vendor
+            </button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal"
-            @click="toggleNewVendor(newVendorName)"
-          >
-            Create Vendor
-          </button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- {{workflow.forms._rawValue.length}} -->
-
 </template>
 
 <script>
@@ -160,7 +160,6 @@ export default {
   components: { NavbarJP },
   setup() {
     var searchName = ref("");
-    
 
     //get vendor data
     var vendorStore = useVendorStore();
@@ -169,9 +168,7 @@ export default {
     var filteredNames = ref([]);
 
     console.log("vendors value is", vendorStore.vendors);
-    console.log("vendorList is an " + typeof vendorList)
-
-    
+    console.log("vendorList is an " + typeof vendorList);
 
     vendorStore.getVendors();
 
@@ -182,18 +179,17 @@ export default {
     watch(vendorStore.$state, (state) => {
       console.log("CHANGE DETECTED", state);
       vendorList.value = state.vendors;
-      
-    //   filteredNames.value = computed(() =>{
-    //   return vendorList.filter(function(vendor){
-    //     vendor.name.includes(searchName)
-    //   })
-    // });
 
-      filteredNames.value = vendorList.value.filter(function(vendor){
+      //   filteredNames.value = computed(() =>{
+      //   return vendorList.filter(function(vendor){
+      //     vendor.name.includes(searchName)
+      //   })
+      // });
+
+      filteredNames.value = vendorList.value.filter(function (vendor) {
         vendor.name.includes(searchName);
       });
     });
-    
 
     watch(searchName, (searchName) => {
       console.log("searchName change!", searchName);
@@ -248,12 +244,11 @@ export default {
     //   router.push("/viewform");
     // };
 
-    console.log(filteredNames)
+    console.log(filteredNames);
 
     return {
       searchName,
       filteredNames,
-      users,
       vendorList,
       newVendorName,
       newVendorNote,
@@ -262,7 +257,7 @@ export default {
       toggleEditVendor,
       toggleVendorPage,
       searchName,
-      filteredNames
+      filteredNames,
     };
   },
 };
