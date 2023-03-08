@@ -39,6 +39,7 @@
         />
       </div>
     </form>
+    <p>{{ filteredNames }}</p>
 
     <div v-if="!searchName" class="list-group flex">
       <template v-for="vendor in vendorList" :key="vendor">
@@ -212,10 +213,21 @@ export default {
 
     vendorStore.getVendors();
 
+    var searchName = ref("");
+    var filteredNames = ref([]);
+
     //watching the vendorStore state for changes
     watch(vendorStore.$state, (state) => {
       console.log("CHANGE DETECTED", state);
       vendorList.value = state.vendors;
+    });
+
+    watch(searchName, (searchName) => {
+      console.log("searchName change!", searchName);
+      filteredNames.value = vendorList.value.filter(function (vendor) {
+        return vendor.name.includes(searchName);
+      });
+      console.log(filteredNames.value);
     });
 
     console.log("vendors value is", vendorStore.vendors);
@@ -264,6 +276,8 @@ export default {
     // };
 
     return {
+      searchName,
+      filteredNames,
       users,
       vendorList,
       newVendorName,
