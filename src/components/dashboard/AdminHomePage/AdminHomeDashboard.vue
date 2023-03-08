@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="mt-3">Admin Home Dashboards</h2>
+        <h2 class="mt-3">Admin's Home Page Dashboards</h2>
         <div class="row">
             <!-- 1st chart -->
             <div class="col my-auto">
@@ -18,7 +18,6 @@
                 :data="VendorLineChart"
                 />
             </div>
-
             <!-- 3rd chart -->
             <div class="col my-auto">
                 <PolarArea 
@@ -97,7 +96,7 @@ export default {
             labels: ['Vendor', 'Admin', 'Approver'],
             // data values corresponding to each stakeholder
             datasets: [{ 
-                label: 'Avg days spent per stakeholder per form',
+                label: 'Avg days spent on each stakeholder per form',
                 data: [5, 10, 8],            
                 backgroundColor: [
                     'rgb(153, 51, 255 )',

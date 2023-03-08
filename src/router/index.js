@@ -5,11 +5,12 @@ import Dashboard from "../views/DashboardView.vue";
 import Home from "../views/Home.vue";
 import FormBuilder from "../views/FormBuilder.vue";
 import ViewForm from "../views/ViewForm.vue";
-import ManageVendorViewJP from "../views/ManageVendorViewJP.vue";
+import ManageVendorView from "../views/ManageVendorView.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 import CreateUser from "../views/CreateUser.vue";
 import Test from "../views/Test.vue";
 import VendorForm from "../views/VendorForm.vue";
+import AdminVendor from "../views/AdminVendor.vue";
 
 const requireAuth = (to, from, next) => {
   let user = JSON.parse(localStorage.getItem("user"));
@@ -47,7 +48,7 @@ const router = createRouter({
     {
       path: "/vendors",
       name: "vendors",
-      component: ManageVendorViewJP,
+      component: ManageVendorView,
       beforeEnter: requireAuth,
     },
     {
@@ -109,6 +110,12 @@ const router = createRouter({
       path: "/vendorForm",
       name: VendorForm,
       component: () => import("../views/VendorForm.vue"),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: "/admin/vendor",
+      name: AdminVendor,
+      component: () => import("../views/AdminVendor.vue"),
       beforeEnter: requireAuth,
     },
   ],
