@@ -15,11 +15,7 @@
           <div class="">
             <h4>Form Details</h4>
             <hr class="border border-dark border-2 mt-2 opacity-75" />
-
-            <template
-              v-for="(info, index) in previewData.templateInfo"
-              :key="index"
-            >
+            <template v-for="(info, index) in newForm.FormInfo" :key="index">
               <b>{{ index }}</b
               >: {{ info }}<br />
             </template>
@@ -45,121 +41,116 @@ import FormUserSection from "../form/FormUserSection.vue";
 import { ref, watch } from "vue";
 export default {
   components: { FormSection, FormUserSection },
-  props: ["previewData"],
+  props: ["newForm"],
   setup(props) {
-    var newForm = ref([]);
+    // const createForm = () => {
+    //   console.log("Checking previewdata in createform", props.previewData);
+    //   var info = props.previewData.templateInfo;
+    //   newForm.value["FormInfo"] = info;
+    //   for (let label in info) {
+    //     console.log("label is", label, info[label]);
+    //   }
+    //   var content = props.previewData.templateContents;
+    //   console.log("sections are", content);
 
-    const createForm = () => {
-      console.log("Checking previewdata in createform", props.previewData);
-      var info = props.previewData.templateInfo;
-      newForm.value["FormInfo"] = info;
-      for (let label in info) {
-        console.log("label is", label, info[label]);
-      }
-      var content = props.previewData.templateContents;
-      console.log("sections are", content);
+    //   newForm.value["FormContent"] = [];
+    //   for (let key in content) {
+    //     console.log("KEY IS ", key);
+    //     var section = content[key];
+    //     console.log("section is", section);
 
-      newForm.value["FormContent"] = [];
-      for (let key in content) {
-        console.log("KEY IS ", key);
-        var section = content[key];
-        console.log("section is", section);
+    //     var sectionKey = Object.keys(section)[0];
+    //     console.log(sectionKey);
 
-        var sectionKey = Object.keys(section)[0];
-        console.log(sectionKey);
+    //     // create vendor/admin section
+    //     var sectionItems = [];
 
-        // create vendor/admin section
-        var sectionItems = [];
+    //     for (let row of section[sectionKey]) {
+    //       let type = row.type;
+    //       // console.log("row is", row, "type is", type);
+    //       if (type == "text") {
+    //         sectionItems.push({
+    //           order: row.order,
+    //           label: row.text,
+    //           input: "",
+    //           type: type,
+    //         });
+    //       } else if (type == "radio" || type == "checkbox") {
+    //         sectionItems.push({
+    //           order: row.order,
+    //           label: row.text,
+    //           input: [],
+    //           options: row.options,
+    //           type: type,
+    //         });
+    //       } else if (type == "header") {
+    //         sectionItems.push({
+    //           order: row.order,
+    //           label: row.text,
+    //           style: row.style,
+    //           type: type,
+    //         });
+    //       } else if (type == "number") {
+    //         sectionItems.push({
+    //           order: row.order,
+    //           label: row.text,
+    //           input: "",
+    //           type: type,
+    //         });
+    //       } else if (type == "boolean") {
+    //         sectionItems.push({
+    //           order: row.order,
+    //           label: row.text,
+    //           input: [],
+    //           options: row.options,
+    //           type: "radio",
+    //         });
+    //       } else if (type == "date") {
+    //         sectionItems.push({
+    //           order: row.order,
+    //           label: row.text,
+    //           input: "",
+    //           options: row.options,
+    //           type: type,
+    //         });
+    //       } else if (type == "likertGroup") {
+    //         sectionItems.push({
+    //           order: row.order,
+    //           label: row.text,
+    //           input: [],
+    //           options: row.options,
+    //           type: type,
+    //         });
+    //       }
+    //     }
+    //     var sectionObject = {};
+    //     if (sectionKey == "admin") {
+    //       sectionObject = {
+    //         admin: sectionItems,
+    //       };
+    //     } else {
+    //       sectionObject = {
+    //         vendor: sectionItems,
+    //       };
+    //     }
 
-        for (let row of section[sectionKey]) {
-          let type = row.type;
-          // console.log("row is", row, "type is", type);
-          if (type == "text") {
-            sectionItems.push({
-              order: row.order,
-              label: row.text,
-              input: "",
-              type: type,
-            });
-          } else if (type == "radio" || type == "checkbox") {
-            sectionItems.push({
-              order: row.order,
-              label: row.text,
-              input: [],
-              options: row.options,
-              type: type,
-            });
-          } else if (type == "header") {
-            sectionItems.push({
-              order: row.order,
-              label: row.text,
-              style: row.style,
-              type: type,
-            });
-          } else if (type == "number") {
-            sectionItems.push({
-              order: row.order,
-              label: row.text,
-              input: "",
-              type: type,
-            });
-          } else if (type == "boolean") {
-            sectionItems.push({
-              order: row.order,
-              label: row.text,
-              input: [],
-              options: row.options,
-              type: "radio",
-            });
-          } else if (type == "date") {
-            sectionItems.push({
-              order: row.order,
-              label: row.text,
-              input: "",
-              options: row.options,
-              type: type,
-            });
-          } else if (type == "likertGroup") {
-            sectionItems.push({
-              order: row.order,
-              label: row.text,
-              input: [],
-              options: row.options,
-              type: type,
-            });
-          }
-        }
-        var sectionObject = {};
-        if (sectionKey == "admin") {
-          sectionObject = {
-            admin: sectionItems,
-          };
-        } else {
-          sectionObject = {
-            vendor: sectionItems,
-          };
-        }
+    //     newForm.value["FormContent"].push(sectionObject);
+    //   }
+    // };
 
-        newForm.value["FormContent"].push(sectionObject);
-      }
-    };
-
-    watch(props.previewData, () => {
-      console.log("previewData updated!", props.previewData);
-      newForm.value = [];
-      createForm();
-      console.log("createform called!,newform is ", newForm.value);
+    watch(props.newForm, () => {
+      console.log("previewData updated!", props.newForm);
     });
 
-    console.log("received previewData", props.previewData);
-    createForm();
+    // console.log("received previewData", props.newForm);
+    // createForm();
 
     // const handleSubmit = () => {
     //   console.log("submit called");
     //   console.log(newForm.value);
     // };
 
-    return { newForm };
+    return {};
   },
 };
 </script>
