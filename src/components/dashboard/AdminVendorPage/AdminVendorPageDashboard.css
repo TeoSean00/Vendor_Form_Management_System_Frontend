@@ -12,3 +12,11 @@
     width: 35px;
     margin-right: 30px;
 }
+
+.btn-sm{
+    height: 2em;
+}
+
+.card-body{
+    padding: 12px;
+}
