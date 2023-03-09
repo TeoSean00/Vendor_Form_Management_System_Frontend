@@ -31,9 +31,11 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Bar, Line, PolarArea } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, plugins} from 'chart.js';
+import FormService from '../../../services/form/formService';
+import { walkFunctionParams } from '@vue/compiler-core';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, plugins)
 
@@ -41,7 +43,8 @@ export default {
     components: {
         Bar,
         Line,
-        PolarArea
+        PolarArea,
+        FormService
     },
     setup() {
         // metadata for file status bar chart
@@ -68,6 +71,16 @@ export default {
                 maintainAspectRatio: true,
             }
         })
+
+        // async await call to get all forms data
+        var formData = ref(null);
+        console.log('before',formData.value)
+        var getFormInfo = async () => {
+            formData.value = await FormService.getForms();
+        };
+
+        getFormInfo();
+        console.log('after',formData.value)
 
         // metadata for vendor line chart
         const VendorLineChart = ref({
@@ -119,7 +132,7 @@ export default {
             }
         })
 
-        return { FileStatusBarChart, FileStatusBarChartOptions, VendorLineChart, VendorLineChartOptions, PolarAreaChart, PolarAreaChartOptions }
+        return { formData, FileStatusBarChart, FileStatusBarChartOptions, VendorLineChart, VendorLineChartOptions, PolarAreaChart, PolarAreaChartOptions }
     }
 }
 </script>
