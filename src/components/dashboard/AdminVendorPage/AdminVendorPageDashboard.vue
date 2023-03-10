@@ -17,6 +17,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="card mx-auto" style="width: 88%;">
+                                <!-- first page to do list -->
                                 <div class="card-body">
                                     <h5 class="card-title">Updates Today</h5>
                                     <p class="card-text">{{dataSize}} new updates for Vendor SGXChange today, {{ dateToday }}</p>
@@ -24,11 +25,10 @@
                                         <p>There are no new updates for today!</p>
                                     </div>
                                     <div v-else>
-                                        <!-- first page to do list -->
                                         <ul class="list-group list-group-flush">
                                             <div v-for="(status, form, index) in dummyData">
-                                                <li v-if="index<4" class="list-group-item" style="font-size: 0.85em; padding: 12px;">
-                                                    {{ form }} - {{ status }}
+                                                <li v-if="index<4" class="list-group-item">
+                                                    {{ index+1 }}. {{ form }} - {{ status }}
                                                     <a href="#" class="btn btn-sm btn-primary">Go to Form</a>
                                                 </li>
                                             </div>
@@ -38,22 +38,44 @@
                             </div>     
                         </div>  
 
-                        <!-- second page onwards to do list -->
+                        <!-- second page to do list -->
                         <div v-if="dataSize > 4">
                             <div class="carousel-item">
-                                <div class="card mx-auto" style="width: 90%;">
+                                <div class="card mx-auto" style="width: 88%;">
                                     <div class="card-body">
                                         <h5 class="card-title">Updates Today</h5>
                                         <p class="card-text">{{dataSize}} new updates for Vendor SGXChange today, {{ dateToday }}</p>
+                                        <ul class="list-group list-group-flush">
+                                            <div v-for="(status, form, index) in dummyData">
+                                                <li v-if="index>3 && index<8" class="list-group-item">
+                                                    {{ index+1 }}. {{ form }} - {{ status }}
+                                                    <a href="#" class="btn btn-sm btn-primary">Go to Form</a>
+                                                </li>
+                                            </div>
+                                        </ul>
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                        <div v-for="(status, form, index) in dummyData">
-                                            <li v-if="index>3" class="list-group-item">
-                                                {{ form }} - {{ status }}
-                                                <a href="#" class="btn btn-sm btn-primary">Go to Form</a>
-                                            </li>
-                                        </div>
-                                    </ul>
+                                </div>   
+                            </div>
+                        </div>
+
+                        <!-- third page to do list -->
+                        <div v-if="dataSize > 8">
+                            <div class="carousel-item">
+                                <div class="card mx-auto" style="width: 88%;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Updates Today</h5>
+                                        <p class="card-text">{{dataSize}} new updates for Vendor SGXChange today, {{ dateToday }}</p>
+                                        <ul class="list-group list-group-flush">
+                                            <div v-for="(status, form, index) in dummyData">
+                                                <li v-if="index>7 && index<12" class="list-group-item">
+                                                    {{ index+1 }}. {{ form }} - {{ status }}
+                                                    <a href="#" class="btn btn-sm btn-primary">
+                                                        Go to Form
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        </ul>
+                                    </div>
                                 </div>   
                             </div>
                         </div>
@@ -151,6 +173,11 @@ export default {
             formE : "Awaiting Admin",
             formF : "Awaiting Approver",
             formG : "Awaiting Approver",
+            formH : "Awaiting Vendor",
+            formI : "Awaiting Admin",
+            formJ : "Awaiting Approver",
+            formK : "Awaiting Vendor",
+            formL : "Awaiting Admin",
         })
 
         const dataSize = computed(() => {
@@ -159,7 +186,7 @@ export default {
             for(let v in value) {
                 count += 1
             }
-            console.log(count)
+            // console.log(count)
             return count
         })
 
@@ -194,7 +221,7 @@ export default {
                 finalLabel.push(sortable[i][0])
                 finalValues.push(sortable[i][1])
             }
-            console.log(sorteddict, finalLabel, finalValues)
+            // console.log(sorteddict, finalLabel, finalValues)
             return ([finalLabel, finalValues])
         })
 
