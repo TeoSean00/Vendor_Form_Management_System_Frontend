@@ -15,7 +15,6 @@ import authVerify from "../services/authVerify";
 const requireAuth = (to, from, next) => {
   // verify if jwt token is still valid
   authVerify();
-
   let user = JSON.parse(localStorage.getItem("user"));
   console.log("current user in auth guard: ", user);
   // if (!user && to.name != "Home") next({ name: "Home" });

@@ -167,7 +167,7 @@
 <script>
 import TemplateList from "../components/template/TemplateList.vue";
 import Navbar from "../components/navbar/Navbar.vue";
-import UserService from "../services/userService";
+import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";

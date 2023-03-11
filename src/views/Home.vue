@@ -8,12 +8,14 @@
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </p>
     </div>
-    <AdminView />
+    <template v-if="adminStatus">
+      <AdminView />
+    </template>
   </div>
 </template>
 <script>
 import { ref } from "vue";
-import UserService from "../services/userService";
+import UserService from "../services/user/userService";
 
 import Navbar from "../components/navbar/Navbar.vue";
 import TopBanner from "../components/navbar/TopBanner.vue";
@@ -29,74 +31,13 @@ export default {
   },
   setup() {
     var content = ref("");
-    var workflows = ref([
-      {
-        workflowId: 1,
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-          {
-            formId: 2,
-            formName: "Form 2",
-            status: "Pending",
-          },
-        ],
-      },
-      {
-        workflowId: 2,
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-        ],
-      },
-      {
-        workflowId: 3,
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-        ],
-      },
-      {
-        workflowId: 4,
-        forms: [
-          {
-            formId: 1,
-            formName: "Form 1",
-            status: "Pending",
-          },
-          {
-            formId: 2,
-            formName: "Form 2",
-            status: "Pending",
-          },
-          {
-            formId: 3,
-            formName: "Form 3",
-            status: "Pending",
-          },
-        ],
-      },
-    ]);
-
-    var toggleCollapse = (workflow) => {
-      workflow.collapse = !workflow.collapse;
-      console.log("Toggle Collapse");
-    };
-
     var auth = useAuthStore();
     var currentUser = auth.user;
+    console.log("home user is currently", currentUser);
 
-    return { content, workflows, toggleCollapse, currentUser };
+    var adminStatus = currentUser.roles.includes("ROLE_ADMIN") ? true : false;
+
+    return { content, currentUser, adminStatus };
   },
 };
-
 </script>
