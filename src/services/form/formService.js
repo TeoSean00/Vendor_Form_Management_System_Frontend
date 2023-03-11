@@ -46,6 +46,20 @@ class FormService {
       });
     return response;
   }
+
+  deleteForm(formID) {
+    const response = axios
+      .delete(API_URL + formID, { headers: authHeader() })
+      .then((response) => {
+        console.log("delete request successful!", response);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("delete request unsuccessful", error);
+        return error;
+      });
+    return response;
+  }
 }
 
 export default new FormService();

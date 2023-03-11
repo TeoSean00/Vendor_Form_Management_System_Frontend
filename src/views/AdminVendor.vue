@@ -7,8 +7,8 @@
         Data dump section
         <p>{{ vendorInfo }}</p>
         <p>{{ templateList }}</p>
-        <p>{{ form }}</p>
         <p>{{ allForms }}</p>
+        <p>{{ toDelete }}</p>
         
       </div>
 
@@ -744,7 +744,7 @@
                   </div>
                 </div> -->
                 <div class="col-6 pl-0">
-                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="">Delete</button>
+                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="toDelete=vendorForm.id">Delete</button>
                   <!-- Modal confirm delete -->
                   <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -758,7 +758,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <button type="button" class="btn btn-danger">Delete</button>
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteForm(toDelete)">Delete</button>
                         </div>
                       </div>
                     </div>
@@ -836,19 +836,7 @@ export default {
     };
     getAllForms();
 
-
-    
-
-
-    
-
-    // //get form
-    var form = ref(null);
-    var getForm = async () => {
-      form.value = await FormService.getForm("640c41af5646e17dcbfa5a77");
-    };
-    
-    getForm();
+    var toDelete = ref('');
     
 
     var content = ref("");
@@ -979,6 +967,11 @@ export default {
       formItems.value.splice(questionKey, 1);
     }
 
+    function deleteForm(toDelete){
+      FormService.deleteForm(toDelete);
+      console.log("Form deleted");
+    }
+
     function exportForm() {
       //Packages the form content into a JSON string
       //This is where we write the ajax code
@@ -1017,11 +1010,11 @@ export default {
       assignedTo,
       desc,
       formSections,
-      form,
       allForms,
       vendorAssignedForms,
       adminAssignedForms,
       approvalAssignedForms,
+      toDelete,
       addTextInput,
       addHeaderText,
       addCheckboxInput,
@@ -1032,6 +1025,7 @@ export default {
       addLikertGroupInput,
       update,
       removeQuestion,
+      deleteForm,
       exportForm,
       addTemplate,
       addAdminSection,
