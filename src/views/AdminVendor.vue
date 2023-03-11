@@ -553,7 +553,7 @@
                   </div>
                 </div> -->
                 <div class="col-6 pl-0">
-                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</button>
+                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="toDelete=vendorForm.id">Delete</button>
                 </div>
               </div>
             </div>
@@ -594,63 +594,9 @@
                     Enter
                   </button>
                 </div>
-                <!-- modal -->
-                <!-- <div
-                  class="modal fade"
-                  id="assign"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                > -->
-                  <!-- <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Assign To
-                        </h5>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          class="form-control"
-                          list="datalistOptions"
-                          id="users"
-                          placeholder="Type to search..."
-                        />
-                        <datalist id="datalistOptions">
-                          <option value="john"></option>
-                          <option value="Mary"></option>
-                          <option value="may"></option>
-                          <option value="ss"></option>
-                          <option value="iii"></option>
-                        </datalist>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          data-bs-dismiss="modal"
-                        >
-                          Save changes
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+                
                 <div class="col-6 pl-0">
-                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</button>
+                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="toDelete=vendorForm.id">Delete</button>
                 </div>
               </div>
             </div>
@@ -688,90 +634,36 @@
                     Enter
                   </button>
                 </div>
-                <!-- modal -->
-                <!-- <div
-                  class="modal fade"
-                  id="assign"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Enter
-                        </h5>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          class="form-control"
-                          list="datalistOptions"
-                          id="users"
-                          placeholder="Type to search..."
-                        />
-                        <datalist id="datalistOptions">
-                          <option value="john"></option>
-                          <option value="Mary"></option>
-                          <option value="may"></option>
-                          <option value="ss"></option>
-                          <option value="iii"></option>
-                        </datalist>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          data-bs-dismiss="modal"
-                        >
-                          Save changes
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+                
                 <div class="col-6 pl-0">
                   <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="toDelete=vendorForm.id">Delete</button>
-                  <!-- Modal confirm delete -->
-                  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="confirmModalLabel">Are you sure?</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                          Do you really want to delete these records? <br>This process cannot be undone.
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteForm(toDelete)">Delete</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
-            </div>      
+          </div>      
+        </div>
+      </template>
+      <div class="col mt-4"></div>
+    </div>
+    
+    <!-- Modal confirm delete -->
+      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmModalLabel">Are you sure?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              Do you really want to delete these records? <br>This process cannot be undone.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteForm(toDelete)">Delete</button>
+            </div>
           </div>
-        </template>
-        <div class="col mt-4"></div>
+        </div>
       </div>
-      
         <!-- empty column -->
      
     </div>
