@@ -435,8 +435,8 @@ export default {
 
     var previewObj = ref({
       templateInfo: {
-        templateName: formName,
-        templateDesc: desc,
+        formName: formName,
+        formDesc: desc,
       },
       templateContents: formSections,
     });
@@ -570,10 +570,11 @@ export default {
       };
       await FormService.addForm(newFormObject)
         .then((response) => {
+          alert("Form created!");
           console.log(response);
         })
         .catch((error) => {
-          console.log(error);
+          alert(error);
         });
     };
 

@@ -5,11 +5,11 @@
     <div class="container">
       <div>
         Data dump section
+        <p>{{ vendorUsers }}</p>
         <p>{{ vendorInfo }}</p>
         <p>{{ templateList }}</p>
         <p>{{ allForms }}</p>
         <p>{{ toDelete }}</p>
-        
       </div>
 
       <div class="section-title d-flex justify-content-between">
@@ -478,27 +478,26 @@
 
       <!-- start of form -->
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-        <template v-for="vendorForm in vendorAssignedForms" :key="vendorForm.status">
+        <template
+          v-for="vendorForm in vendorAssignedForms"
+          :key="vendorForm.status"
+        >
           <div class="col">
             <div class="card h-100">
               <div class="card-body">
-                <h2 class="card-title">{{vendorForm.id}}</h2>
+                <h2 class="card-title">{{ vendorForm.id }}</h2>
                 <p class="card-text">
-                  Form description: <br/> {{vendorForm.content.FormInfo.templateDesc}}
+                  Form description: <br />
+                  {{ vendorForm.content.FormInfo }}
                 </p>
               </div>
               <div class="card-footer">
-              <div class="row">
-                <div class="col-6 pr-0">
-                  <button
-                    class="btn btn-link btn-block"
-                   
-                  >
-                    Enter
-                  </button>
-                </div>
-                <!-- modal -->
-                <!-- <div
+                <div class="row">
+                  <div class="col-6 pr-0">
+                    <button class="btn btn-link btn-block">Enter</button>
+                  </div>
+                  <!-- modal -->
+                  <!-- <div
                   class="modal fade"
                   id="assign"
                   tabindex="-1"
@@ -552,19 +551,24 @@
                     </div>
                   </div>
                 </div> -->
-                <div class="col-6 pl-0">
-                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="toDelete=vendorForm.id">Delete</button>
+                  <div class="col-6 pl-0">
+                    <button
+                      class="btn btn-link btn-block"
+                      data-bs-toggle="modal"
+                      data-bs-target="#confirmModal"
+                      @click="toDelete = vendorForm.id"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-            </div>      
           </div>
         </template>
       </div>
-        <!-- end of form  -->
+      <!-- end of form  -->
 
-
-        
       <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
@@ -575,32 +579,38 @@
       </div>
 
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-        <template v-for="vendorForm in adminAssignedForms" :key="vendorForm.status">
+        <template
+          v-for="vendorForm in adminAssignedForms"
+          :key="vendorForm.status"
+        >
           <div class="col">
             <div class="card h-100">
               <div class="card-body">
-                <h2 class="card-title">{{vendorForm.id}}</h2>
+                <h2 class="card-title">{{ vendorForm.id }}</h2>
                 <p class="card-text">
-                  Form description: <br/> {{vendorForm.content.FormInfo.templateDesc}}
+                  Form description: <br />
+                  {{ vendorForm.content.FormInfo.templateDesc }}
                 </p>
               </div>
               <div class="card-footer">
-              <div class="row">
-                <div class="col-6 pr-0">
-                  <button
-                    class="btn btn-link btn-block"
-                  
-                  >
-                    Enter
-                  </button>
-                </div>
-                
-                <div class="col-6 pl-0">
-                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="toDelete=vendorForm.id">Delete</button>
+                <div class="row">
+                  <div class="col-6 pr-0">
+                    <button class="btn btn-link btn-block">Enter</button>
+                  </div>
+
+                  <div class="col-6 pl-0">
+                    <button
+                      class="btn btn-link btn-block"
+                      data-bs-toggle="modal"
+                      data-bs-target="#confirmModal"
+                      @click="toDelete = vendorForm.id"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-            </div>      
           </div>
         </template>
       </div>
@@ -615,57 +625,87 @@
       </div>
 
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-        <template v-for="vendorForm in approvalAssignedForms" :key="vendorForm.status">
+        <template
+          v-for="vendorForm in approvalAssignedForms"
+          :key="vendorForm.status"
+        >
           <div class="col">
             <div class="card h-100">
               <div class="card-body">
-                <h2 class="card-title">{{vendorForm.id}}</h2>
+                <h2 class="card-title">{{ vendorForm.id }}</h2>
                 <p class="card-text">
-                  Form description: <br/> {{vendorForm.content.FormInfo.templateDesc}}
+                  Form description: <br />
+                  {{ vendorForm.content.FormInfo.templateDesc }}
                 </p>
               </div>
               <div class="card-footer">
-              <div class="row">
-                <div class="col-6 pr-0">
-                  <button
-                    class="btn btn-link btn-block"
-                    
-                  >
-                    Enter
-                  </button>
-                </div>
-                
-                <div class="col-6 pl-0">
-                  <button class="btn btn-link btn-block" data-bs-toggle="modal" data-bs-target="#confirmModal" @click="toDelete=vendorForm.id">Delete</button>
+                <div class="row">
+                  <div class="col-6 pr-0">
+                    <button class="btn btn-link btn-block">Enter</button>
+                  </div>
+
+                  <div class="col-6 pl-0">
+                    <button
+                      class="btn btn-link btn-block"
+                      data-bs-toggle="modal"
+                      data-bs-target="#confirmModal"
+                      @click="toDelete = vendorForm.id"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>      
-        </div>
-      </template>
-      <div class="col mt-4"></div>
-    </div>
-    
-    <!-- Modal confirm delete -->
-      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+          </div>
+        </template>
+        <div class="col mt-4"></div>
+      </div>
+
+      <!-- Modal confirm delete -->
+      <div
+        class="modal fade"
+        id="confirmModal"
+        tabindex="-1"
+        aria-labelledby="confirmModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="confirmModalLabel">Are you sure?</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body text-center">
-              Do you really want to delete these records? <br>This process cannot be undone.
+              Do you really want to delete these records? <br />This process
+              cannot be undone.
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="deleteForm(toDelete)">Delete</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-dismiss="modal"
+                @click="deleteForm(toDelete)"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
       </div>
-        <!-- empty column -->
-     
+      <!-- empty column -->
     </div>
   </section>
 </template>
@@ -701,6 +741,13 @@ export default {
     getVendorInfo();
     console.log(vendorInfo);
 
+    var vendorUsers = ref([]);
+    var getUserInfo = async () => {
+      console.log("vendorinfo vendorId is", currId);
+      vendorUsers.value = await UserService.getVendorUsers(currId.value);
+    };
+    getUserInfo();
+
     var allForms = ref([]);
     var vendorForms = ref([]);
     var vendorAssignedForms = ref([]);
@@ -713,23 +760,19 @@ export default {
       for (var i = 0; i < allForms.value.length; i++) {
         if (allForms.value[i].vendorId == currId.value) {
           vendorForms.value.push(allForms.value[i]);
-          if (allForms.value[i].status == "vendor_response"){
+          if (allForms.value[i].status == "vendor_response") {
             vendorAssignedForms.value.push(allForms.value[i]);
-          }
-          else if (allForms.value[i].status == "admin_response"){
+          } else if (allForms.value[i].status == "admin_response") {
             adminAssignedForms.value.push(allForms.value[i]);
-          }
-          else if (allForms.value[i].status == "approval_response"){
+          } else if (allForms.value[i].status == "approval_response") {
             approvalAssignedForms.value.push(allForms.value[i]);
           }
         }
-        
       }
     };
     getAllForms();
 
-    var toDelete = ref('');
-    
+    var toDelete = ref("");
 
     var content = ref("");
 
@@ -859,7 +902,7 @@ export default {
       formItems.value.splice(questionKey, 1);
     }
 
-    function deleteForm(toDelete){
+    function deleteForm(toDelete) {
       FormService.deleteForm(toDelete);
       console.log("Form deleted");
     }
@@ -893,6 +936,7 @@ export default {
     }
 
     return {
+      vendorUsers,
       vendorInfo,
       currId,
       templateList,
