@@ -148,7 +148,7 @@
                         v-model="user.vendor"
                         type="radio"
                         class="form-check-input me-2"
-                        name="role"
+                        name="vendor"
                         :value="[vendor.name, vendor.id]"
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
@@ -215,7 +215,7 @@
         </label>
       </div>
 
-      <button class="btn btn-primary btn-block" @click="toggleReview">
+      <button class="btn btn-primary btn-block" @click="toggleSubmit">
         Create User
       </button>
     </div>
@@ -235,6 +235,8 @@ import AuthService from "../services/authService";
 export default {
   components: { Navbar },
   setup() {
+    var stage = ref(0);
+
     var user = ref({
       username: "",
       email: "",
@@ -245,11 +247,18 @@ export default {
 
     var review = ref(false);
 
-    var toggleReview = async () => {
+    var toggleSubmit = async () => {
       if (review.value == false) {
         review.value = true;
       }
-      await AuthService.signup(user);
+      let response = await AuthService.signup(user)
+        .then((response) => {
+          return response;
+        })
+        .catch((error) => {
+          return error;
+        });
+      alert(response);
     };
 
     var vendors = ref([]);
@@ -276,8 +285,7 @@ export default {
           toggleUsernameError.value = false;
           stage.value += 1;
         }
-      }
-      if (stage.value > 0) {
+      } else if (stage.value > 0) {
         stage.value += 1;
       }
     };
@@ -287,14 +295,12 @@ export default {
 
     const colorList = [25, 50, 75, 100];
     const statusList = ["Details", "Permissions", "Review", "Complete"];
-
-    var stage = ref(0);
     return {
       toggleUsernameError,
       toggleEmailError,
       vendors,
       user,
-      toggleReview,
+      toggleSubmit,
       colorList,
       statusList,
       stage,
