@@ -11,6 +11,7 @@ import CreateUser from "../views/CreateUser.vue";
 import VendorForm from "../views/VendorForm.vue";
 import AdminVendor from "../views/AdminVendor.vue";
 import authVerify from "../services/authVerify";
+import VendorView from "../views/VendorView.vue";
 
 const requireAuth = (to, from, next) => {
   // verify if jwt token is still valid
@@ -29,13 +30,26 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: Home,
-      beforeEnter: requireAuth,
+      beforeEnter(to, from, next) {
+        authVerify();
+        let user = JSON.parse(localStorage.getItem("user"));
+        console.log("current user in auth guard: ", user);
+        // if (!user && to.name != "Home") next({ name: "Home" });
+        if (!user) {next({ name: "login" });}
+        else {
+          if (user.roles.includes("ROLE_ADMIN","ROLE_MODERATOR") == false){
+            next({ name: "VendorView" });
+          }
+          next();
+        } ;
+      } 
+      
     },
-    // {
-    //   path: "/home",
-    //   name: "home",
-    //   component: Home,
-    // },
+    {
+      path: "/vendorView",
+      name: "VendorView",
+      component: VendorView,
+    },
     {
       path: "/login",
       name: "login",
