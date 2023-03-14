@@ -153,6 +153,7 @@
             <button
               type="button"
               class="btn btn-primary"
+              data-bs-dismiss="modal"
               @click="toggleCreateForm"
             >
               Create form
@@ -167,7 +168,7 @@
 <script>
 import TemplateList from "../components/template/TemplateList.vue";
 import Navbar from "../components/navbar/Navbar.vue";
-import UserService from "../services/userService";
+import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
@@ -435,8 +436,8 @@ export default {
 
     var previewObj = ref({
       templateInfo: {
-        templateName: formName,
-        templateDesc: desc,
+        formName: formName,
+        formDesc: desc,
       },
       templateContents: formSections,
     });
@@ -570,10 +571,11 @@ export default {
       };
       await FormService.addForm(newFormObject)
         .then((response) => {
+          alert("Form created!");
           console.log(response);
         })
         .catch((error) => {
-          console.log(error);
+          alert(error);
         });
     };
 
