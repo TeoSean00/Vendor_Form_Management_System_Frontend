@@ -8,9 +8,7 @@
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </p>
     </div>
-    <template v-if="adminStatus">
-      <AdminView />
-    </template>
+    <AdminView />
   </div>
 </template>
 <script>
@@ -35,9 +33,12 @@ export default {
     var currentUser = auth.user;
     console.log("home user is currently", currentUser);
 
-    var adminStatus = currentUser.roles.includes("ROLE_ADMIN") ? true : false;
+    // var adminStatus = ref(false);
+    // if (currentUser) {
+    //   adminStatus = currentUser.roles.includes("ROLE_ADMIN") ? true : false;
+    // }
 
-    return { content, currentUser, adminStatus };
+    return { content, currentUser };
   },
 };
 </script>
