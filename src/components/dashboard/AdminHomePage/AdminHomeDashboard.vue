@@ -1,14 +1,13 @@
 <template>
   <div class="container">
     <h2 class="mt-3">Admin's Home Page Dashboards</h2>
-    {{ formData }}
     <div class="row">
       <!-- 1st chart -->
       <div class="col my-auto">
         <Bar
-          id="file-status-bar-chart"
-          :options="FileStatusBarChartOptions"
-          :data="FileStatusBarChart"
+            id="file-status-bar-chart"
+            :options="FileStatusBarChartOptions"
+            :data="FileStatusBarChart"
         />
       </div>
       <!-- 2nd chart -->
@@ -32,8 +31,9 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, reactive, watch } from "vue";
 import { Bar, Line, PolarArea } from "vue-chartjs";
+import FormService from "../../../services/form/formService";
 import {
   Chart as ChartJS,
   Title,
@@ -46,8 +46,6 @@ import {
   LineElement,
   plugins,
 } from "chart.js";
-import FormService from "../../../services/form/formService";
-import { walkFunctionParams } from "@vue/compiler-core";
 
 ChartJS.register(
   Title,
@@ -69,52 +67,75 @@ export default {
     FormService,
   },
   setup() {
-    // metadata for file status bar chart
-    const FileStatusBarChart = ref({
-      // labels for each file status in the bar chart
-      labels: [
-        "Awaiting Vendor",
-        "Awaiting Admin",
-        "Awaiting Approver",
-        "Completed",
-        "Rejected",
-      ],
-      // data values corresponding to each file status bar in the bar chart
-      datasets: [
-        {
-          label: "Breakdown of overall form statuses",
-          data: [40, 20, 12, 10, 6],
-          backgroundColor: [
-            "rgb(153, 51, 255 )",
-            "rgb(54, 162, 235)",
-            "rgb(255, 128, 0)",
-            "rgb(100, 202, 150)",
-            "rgb(255, 75, 132)",
-          ],
+        // metadata for file status bar chart
+        var FileStatusBarChart = ref({
+        // labels for each file status in the bar chart
+        labels: [
+            "Awaiting Vendor",
+            "Awaiting Admin",
+            "Awaiting Approver",
+            "Completed",
+        ],
+        // data values corresponding to each file status bar in the bar chart
+        datasets: [
+            {
+            label: "Breakdown of overall form statuses",
+            data: [40, 20, 12, 10],
+            backgroundColor: [
+                "rgb(153, 51, 255 )",
+                "rgb(54, 162, 235)",
+                "rgb(255, 128, 0)",
+                "rgb(100, 202, 150)",
+                "rgb(255, 75, 132)",
+            ],
+            },
+        ],
+        });
+        // configuration options for bar chart
+        const FileStatusBarChartOptions = ref({
+        chartOptions: {
+            responsive: false,
+            maintainAspectRatio: true,
         },
-      ],
-    });
-    // configuration options for bar chart
-    const FileStatusBarChartOptions = ref({
-      chartOptions: {
-        responsive: false,
-        maintainAspectRatio: true,
-      },
-    });
+        });
 
-    // async await call to get all forms data
-    var formData = ref(null);
+        // method to organise form status bar chart fetched API data
+        var manipulateForms = () => {
+        let defaultValues = [0, 0, 0, 0]
+        for(let i = 0; i<formData.value.length; i++) {
+            let status = formData.value[i].status
+            if (status === "vendor_response") {
+                defaultValues[0] += 1
+            }
+            else if (status === "admin_review") {
+                defaultValues[1] += 1
+            }
+            else if (status === "approver_review") {
+                defaultValues[2] += 1
+            }
+            else if (status === "completed") {
+                defaultValues[3] += 1
+            }
+        }
+        console.log('form breakdowns array before: ', FileStatusBarChart.value.datasets[0].data, 'form breakdowns array after: ', defaultValues)
+        FileStatusBarChart.value.datasets[0].data = defaultValues;
+        }
 
-    var getFormInfo = async () => {
-      console.log("getFormInfo called!", formData.value);
-      formData.value = await FormService.getForms().then((response) => {
-        return response;
-      });
-      console.log("after await", formData.value);
-    };
+        // async await call to get all forms data
+        var formData = ref(null);
 
-    getFormInfo();
+        var getFormInfo = async () => {
+        console.log("getFormInfo called! Before Value: ", formData.value);
+        formData.value = await FormService.getForms().then((response) => {
+            return response;
+        });
+        console.log("after await value: ", formData.value);
+        manipulateForms();
+        };
+        
+        getFormInfo();
 
+    // ------------------------------------------------------------------
     // metadata for vendor line chart
     const VendorLineChart = ref({
       // labels for each month in the line chart
@@ -175,6 +196,7 @@ export default {
       VendorLineChartOptions,
       PolarAreaChart,
       PolarAreaChartOptions,
+      manipulateForms,
     };
   },
 };
