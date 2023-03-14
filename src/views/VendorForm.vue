@@ -2,7 +2,7 @@
   <Navbar />
   Signed in as {{ currentUser }}
   <br />
-  {{ newForm }}
+  {{ newFormContent }}
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <!-- <div class="m-2">
@@ -15,7 +15,7 @@
           <hr class="border border-dark border-2 mt-2 opacity-75" />
         </div>
         <form onsubmit="return false;">
-          <template v-for="(section, index) in newForm" :key="index">
+          <template v-for="(section, index) in newFormContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
               <template v-for="sect in sectionData" :key="sect">
                 {{ sect }}
@@ -23,6 +23,9 @@
               </template>
             </template>
           </template>
+          <button class="btn btn-secondary-blue me-2" @click="saveForm">
+            Save Form
+          </button>
           <button class="btn btn-primary" @click="submitForm">
             Submit Form
           </button>
@@ -45,7 +48,7 @@ export default {
   props: [],
   setup() {
     // Current user test
-    var formID = "64099cb650fce16159f43ac6" //TEMP FORM ID. CHANGE TO NON HARDCODED
+    var formID = "640c3ec1976af269ac9ce423"; //TEMP FORM ID. CHANGE TO NON HARDCODED
     var currentUser = ref("vendor");
     var content = ref("");
     // var newForm = ref([
@@ -122,23 +125,37 @@ export default {
     //     ],
     //   },
     // ]);
-    var newForm = ref([]);
+    var newFormContent = ref([]);
     function submitForm() {
-      console.log(newForm.value);
+      console.log(newFormContent.value);
       console.log("Form Submitted");
     }
+
+    // Update Form
+    var saveForm = async () => {
+      loadedForm.value.content.FormContent = newFormContent.value;
+      await FormService.updateForm("640c3ec1976af269ac9ce423", loadedForm.value)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    var loadedForm = ref(null);
 
     var loadForm = async (formID) => {
       console.log("Loading Form");
       await FormService.getForm(formID)
         .then((response) => {
           console.log("Loaded form is: ");
-          console.log(response)
-          var loadedForm = response
+          console.log(response);
+          loadedForm.value = response;
           // Other variables here etc vendorName = response.vendorName
-          newForm.value = loadedForm.content.FormContent;
+          newFormContent.value = loadedForm.value.content.FormContent;
           // ADD THE OTHER FORM VARIABLES HERE
-          console.log("New form is" + newForm);
+          console.log("New form is" + newFormContent);
         })
         .catch((error) => {
           console.log(error);
@@ -146,7 +163,8 @@ export default {
     };
     loadForm(formID);
     return {
-      newForm,
+      saveForm,
+      newFormContent,
       currentUser,
       submitForm,
       loadForm,

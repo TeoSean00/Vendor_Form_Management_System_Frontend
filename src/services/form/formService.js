@@ -47,6 +47,20 @@ class FormService {
     return response;
   }
 
+  updateForm(formID,FormObject) {
+    const response = axios
+      .put(API_URL + formID, FormObject, { headers: authHeader() })
+      .then((response) => {
+        console.log("update request successful!", response);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("update request unsuccessful", error);
+        return error;
+      });
+    return response;
+  }
+
   deleteForm(formID) {
     const response = axios
       .delete(API_URL + formID, { headers: authHeader() })
@@ -60,6 +74,7 @@ class FormService {
       });
     return response;
   }
+
 }
 
 export default new FormService();
