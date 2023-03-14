@@ -1,85 +1,138 @@
 <template>
-  <div class="mt-2 p-2 border rounded border-light border-1 bg-dark-purple shadow-sm">
+  <div
+    :class="sectionColor"
+  >
     <div class="row">
-      <div class="col-12">
-        {{ assignTo }} Section 
-          <button class="text-center borderless-button mx-2" @click="removeSection(order)">
-            Remove Section <font-awesome-icon icon="fa-solid fa-trash" />
-          </button>
+      <div class="col-6 px-3 py-1 bg fw-bold text-light">
+          {{ assignTo }} Section
       </div>
-        <div class="row">
-          <div v-for="(item, index) in formItems" :key="index">
-            <FormComponent
-              :itemInfo="item"
-              :idx="index"
-              @updateQuestion="update"
-              @remove="removeQuestion"
-            />
-          </div>
+      <div class="col-6 text-end">
+        <button
+        class="text-end borderless-button mx-2 "
+        @click="removeSection(order)"
+        >
+        Remove Section <font-awesome-icon icon="fa-solid fa-xmark" />
+      </button>
+      </div>
+      <div class="row">
+        <div v-for="(item, index) in formItems" :key="index">
+          <FormComponent
+            :itemInfo="item"
+            :idx="index"
+            @updateQuestion="update"
+            @remove="removeQuestion"
+          />
         </div>
-      
-    </div>
-    <div class="col-6 offset-3 sticky-bottom d-flex justify-content-center border rounded border-light border-1 bg-light-grey shadow-lg">
-      <div class="row " >
-        
       </div>
-      <div class="row m-1 p-1 ">
-        <button @click="addHeaderText" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Header">
+    </div>
+    <div
+      class="col-8 offset-2 sticky-bottom d-flex justify-content-center border rounded border-light border-1 bg-light-grey shadow-lg"
+    >
+      <div class="row m-1 p-1">
+        <button
+          @click="addHeaderText"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Header"
+        >
           <font-awesome-icon icon="fa-solid fa-h" />
         </button>
-        <button @click="addTextInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Text Input">
+        <button
+          @click="addTextInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Text Input"
+        >
           <font-awesome-icon icon="fa-solid fa-t" />
         </button>
-        <button @click="addNumberInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Number Input">
+        <button
+          @click="addNumberInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Number Input"
+        >
           <font-awesome-icon icon="fa-solid fa-1" />
         </button>
-        <button @click="addBooleanInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add True False">
+        <button
+          @click="addDateInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Date"
+        >
+          <font-awesome-icon icon="fa-solid fa-calendar" />
+        </button>
+        <button
+          @click="addBooleanInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add True False"
+        >
           <font-awesome-icon icon="fa-solid fa-t" />
           <font-awesome-icon icon="fa-solid fa-f" />
         </button>
-        <button @click="addDateInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Date">
-          <font-awesome-icon icon="fa-solid fa-calendar" />
-        </button>
-        <button @click="addCheckboxInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Checkbox Group">
+        <button
+          @click="addCheckboxInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Checkbox Group"
+        >
           <font-awesome-icon icon="fa-solid fa-circle-check" />
         </button>
-        <button @click="addRadioInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Radio Group">
+        <button
+          @click="addRadioInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Radio Group"
+        >
           <font-awesome-icon icon="fa-solid fa-radio" />
         </button>
-        <button @click="addLikertGroupInput" class="m-2 btn btn-main-blue btn-circle" data-bs-toggle="tooltip" data-bs-placement="right" title="Add Likert Group">
+        <button
+          @click="addLikertGroupInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Likert Group"
+        >
           <font-awesome-icon icon="fa-solid fa-object-group" />
         </button>
       </div>
     </div>
   </div>
-      <div class="col-1 text-center">
-        <div class="row m-1 p-1">
-          <button @click="addHeaderText" class="borderless-button">
-            <font-awesome-icon icon="fa-solid fa-circle-h" class="fa-2xl" />
-          </button>
-          <button @click="addTextInput" class="my-1 btn btn-main-blue">
-            <font-awesome-icon icon="fa-solid fa-circle-t" />
-          </button>
-          <button @click="addNumberInput" class="my-1 btn btn-main-blue">
-            Add Number Input
-          </button>
-          <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
-            Add BooleanInput
-          </button>
-          <button @click="addDateInput" class="my-1 btn btn-main-blue">
-            Add DateInput
-          </button>
-          <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
-            Add Checkbox Input
-          </button>
-          <button @click="addRadioInput" class="my-1 btn btn-main-blue">
-            Add Radio Input
-          </button>
-          <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
-            Add Likert Group
-          </button>
-        </div>
-      </div>
+  <!-- <div class="col-1 text-center">
+    <div class="row m-1 p-1">
+      <button @click="addHeaderText" class="borderless-button">
+        <font-awesome-icon icon="fa-solid fa-circle-h" class="fa-2xl" />
+      </button>
+      <button @click="addTextInput" class="my-1 btn btn-main-dark-purple">
+        <font-awesome-icon icon="fa-solid fa-circle-t" />
+      </button>
+      <button @click="addNumberInput" class="my-1 btn btn-main-blue">
+        Add Number Input
+      </button>
+      <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
+        Add BooleanInput
+      </button>
+      <button @click="addDateInput" class="my-1 btn btn-main-blue">
+        Add DateInput
+      </button>
+      <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
+        Add Checkbox Input
+      </button>
+      <button @click="addRadioInput" class="my-1 btn btn-main-blue">
+        Add Radio Input
+      </button>
+      <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
+        Add Likert Group
+      </button>
+    </div>
+  </div> -->
 </template>
 
 <script>
@@ -91,12 +144,30 @@ export default {
   setup(props, context) {
     var formItems = ref(props.sectionInfo[Object.keys(props.sectionInfo)[0]]);
     // console.log(formItems.value);
-    const assignTo = computed(()=>{
+    const assignTo = computed(() => {
       if (Object.keys(props.sectionInfo)[0] == "admin") {
         return "Admin";
       } else {
         return "Vendor";
       }
+    });
+
+    //Computed style for admin // vendor
+    const sectionColor = computed(()=>{
+      if (Object.keys(props.sectionInfo)[0] == "admin") {
+        return "mt-2 p-2 border rounded border-light border-1 bg-dark-purple shadow-sm";
+      } else {
+        return "mt-2 p-2 border rounded border-light border-1 bg-main-blue shadow-sm"
+      }
+    })
+
+    const buttonColor = computed(()=>{
+      if (Object.keys(props.sectionInfo)[0] == "admin") {
+        return "m-2 btn btn-main-dark-purple btn-circle";
+      } else {
+        return "m-2 btn btn-main-blue btn-circle";
+      }
+
     })
 
     function addTextInput() {
@@ -104,7 +175,7 @@ export default {
         type: "text",
         order: formItems.value.length,
         text: "",
-        required : false,
+        required: false,
       });
     }
     function addCheckboxInput() {
@@ -113,7 +184,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
-        required : false,
+        required: false,
       });
     }
     function addRadioInput() {
@@ -122,7 +193,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
-        required : false,
+        required: false,
       });
     }
     function addHeaderText() {
@@ -131,7 +202,7 @@ export default {
         order: formItems.value.length,
         text: "",
         style: "h1",
-        required : false,
+        required: false,
       });
     }
     function addBooleanInput() {
@@ -140,7 +211,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: ["Yes", "No"],
-        required : false,
+        required: false,
       });
     }
     function addDateInput() {
@@ -148,7 +219,7 @@ export default {
         type: "date",
         order: formItems.value.length,
         text: "",
-        required : false,
+        required: false,
       });
     }
     function addNumberInput() {
@@ -156,7 +227,7 @@ export default {
         type: "number",
         order: formItems.value.length,
         text: "",
-        required : false,
+        required: false,
       });
     }
     function addLikertGroupInput() {
@@ -165,7 +236,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
-        required : false,
+        required: false,
       });
     }
 
@@ -179,13 +250,15 @@ export default {
       formItems.value.splice(questionKey, 1);
     }
 
-    function removeSection(toRemove){
-      context.emit("removeSection",toRemove);
+    function removeSection(toRemove) {
+      context.emit("removeSection", toRemove);
     }
 
     return {
       formItems,
       assignTo,
+      sectionColor,
+      buttonColor,
       addCheckboxInput,
       addRadioInput,
       addHeaderText,

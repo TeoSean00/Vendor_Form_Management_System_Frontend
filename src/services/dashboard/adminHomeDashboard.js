@@ -2,6 +2,7 @@ import axios from "axios";
 import authHeader from '../authHeader';
 
 console.log(authHeader())
+// to be updated once backend form and its routes set up
 
 const API_URL = "http://localhost:8080/api/template/";
 
@@ -19,19 +20,6 @@ class TemplateService {
             return error
         });
         return response
-    }
-    getTemplates(){
-        const response = axios
-            .get(API_URL + "all",{headers:authHeader()})
-            .then((response) => {
-                console.log("get request successful!",response);
-                return response.data;
-            })
-            .catch((error) => {
-                console.log("get request unsuccessful", error);
-                return error;
-            });
-        return response;
     }
 }
 

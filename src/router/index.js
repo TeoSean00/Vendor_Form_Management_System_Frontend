@@ -8,11 +8,14 @@ import ViewForm from "../views/ViewForm.vue";
 import ManageVendorView from "../views/ManageVendorView.vue";
 import ManageUserView from "../views/ManageUserView.vue";
 import CreateUser from "../views/CreateUser.vue";
-import Test from "../views/Test.vue";
 import VendorForm from "../views/VendorForm.vue";
 import AdminVendor from "../views/AdminVendor.vue";
+import authVerify from "../services/authVerify";
 
 const requireAuth = (to, from, next) => {
+  // verify if jwt token is still valid
+  authVerify();
+
   let user = JSON.parse(localStorage.getItem("user"));
   console.log("current user in auth guard: ", user);
   // if (!user && to.name != "Home") next({ name: "Home" });
@@ -88,7 +91,7 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
-      name: Dashboard,
+      name: "Dashboard",
       component: () => import("../views/DashboardView.vue"),
       beforeEnter: requireAuth,
     },
@@ -100,22 +103,23 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import("../views/AboutView.vue"),
     // },
-    {
-      path: "/test",
-      name: Test,
-      component: () => import("../views/Test.vue"),
-      beforeEnter: requireAuth,
-    },
+    // {
+    //   path: "/test",
+    //   name: "Test",
+    //   component: () => import("../views/Test.vue"),
+    //   beforeEnter: requireAuth,
+    // },
     {
       path: "/vendorForm",
-      name: VendorForm,
+      name: "VendorForm",
       component: () => import("../views/VendorForm.vue"),
       beforeEnter: requireAuth,
     },
     {
-      path: "/admin/vendor",
-      name: AdminVendor,
-      component: () => import("../views/AdminVendor.vue"),
+      path: "/admin/:name",
+      name: "AdminVendor",
+      component: AdminVendor,
+      props: (route) => ({ vendorId: route.query.vendorId }),
       beforeEnter: requireAuth,
     },
   ],

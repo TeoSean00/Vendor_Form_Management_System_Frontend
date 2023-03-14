@@ -3,13 +3,12 @@ import authHeader from "../authHeader";
 
 console.log(authHeader());
 
-const API_URL = "http://localhost:8080/api/vendor/";
+const API_URL = "http://localhost:8080/api/form/";
 
-class VendorService {
-  addVendor(vendorObject) {
-    var data = vendorObject;
+class FormService {
+  addForm(FormObject) {
     const response = axios
-      .post(API_URL, data, { headers: authHeader() })
+      .post(API_URL, FormObject, { headers: authHeader() })
       .then((response) => {
         console.log("post request successful!");
         return response.data;
@@ -20,7 +19,7 @@ class VendorService {
       });
     return response;
   }
-  getVendors() {
+  getForms() {
     const response = axios
       .get(API_URL + "all", { headers: authHeader() })
       .then((response) => {
@@ -33,19 +32,20 @@ class VendorService {
       });
     return response;
   }
-  getVendor(vendorId){
+
+  getForm(formID) {
     const response = axios
-    .get(API_URL + vendorId,{headers:authHeader()})
-    .then((response)=>{
-      console.log("get request successful!",response)
-      return response.data;
-    })
-    .catch((error)=>{
-      console.log("get request unsuccessful", error)
-      return error;
-    });
+      .get(API_URL + formID, { headers: authHeader() })
+      .then((response) => {
+        console.log("get request successful!", response);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("get request unsuccessful", error);
+        return error;
+      });
     return response;
   }
 }
 
-export default new VendorService();
+export default new FormService();

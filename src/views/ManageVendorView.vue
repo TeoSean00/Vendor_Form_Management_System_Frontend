@@ -39,135 +39,119 @@
         />
       </div>
     </form>
+    <p>Filtered names are</p>
+    <p>{{ filteredNames }}</p>
 
     <div v-if="!searchName" class="list-group flex">
-      <a
-        v-for="vendor in vendorList"
-        :key="vendor"
-        href="#"
-        class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
-        aria-current="true"
-      >
-        <span v-if="vendor.name == null">
-          <h3>Company {{ vendor.vendorId }}</h3>
-        </span>
-        <span v-else>
-          <h3>{{ vendor.name }}</h3>
-        </span>
-        <div class="float-right">
-          <span class="badge bluebg mx-1 mt-2">In Progress</span>
-          <span class="badge text-bg-info">Total</span>
-        </div>
-      </a>
+      <template v-for="vendor in vendorList" :key="vendor">
+        <a
+          href="#"
+          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
+          aria-current="true"
+          @click="toggleVendorPage(vendor.name, vendor.id)"
+        >
+          <!-- <span v-if="vendor.name == null">
+            <h3>Company {{ vendor.vendorId }}</h3>
+          </span> -->
+          <span>
+            <h3>{{ vendor.name }}</h3>
+            <p>{{ vendor.id }}</p>
+          </span>
+          <div class="float-right">
+            <span class="badge bluebg mx-1 mt-2">In Progress</span>
+            <span class="badge text-bg-info">Total</span>
+          </div>
+        </a>
+      </template>
     </div>
-    <!-- <div v-else class="list-group flex">
-      <a v-for="workflow in workflows"  href="#" class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex" aria-current="true">
-
-        
-        <span v-if="workflow.name.includes(searchName)" >
-          <h3>{{workflow.name}}</h3>
-        </span>
-        
-        <div class="float-right">
-          <span class="badge bluebg mx-1 mt-2" >In Progress</span>
-          <span class="badge text-bg-info">Total</span>
-        </div>
-        
-      </a>
-
-    </div> -->
-  </div>
-
-  <div
-    class="modal fade"
-    id="createVendor"
-    tabindex="-1"
-    aria-labelledby="createVendorLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Create Vendor</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div>
-            <label for="vendorName" class="form-label">Vendor Name</label>
-            <input
-              type="username"
-              class="form-control"
-              v-model="newVendorName"
-              placeholder="Vendor name here"
-            />
+    <div v-else class="list-group flex">
+      <template v-for="vendor in filteredNames" :key="vendor">
+        <a
+          href="#"
+          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
+          aria-current="true"
+        >
+          <span v-if="vendor.name == null">
+            <h3>Company {{ vendor.vendorId }}</h3>
+          </span>
+          <span v-else>
+            <h3>{{ vendor.name }}</h3>
+          </span>
+          <div class="float-right">
+            <span class="badge bluebg mx-1 mt-2">In Progress</span>
+            <span class="badge text-bg-info">Total</span>
           </div>
-          <div class="mb-3">
-            <label for="vendorNotes" class="form-label"
-              >Additional Details</label
+        </a>
+      </template>
+    </div>
+
+    <div
+      class="modal fade"
+      id="createVendor"
+      tabindex="-1"
+      aria-labelledby="createVendorLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create Vendor</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <label for="vendorName" class="form-label">Vendor Name</label>
+              <input
+                type="username"
+                class="form-control"
+                v-model="newVendorName"
+                placeholder="Vendor name here"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="vendorNotes" class="form-label"
+                >Additional Details</label
+              >
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                v-model="newVendorNote"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
             >
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              v-model="newVendorNote"
-            ></textarea>
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="toggleNewVendor(newVendorName)"
+            >
+              Create Vendor
+            </button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-bs-dismiss="modal"
-            @click="toggleNewVendor(newVendorName)"
-          >
-            Create Vendor
-          </button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- {{workflow.forms._rawValue.length}} -->
-
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Assign Users</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul>
-          <li  v-for="user in users" style="list-style-type: none;">
-            <input :id="user" type="checkbox" :name="user"> {{ user.userName }}
-          </li>
-        </ul>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> -->
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useVendorStore } from "../stores/vendorStore";
@@ -176,29 +160,7 @@ import { useRouter } from "vue-router";
 export default {
   components: { NavbarJP },
   setup() {
-    var searchName = "";
-    var users = ref([
-      {
-        userId: 1,
-        userName: "John@gmail.com",
-      },
-      {
-        userId: 2,
-        userName: "Kevan",
-      },
-      {
-        userId: 3,
-        userName: "Johnson",
-      },
-      {
-        userId: 4,
-        userName: "Timbre",
-      },
-      {
-        userId: 5,
-        userName: "Jadon",
-      },
-    ]);
+    var searchName = ref("");
 
     //get vendor data
     var vendorStore = useVendorStore();
@@ -206,13 +168,30 @@ export default {
     var vendorList = ref([]);
 
     console.log("vendors value is", vendorStore.vendors);
+    console.log("vendorList is an " + typeof vendorList);
 
     vendorStore.getVendors();
+
+    var searchName = ref("");
 
     //watching the vendorStore state for changes
     watch(vendorStore.$state, (state) => {
       console.log("CHANGE DETECTED", state);
       vendorList.value = state.vendors;
+    });
+
+    const filteredNames = computed(() => {
+      let matchList = [];
+      matchList = vendorList.value.filter(function (vendor) {
+        console.log("matching with vendor", vendor, searchName.value);
+        if (
+          vendor.name.toLowerCase().includes(searchName.value.toLowerCase())
+        ) {
+          console.log("MATCHED", vendor.name, searchName.value);
+          return vendor;
+        }
+      });
+      return matchList;
     });
 
     console.log("vendors value is", vendorStore.vendors);
@@ -240,25 +219,40 @@ export default {
       vendor.name = newName;
     };
 
-    const toggleFormbuilder = () => {
-      router.push("/formbuilder");
+    const toggleVendorPage = (vendorName, vendorId) => {
+      router.push({
+        name: "AdminVendor",
+        params: {
+          name: vendorName,
+        },
+        query: {
+          vendorId: vendorId,
+        },
+      });
     };
 
-    const toggleFormview = () => {
-      router.push("/viewform");
-    };
+    // const toggleFormbuilder = () => {
+    //   router.push("/formbuilder");
+    // };
+
+    // const toggleFormview = () => {
+    //   router.push("/viewform");
+    // };
+
+    console.log(filteredNames);
 
     return {
-      users,
+      searchName,
+      filteredNames,
       vendorList,
       newVendorName,
       newVendorNote,
       currentUser,
-      toggleFormbuilder,
-      toggleFormview,
       toggleNewVendor,
       toggleEditVendor,
+      toggleVendorPage,
       searchName,
+      filteredNames,
     };
   },
 };
