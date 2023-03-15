@@ -1,8 +1,8 @@
 <template>
   <Navbar />
-  Signed in as {{ currentUser }}
+  Signed in as {{ currentUser }} displayRole is {{ displayRole }}
   <br />
-  {{ newFormContent }}
+  <!-- {{ newFormContent }} -->
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <!-- <div class="m-2">
@@ -17,8 +17,12 @@
         <form onsubmit="return false;">
           <template v-for="(section, index) in newFormContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
-              <template v-for="sect in sectionData" :key="sect">
-                {{ sect }}
+              <template
+                v-if="displayRole == i"
+                v-for="sect in sectionData"
+                :key="sect"
+              >
+                <!-- {{ sect }} -->
                 <FormSection :sectionData="sect" />
               </template>
             </template>
@@ -39,6 +43,7 @@ import Navbar from "../components/navbar/Navbar.vue";
 import FormSection from "../components/form/FormSection.vue";
 import FormService from "../services/form/formService";
 import { ref } from "vue";
+import { useAuthStore } from "../stores/authStore";
 
 export default {
   components: {
@@ -48,9 +53,15 @@ export default {
   props: [],
   setup() {
     // Current user test
-    var formID = "640c3ec1976af269ac9ce423"; //TEMP FORM ID. CHANGE TO NON HARDCODED
-    var currentUser = ref("vendor");
-    var content = ref("");
+    var formID = "6409371081ad093ae37ebee8"; //TEMP FORM ID. CHANGE TO NON HARDCODED
+    var currentUser = ref(null);
+    var displayRole = ref(false);
+
+    var auth = useAuthStore();
+    currentUser.value = auth.user;
+    displayRole.value = auth.user.roles.includes("ROLE_ADMIN")
+      ? "admin"
+      : "vendor";
     // var newForm = ref([
     //   {
     //     admin: [
@@ -163,6 +174,7 @@ export default {
     };
     loadForm(formID);
     return {
+      displayRole,
       saveForm,
       newFormContent,
       currentUser,
