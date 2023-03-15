@@ -122,7 +122,7 @@
           background: 'primary',
           symbol: 'clipboard',
         }"
-        @click="toggleUserView"
+        @click="toggleFormBuilder"
        class="mx-auto"/>
     </div>
   </div>
