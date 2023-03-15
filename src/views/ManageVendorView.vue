@@ -1,8 +1,8 @@
 <template>
   <NavbarJP />
-  <div class="container">
-    <div class="row pt-3 mb-3">
-      <div class="col-10">
+  <div class="container-fluid">
+    <div class="pt-4 mb-3 d-flex justify-content-between">
+      <div class="">
         <h5 class="text-secondary-blue">
           Welcome back,
           <span class="text-main-blue fw-bold">{{ currentUser.username }}</span>
@@ -10,18 +10,28 @@
         </h5>
       </div>
 
-      <div class="col-2">
-        <button
+      <div>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#createVendor"
+          >
+            Add Vendor
+          </button>
+        <!-- <button
           type="button"
           class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#createVendor"
         >
           Add Vendor
-        </button>
+        </button> -->
       </div>
     </div>
+
     vendor data here {{ vendorList }}
+
     <form action="">
       <div class="input-group mb-2">
         <span
@@ -39,6 +49,7 @@
         />
       </div>
     </form>
+
     <p>Filtered names are</p>
     <p>{{ filteredNames }}</p>
 
