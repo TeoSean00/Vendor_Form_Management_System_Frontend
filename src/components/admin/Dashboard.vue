@@ -1,8 +1,8 @@
 <template>
-  <div class="py-4 container-fluid">
+  <!-- <div class="py-4 container-fluid">
     <div class="row mb-4">
       <div class="col-lg-12 position-relative z-index-2">
-        <!-- Commented out the statistics stuff -->
+        Commented out the statistics stuff
         <div class="row">
           <div class="col-lg-4 col-md-6 mt-4">
             <chart-holder-card
@@ -79,145 +79,52 @@
               />
             </div>
           </div>
-
-          <!-- old workflow chart-->
-
-          <!-- <div class="col-lg-4 mt-4">
-            <chart-holder-card
-              title="Number of Workflows"
-              subtitle="Last Campaign Performance"
-              update="just updated"
-              color="dark"
-            >
-              <reports-line-chart
-                id="tasks-chart"
-                :chart="{
-                  labels: [
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ],
-                  datasets: {
-                    label: 'Mobile apps',
-                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-                  },
-                }"
-              />
-            </chart-holder-card>
-            </div> -->
         </div>
       </div>
     </div>
+  </div> -->
 
-    <!-- <div class="row">
-      <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
-        <project-card
-          title="Projects"
-          description="<i class='fa fa-check text-info' aria-hidden='true'></i> <span class='font-weight-bold ms-1'>30 done</span> this month"
-          :headers="['Companies', 'Members', 'Budget', 'Progress']"
-          :projects="[
-            {
-              logo: logoXD,
-              title: 'Material XD Material XD Version',
-              members: [team1, team2, team3, team4],
-              budget: '$14,000',
-              progress: { percentage: 60, color: 'info' },
-            },
-            {
-              logo: logoAtlassian,
-              title: 'Add Progress Track',
-              members: [team2, team4],
-              budget: '$3,000',
-              progress: { percentage: 10, color: 'info' },
-            },
-            {
-              logo: logoSlack,
-              title: 'Fix Platform Errors',
-              members: [team3, team1],
-              budget: 'Not set',
-              progress: { percentage: 100, color: 'success' },
-            },
-            {
-              logo: logoSpotify,
-              title: 'Launch our Mobile App',
-              members: [team4, team3, team4, team1],
-              budget: '$20,500',
-              progress: { percentage: 100, color: 'success' },
-            },
-            {
-              logo: logoJira,
-              title: 'Add the New Pricing Page',
-              members: [team4],
-              budget: '$500',
-              progress: { percentage: 25, color: 'info' },
-            },
-            {
-              logo: logoJira,
-              title: 'Redesign New Online Shop',
-              members: [team1, team4],
-              budget: '$2,000',
-              progress: { percentage: 40, color: 'info' },
-            },
-          ]"
-        />
-      </div> -->
-    <!-- <div class="col-lg-4 col-md-6">
-        <timeline-list
-          class="h-100"
-          title="Orders overview"
-          description="<i class='fa fa-arrow-up text-success' aria-hidden='true'></i>
-        <span class='font-weight-bold'>24%</span> this month"
-        >
-          <timeline-item
-            :icon="{
-              component: 'notifications',
-              class: 'text-success',
-            }"
-            title="$2400 Design changes"
-            date-time="22 DEC 7:20 PM"
-          />
-          <TimelineItem
-            :icon="{
-              component: 'code',
-              class: 'text-danger',
-            }"
-            title="New order #1832412"
-            date-time="21 DEC 11 PM"
-          />
-          <TimelineItem
-            :icon="{
-              component: 'shopping_cart',
-              class: 'text-info',
-            }"
-            title="Server payments for April"
-            date-time="21 DEC 9:34 PM"
-          />
-          <TimelineItem
-            :icon="{
-              component: 'credit_card',
-              class: 'text-warning',
-            }"
-            title="New card added for order #4395133"
-            date-time="20 DEC 2:20 AM"
-          />
-          <TimelineItem
-            :icon="{
-              component: 'vpn_key',
-              class: 'text-primary',
-            }"
-            title="Unlock packages for development"
-            date-time="18 DEC 4:54 AM"
-            class="pb-1"
-          />
-        </timeline-list>
-      </div> -->
-    <!-- </div> -->
+    
+  <div class="row">
+    <div class="col-4">
+      <mini-statistics-card
+        :title="{ text: 'Manage Vendors', value: '$53k' }"
+        detail="<span class='text-success text-sm font-weight-bolder'>+55%</span> than last week"
+        :icon="{
+          name: 'weekend',
+          color: 'text-white',
+          background: 'dark',
+          symbol: 'fa-store',
+          height: 2,
+        }"
+        @click="toggleWorkflow"
+      />
+    </div>
+    <div class="col-4">
+      <mini-statistics-card
+        :title="{ text: 'Manager Users', value: '2,300' }"
+        detail="<span class='text-success text-sm font-weight-bolder'>+3%</span> than last month"
+        :icon="{
+          name: 'leaderboard',
+          color: 'text-white',
+          background: 'primary',
+          symbol: 'user',
+        }"
+        @click="toggleUserView"
+       class="mx-auto"/>
+    </div>
+    <div class="col-4">
+      <mini-statistics-card
+        :title="{ text: 'Manage Templates', value: '2,300' }"
+        :icon="{
+          name: 'leaderboard',
+          color: 'text-white',
+          background: 'primary',
+          symbol: 'clipboard',
+        }"
+        @click="toggleUserView"
+       class="mx-auto"/>
+    </div>
   </div>
 </template>
 <script>
@@ -246,7 +153,11 @@ export default {
       router.push("/users");
     };
 
-    return { toggleWorkflow, toggleUserView };
+    const toggleFormBuilder = () => {
+      router.push("/formbuilder");
+    };
+
+    return { toggleWorkflow, toggleUserView, toggleFormBuilder };
   },
 };
 </script>

@@ -1,31 +1,39 @@
 <template>
-  <div>
-    <Navbar />
+  <div class="mx-0">
+    <NavbarJP />
 
     <div class="row px-5 pt-3">
-      <p class="text-secondary-blue">
+      <h4 class="text-secondary-blue">
         Welcome back,
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
-      </p>
+      </h4>
     </div>
-    <AdminView />
+    <div class="container">
+      <AdminHomeDashboard />
+    </div>
+    <div class="mt-5">
+      <AdminView/>
+    </div>
+    
   </div>
 </template>
 <script>
 import { ref } from "vue";
 import UserService from "../services/user/userService";
 
-import Navbar from "../components/navbar/Navbar.vue";
+import NavbarJP from "../components/navbar/NavbarJP.vue";
 import TopBanner from "../components/navbar/TopBanner.vue";
 import AdminView from "./AdminView.vue";
+import AdminHomeDashboard from "../components/dashboard/AdminHomePage/AdminHomeDashboard.vue"
 
 import { useAuthStore } from "../stores/authStore";
 
 export default {
   components: {
-    Navbar,
+    NavbarJP,
     TopBanner,
     AdminView,
+    AdminHomeDashboard
   },
   setup() {
     var content = ref("");

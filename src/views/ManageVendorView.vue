@@ -191,6 +191,8 @@ export default {
       vendorList.value = state.vendors;
     });
 
+    console.log(vendorList.value)
+
     const filteredNames = computed(() => {
       let matchList = [];
       matchList = vendorList.value.filter(function (vendor) {
@@ -222,6 +224,7 @@ export default {
         forms: [],
       };
       vendorStore.addVendor(newVendor);
+      newVendorName = ref("")
     };
 
     const toggleEditVendor = (vendor) => {

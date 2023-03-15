@@ -8,9 +8,9 @@
           class="p-4 shadow"
         />
       </div>
-      <div class="col-6">
+      <div class="col-6 ">
         <!-- <p class="text-sm mb-0 text-capitalize">{{ title.text }}</p> -->
-        <p class="mb-0 fs-5">{{ title.text }}</p>
+        <p class="mb-0 fs-5 mt-4">{{ title.text }}</p>
       </div>
     </div>
   </div>
