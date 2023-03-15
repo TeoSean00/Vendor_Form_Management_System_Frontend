@@ -60,51 +60,17 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr v-for="user,index in vendorUsers" :key="user">
+
                         <td>
-                          <p class="fw-normal mb-1">1</p>
+                          <p class="fw-normal mb-1">{{ ++index }}</p>
                         </td>
                         <td>
-                          <p class="fw-bold mb-1">John Doe</p>
-                          <p class="text-muted mb-0">john.doe@gmail.com</p>
+                          <p class="fw-bold mb-1">{{ user.username }}</p>
+                          <p class="text-muted mb-0">{{ user.email }}</p>
                         </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="fw-normal mb-1">2</p>
-                        </td>
-                        <td>
-                          <p class="fw-bold mb-1">John Doe</p>
-                          <p class="text-muted mb-0">john.doe@gmail.com</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="fw-normal mb-1">1</p>
-                        </td>
-                        <td>
-                          <p class="fw-bold mb-1">John Doe</p>
-                          <p class="text-muted mb-0">john.doe@gmail.com</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="fw-normal mb-1">1</p>
-                        </td>
-                        <td>
-                          <p class="fw-bold mb-1">John Doe</p>
-                          <p class="text-muted mb-0">john.doe@gmail.com</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="fw-normal mb-1">1</p>
-                        </td>
-                        <td>
-                          <p class="fw-bold mb-1">John Doe</p>
-                          <p class="text-muted mb-0">john.doe@gmail.com</p>
-                        </td>
-                      </tr>
+
+                      </tr>   
                     </tbody>
                   </table>
                 </div>
@@ -482,6 +448,12 @@
           v-for="vendorForm in vendorAssignedForms"
           :key="vendorForm.status"
         >
+          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.status" @upToDelete="upToDelete"></FormCard>
+        </template>
+        <!-- <template
+          v-for="vendorForm in vendorAssignedForms"
+          :key="vendorForm.status"
+        >
           <div class="col">
             <div class="card h-100">
               <div class="card-body">
@@ -496,61 +468,7 @@
                   <div class="col-6 pr-0">
                     <button class="btn btn-link btn-block">Enter</button>
                   </div>
-                  <!-- modal -->
-                  <!-- <div
-                  class="modal fade"
-                  id="assign"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Assign To
-                        </h5>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        <input
-                          class="form-control"
-                          list="datalistOptions"
-                          id="users"
-                          placeholder="Type to search..."
-                        />
-                        <datalist id="datalistOptions">
-                          <option value="john"></option>
-                          <option value="Mary"></option>
-                          <option value="may"></option>
-                          <option value="ss"></option>
-                          <option value="iii"></option>
-                        </datalist>
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          data-bs-dismiss="modal"
-                        >
-                          Save changes
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+                  
                   <div class="col-6 pl-0">
                     <button
                       class="btn btn-link btn-block"
@@ -565,7 +483,7 @@
               </div>
             </div>
           </div>
-        </template>
+        </template> -->
       </div>
       <!-- end of form  -->
 
@@ -716,10 +634,12 @@ import Navbar from "../components/navbar/Navbar.vue";
 import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
+import FormCard from "../components/form/FormCard.vue";
 import { useTemplateStore } from "../stores/templateStore";
 import { onMounted, ref, watch } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import FormService from "../services/form/formService";
+
 
 export default {
   components: {
@@ -727,6 +647,7 @@ export default {
     FormComponent,
     TemplateList,
     SectionComponent,
+    FormCard
   },
   props: ["vendorId"],
   setup(props) {
@@ -773,6 +694,9 @@ export default {
     getAllForms();
 
     var toDelete = ref("");
+    function upToDelete(vendorFormId) {
+      toDelete.value = vendorFormId; 
+    };
 
     var content = ref("");
 
@@ -966,6 +890,7 @@ export default {
       addTemplate,
       addAdminSection,
       addVendorSection,
+      upToDelete
     };
   },
 };
