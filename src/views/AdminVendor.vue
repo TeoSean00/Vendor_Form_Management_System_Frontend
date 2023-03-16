@@ -60,8 +60,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="user,index in vendorUsers" :key="user">
-
+                      <tr v-for="(user, index) in vendorUsers" :key="user">
                         <td>
                           <p class="fw-normal mb-1">{{ ++index }}</p>
                         </td>
@@ -69,8 +68,7 @@
                           <p class="fw-bold mb-1">{{ user.username }}</p>
                           <p class="text-muted mb-0">{{ user.email }}</p>
                         </td>
-
-                      </tr>   
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -434,7 +432,7 @@
         </div>
       </div>
 
-      <div class=" bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
             Assigned (Vendor fill in Stage) | Waiting for vendor response
@@ -448,7 +446,11 @@
           v-for="vendorForm in vendorAssignedForms"
           :key="vendorForm.status"
         >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.status" @upToDelete="upToDelete"></FormCard>
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.status"
+            @upToDelete="upToDelete"
+          ></FormCard>
         </template>
         <!-- <template
           v-for="vendorForm in vendorAssignedForms"
@@ -640,14 +642,13 @@ import { onMounted, ref, watch } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import FormService from "../services/form/formService";
 
-
 export default {
   components: {
     Navbar,
     FormComponent,
     TemplateList,
     SectionComponent,
-    FormCard
+    FormCard,
   },
   props: ["vendorId"],
   setup(props) {
@@ -675,6 +676,21 @@ export default {
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
 
+    var getAllVendorForms = async () => {
+      allForms.value = await FormService.getForms(currId.value);
+      console.log("hi" + allForms.value[0].vendorId);
+      for (var i = 0; i < allForms.value.length; i++) {
+        vendorForms.value.push(allForms.value[i]);
+        if (allForms.value[i].status == "vendor_response") {
+          vendorAssignedForms.value.push(allForms.value[i]);
+        } else if (allForms.value[i].status == "admin_response") {
+          adminAssignedForms.value.push(allForms.value[i]);
+        } else if (allForms.value[i].status == "approval_response") {
+          approvalAssignedForms.value.push(allForms.value[i]);
+        }
+      }
+    };
+
     var getAllForms = async () => {
       allForms.value = await FormService.getForms();
       console.log("hi" + allForms.value[0].vendorId);
@@ -691,12 +707,12 @@ export default {
         }
       }
     };
-    getAllForms();
+    getAllVendorForms();
 
     var toDelete = ref("");
     function upToDelete(vendorFormId) {
-      toDelete.value = vendorFormId; 
-    };
+      toDelete.value = vendorFormId;
+    }
 
     var content = ref("");
 
@@ -890,7 +906,7 @@ export default {
       addTemplate,
       addAdminSection,
       addVendorSection,
-      upToDelete
+      upToDelete,
     };
   },
 };
