@@ -17,14 +17,12 @@
         <form onsubmit="return false;">
           <template v-for="(section, index) in newFormContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
-              <template
-                v-if="displayRole == i"
-                v-for="sect in sectionData"
-                :key="sect"
-              >
-                <!-- {{ sect }} -->
-                <FormSection :sectionData="sect" />
-              </template>
+              <div v-if="displayRole == i">
+                <template v-for="sect in sectionData" :key="sect">
+                  <!-- {{ sect }} -->
+                  <FormSection :sectionData="sect" />
+                </template>
+              </div>
             </template>
           </template>
           <button class="btn btn-secondary-blue me-2" @click="saveForm">
@@ -172,6 +170,7 @@ export default {
           console.log(error);
         });
     };
+
     loadForm(formID);
     return {
       displayRole,
