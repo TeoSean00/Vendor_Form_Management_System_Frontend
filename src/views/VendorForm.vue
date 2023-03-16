@@ -79,11 +79,12 @@ export default {
   props: [],
   setup() {
     // Current user test
-    var formID = "64099cb650fce16159f43ac6"; //TEMP FORM ID. CHANGE TO NON HARDCODED
+    var formID = "640d327ba8affc65fb420b19"; //TEMP FORM ID. CHANGE TO NON HARDCODED
     var currentUser = ref("vendor");
     var newForm = ref([]);
     var formContent = ref([]);
     var formStatus = ref([]);
+
     var submitForm = async (status) => {
       newForm.value.status = status;
       console.log(newForm);
@@ -98,10 +99,11 @@ export default {
       console.log("Form Submitted");
     };
 
+    var loadedForm = ref(null);
+
     // Update Form
     var saveForm = async () => {
-      loadedForm.value.content.FormContent = newFormContent.value;
-      await FormService.updateForm("640c3ec1976af269ac9ce423", loadedForm.value)
+      await FormService.updateForm("640c3ec1976af269ac9ce423", newForm.value)
         .then((response) => {
           console.log(response);
         })
@@ -110,7 +112,10 @@ export default {
         });
     };
 
-    var loadedForm = ref(null);
+    // get the roles
+    var displayRole = ref(null);
+    var auth = useAuthStore();
+    displayRole.value = auth.user;
 
     var loadForm = async (formID) => {
       console.log("Loading Form");
@@ -126,7 +131,6 @@ export default {
           // // Other variables here etc vendorName = response.vendorName
           // newForm.value = loadedForm.content.FormContent;
           // ADD THE OTHER FORM VARIABLES HERE
-          console.log("New form is" + newFormContent);
         })
         .catch((error) => {
           console.log(error);
@@ -137,7 +141,6 @@ export default {
     return {
       displayRole,
       saveForm,
-      newFormContent,
       currentUser,
       submitForm,
       loadForm,
