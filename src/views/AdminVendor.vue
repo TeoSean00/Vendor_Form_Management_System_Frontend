@@ -547,35 +547,7 @@
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
         >
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                <h2 class="card-title">{{ vendorForm.id }}</h2>
-                <p class="card-text">
-                  Form description: <br />
-                  {{ vendorForm.content.FormInfo.templateDesc }}
-                </p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-6 pr-0">
-                    <button class="btn btn-link btn-block">Enter</button>
-                  </div>
-
-                  <div class="col-6 pl-0">
-                    <button
-                      class="btn btn-link btn-block"
-                      data-bs-toggle="modal"
-                      data-bs-target="#confirmModal"
-                      @click="toDelete = vendorForm.id"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete"></FormCard>
         </template>
         <div class="col mt-4"></div>
       </div>
