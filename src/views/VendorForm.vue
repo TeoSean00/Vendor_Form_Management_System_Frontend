@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-import Navbar from "../components/navbar/Navbar.vue";
+import Navbar from "../components/navbar/NavbarJP.vue";
 import FormSection from "../components/form/FormSection.vue";
 import FormService from "../services/form/formService";
 import { ref } from "vue";

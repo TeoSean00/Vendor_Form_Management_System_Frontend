@@ -1,6 +1,6 @@
 <template>
   <div class="container-flex">
-    <Navbar />
+    <Navbar/>
 
     <div class="row">
       <div class="col-12">
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import Navbar from "../components/navbar/Navbar.vue";
+import Navbar from "../components/navbar/NavbarJP.vue";
 import { useRouter } from "vue-router";
 import UserService from "../services/user/userService";
 import { ref } from "vue";
