@@ -46,6 +46,7 @@ export const useAuthStore = defineStore("auth", {
     logout() {
       console.log("logout called");
       AuthService.logout();
+      location.reload()
     },
     register(user) {
       return AuthService.register(user).then(

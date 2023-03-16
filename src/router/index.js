@@ -11,15 +11,26 @@ import CreateUser from "../views/CreateUser.vue";
 import VendorForm from "../views/VendorForm.vue";
 import AdminVendor from "../views/AdminVendor.vue";
 import authVerify from "../services/authVerify";
+import VendorView from "../views/VendorView.vue";
 
 const requireAuth = (to, from, next) => {
   // verify if jwt token is still valid
   authVerify();
-
   let user = JSON.parse(localStorage.getItem("user"));
   console.log("current user in auth guard: ", user);
   // if (!user && to.name != "Home") next({ name: "Home" });
   if (!user) next({ name: "login" });
+  else next();
+};
+
+const requireAdmin = (to, from, next) => {
+  // verify if jwt token is still valid
+  authVerify();
+  let user = JSON.parse(localStorage.getItem("user"));
+  console.log("current user in auth guard: ", user);
+  // if (!user && to.name != "Home") next({ name: "Home" });
+  if (!user || user.roles.includes("ROLE_ADMIN", "ROLE_MODERATOR") == false)
+    next({ name: "login" });
   else next();
 };
 
@@ -30,13 +41,27 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: Home,
+      beforeEnter(to, from, next) {
+        authVerify();
+        let user = JSON.parse(localStorage.getItem("user"));
+        console.log("current user in auth guard: ", user);
+        // if (!user && to.name != "Home") next({ name: "Home" });
+        if (!user) {
+          next({ name: "login" });
+        } else {
+          if (user.roles.includes("ROLE_ADMIN", "ROLE_MODERATOR") == false) {
+            next({ name: "VendorView" });
+          }
+          next();
+        }
+      },
+    },
+    {
+      path: "/vendorView",
+      name: "VendorView",
+      component: VendorView,
       beforeEnter: requireAuth,
     },
-    // {
-    //   path: "/home",
-    //   name: "home",
-    //   component: Home,
-    // },
     {
       path: "/login",
       name: "login",
@@ -52,19 +77,19 @@ const router = createRouter({
       path: "/vendors",
       name: "vendors",
       component: ManageVendorView,
-      beforeEnter: requireAuth,
+      beforeEnter: requireAdmin,
     },
     {
       path: "/users",
       name: "users",
       component: ManageUserView,
-      beforeEnter: requireAuth,
+      beforeEnter: requireAdmin,
     },
     {
       path: "/createUser",
       name: "createUser",
       component: CreateUser,
-      beforeEnter: requireAuth,
+      beforeEnter: requireAdmin,
     },
     // {
     //   path: "/mod",
@@ -81,13 +106,13 @@ const router = createRouter({
       name: "formbuilder",
       component: FormBuilder,
       props: (route) => ({ vendorId: route.query.vendorId }),
-      beforeEnter: requireAuth,
+      beforeEnter: requireAdmin,
     },
     {
       path: "/viewForm",
       name: "viewForm",
       component: ViewForm,
-      beforeEnter: requireAuth,
+      beforeEnter: requireAdmin,
     },
     {
       path: "/dashboard",

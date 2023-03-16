@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Dashboard />
-    <div class="container">
+    <!-- <div class="container">
       <div class="d-flex">
         <button class="btn btn-primary me-2" @click="toggleWorkflow">
           Manage Vendors
@@ -13,7 +13,7 @@
           Manage Templates
         </button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

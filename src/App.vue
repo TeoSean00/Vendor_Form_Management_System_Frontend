@@ -12,12 +12,10 @@ components: {
 </script>
 
 <template>
-  <div class="container-fluid ">
     <!-- <TopBanner/> -->
     <!-- <Navbar />   -->
     <!-- <NavbarVertical/> -->
     <RouterView />
-  </div>
 </template>
 
 <style scoped>
