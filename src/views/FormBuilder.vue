@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar/>
 
   <div class="row justify-content-center bg-light-grey">
     <div class="col-8">
@@ -167,7 +167,7 @@
 
 <script>
 import TemplateList from "../components/template/TemplateList.vue";
-import Navbar from "../components/navbar/Navbar.vue";
+import Navbar from "../components/navbar/NavbarJP.vue";
 import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";

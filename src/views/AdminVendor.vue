@@ -1,16 +1,16 @@
 <template>
   <Navbar />
 
-  <section id="forms" class="forms">
+  <section id="forms" class="forms mt-2">
     <div class="container">
-      <div>
+      <!-- <div>
         Data dump section
         <p>{{ vendorUsers }}</p>
         <p>{{ vendorInfo }}</p>
         <p>{{ templateList }}</p>
         <p>{{ allForms }}</p>
         <p>{{ toDelete }}</p>
-      </div>
+      </div> -->
 
       <div class="section-title d-flex justify-content-between">
         <h1 v-if="vendorInfo" class="text-main-blue">{{ vendorInfo.name }}</h1>
@@ -468,7 +468,7 @@
         </div>
       </div>
 
-      <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
+      <div class=" bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
             Assigned (Vendor fill in Stage) | Waiting for vendor response
@@ -569,7 +569,7 @@
       </div>
       <!-- end of form  -->
 
-      <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
             Awaiting Evaluation (Admin stage) | Waiting for both admin to fill
@@ -615,7 +615,7 @@
         </template>
       </div>
 
-      <div class="card text-white bg-primary mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
             Awaiting Approval (approver stage) | Waiting for approval to
@@ -712,7 +712,7 @@
 
 <script>
 import TemplateList from "../components/template/TemplateList.vue";
-import Navbar from "../components/navbar/Navbar.vue";
+import Navbar from "../components/navbar/NavbarJP.vue";
 import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";

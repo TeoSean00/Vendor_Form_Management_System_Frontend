@@ -47,15 +47,15 @@ class FormService {
     return response;
   }
 
-  updateForm(formID,FormObject) {
+  updateForm(formID, FormObject) {
     const response = axios
       .put(API_URL + formID, FormObject, { headers: authHeader() })
       .then((response) => {
-        console.log("update request successful!", response);
+        console.log("put request successful!", FormObject);
         return response.data;
       })
       .catch((error) => {
-        console.log("update request unsuccessful", error);
+        console.log("put request unsuccessful", error);
         return error;
       });
     return response;
@@ -74,7 +74,6 @@ class FormService {
       });
     return response;
   }
-
 }
 
 export default new FormService();

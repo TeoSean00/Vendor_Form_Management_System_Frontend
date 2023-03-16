@@ -1,18 +1,15 @@
 <template>
-    <div class="row bluebg">
-      <div class="col-1">
-        <img src="../../assets/Logo.png" alt="" style="width: 80px; height: 80px;" class="mt-3 mx-5">
+    <div class="container-fluid bluebg d-flex justify-content-between m-0" style="width: 100%;">
+      <div>
+        <router-link to="/" class="nav-link text-light">
+          <img src="../../assets/Logo.png" alt="" style="width: 80px; height: 80px;" class="mt-3 mx-5">
+        </router-link>
       </div>
-      <div class="col-7" >
-        <!-- <h3 class="text-light mt-5 mx-5">
-          Admin
-        </h3> -->
-      </div>
-      <div class="col-4">
+      <div>
         <nav class="navbar navbar-expand navbar-light mt-5 px-0">
     
           <a href="" class="navbar-brand" @click.prevent></a>
-  
+          
           <div class="navbar-nav mr-auto mx-4">
   
             <li class="nav-item ">
@@ -20,21 +17,21 @@
                 <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="home"/>
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link to="#" class="nav-link text-light">
                 <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="bell" />
               </router-link>
-            </li>
+            </li> -->
             <li class="nav-item ">
               <router-link to="/formbuilder" class="nav-link text-light">
                 <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="clipboard" />
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link to="/profile" class="nav-link text-light">
                 <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="user" />
               </router-link>
-            </li>
+            </li> -->
             <!-- <li v-if="showAdminBoard" class="nav-item">
               <router-link to="/admin" class="nav-link">Admin Board</router-link>
             </li>
