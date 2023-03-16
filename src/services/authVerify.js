@@ -11,6 +11,7 @@ const parseJwt = (token) => {
 export default function authVerify() {
   var auth = useAuthStore();
   const user = JSON.parse(localStorage.getItem("user"));
+
   if (user && user.accessToken) {
     const jwt = parseJwt(user.accessToken);
     if (jwt.exp * 1000 < Date.now()) {
