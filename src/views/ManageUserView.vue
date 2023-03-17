@@ -1,6 +1,6 @@
 <template>
   <div class="container-flex">
-    <Navbar />
+    <Navbar/>
 
     <div class="row">
       <div class="col-12">
@@ -71,7 +71,12 @@
                       </td>
                       <td>
                         <p class="text-xs font-weight-bold mb-0">
-                          {{ user.roles[0] }}
+                          <template
+                            v-for="(user, index) in user.roles"
+                            :key="index"
+                          >
+                            {{ user.name }} <br />
+                          </template>
                         </p>
 
                         <p class="text-xs text-secondary mb-0">
@@ -111,43 +116,53 @@
 </template>
 
 <script>
-import Navbar from "../components/navbar/Navbar.vue";
+import Navbar from "../components/navbar/NavbarJP.vue";
 import { useRouter } from "vue-router";
+import UserService from "../services/user/userService";
+import { ref } from "vue";
 export default {
   components: { Navbar },
   setup() {
-    const users = [
-      {
-        id: "63d85d7193c8ae0f8f0809af",
-        username: "Mr Admin",
-        email: "moderator123@gmail.com",
-        roles: ["ROLE_ADMIN"],
-      },
-      {
-        id: "63d85d7193c8ae0f8f0839af",
-        username: "Mr User",
-        email: "moderator123@gmail.com",
-        roles: ["ROLE_USER"],
-      },
-      {
-        id: "63d85d7193c8ae0f8f0829af",
-        username: "Mr Moderator",
-        email: "moderator123@gmail.com",
-        roles: ["ROLE_MODERATOR"],
-      },
-      {
-        id: "63d85d7193c8ae0f8f0819af",
-        username: "Mr Admin Two",
-        email: "moderator123@gmail.com",
-        roles: ["ROLE_MODERATOR"],
-      },
-      {
-        id: "63d85d7193c8ae0f8f0849af",
-        username: "Mr User two",
-        email: "moderator123@gmail.com",
-        roles: ["ROLE_USER"],
-      },
-    ];
+    var users = ref([]);
+
+    var getUsers = async () => {
+      users.value = await UserService.getUsers();
+    };
+
+    getUsers();
+
+    // const users = [
+    //   {
+    //     id: "63d85d7193c8ae0f8f0809af",
+    //     username: "Mr Admin",
+    //     email: "moderator123@gmail.com",
+    //     roles: ["ROLE_ADMIN"],
+    //   },
+    //   {
+    //     id: "63d85d7193c8ae0f8f0839af",
+    //     username: "Mr User",
+    //     email: "moderator123@gmail.com",
+    //     roles: ["ROLE_USER"],
+    //   },
+    //   {
+    //     id: "63d85d7193c8ae0f8f0829af",
+    //     username: "Mr Moderator",
+    //     email: "moderator123@gmail.com",
+    //     roles: ["ROLE_MODERATOR"],
+    //   },
+    //   {
+    //     id: "63d85d7193c8ae0f8f0819af",
+    //     username: "Mr Admin Two",
+    //     email: "moderator123@gmail.com",
+    //     roles: ["ROLE_MODERATOR"],
+    //   },
+    //   {
+    //     id: "63d85d7193c8ae0f8f0849af",
+    //     username: "Mr User two",
+    //     email: "moderator123@gmail.com",
+    //     roles: ["ROLE_USER"],
+    //   },
+    // ];
 
     var router = useRouter();
 

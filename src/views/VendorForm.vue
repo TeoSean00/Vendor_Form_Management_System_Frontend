@@ -1,8 +1,8 @@
 <template>
   <Navbar />
-  Signed in as {{ currentUser }}
+  Signed in as {{ currentUser }} displayRole is {{ displayRole }}
   <br />
-  {{ newForm }}
+  <!-- {{ newFormContent }} -->
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <!-- <div class="m-2">
@@ -11,20 +11,53 @@
       <div class="form-floating m-4">
         <div class="">
           <h4>Form Details</h4>
-          <button @click="testUser" class="btn btn-primary">Change user</button>
+          <span> Form Status: {{ formStatus }} </span>
           <hr class="border border-dark border-2 mt-2 opacity-75" />
         </div>
         <form onsubmit="return false;">
-          <template v-for="(section, index) in newForm" :key="index">
+          <template v-for="(section, index) in formContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
+              <h1>{{ i }} Section</h1>
               <template v-for="sect in sectionData" :key="sect">
                 {{ sect }}
                 <FormSection :sectionData="sect" />
               </template>
             </template>
           </template>
-          <button class="btn btn-primary" @click="submitForm">
-            Submit Form
+          <button
+            v-if="formStatus == 'approver_response'"
+            class="btn btn-danger mx-1"
+            @click="submitForm('admin_response')"
+          >
+            Reject Form
+          </button>
+          <button
+            v-if="formStatus == 'approver_response'"
+            class="btn btn-primary mx-1"
+            @click="submitForm('form_completed')"
+          >
+            Approve
+          </button>
+          <button
+            v-if="formStatus == 'admin_response'"
+            class="btn btn-danger mx-1"
+            @click="submitForm('vendor_response')"
+          >
+            Reject Form
+          </button>
+          <button
+            v-if="formStatus == 'admin_response'"
+            class="btn btn-primary mx-1"
+            @click="submitForm('approver_response')"
+          >
+            Submit for approval
+          </button>
+          <button
+            v-if="formStatus == 'vendor_response'"
+            class="btn btn-primary mx-1"
+            @click="submitForm('admin_response')"
+          >
+            Submit to admin
           </button>
         </form>
       </div>
@@ -32,10 +65,11 @@
   </div>
 </template>
 <script>
-import Navbar from "../components/navbar/Navbar.vue";
+import Navbar from "../components/navbar/NavbarJP.vue";
 import FormSection from "../components/form/FormSection.vue";
 import FormService from "../services/form/formService";
 import { ref } from "vue";
+import { useAuthStore } from "../stores/authStore";
 
 export default {
   components: {
@@ -45,111 +79,73 @@ export default {
   props: [],
   setup() {
     // Current user test
-    var formID = "64099cb650fce16159f43ac6" //TEMP FORM ID. CHANGE TO NON HARDCODED
+    var formID = "640d327ba8affc65fb420b19"; //TEMP FORM ID. CHANGE TO NON HARDCODED
     var currentUser = ref("vendor");
-    var content = ref("");
-    // var newForm = ref([
-    //   {
-    //     admin: [
-    //       { order: 0, label: "Admin header", style: "h1", type: "header" },
-    //       { order: 1, label: "Admin text", input: "", type: "text" },
-    //       { order: 2, label: "Admin Number", input: "", type: "number" },
-    //       {
-    //         order: 3,
-    //         label: "Admin Boolean",
-    //         input: [],
-    //         options: ["Yes", "No"],
-    //         type: "radio",
-    //       },
-    //       { order: 4, label: "Admin Date", input: "", type: "date" },
-    //       {
-    //         order: 5,
-    //         label: "Admin Checkbox",
-    //         input: [],
-    //         options: ["Admin check 1", "Admin check 2"],
-    //         type: "checkbox",
-    //       },
-    //       {
-    //         order: 6,
-    //         label: "Admin Radio",
-    //         input: [],
-    //         options: ["Admin radio 1", "Admin radio 2"],
-    //         type: "radio",
-    //       },
-    //       {
-    //         order: 7,
-    //         label: "Admin likert ",
-    //         input: [],
-    //         options: ["admin likert 1", "Admin likert 2"],
-    //         type: "likertGroup",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     vendor: [
-    //       { order: 0, label: "Vendor header", style: "h1", type: "header" },
-    //       { order: 1, label: "Vendor text", input: "", type: "text" },
-    //       { order: 2, label: "Vendor numn", input: "", type: "number" },
-    //       {
-    //         order: 3,
-    //         label: "Vendor bool",
-    //         input: [],
-    //         options: ["Yes", "No"],
-    //         type: "radio",
-    //       },
-    //       { order: 4, label: "Vendor date", input: "", type: "date" },
-    //       {
-    //         order: 5,
-    //         label: "Vendor check ",
-    //         input: [],
-    //         options: ["Vendor cvhck 1", "Vendor chek 2"],
-    //         type: "checkbox",
-    //       },
-    //       {
-    //         order: 6,
-    //         label: "Vendor radio",
-    //         input: [],
-    //         options: ["Vendor rad 1", "Vendor rad 2"],
-    //         type: "radio",
-    //       },
-    //       {
-    //         order: 7,
-    //         label: "Vendor likert ",
-    //         input: [],
-    //         options: ["Vendor lik 1", "Vendor lik 2"],
-    //         type: "likertGroup",
-    //       },
-    //     ],
-    //   },
-    // ]);
     var newForm = ref([]);
-    function submitForm() {
-      console.log(newForm.value);
+    var formContent = ref([]);
+    var formStatus = ref([]);
+
+    var submitForm = async (status) => {
+      newForm.value.status = status;
+      console.log(newForm);
+      await FormService.updateForm(formID, newForm.value)
+        .then((response) => {
+          console.log("Submitted form is: ");
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       console.log("Form Submitted");
-    }
+    };
+
+    var loadedForm = ref(null);
+
+    // Update Form
+    var saveForm = async () => {
+      await FormService.updateForm("640c3ec1976af269ac9ce423", newForm.value)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    // get the roles
+    var displayRole = ref(null);
+    var auth = useAuthStore();
+    displayRole.value = auth.user;
 
     var loadForm = async (formID) => {
       console.log("Loading Form");
       await FormService.getForm(formID)
         .then((response) => {
           console.log("Loaded form is: ");
-          console.log(response)
-          var loadedForm = response
-          // Other variables here etc vendorName = response.vendorName
-          newForm.value = loadedForm.content.FormContent;
+          console.log(response);
+          newForm.value = response;
+          formContent.value = newForm.value.content.FormContent;
+          formStatus.value = newForm.value.status;
+          // var loadedForm = response
+          // formStatus.value = loadedForm.status
+          // // Other variables here etc vendorName = response.vendorName
+          // newForm.value = loadedForm.content.FormContent;
           // ADD THE OTHER FORM VARIABLES HERE
-          console.log("New form is" + newForm);
         })
         .catch((error) => {
           console.log(error);
         });
     };
+
     loadForm(formID);
     return {
-      newForm,
+      displayRole,
+      saveForm,
       currentUser,
       submitForm,
       loadForm,
+      formContent,
+      formStatus,
     };
   },
 };

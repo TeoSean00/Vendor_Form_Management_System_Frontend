@@ -30,12 +30,13 @@ import {
   faCalendar,
   faCircleCheck,
   faRadio,
-  faObjectGroup
+  faObjectGroup,
+  faStore,
 } from "@fortawesome/free-solid-svg-icons";
 
 
 
-library.add(faH, faT, fa1, faF, faCalendar, faCircleCheck, faRadio, faObjectGroup,faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
+library.add(faH, faT, fa1, faF, faCalendar, faCircleCheck, faRadio, faObjectGroup,faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile, faStore);
 
 
 library.add(faMagnifyingGlass,faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
