@@ -36,7 +36,7 @@ import {
 
 
 
-library.add(faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile, faStore, faH, faT, fa1, faF, faCalendar, faCircleCheck, faRadio, faObjectGroup,faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
+library.add(faH, faT, fa1, faF, faCalendar, faCircleCheck, faRadio, faObjectGroup,faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile, faStore);
 
 
 library.add(faMagnifyingGlass,faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
