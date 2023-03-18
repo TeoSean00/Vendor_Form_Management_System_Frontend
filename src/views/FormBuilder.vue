@@ -89,9 +89,17 @@
           Preview Form
         </button>
         <button
+          v-if="selectedVendor == null"
           class="btn btn-main-blue mb-3"
           data-bs-toggle="modal"
           data-bs-target="#createFormModal"
+        >
+          Create Form
+        </button>
+        <button
+          v-if="selectedVendor != null"
+          class="btn btn-main-blue mb-3"
+          @click="toggleCreateForm"
         >
           Create Form
         </button>
@@ -176,6 +184,7 @@ import { useTemplateStore } from "../stores/templateStore";
 import { ref, watch } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
+import { useRouter } from "vue-router";
 
 export default {
   components: {
@@ -188,7 +197,7 @@ export default {
   props: ["vendorId"],
   setup(props) {
     var content = ref("");
-
+    
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
@@ -554,6 +563,14 @@ export default {
 
     var vendors = ref(null);
     var selectedVendor = ref(null);
+    const currId = ref(props.vendorId);
+    var vendorInfo = ref(null);
+    var getVendorInfo = async () => {
+      vendorInfo.value = await VendorService.getVendor(currId.value);
+      selectedVendor.value = vendorInfo.value;
+    };
+    getVendorInfo();
+
 
     var getVendors = async () => {
       vendors.value = await VendorService.getVendors();
@@ -572,6 +589,9 @@ export default {
       await FormService.addForm(newFormObject)
         .then((response) => {
           alert("Form created!");
+          if (vendorInfo !=null){
+            toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
+          }
           console.log(response);
         })
         .catch((error) => {
@@ -579,9 +599,24 @@ export default {
         });
     };
 
+    const router = useRouter();
+    const toggleVendorPage = (vendorName, vendorId) => {
+      router.push({
+        name: "AdminVendor",
+        params: {
+          name: vendorName,
+        },
+        query: {
+          vendorId: vendorId,
+        },
+      });
+    };
+
     return {
       selectedVendor,
       vendors,
+      currId,
+      vendorInfo,
       toggleCreateForm,
       previewObj,
       content,
@@ -596,6 +631,7 @@ export default {
       addVendorSection,
       removeSection,
       togglePreview,
+      toggleVendorPage,
       newForm,
     };
   },

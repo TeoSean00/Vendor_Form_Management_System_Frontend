@@ -89,6 +89,7 @@ const router = createRouter({
       path: "/createUser",
       name: "createUser",
       component: CreateUser,
+      props: (route) => ({ vendorId: route.query.vendorId }),
       beforeEnter: requireAdmin,
     },
     // {

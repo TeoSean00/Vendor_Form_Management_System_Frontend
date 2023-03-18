@@ -138,10 +138,12 @@
             <hr class="border border-dark border-1 mt-2 opacity-75" />
             <div class="row">
               <div class="col-4">
-                <label class="fw-bold" for="access">Select Vendor</label>
+                <label class="fw-bold" for="access" v-if="currId == null">Select Vendor</label>
+                <label class="fw-bold" for="access" v-if="currId != null">Selected Vendor</label>
               </div>
               <div class="col-8 d-flex flex-column mb-2">
-                <div class="form-check">
+                
+                <div class="form-check" v-if="currId == null">
                   <template v-for="(vendor, index) in vendors" :key="index">
                     <p>
                       <input
@@ -156,6 +158,9 @@
                       </label>
                     </p>
                   </template>
+                </div>
+                <div class="form-check" v-if="currId != null">
+                  <p>{{ vendorInfo.name }}</p>
                 </div>
               </div>
             </div>
@@ -219,7 +224,10 @@
         Create User
       </button>
     </div>
-    <button v-if="stage > 0" class="btn btn-secondary" @click="togglePrevious">
+    <button v-if="stage > 0 && submitted" class="btn btn-secondary" @click="toggleVendorPage(user.vendor[0], user.vendor[1])">
+      Back
+    </button>
+    <button v-if="stage > 0 && !submitted" class="btn btn-secondary" @click="togglePrevious">
       Back
     </button>
   </div>
@@ -231,11 +239,14 @@ import User from "../models/user";
 import { ref } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import AuthService from "../services/authService";
+import { useRouter } from "vue-router";
 
 export default {
   components: { Navbar },
-  setup() {
-    var stage = ref(0);
+  props: ["vendorId"],
+  setup(props) {
+    const currId = ref(props.vendorId);
+    console.log("vendorDetails is", currId);
 
     var user = ref({
       username: "",
@@ -245,20 +256,37 @@ export default {
       vendor: [null, null],
     });
 
-    var review = ref(false);
+    var vendorInfo = ref(null);
+    var getVendorInfo = async () => {
+      vendorInfo.value = await VendorService.getVendor(currId.value);
+      user.value.vendor = [vendorInfo.value.name, vendorInfo.value.id];
+    };
+    getVendorInfo();
+    console.log(vendorInfo);
 
+    var stage = ref(0);
+    
+    
+
+    var review = ref(false);
+    var submitted = ref(false);
     var toggleSubmit = async () => {
       if (review.value == false) {
         review.value = true;
       }
       let response = await AuthService.signup(user)
         .then((response) => {
+          submitted.value = true;
+          console.log("status" + submitted)
           return response;
         })
         .catch((error) => {
           return error;
         });
       alert(response);
+      if (submitted){
+        toggleVendorPage(user.value.vendor[0], user.value.vendor[1]);
+      }
     };
 
     var vendors = ref([]);
@@ -293,6 +321,21 @@ export default {
       stage.value -= 1;
     };
 
+    const router = useRouter();
+    const toggleVendorPage = (vendorName, vendorId) => {
+      router.push({
+        name: "AdminVendor",
+        params: {
+          name: vendorName,
+        },
+        query: {
+          vendorId: vendorId,
+        },
+      });
+    };
+
+    
+
     const colorList = [25, 50, 75, 100];
     const statusList = ["Details", "Permissions", "Review", "Complete"];
     return {
@@ -304,8 +347,12 @@ export default {
       colorList,
       statusList,
       stage,
+      currId,
+      vendorInfo,
+      submitted,
       toggleNext,
       togglePrevious,
+      toggleVendorPage
     };
   },
 };
