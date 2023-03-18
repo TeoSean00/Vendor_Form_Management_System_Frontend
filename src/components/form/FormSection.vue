@@ -63,7 +63,7 @@
         <div class="form-check">
           <input
             class="form-check-input"
-            :type="sectionData.type"
+            type="radio"
             :value="data"
             id="flexCheckDefault"
             v-model="sectionData.input"
