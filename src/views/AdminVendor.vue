@@ -113,7 +113,7 @@
           <FormCard
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete"
+            @upToDelete="upToDelete" @enterForm="enterForm"
           ></FormCard>
         </template>
         
@@ -138,7 +138,7 @@
           <FormCard
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete"
+            @upToDelete="upToDelete" @enterForm="enterForm"
           ></FormCard>
         </template>
       </div>
@@ -159,7 +159,7 @@
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
         >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete"></FormCard>
+          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete" @enterForm="enterForm"></FormCard>
       </template>
       </div>
       <!-- end of approval assigned form  -->
@@ -179,7 +179,7 @@
           v-for="vendorForm in completedForms"
           :key="vendorForm.status"
         >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete"></FormCard>
+          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete" @enterForm="enterForm"></FormCard>
         </template>
         <div class="col mt-4"></div>
       </div>
@@ -293,7 +293,7 @@ export default {
           vendorAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "admin_response") {
           adminAssignedForms.value.push(allForms.value[i]);
-        } else if (allForms.value[i].status == "approval_response") {
+        } else if (allForms.value[i].status == "approver_response") {
           approvalAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "completed") {
           completedForms.value.push(allForms.value[i]);
@@ -311,7 +311,7 @@ export default {
             vendorAssignedForms.value.push(allForms.value[i]);
           } else if (allForms.value[i].status == "admin_response") {
             adminAssignedForms.value.push(allForms.value[i]);
-          } else if (allForms.value[i].status == "approval_response") {
+          } else if (allForms.value[i].status == "approver_response") {
             approvalAssignedForms.value.push(allForms.value[i]);
           }
         }
@@ -322,6 +322,17 @@ export default {
     var toDelete = ref("");
     function upToDelete(vendorFormId) {
       toDelete.value = vendorFormId;
+    }
+
+    const router = useRouter();
+    function enterForm(vendorFormId) {
+      console.log("enter form is " + vendorFormId);
+      router.push({
+        path: '/vendorForm' , 
+        query: {
+          vendorFormId: vendorFormId,
+        }
+      });
     }
 
     var content = ref("");
@@ -340,7 +351,6 @@ export default {
     );
 
 
-    const router = useRouter();
     const toggleCreateUserPage = (vendorName, vendorId) => {
       router.push({
         name: "createUser",
@@ -547,6 +557,7 @@ export default {
       addAdminSection,
       addVendorSection,
       upToDelete,
+      enterForm,
       toggleCreateUserPage,
       toggleFormBuilderPage
     };

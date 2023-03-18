@@ -68,6 +68,7 @@
 import Navbar from "../components/navbar/NavbarJP.vue";
 import FormSection from "../components/form/FormSection.vue";
 import FormService from "../services/form/formService";
+import VendorService from "../services/vendor/vendorService";
 import { ref } from "vue";
 import { useAuthStore } from "../stores/authStore";
 
@@ -76,10 +77,23 @@ export default {
     Navbar,
     FormSection,
   },
-  props: [],
-  setup() {
+  props: ['vendorFormId'],
+  setup(props) {
+
+    const currFormId = ref(props.vendorFormId);
+    console.log("formDetails is", currFormId);
+    
+    var formID = ref(currFormId.value); //TEMP FORM ID. CHANGE TO NON HARDCODED
+    // var formInfo = ref(null);
+    // var getFormInfo = async () => {
+    //   formInfo.value = await FormService.getForm(currFormId.value);
+    //   console.log(formInfo.value.id);
+    //   formID.value = formInfo.value.id;
+    // };
+
+    // getFormInfo();
+  
     // Current user test
-    var formID = "6415163ba9c8c50b63c8ee12"; //TEMP FORM ID. CHANGE TO NON HARDCODED
     var currentUser = ref("vendor");
     var newForm = ref([]);
     var formContent = ref([]);
@@ -103,7 +117,7 @@ export default {
 
     // Update Form
     var saveForm = async () => {
-      await FormService.updateForm("640c3ec1976af269ac9ce423", newForm.value)
+      await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
           console.log(response);
         })
@@ -119,7 +133,7 @@ export default {
 
     var loadForm = async (formID) => {
       console.log("Loading Form");
-      await FormService.getForm(formID)
+      await FormService.getForm(formID.value)
         .then((response) => {
           console.log("Loaded form is: ");
           console.log(response);
@@ -139,6 +153,8 @@ export default {
 
     loadForm(formID);
     return {
+      currFormId,
+      
       displayRole,
       saveForm,
       currentUser,

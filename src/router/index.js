@@ -139,6 +139,7 @@ const router = createRouter({
       path: "/vendorForm",
       name: "VendorForm",
       component: () => import("../views/VendorForm.vue"),
+      props: (route) => ({ vendorFormId: route.query.vendorFormId }),
       beforeEnter: requireAuth,
     },
     {

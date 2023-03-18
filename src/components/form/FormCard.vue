@@ -11,7 +11,7 @@
               <div class="card-footer">
                 <div class="row">
                   <div class="col-6 pr-0">
-                    <button class="btn btn-link btn-block">Enter</button>
+                    <button class="btn btn-link btn-block" @click="enterForm">Enter</button>
                   </div>
                   
                   <div class="col-6 pl-0">
@@ -43,7 +43,11 @@ export default {
       context.emit("upToDelete", props.vendorFormId);
     };
 
-    return { props, context, updateToDelete };
+    function enterForm() {
+      context.emit("enterForm", props.vendorFormId);
+    };
+
+    return { props, context, updateToDelete, enterForm };
   },
 };
 </script>
