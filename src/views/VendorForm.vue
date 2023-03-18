@@ -102,7 +102,7 @@ export default {
     var submitForm = async (status) => {
       newForm.value.status = status;
       console.log(newForm);
-      await FormService.updateForm(formID, newForm.value)
+      await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
           console.log("Submitted form is: ");
           console.log(response);
