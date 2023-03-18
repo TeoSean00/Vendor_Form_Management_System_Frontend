@@ -510,7 +510,7 @@ export default {
               label: row.text,
               input: [],
               options: row.options,
-              type: "radio",
+              type: type,
             });
           } else if (type == "date") {
             sectionItems.push({
