@@ -7,9 +7,9 @@
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
         <h1 class="text-main-blue">Form Builder</h1>
-        {{ previewObj }}
+        <!-- {{ previewObj }}
         {{ formName }}
-        {{ desc }}
+        {{ desc }} -->
         <div class="row">
           <span class="text-secondary-blue"
             >Form Name:
@@ -40,7 +40,7 @@
           ></textarea>
         </div>
       </div>
-      {{ newForm }}
+      <!-- {{ newForm }} -->
       <div class="row p-1 mt-1">
         <div v-for="(section, index) in formSections" :key="index">
           <SectionComponent
@@ -60,26 +60,32 @@
         </div> -->
       </div>
     </div>
-    <div class="col-8 justify-content-center text-center">
-      <button @click="addAdminSection" class="col-4 m-3 btn btn-main-blue">
-        Add Admin Section
-      </button>
-      <button @click="addVendorSection" class="col-4 m-3 btn btn-main-blue">
-        Add Vendor Section
-      </button>
-      <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
+    <div class="col-8 ">
+      <div class="row m-1 mt-3 mb-3 p-2 border rounded border-light border-1 bg-white shadow-sm justify-content-center text-center" >
+        <div class="col-8 ">
+      
+          <div class="p-1">
+            <button
+              class="btn btn-secondary col-12 mx-auto"
+              data-bs-toggle="modal"
+              data-bs-target="#selectTemplateModal"
+            >
+              Select Template
+            </button>
+          </div>
+          <hr>
+          <button @click="addAdminSection" class="col-5  btn btn-main-dark-purple">
+            Add Admin Section
+          </button>
+          <button @click="addVendorSection" class="col-5 mx-2 btn btn-main-blue">
+            Add Vendor Section
+          </button>
+          <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
 
-      <!-- <div class="col-6 m-1 p-1">
-        <TemplateList :list="templatesList" @addTemplate="addTemplate" />
-      </div> -->
-      <div class="col-6 m-1 p-1">
-        <button
-          class="btn btn-main-blue mb-3"
-          data-bs-toggle="modal"
-          data-bs-target="#selectTemplateModal"
-        >
-          Select Template
-        </button>
+          <!-- <div class="col-6 m-1 p-1">
+            <TemplateList :list="templatesList" @addTemplate="addTemplate" />
+          </div> -->
+        </div>
       </div>
     </div>
 
@@ -124,7 +130,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Select a Template</h1>
             <button
               type="button"
               class="btn-close"
@@ -133,8 +139,6 @@
             ></button>
           </div>
           <div class="modal-body">
-            <label class="form-label">Select Template</label>
-            <hr />
             <select
               class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
@@ -158,11 +162,11 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-main-blue"
               data-bs-dismiss="modal"
               @click="addSelectedTemplate"
             >
-              Create form
+              Add Template.
             </button>
           </div>
         </div>
@@ -217,7 +221,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-main-blue"
               data-bs-dismiss="modal"
               @click="toggleCreateForm"
             >
