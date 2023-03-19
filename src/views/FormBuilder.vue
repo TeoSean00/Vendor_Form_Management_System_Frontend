@@ -6,7 +6,41 @@
       <div
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
-        <h1 class="text-main-blue">Form Builder</h1>
+        <h1 class="text-main-blue">Form Builder
+        <span class="float-end">
+          <button
+            type="button"
+            class="mx-2 btn btn-secondary-blue mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#templatePreview"
+            @click="togglePreview"
+          >
+          <font-awesome-icon icon="fa-solid fa-eye" />
+          </button>
+          <button @click="exportForm" class="mx-2 btn btn-turqouise mb-3">
+            <font-awesome-icon icon="fa-solid fa-floppy-disk" />
+            &nbsp Save Template
+          </button>
+          <button
+            v-if="selectedVendor == null"
+            class="mx-2 btn btn-main-blue mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#createFormModal"
+          >
+          <font-awesome-icon icon="fa-solid fa-circle-plus" />
+          &nbsp Create Form
+          </button>
+          <button
+            v-if="selectedVendor != null"
+            class="mx-2 btn btn-main-blue mb-3"
+            @click="toggleCreateForm"
+          >
+          <font-awesome-icon icon="fa-solid fa-circle-plus" />
+          &nbsp Assign Form
+          </button>
+        </span>
+      </h1>
+
         <!-- {{ previewObj }}
         {{ formName }}
         {{ desc }} -->
@@ -61,71 +95,77 @@
       </div>
     </div>
     <div class="col-8 ">
-      <div class="row m-1 mt-3 mb-3 p-2 border rounded border-light border-1 bg-white shadow-sm justify-content-center text-center" >
+      <div class="row m-1 mt-3 mb-1 p-2 border rounded border-light border-1 bg-white shadow-sm justify-content-center text-center" >
         <div class="col-8 ">
-      
           <div class="p-1">
             <button
               class="btn btn-secondary col-12 mx-auto"
               data-bs-toggle="modal"
               data-bs-target="#selectTemplateModal"
             >
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
+
               Select Template
             </button>
           </div>
-          <hr>
-          <button @click="addAdminSection" class="col-5  btn btn-main-dark-purple">
-            Add Admin Section
-          </button>
-          <button @click="addVendorSection" class="col-5 mx-2 btn btn-main-blue">
-            Add Vendor Section
-          </button>
-          <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
+          <button @click="addAdminSection" class="col-5 me-2 btn btn-main-dark-purple">
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
+            Admin Section
+          </button>       
+          <button
+            type="button"
+            class="btn btn-secondary btn-circle"
+            @click="scrollToTop"
+          >
+          <font-awesome-icon icon="fa-solid fa-chevron-up" />
+                </button>
+          <button @click="addVendorSection" class="col-5 ms-2 btn btn-main-blue">
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
 
-          <!-- <div class="col-6 m-1 p-1">
-            <TemplateList :list="templatesList" @addTemplate="addTemplate" />
-          </div> -->
+            Vendor Section
+          </button>
         </div>
+        <!-- Form Utilities -->
+        <!-- <div class="col-8 justify-content-center text-center mt-1">
+          <button @click="exportForm" class="col-3 mx-2 btn btn-turqouise mb-3">
+            Save Template
+          </button>
+          <button
+            type="button"
+            class="col-2 mx-2 btn btn-secondary-blue mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#templatePreview"
+            @click="togglePreview"
+          >
+            Preview
+          </button>
+          <button
+            v-if="selectedVendor == null"
+            class="col-3 mx-2 btn btn-main-blue mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#createFormModal"
+          >
+            Create Form
+          </button>
+          <button
+            v-if="selectedVendor != null"
+            class="col-3 mx-2 btn btn-main-blue mb-3"
+            @click="toggleCreateForm"
+          >
+            Create Form
+          </button>
+        </div> -->
+        <!-- Tyler button to go Do Form page
+        <div class="row mt-4">
+          <router-link to="/vendorForm">
+            <button class="btn btn-turqouise mb-3">Go to Form (TYLER)</button>
+          </router-link>
+        </div> -->
       </div>
     </div>
 
-    <div class="col-10">
-      <div class="row">
-        <button @click="exportForm" class="btn btn-turqouise mb-3">
-          Save as Template
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary-blue mb-3"
-          data-bs-toggle="modal"
-          data-bs-target="#templatePreview"
-          @click="togglePreview"
-        >
-          Preview Form
-        </button>
-        <button
-          v-if="selectedVendor == null"
-          class="btn btn-main-blue mb-3"
-          data-bs-toggle="modal"
-          data-bs-target="#createFormModal"
-        >
-          Create Form
-        </button>
-        <button
-          v-if="selectedVendor != null"
-          class="btn btn-main-blue mb-3"
-          @click="toggleCreateForm"
-        >
-          Create Form
-        </button>
-      </div>
-      <!-- Tyler button to go Do Form page-->
-      <div class="row mt-4">
-        <router-link to="/vendorForm">
-          <button class="btn btn-turqouise mb-3">Go to Form (TYLER)</button>
-        </router-link>
-      </div>
-    </div>
+ 
+   
 
     <!-- Template Selection Modal -->
     <div
@@ -271,7 +311,7 @@ export default {
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
-        console.log("Userboard response is " + response.data);
+        // console.log("Userboard response is " + response.data);
       },
       (error) => {
         content.value =
@@ -285,12 +325,12 @@ export default {
     var selectedTemplateObject = ref(null);
     var getTemplatesList = async () => {
       templatesList.value = await TemplateService.getTemplates();
-      console.log("Got it");
-      console.log(templatesList.value);
+      // console.log("Got it");
+      // console.log(templatesList.value);
     }
     getTemplatesList();
 
-    console.log("vendorId Received", props.vendorId);
+    // console.log("vendorId Received", props.vendorId);
     
     var vendorAssessmentForm = 
       {
@@ -462,7 +502,7 @@ export default {
     var formSections = ref([]);
 
     var addSelectedTemplate = () => {
-      console.log("Checking templateData in createform", selectedTemplateObject);
+      // console.log("Checking templateData in createform", selectedTemplateObject);
       addTemplate(selectedTemplateObject);
     };
 
@@ -480,13 +520,11 @@ export default {
     var addTemplate = (template) => {
       // console.log("template received is", template.value);
       for (let i = 0; i < template.value["templateContents"].length; i++) {
-        console.log("wtf", i);
         var section = template.value["templateContents"][i];
         formSections.value.push(section);
       }
     };
  
-
     function update() {
       //Uncomment this out to check
       // console.log("parent checking the state of the form", formItems);
@@ -510,8 +548,8 @@ export default {
       // console.log(outputObj);
       // const outputJson = JSON.stringify(outputObj);
       TemplateService.addTemplate(outputObj);
-      console.log("Added");
-      console.log(outputObj);
+      // console.log("Added");
+      // console.log(outputObj);
 
       //for adding template to mongoDB
       // templates.addTemplate(outputObj);
@@ -534,7 +572,7 @@ export default {
     });
 
     var togglePreview = () => {
-      console.log("Preview Toggled");
+      // console.log("Preview Toggled");
       // console.log("updated previewObj", previewObj.value);
     };
 
@@ -542,23 +580,23 @@ export default {
 
     //create form from template
     var createForm = () => {
-      console.log("Checking templateData in createform", previewObj.value);
+      // console.log("Checking templateData in createform", previewObj.value);
       var info = previewObj.value.templateInfo;
       newForm.value["FormInfo"] = info;
       for (let label in info) {
-        console.log("label is", label, info[label]);
+        // console.log("label is", label, info[label]);
       }
       var content = previewObj.value.templateContents;
-      console.log("sections are", content);
+      // console.log("sections are", content);
 
       newForm.value["FormContent"] = [];
       for (let key in content) {
-        console.log("KEY IS ", key);
+        // console.log("KEY IS ", key);
         var section = content[key];
-        console.log("section is", section);
+        // console.log("section is", section);
 
         var sectionKey = Object.keys(section)[0];
-        console.log(sectionKey);
+        // console.log(sectionKey);
 
         // create vendor/admin section
         var sectionItems = [];
@@ -636,11 +674,16 @@ export default {
       }
     };
 
+    var scrollToTop = (()=>{
+      window.scrollTo(0,0);
+    });
+  
+
     watch(previewObj.value, () => {
-      console.log("previewData updated!", previewObj.value);
+      // console.log("previewData updated!", previewObj.value);
       newForm.value = {};
       createForm();
-      console.log("createform called!,newform is ", newForm.value);
+      // console.log("createform called!,newform is ", newForm.value);
     });
 
     var vendors = ref(null);
@@ -661,7 +704,7 @@ export default {
     getVendors();
 
     var toggleCreateForm = async () => {
-      console.log("selected Vendor is", selectedVendor);
+      // console.log("selected Vendor is", selectedVendor);
       var newFormObject = {
         vendorName: selectedVendor.value.name,
         creationDate: Date.now(),
@@ -674,7 +717,7 @@ export default {
           if (vendorInfo !=null){
             toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
           }
-          console.log(response);
+          // console.log(response);
         })
         .catch((error) => {
           alert(error);
@@ -700,13 +743,14 @@ export default {
       vendors,
       currId,
       vendorInfo,
-      toggleCreateForm,
       previewObj,
       content,
       formName,
       desc,
       templatesList,
       formSections,
+      toggleCreateForm,
+      scrollToTop,
       update,
       exportForm,
       addTemplate,
