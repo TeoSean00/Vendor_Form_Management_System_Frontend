@@ -172,10 +172,11 @@ import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
-import { useTemplateStore } from "../stores/templateStore";
+// import { useTemplateStore } from "../stores/templateStore";
 import { ref, watch } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
+import TemplateService from "../services/template/templateService";
 
 export default {
   components: {
@@ -200,6 +201,24 @@ export default {
           error.toString();
       }
     );
+
+    // var vendors = ref(null);
+    // var selectedVendor = ref(null);
+
+    // var getVendors = async () => {
+    //   vendors.value = await VendorService.getVendors();
+    // };
+
+    // getVendors();
+    
+  
+    var templatesList = ref(null);
+    var getTemplatesList = async () => {
+      templatesList.value = await TemplateService.getTemplates();
+      console.log("Got it");
+      console.log(templatesList.value);
+    }
+    getTemplatesList();
 
     console.log("vendorId Received", props.vendorId);
 
@@ -367,8 +386,6 @@ export default {
       },
     ]);
 
-    // var templates = useTemplateStore();
-    console.log("current templates are", templates);
 
     var formName = ref("");
     var desc = ref("");
@@ -390,14 +407,9 @@ export default {
       for (let i = 0; i < template.templateContents.length; i++) {
         var section = template.templateContents[i];
         formSections.value.push(section);
-        // let key = Object.keys(section)[0];
-        // console.log(section[key]);
-        // section[key].forEach((element) => {
-        //   formItems.value.push(element);
-        // });
       }
       //Add template to backend
-      useTemplateStore().addTemplate(formSections);
+      TemplateService.addTemplate(formSections);
       
     };
 
