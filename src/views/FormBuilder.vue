@@ -69,8 +69,17 @@
       </button>
       <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
 
-      <div class="col-6 m-1 p-1">
+      <!-- <div class="col-6 m-1 p-1">
         <TemplateList :list="templatesList" @addTemplate="addTemplate" />
+      </div> -->
+      <div class="col-6 m-1 p-1">
+        <button
+          class="btn btn-main-blue mb-3"
+          data-bs-toggle="modal"
+          data-bs-target="#selectTemplateModal"
+        >
+          Select Template
+        </button>
       </div>
     </div>
 
@@ -105,6 +114,60 @@
     </div>
 
     <!-- Template Selection Modal -->
+    <div
+      class="modal fade"
+      id="selectTemplateModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <label class="form-label">Select Template</label>
+            <hr />
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="selectedTemplateObject"
+            >
+              <template v-for="(templates, index) in templatesList" :key="index">
+                <option :value="templates.details">{{ templates.details.templateInfo.templateName }}</option>
+              </template>
+            </select>
+            <div v-if="selectedTemplateObject" class="alert alert-warning" role="alert">
+              You selected {{ selectedTemplateObject["templateInfo"]["templateName"] }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="addSelectedTemplate"
+            >
+              Create form
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Template Preview Modal -->
     <TemplatePreview :newForm="newForm" />
@@ -205,17 +268,8 @@ export default {
       }
     );
 
-    // var vendors = ref(null);
-    // var selectedVendor = ref(null);
-
-    // var getVendors = async () => {
-    //   vendors.value = await VendorService.getVendors();
-    // };
-
-    // getVendors();
-    
-  
     var templatesList = ref(null);
+    var selectedTemplateObject = ref(null);
     var getTemplatesList = async () => {
       templatesList.value = await TemplateService.getTemplates();
       console.log("Got it");
@@ -224,8 +278,7 @@ export default {
     getTemplatesList();
 
     console.log("vendorId Received", props.vendorId);
-    //Code to Add Vendor Assessment form into db
-    //temporary template data
+    
     var vendorAssessmentForm = 
       {
         templateInfo: {
@@ -387,14 +440,18 @@ export default {
           },
         ],
       };
-    
-    console.log("Tryna add this");
-    console.log(vendorAssessmentForm)
-    TemplateService.addTemplate(vendorAssessmentForm);
+    //Adding in a vendor form at every time we refresh...
+    // console.log(vendorAssessmentForm)
+    // TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
     var desc = ref("");
     var formSections = ref([]);
+
+    var addSelectedTemplate = () => {
+      console.log("Checking templateData in createform", selectedTemplateObject);
+      addTemplate(selectedTemplateObject);
+    };
 
     var addAdminSection = () => {
       formSections.value.push({
@@ -407,21 +464,15 @@ export default {
       });
     };
 
-    // var addTemplate = (template) => {
-    //   // console.log("template received is", template);
-    //   for (let i = 0; i < template.templateContents.length; i++) {
-    //     var section = template.templateContents[i];
-    //     formSections.value.push(section);
-    //   }
-    // };
-    var addTemplate = (templateId) => {
-      // console.log("template received is", template);
-      templateContents = Template
-      for (let i = 0; i < template.templateContents.length; i++) {
-        var section = template.templateContents[i];
+    var addTemplate = (template) => {
+      // console.log("template received is", template.value);
+      for (let i = 0; i < template.value["templateContents"].length; i++) {
+        console.log("wtf", i);
+        var section = template.value["templateContents"][i];
         formSections.value.push(section);
       }
     };
+ 
 
     function update() {
       //Uncomment this out to check
@@ -608,6 +659,7 @@ export default {
 
     return {
       selectedVendor,
+      selectedTemplateObject,
       vendors,
       toggleCreateForm,
       previewObj,
@@ -619,6 +671,7 @@ export default {
       update,
       exportForm,
       addTemplate,
+      addSelectedTemplate,
       addAdminSection,
       addVendorSection,
       removeSection,
