@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    vendor data here {{ vendorList }}
+    <!-- vendor data here {{ vendorList }} -->
 
     <form action="">
       <div class="input-group mb-2">
@@ -50,8 +50,8 @@
       </div>
     </form>
 
-    <p>Filtered names are</p>
-    <p>{{ filteredNames }}</p>
+    <!-- <p>Filtered names are</p>
+    <p>{{ filteredNames }}</p> -->
 
     <div v-if="!searchName" class="list-group flex">
       <template v-for="vendor in vendorList" :key="vendor">
@@ -65,8 +65,11 @@
             <h3>Company {{ vendor.vendorId }}</h3>
           </span> -->
           <span>
-            <h3>{{ vendor.name }}</h3>
-            <p>{{ vendor.id }}</p>
+            <h3>Name : {{ vendor.name }}</h3>
+            <h5>Country : {{ vendor.country }}</h5>
+            <span>Description : {{ vendor.details }}</span
+            ><br />
+            <span>id : {{ vendor.id }}</span>
           </span>
           <div class="float-right">
             <span class="badge bluebg mx-1 mt-2">In Progress</span>
@@ -229,14 +232,20 @@ export default {
 
     const toggleNewVendor = (newVendorName) => {
       console.log("toggle create new vendor", newVendorName);
+      console.log("SUMITTED INFO");
+      console.log(newVendorCountry.value);
+      console.log(newVendorName.value);
+      console.log(newVendorDetails.value);
       var newVendor = {
         name: newVendorName,
-        details: newVendorCountry,
-        country: newVendorDetails,
+        details: newVendorDetails.value,
+        country: newVendorCountry.value,
         forms: [],
       };
       vendorStore.addVendor(newVendor);
-      newVendorName = ref("");
+      newVendorName.value = "";
+      newVendorCountry = "";
+      newVendorDetails = "";
     };
 
     const toggleEditVendor = (vendor) => {

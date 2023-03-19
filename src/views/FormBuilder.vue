@@ -137,7 +137,7 @@
             <label class="form-label">Select Vendor</label>
             <hr />
             <select
-              v-if="selectedVendor == null"
+              v-if="selectedVendor == ''"
               class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
               v-model="selectedVendor"
@@ -147,7 +147,7 @@
               </template>
             </select>
             <select
-              v-if="selectedVendor != null"
+              v-if="selectedVendor != ''"
               class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
               v-model="selectedVendor"
