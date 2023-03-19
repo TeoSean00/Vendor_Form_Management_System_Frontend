@@ -31,8 +31,6 @@ import {
   faCircleCheck,
   faRadio,
   faObjectGroup,
-  faObjectGroup,
-  faMagnifyingGlass,
   faStore,
 } from "@fortawesome/free-solid-svg-icons";
 
