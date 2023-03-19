@@ -77,7 +77,7 @@
     <div class="col-10">
       <div class="row">
         <button @click="exportForm" class="btn btn-turqouise mb-3">
-          Export Form
+          Save as Template
         </button>
         <button
           type="button"
@@ -188,7 +188,6 @@ export default {
   props: ["vendorId"],
   setup(props) {
     var content = ref("");
-
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
@@ -397,6 +396,9 @@ export default {
         //   formItems.value.push(element);
         // });
       }
+      //Add template to backend
+      useTemplateStore().addTemplate(formSections);
+      
     };
 
     function update() {

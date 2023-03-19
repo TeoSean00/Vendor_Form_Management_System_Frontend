@@ -8,7 +8,7 @@
     </button>
   </template>
 </template>
-
+  
 <script>
 export default {
   emits: ["addTemplate"],
