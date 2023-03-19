@@ -6,7 +6,42 @@
       <div
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
-        <h1 class="text-main-blue">Form Builder</h1>
+        <h1 class="text-main-blue">
+          Form Builder
+          <span class="float-end">
+            <button
+              type="button"
+              class="mx-2 btn btn-secondary-blue mb-3"
+              data-bs-toggle="modal"
+              data-bs-target="#templatePreview"
+              @click="togglePreview"
+            >
+              <font-awesome-icon icon="fa-solid fa-eye" />
+            </button>
+            <button @click="exportForm" class="mx-2 btn btn-turqouise mb-3">
+              <font-awesome-icon icon="fa-solid fa-floppy-disk" />
+              &nbsp; Save Template
+            </button>
+            <button
+              v-if="selectedVendor == null"
+              class="mx-2 btn btn-main-blue mb-3"
+              data-bs-toggle="modal"
+              data-bs-target="#createFormModal"
+            >
+              <font-awesome-icon icon="fa-solid fa-circle-plus" />
+              &nbsp; Create Form
+            </button>
+            <button
+              v-if="selectedVendor != null"
+              class="mx-2 btn btn-main-blue mb-3"
+              @click="toggleCreateForm"
+            >
+              <font-awesome-icon icon="fa-solid fa-circle-plus" />
+              &nbsp; Assign Form
+            </button>
+          </span>
+        </h1>
+
         <!-- {{ previewObj }}
         {{ formName }}
         {{ desc }} -->
@@ -60,58 +95,151 @@
         </div> -->
       </div>
     </div>
-    <div class="col-8 justify-content-center text-center">
-      <button @click="addAdminSection" class="col-4 m-3 btn btn-main-blue">
-        Add Admin Section
-      </button>
-      <button @click="addVendorSection" class="col-4 m-3 btn btn-main-blue">
-        Add Vendor Section
-      </button>
-      <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
+    <div class="col-8">
+      <div
+        class="row m-1 mt-3 mb-1 p-2 border rounded border-light border-1 bg-white shadow-sm justify-content-center text-center"
+      >
+        <div class="col-8">
+          <div class="p-1">
+            <button
+              class="btn btn-secondary col-12 mx-auto"
+              data-bs-toggle="modal"
+              data-bs-target="#selectTemplateModal"
+            >
+              <font-awesome-icon icon="fa-solid fa-circle-plus" />
 
-      <div class="col-6 m-1 p-1">
-        <TemplateList :list="templates" @addTemplate="addTemplate" />
+              Select Template
+            </button>
+          </div>
+          <button
+            @click="addAdminSection"
+            class="col-5 me-2 btn btn-main-dark-purple"
+          >
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
+            Admin Section
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-circle"
+            @click="scrollToTop"
+          >
+            <font-awesome-icon icon="fa-solid fa-chevron-up" />
+          </button>
+          <button
+            @click="addVendorSection"
+            class="col-5 ms-2 btn btn-main-blue"
+          >
+            <font-awesome-icon icon="fa-solid fa-circle-plus" />
+
+            Vendor Section
+          </button>
+        </div>
+        <!-- Form Utilities -->
+        <!-- <div class="col-8 justify-content-center text-center mt-1">
+          <button @click="exportForm" class="col-3 mx-2 btn btn-turqouise mb-3">
+            Save Template
+          </button>
+          <button
+            type="button"
+            class="col-2 mx-2 btn btn-secondary-blue mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#templatePreview"
+            @click="togglePreview"
+          >
+            Preview
+          </button>
+          <button
+            v-if="selectedVendor == null"
+            class="col-3 mx-2 btn btn-main-blue mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#createFormModal"
+          >
+            Create Form
+          </button>
+          <button
+            v-if="selectedVendor != null"
+            class="col-3 mx-2 btn btn-main-blue mb-3"
+            @click="toggleCreateForm"
+          >
+            Create Form
+          </button>
+        </div> -->
+        <!-- Tyler button to go Do Form page
+        <div class="row mt-4">
+          <router-link to="/vendorForm">
+            <button class="btn btn-turqouise mb-3">Go to Form (TYLER)</button>
+          </router-link>
+        </div> -->
       </div>
     </div>
 
-    <div class="col-10">
-      <div class="row">
-        <button @click="exportForm" class="btn btn-turqouise mb-3">
-          Export Form
-        </button>
-        <button
-          type="button"
-          class="btn btn-secondary-blue mb-3"
-          data-bs-toggle="modal"
-          data-bs-target="#templatePreview"
-          @click="togglePreview"
-        >
-          Preview Form
-        </button>
-        <button
-          class="btn btn-main-blue mb-3"
-          data-bs-toggle="modal"
-          data-bs-target="#createFormModal"
-        >
-          Create Form
-        </button>
-        <!-- <button
-          v-if="selectedVendor != null"
-          class="btn btn-main-blue mb-3"
-          @click="toggleCreateForm"
-        >
-          Create Form
-        </button> -->
-      </div>
-      <!-- Tyler button to go Do Form page-->
-      <div class="row mt-4">
-        <router-link to="/vendorForm">
-          <button class="btn btn-turqouise mb-3">Go to Form (TYLER)</button>
-        </router-link>
+    <!-- Template Selection Modal -->
+    <div
+      class="modal fade"
+      id="selectTemplateModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Select a Template
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="selectedTemplateObject"
+            >
+              <template
+                v-for="(templates, index) in templatesList"
+                :key="index"
+              >
+                <option :value="templates.details">
+                  {{ templates.details.templateInfo.templateName }}
+                </option>
+              </template>
+            </select>
+            <div
+              v-if="selectedTemplateObject"
+              class="alert alert-warning"
+              role="alert"
+            >
+              You selected
+              {{ selectedTemplateObject["templateInfo"]["templateName"] }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-main-blue"
+              data-bs-dismiss="modal"
+              @click="addSelectedTemplate"
+            >
+              Add Template.
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Template Preview Modal -->
     <TemplatePreview :newForm="newForm" />
 
     <!-- Modal for selecting vendor to create form for -->
@@ -205,10 +333,11 @@ import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
-import { useTemplateStore } from "../stores/templateStore";
-import { computed, ref, watch } from "vue";
+import TemplateSelect from "../components/template/TemplateSelect.vue";
+import { ref, watch } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
+import TemplateService from "../services/template/templateService";
 import { useRouter } from "vue-router";
 
 export default {
@@ -218,15 +347,18 @@ export default {
     TemplateList,
     SectionComponent,
     TemplatePreview,
+    TemplateSelect,
   },
   props: ["vendorId"],
   setup(props) {
+    if (props.vendorId) {
+      console.log("here");
+    }
     var content = ref("");
-
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
-        console.log("Userboard response is " + response.data);
+        // console.log("Userboard response is " + response.data);
       },
       (error) => {
         content.value =
@@ -236,178 +368,189 @@ export default {
       }
     );
 
-    console.log("vendorId Received", props.vendorId);
+    var templatesList = ref(null);
+    var selectedTemplateObject = ref(null);
+    var getTemplatesList = async () => {
+      templatesList.value = await TemplateService.getTemplates();
+      // console.log("Got it");
+      // console.log(templatesList.value);
+    };
+    getTemplatesList();
 
-    //temporary template data
-    var templates = ref([
-      {
-        templateInfo: {
-          templateName: "New Vendor Assessment Form",
-          assignedTo: "Vendor",
-          templateDesc: "Assessment for new vendors",
-        },
-        templateContents: [
-          {
-            vendor: [
-              {
-                type: "header",
-                order: 0,
-                text: "NEW VENDOR ASSESSMENT FORM",
-                style: "h1",
-              },
-              { type: "text", order: 1, text: "Company's Name" },
-              { type: "number", order: 2, text: "Company Registration No:" },
-              { type: "text", order: 3, text: "Office Address" },
-              {
-                type: "boolean",
-                order: 4,
-                text: "GST Registered",
-                options: ["Yes", "No"],
-              },
-              { type: "number", order: 5, text: "Tel" },
-              { type: "text", order: 6, text: "Fax" },
-              {
-                type: "checkbox",
-                order: 7,
-                text: "Type of business License/Registration",
-                options: [
-                  "Sole Proprietorship",
-                  "Limited Company",
-                  "Partnership Agreement",
-                  "Others",
-                ],
-              },
-              {
-                type: "header",
-                order: 0,
-                text: "Contact Person",
-                style: "h1",
-              },
-              { type: "text", order: 8, text: "Contact Name" },
-              { type: "number", order: 9, text: "Contact Tel" },
-              { type: "text", order: 10, text: "Contact Designation" },
-              {
-                type: "checkbox",
-                order: 11,
-                text: "Nature of Business",
-                options: [
-                  "Manufacturing",
-                  "Agent/dealer",
-                  "Distributor",
-                  "Others",
-                ],
-              },
-              {
-                type: "text",
-                order: 12,
-                text: "If you picked Others please specify the nature of your business",
-              },
-            ],
-          },
-          {
-            admin: [
-              {
-                type: "header",
-                order: 0,
-                text: "NEW VENDOR ASSESSMENT FORM",
-                style: "h1",
-              },
-              {
-                type: "boolean",
-                order: 2,
-                text: "ISO 9001 Certification",
-                options: ["Yes", "No"],
-              },
-              { type: "text", order: 3, text: "Certification Body" },
-              {
-                type: "boolean",
-                order: 4,
-                text: "Accreditation of Laboratory",
-                options: ["Yes", "No"],
-              },
-              { type: "text", order: 5, text: "Accreditation Body" },
-              {
-                type: "boolean",
-                order: 6,
-                text: "Product Certification",
-                options: ["Yes", "No"],
-              },
-              {
-                type: "text",
-                order: 7,
-                text: "Product Markings (e.g. PSB, UL, TUV)",
-              },
-              {
-                type: "boolean",
-                order: 8,
-                text: "Site Evaluation Results",
-                options: ["Yes", "No"],
-              },
-              {
-                type: "checkbox",
-                order: 9,
-                text: "Site Evaluation Results",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              {
-                type: "boolean",
-                order: 10,
-                text: "Results of Samples/Product Evaluation",
-                options: ["Yes", "No"],
-              },
-              {
-                type: "checkbox",
-                order: 11,
-                text: "Results of Samples/Product Evaluation",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              {
-                type: "boolean",
-                order: 12,
-                text: "Results of First Deal",
-                options: ["Yes", "No"],
-              },
-              {
-                type: "checkbox",
-                order: 13,
-                text: "Results of First Deal",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              {
-                type: "boolean",
-                order: 14,
-                text: "Track Record Review/ Customer Reference",
-                options: ["Yes", "No"],
-              },
-              {
-                type: "checkbox",
-                order: 15,
-                text: "Track Record Review/ Customer Reference",
-                options: ["Satisfactory", "Unsatisfactory"],
-              },
-              {
-                type: "boolean",
-                order: 16,
-                text: "Other Evaluation",
-                options: ["Yes", "No"],
-              },
-              {
-                type: "text",
-                order: 17,
-                text: "Specify: Product Markings (e.g. PSB, UL, TUV)",
-              },
-            ],
-          },
-        ],
+    // console.log("vendorId Received", props.vendorId);
+
+    var vendorAssessmentForm = {
+      templateInfo: {
+        templateName: "New Vendor Assessment Form",
+        assignedTo: "Vendor",
+        templateDesc: "Assessment for new vendors",
       },
-    ]);
-
-    // var templates = useTemplateStore();
-    console.log("current templates are", templates);
+      templateContents: [
+        {
+          vendor: [
+            {
+              type: "header",
+              order: 0,
+              text: "NEW VENDOR ASSESSMENT FORM",
+              style: "h1",
+            },
+            { type: "text", order: 1, text: "Company's Name" },
+            { type: "number", order: 2, text: "Company Registration No:" },
+            { type: "text", order: 3, text: "Office Address" },
+            {
+              type: "boolean",
+              order: 4,
+              text: "GST Registered",
+              options: ["Yes", "No"],
+            },
+            { type: "number", order: 5, text: "Tel" },
+            { type: "text", order: 6, text: "Fax" },
+            {
+              type: "checkbox",
+              order: 7,
+              text: "Type of business License/Registration",
+              options: [
+                "Sole Proprietorship",
+                "Limited Company",
+                "Partnership Agreement",
+                "Others",
+              ],
+            },
+            {
+              type: "header",
+              order: 0,
+              text: "Contact Person",
+              style: "h1",
+            },
+            { type: "text", order: 8, text: "Contact Name" },
+            { type: "number", order: 9, text: "Contact Tel" },
+            { type: "text", order: 10, text: "Contact Designation" },
+            {
+              type: "checkbox",
+              order: 11,
+              text: "Nature of Business",
+              options: [
+                "Manufacturing",
+                "Agent/dealer",
+                "Distributor",
+                "Others",
+              ],
+            },
+            {
+              type: "text",
+              order: 12,
+              text: "If you picked Others please specify the nature of your business",
+            },
+          ],
+        },
+        {
+          admin: [
+            {
+              type: "header",
+              order: 0,
+              text: "NEW VENDOR ASSESSMENT FORM",
+              style: "h1",
+            },
+            {
+              type: "boolean",
+              order: 2,
+              text: "ISO 9001 Certification",
+              options: ["Yes", "No"],
+            },
+            { type: "text", order: 3, text: "Certification Body" },
+            {
+              type: "boolean",
+              order: 4,
+              text: "Accreditation of Laboratory",
+              options: ["Yes", "No"],
+            },
+            { type: "text", order: 5, text: "Accreditation Body" },
+            {
+              type: "boolean",
+              order: 6,
+              text: "Product Certification",
+              options: ["Yes", "No"],
+            },
+            {
+              type: "text",
+              order: 7,
+              text: "Product Markings (e.g. PSB, UL, TUV)",
+            },
+            {
+              type: "boolean",
+              order: 8,
+              text: "Site Evaluation Results",
+              options: ["Yes", "No"],
+            },
+            {
+              type: "checkbox",
+              order: 9,
+              text: "Site Evaluation Results",
+              options: ["Satisfactory", "Unsatisfactory"],
+            },
+            {
+              type: "boolean",
+              order: 10,
+              text: "Results of Samples/Product Evaluation",
+              options: ["Yes", "No"],
+            },
+            {
+              type: "checkbox",
+              order: 11,
+              text: "Results of Samples/Product Evaluation",
+              options: ["Satisfactory", "Unsatisfactory"],
+            },
+            {
+              type: "boolean",
+              order: 12,
+              text: "Results of First Deal",
+              options: ["Yes", "No"],
+            },
+            {
+              type: "checkbox",
+              order: 13,
+              text: "Results of First Deal",
+              options: ["Satisfactory", "Unsatisfactory"],
+            },
+            {
+              type: "boolean",
+              order: 14,
+              text: "Track Record Review/ Customer Reference",
+              options: ["Yes", "No"],
+            },
+            {
+              type: "checkbox",
+              order: 15,
+              text: "Track Record Review/ Customer Reference",
+              options: ["Satisfactory", "Unsatisfactory"],
+            },
+            {
+              type: "boolean",
+              order: 16,
+              text: "Other Evaluation",
+              options: ["Yes", "No"],
+            },
+            {
+              type: "text",
+              order: 17,
+              text: "Specify: Product Markings (e.g. PSB, UL, TUV)",
+            },
+          ],
+        },
+      ],
+    };
+    //Adding in a vendor form at every time we refresh...
+    // console.log(vendorAssessmentForm)
+    TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
     var desc = ref("");
     var formSections = ref([]);
+
+    var addSelectedTemplate = () => {
+      // console.log("Checking templateData in createform", selectedTemplateObject);
+      addTemplate(selectedTemplateObject);
+    };
 
     var addAdminSection = () => {
       formSections.value.push({
@@ -421,15 +564,10 @@ export default {
     };
 
     var addTemplate = (template) => {
-      // console.log("template received is", template);
-      for (let i = 0; i < template.templateContents.length; i++) {
-        var section = template.templateContents[i];
+      // console.log("template received is", template.value);
+      for (let i = 0; i < template.value["templateContents"].length; i++) {
+        var section = template.value["templateContents"][i];
         formSections.value.push(section);
-        // let key = Object.keys(section)[0];
-        // console.log(section[key]);
-        // section[key].forEach((element) => {
-        //   formItems.value.push(element);
-        // });
       }
     };
 
@@ -451,10 +589,13 @@ export default {
         },
         templateContents: formSections.value,
       };
+      //Add template to backend
 
-      console.log(outputObj);
-      const outputJson = JSON.stringify(outputObj);
-      console.log(outputJson);
+      // console.log(outputObj);
+      // const outputJson = JSON.stringify(outputObj);
+      TemplateService.addTemplate(outputObj);
+      // console.log("Added");
+      // console.log(outputObj);
 
       //for adding template to mongoDB
       // templates.addTemplate(outputObj);
@@ -477,7 +618,7 @@ export default {
     });
 
     var togglePreview = () => {
-      console.log("Preview Toggled");
+      // console.log("Preview Toggled");
       // console.log("updated previewObj", previewObj.value);
     };
 
@@ -485,23 +626,23 @@ export default {
 
     //build form from template
     var createForm = () => {
-      console.log("Checking templateData in createform", previewObj.value);
+      // console.log("Checking templateData in createform", previewObj.value);
       var info = previewObj.value.templateInfo;
       newForm.value["FormInfo"] = info;
       for (let label in info) {
-        console.log("label is", label, info[label]);
+        // console.log("label is", label, info[label]);
       }
       var content = previewObj.value.templateContents;
-      console.log("sections are", content);
+      // console.log("sections are", content);
 
       newForm.value["FormContent"] = [];
       for (let key in content) {
-        console.log("KEY IS ", key);
+        // console.log("KEY IS ", key);
         var section = content[key];
-        console.log("section is", section);
+        // console.log("section is", section);
 
         var sectionKey = Object.keys(section)[0];
-        console.log(sectionKey);
+        // console.log(sectionKey);
 
         // create vendor/admin section
         var sectionItems = [];
@@ -578,23 +719,29 @@ export default {
       }
     };
 
-    //update the output form based on the template
+    var scrollToTop = () => {
+      window.scrollTo(0, 0);
+    };
+
     watch(previewObj.value, () => {
-      console.log("previewData updated!", previewObj.value);
+      // console.log("previewData updated!", previewObj.value);
       newForm.value = {};
       createForm();
-      console.log("createform called!,newform is ", newForm.value);
+      // console.log("createform called!,newform is ", newForm.value);
     });
 
     var vendors = ref(null);
     var selectedVendor = ref(null);
+
     const currId = ref(props.vendorId);
     var vendorInfo = ref(null);
-    var getVendorInfo = async () => {
-      vendorInfo.value = await VendorService.getVendor(currId.value);
-      selectedVendor.value = vendorInfo.value;
-    };
-    getVendorInfo();
+    if (props.vendorId) {
+      var getVendorInfo = async () => {
+        vendorInfo.value = await VendorService.getVendor(currId.value);
+        selectedVendor.value = vendorInfo.value;
+      };
+      getVendorInfo();
+    }
 
     var getVendors = async () => {
       vendors.value = await VendorService.getVendors();
@@ -623,10 +770,10 @@ export default {
       await FormService.addForm(newFormObject)
         .then((response) => {
           alert("Form created!");
-          if (vendorInfo != null) {
+          if (props.vendorId) {
             toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
           }
-          console.log(response);
+          // console.log(response);
         })
         .catch((error) => {
           alert(error);
@@ -650,19 +797,22 @@ export default {
       createFormError,
       formDeadline,
       selectedVendor,
+      selectedTemplateObject,
       vendors,
       currId,
       vendorInfo,
-      toggleCreateForm,
       previewObj,
       content,
       formName,
       desc,
-      templates,
+      templatesList,
       formSections,
+      toggleCreateForm,
+      scrollToTop,
       update,
       exportForm,
       addTemplate,
+      addSelectedTemplate,
       addAdminSection,
       addVendorSection,
       removeSection,

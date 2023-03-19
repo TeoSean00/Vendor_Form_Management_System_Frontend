@@ -25,37 +25,43 @@
             </template>
           </template>
           <button
+            class="btn btn-primary mx-1"
+            @click="saveForm()"
+          >
+            Save Form
+          </button>
+          <button
             v-if="formStatus == 'approver_response'"
             class="btn btn-danger mx-1"
-            @click="submitForm('admin_response')"
+            @click="submitForm('admin_response', 'reject')"
           >
             Reject Form
           </button>
           <button
             v-if="formStatus == 'approver_response'"
             class="btn btn-primary mx-1"
-            @click="submitForm('form_completed')"
+            @click="submitForm('form_completed', 'approve')"
           >
-            Approve
+            Approve Form
           </button>
           <button
             v-if="formStatus == 'admin_response'"
             class="btn btn-danger mx-1"
-            @click="submitForm('vendor_response')"
+            @click="submitForm('vendor_response', 'reject')"
           >
             Reject Form
           </button>
           <button
             v-if="formStatus == 'admin_response'"
             class="btn btn-primary mx-1"
-            @click="submitForm('approver_response')"
+            @click="submitForm('approver_response', 'approve')"
           >
             Submit for approval
           </button>
           <button
             v-if="formStatus == 'vendor_response'"
             class="btn btn-primary mx-1"
-            @click="submitForm('admin_response')"
+            @click="submitForm('admin_response', 'approve')"
           >
             Submit to admin
           </button>
@@ -71,11 +77,14 @@ import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
 import { ref } from "vue";
 import { useAuthStore } from "../stores/authStore";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
   components: {
     Navbar,
     FormSection,
+    toast
   },
   props: ['vendorFormId'],
   setup(props) {
@@ -99,7 +108,14 @@ export default {
     var formContent = ref([]);
     var formStatus = ref([]);
 
-    var submitForm = async (status) => {
+    var submitForm = async (status, action) => {
+      var message = "";
+      if (action == "reject") {
+        message = "Form Rejected!"
+      }
+      else if (action == "approve") {
+        message = "Form Approved!"
+      }
       newForm.value.status = status;
       console.log(newForm);
       await FormService.updateForm(formID.value, newForm.value)
@@ -111,6 +127,9 @@ export default {
           console.log(error);
         });
       console.log("Form Submitted");
+      toast.success(message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     };
 
     var loadedForm = ref(null);
@@ -120,6 +139,9 @@ export default {
       await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
           console.log(response);
+          toast.success("Form Saved!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
         })
         .catch((error) => {
           console.log(error);

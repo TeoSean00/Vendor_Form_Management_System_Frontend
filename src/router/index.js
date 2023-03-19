@@ -103,7 +103,7 @@ const router = createRouter({
       component: () => import("../views/BoardUser.vue"),
     },
     {
-      path: "/formbuilder",
+      path: "/formbuilder/",
       name: "formbuilder",
       component: FormBuilder,
       props: (route) => ({ vendorId: route.query.vendorId }),

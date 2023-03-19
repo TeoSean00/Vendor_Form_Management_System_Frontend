@@ -287,7 +287,7 @@ export default {
 
     var getAllVendorForms = async () => {
       allForms.value = await FormService.getForms(currId.value);
-      console.log("hi" + allForms.value[0].vendorId);
+      console.log("hi" + allForms.value[1].vendorId);
       for (var i = 0; i < allForms.value.length; i++) {
         vendorForms.value.push(allForms.value[i]);
         if (allForms.value[i].status == "vendor_response") {
@@ -318,7 +318,7 @@ export default {
         }
       }
     };
-    getAllVendorForms();
+    getAllForms();
 
     var toDelete = ref("");
     function upToDelete(vendorFormId) {
