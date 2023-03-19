@@ -307,6 +307,9 @@ export default {
   },
   props: ["vendorId"],
   setup(props) {
+    if(props.vendorId){
+      console.log("here");
+    }
     var content = ref("");
     UserService.getUserBoard().then(
       (response) => {
@@ -688,13 +691,17 @@ export default {
 
     var vendors = ref(null);
     var selectedVendor = ref(null);
+
     const currId = ref(props.vendorId);
     var vendorInfo = ref(null);
-    var getVendorInfo = async () => {
-      vendorInfo.value = await VendorService.getVendor(currId.value);
-      selectedVendor.value = vendorInfo.value;
-    };
-    getVendorInfo();
+    if (props.vendorId){
+      var getVendorInfo = async () => {
+        vendorInfo.value = await VendorService.getVendor(currId.value);
+        selectedVendor.value = vendorInfo.value;
+      };
+      getVendorInfo();
+
+    }
 
 
     var getVendors = async () => {
