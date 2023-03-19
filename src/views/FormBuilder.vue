@@ -70,7 +70,7 @@
       <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
 
       <div class="col-6 m-1 p-1">
-        <TemplateList :list="templates" @addTemplate="addTemplate" />
+        <TemplateList :list="templatesList" @addTemplate="addTemplate" />
       </div>
     </div>
 
@@ -104,7 +104,9 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Template Selection Modal -->
+
+    <!-- Template Preview Modal -->
     <TemplatePreview :newForm="newForm" />
 
     <!-- Modal for selecting vendor to create form for -->
@@ -172,7 +174,7 @@ import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
-// import { useTemplateStore } from "../stores/templateStore";
+import TemplateSelect from "../components/template/TemplateSelect.vue";
 import { ref, watch } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
@@ -185,6 +187,7 @@ export default {
     TemplateList,
     SectionComponent,
     TemplatePreview,
+    TemplateSelect,
   },
   props: ["vendorId"],
   setup(props) {
@@ -221,9 +224,9 @@ export default {
     getTemplatesList();
 
     console.log("vendorId Received", props.vendorId);
-
+    //Code to Add Vendor Assessment form into db
     //temporary template data
-    var templates = ref([
+    var vendorAssessmentForm = 
       {
         templateInfo: {
           templateName: "New Vendor Assessment Form",
@@ -383,9 +386,11 @@ export default {
             ],
           },
         ],
-      },
-    ]);
-
+      };
+    
+    console.log("Tryna add this");
+    console.log(vendorAssessmentForm)
+    TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
     var desc = ref("");
@@ -402,15 +407,20 @@ export default {
       });
     };
 
-    var addTemplate = (template) => {
+    // var addTemplate = (template) => {
+    //   // console.log("template received is", template);
+    //   for (let i = 0; i < template.templateContents.length; i++) {
+    //     var section = template.templateContents[i];
+    //     formSections.value.push(section);
+    //   }
+    // };
+    var addTemplate = (templateId) => {
       // console.log("template received is", template);
+      templateContents = Template
       for (let i = 0; i < template.templateContents.length; i++) {
         var section = template.templateContents[i];
         formSections.value.push(section);
       }
-      //Add template to backend
-      TemplateService.addTemplate(formSections);
-      
     };
 
     function update() {
@@ -430,11 +440,14 @@ export default {
           templateDesc: desc.value,
         },
         templateContents: formSections.value,
-      };
-
+      }
+      //Add template to backend
+      
+      // console.log(outputObj);
+      // const outputJson = JSON.stringify(outputObj);
+      TemplateService.addTemplate(outputObj);
+      console.log("Added");
       console.log(outputObj);
-      const outputJson = JSON.stringify(outputObj);
-      console.log(outputJson);
 
       //for adding template to mongoDB
       // templates.addTemplate(outputObj);
@@ -601,7 +614,7 @@ export default {
       content,
       formName,
       desc,
-      templates,
+      templatesList,
       formSections,
       update,
       exportForm,
