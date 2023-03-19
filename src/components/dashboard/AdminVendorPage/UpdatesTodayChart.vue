@@ -9,7 +9,7 @@
             <div class="card-body">
               <h5 class="card-title">Updates Today</h5>
               <p class="card-text">
-                {{ dataSize }} new updates for Vendor SGXChange today,
+                {{ dataSize }} new updates for Vendor Sean today,
                 {{ dateToday }}
               </p>
               <div v-if="dataSize == 0">
@@ -36,7 +36,7 @@
               <div class="card-body">
                 <h5 class="card-title">Updates Today</h5>
                 <p class="card-text">
-                  {{ dataSize }} new updates for Vendor SGXChange today,
+                  {{ dataSize }} new updates for Vendor Sean today,
                   {{ dateToday }}
                 </p>
                 <ul class="list-group list-group-flush">
@@ -59,7 +59,7 @@
               <div class="card-body">
                 <h5 class="card-title">Updates Today</h5>
                 <p class="card-text">
-                  {{ dataSize }} new updates for Vendor SGXChange today,
+                  {{ dataSize }} new updates for Vendor Sean today,
                   {{ dateToday }}
                 </p>
                 <ul class="list-group list-group-flush">
