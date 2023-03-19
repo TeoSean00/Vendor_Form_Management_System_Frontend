@@ -13,7 +13,11 @@
       </div> -->
 
       <div class="section-title d-flex justify-content-between">
-        <h1 v-if="vendorInfo" class="text-main-blue">{{ vendorInfo.name }}</h1>
+        <div v-if="vendorInfo">
+          <h1 class="text-main-blue">Vendor: {{ vendorInfo.name }}</h1>
+          <h3 class="text-main-blue">Country: {{ vendorInfo.country }}</h3>
+          <h3 class="text-main-blue">Details: {{ vendorInfo.details }}</h3>
+        </div>
         <div
           class="btn-group mt-auto shadow-0"
           role="group"
@@ -279,42 +283,21 @@ export default {
     getUserInfo();
 
     var allForms = ref([]);
-    var vendorForms = ref([]);
     var vendorAssignedForms = ref([]);
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
     var completedForms = ref([]);
 
-    var getAllVendorForms = async () => {
-      allForms.value = await FormService.getForms(currId.value);
-      console.log("hi" + allForms.value[1].vendorId);
+    var getAllForms = async () => {
+      allForms.value = await FormService.getVendorForms(currId.value);
+      console.log("hi" + allForms.value[0].vendorId);
       for (var i = 0; i < allForms.value.length; i++) {
-        vendorForms.value.push(allForms.value[i]);
         if (allForms.value[i].status == "vendor_response") {
           vendorAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "admin_response") {
           adminAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "approver_response") {
           approvalAssignedForms.value.push(allForms.value[i]);
-        } else if (allForms.value[i].status == "completed") {
-          completedForms.value.push(allForms.value[i]);
-        }
-      }
-    };
-
-    var getAllForms = async () => {
-      allForms.value = await FormService.getForms();
-      console.log("hi" + allForms.value[0].vendorId);
-      for (var i = 0; i < allForms.value.length; i++) {
-        if (allForms.value[i].vendorId == currId.value) {
-          vendorForms.value.push(allForms.value[i]);
-          if (allForms.value[i].status == "vendor_response") {
-            vendorAssignedForms.value.push(allForms.value[i]);
-          } else if (allForms.value[i].status == "admin_response") {
-            adminAssignedForms.value.push(allForms.value[i]);
-          } else if (allForms.value[i].status == "approver_response") {
-            approvalAssignedForms.value.push(allForms.value[i]);
-          }
         }
       }
     };

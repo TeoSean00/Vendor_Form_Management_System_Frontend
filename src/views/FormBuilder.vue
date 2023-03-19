@@ -23,18 +23,10 @@
               &nbsp; Save Template
             </button>
             <button
-              v-if="selectedVendor == null"
-              class="mx-2 btn btn-main-blue mb-3"
+              v-if="selectedVendor != null"
               data-bs-toggle="modal"
               data-bs-target="#createFormModal"
-            >
-              <font-awesome-icon icon="fa-solid fa-circle-plus" />
-              &nbsp; Create Form
-            </button>
-            <button
-              v-if="selectedVendor != null"
               class="mx-2 btn btn-main-blue mb-3"
-              @click="toggleCreateForm"
             >
               <font-awesome-icon icon="fa-solid fa-circle-plus" />
               &nbsp; Assign Form
@@ -731,7 +723,7 @@ export default {
     });
 
     var vendors = ref(null);
-    var selectedVendor = ref(null);
+    var selectedVendor = ref("");
 
     const currId = ref(props.vendorId);
     var vendorInfo = ref(null);
