@@ -1,16 +1,18 @@
 <template>
   <div
-    class="mt-2 p-2 border rounded border-light border-1 bg-dark-purple shadow-sm"
+    :class="sectionColor"
   >
     <div class="row">
-      <div class="col-12">
-        {{ assignTo }} Section
+      <div class="col-6 px-3 py-1 bg fw-bold text-light">
+          {{ assignTo }} Section
+      </div>
+      <div class="col-6 text-end">
         <button
-          class="text-center borderless-button mx-2"
-          @click="removeSection(order)"
+        class="text-end borderless-button mx-2 "
+        @click="removeSection(order)"
         >
-          Remove Section <font-awesome-icon icon="fa-solid fa-trash" />
-        </button>
+        Remove Section <font-awesome-icon icon="fa-solid fa-xmark" />
+      </button>
       </div>
       <div class="row">
         <div v-for="(item, index) in formItems" :key="index">
@@ -24,13 +26,12 @@
       </div>
     </div>
     <div
-      class="col-6 offset-3 sticky-bottom d-flex justify-content-center border rounded border-light border-1 bg-light-grey shadow-lg"
+      class="col-8 offset-2 sticky-bottom d-flex justify-content-center border rounded border-light border-1 bg-light-grey shadow-lg"
     >
-      <div class="row"></div>
       <div class="row m-1 p-1">
         <button
           @click="addHeaderText"
-          class="m-2 btn btn-main-blue btn-circle"
+          :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
           title="Add Header"
@@ -39,7 +40,7 @@
         </button>
         <button
           @click="addTextInput"
-          class="m-2 btn btn-main-blue btn-circle"
+          :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
           title="Add Text Input"
@@ -48,7 +49,7 @@
         </button>
         <button
           @click="addNumberInput"
-          class="m-2 btn btn-main-blue btn-circle"
+          :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
           title="Add Number Input"
@@ -56,8 +57,17 @@
           <font-awesome-icon icon="fa-solid fa-1" />
         </button>
         <button
+          @click="addDateInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Date"
+        >
+          <font-awesome-icon icon="fa-solid fa-calendar" />
+        </button>
+        <button
           @click="addBooleanInput"
-          class="m-2 btn btn-main-blue btn-circle"
+          :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
           title="Add True False"
@@ -66,17 +76,8 @@
           <font-awesome-icon icon="fa-solid fa-f" />
         </button>
         <button
-          @click="addDateInput"
-          class="m-2 btn btn-main-blue btn-circle"
-          data-bs-toggle="tooltip"
-          data-bs-placement="right"
-          title="Add Date"
-        >
-          <font-awesome-icon icon="fa-solid fa-calendar" />
-        </button>
-        <button
           @click="addCheckboxInput"
-          class="m-2 btn btn-main-blue btn-circle"
+          :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
           title="Add Checkbox Group"
@@ -85,7 +86,7 @@
         </button>
         <button
           @click="addRadioInput"
-          class="m-2 btn btn-main-blue btn-circle"
+          :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
           title="Add Radio Group"
@@ -94,7 +95,7 @@
         </button>
         <button
           @click="addLikertGroupInput"
-          class="m-2 btn btn-main-blue btn-circle"
+          :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
           title="Add Likert Group"
@@ -104,12 +105,12 @@
       </div>
     </div>
   </div>
-  <div class="col-1 text-center">
+  <!-- <div class="col-1 text-center">
     <div class="row m-1 p-1">
       <button @click="addHeaderText" class="borderless-button">
         <font-awesome-icon icon="fa-solid fa-circle-h" class="fa-2xl" />
       </button>
-      <button @click="addTextInput" class="my-1 btn btn-main-blue">
+      <button @click="addTextInput" class="my-1 btn btn-main-dark-purple">
         <font-awesome-icon icon="fa-solid fa-circle-t" />
       </button>
       <button @click="addNumberInput" class="my-1 btn btn-main-blue">
@@ -131,7 +132,7 @@
         Add Likert Group
       </button>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -150,6 +151,24 @@ export default {
         return "Vendor";
       }
     });
+
+    //Computed style for admin // vendor
+    const sectionColor = computed(()=>{
+      if (Object.keys(props.sectionInfo)[0] == "admin") {
+        return "mt-2 p-2 border rounded border-light border-1 bg-dark-purple shadow-sm";
+      } else {
+        return "mt-2 p-2 border rounded border-light border-1 bg-main-blue shadow-sm"
+      }
+    })
+
+    const buttonColor = computed(()=>{
+      if (Object.keys(props.sectionInfo)[0] == "admin") {
+        return "m-2 btn btn-main-dark-purple btn-circle";
+      } else {
+        return "m-2 btn btn-main-blue btn-circle";
+      }
+
+    })
 
     function addTextInput() {
       formItems.value.push({
@@ -238,6 +257,8 @@ export default {
     return {
       formItems,
       assignTo,
+      sectionColor,
+      buttonColor,
       addCheckboxInput,
       addRadioInput,
       addHeaderText,

@@ -55,6 +55,10 @@
   background-color: #7972a6 !important;
 }
 
+.btn-main-dark-purple {
+  @include button-variant(#7972a6, #7972a6, #ffffff, #4b4570, #4b4570, #ffffff);
+}
+
 .text-dark-purple {
   color: #7972a6 !important;
 }
