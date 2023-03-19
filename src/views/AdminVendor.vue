@@ -91,11 +91,9 @@
           >
             Add Form
           </button>
-
         </div>
       </div>
 
-      
       <!-- start vendor assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
@@ -111,12 +109,14 @@
           :key="vendorForm.status"
         >
           <FormCard
+            :dateCreated="vendorForm.createDate"
+            :deadline="vendorForm.deadline"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete" @enterForm="enterForm"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
           ></FormCard>
         </template>
-        
       </div>
       <!-- end of vendor assigned form  -->
 
@@ -138,7 +138,8 @@
           <FormCard
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete" @enterForm="enterForm"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
           ></FormCard>
         </template>
       </div>
@@ -159,34 +160,35 @@
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
         >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete" @enterForm="enterForm"></FormCard>
-      </template>
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
+        </template>
       </div>
       <!-- end of approval assigned form  -->
-
 
       <!-- start completed assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
-          <h4 class="text-white m-0">
-            Completed Forms
-          </h4>
+          <h4 class="text-white m-0">Completed Forms</h4>
         </div>
       </div>
 
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-        <template
-          v-for="vendorForm in completedForms"
-          :key="vendorForm.status"
-        >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete" @enterForm="enterForm"></FormCard>
+        <template v-for="vendorForm in completedForms" :key="vendorForm.status">
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
         </template>
         <div class="col mt-4"></div>
       </div>
       <!-- end of completed assigned form  -->
-      
-
-
 
       <!-- Modal confirm delete -->
       <div
@@ -231,7 +233,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 </template>
@@ -328,10 +329,10 @@ export default {
     function enterForm(vendorFormId) {
       console.log("enter form is " + vendorFormId);
       router.push({
-        path: '/vendorForm' , 
+        path: "/vendorForm",
         query: {
           vendorFormId: vendorFormId,
-        }
+        },
       });
     }
 
@@ -349,7 +350,6 @@ export default {
           error.toString();
       }
     );
-
 
     const toggleCreateUserPage = (vendorName, vendorId) => {
       router.push({
@@ -374,9 +374,6 @@ export default {
         },
       });
     };
-
-
-
 
     //get template data from templatestore
     var templateStore = useTemplateStore();
@@ -559,7 +556,7 @@ export default {
       upToDelete,
       enterForm,
       toggleCreateUserPage,
-      toggleFormBuilderPage
+      toggleFormBuilderPage,
     };
   },
 };

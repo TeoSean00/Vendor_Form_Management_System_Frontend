@@ -161,6 +161,19 @@
             </div>
             <label class="form-label">Set Deadline for this form</label>
             <hr />
+            <input
+              type="date"
+              id="deadline"
+              name="form-deadline"
+              class="mb-3"
+              v-model.lazy="formDeadline"
+            />
+            <div v-if="formDeadline" class="alert alert-warning" role="alert">
+              You selected {{ formDeadline }}
+            </div>
+            <div v-if="createFormError" class="alert alert-danger" role="alert">
+              {{ createFormError }}
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -173,7 +186,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              data-bs-dismiss="modal"
+              :data-bs-dismiss="formDeadline != null ? 'modal' : ''"
               @click="toggleCreateForm"
             >
               Create form
@@ -193,7 +206,7 @@ import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
 import { useTemplateStore } from "../stores/templateStore";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
 import { useRouter } from "vue-router";
@@ -589,12 +602,21 @@ export default {
 
     getVendors();
 
+    var formDeadline = ref(null);
+    var createFormError = ref(null);
     //add form to vendor
     var toggleCreateForm = async () => {
+      if (formDeadline.value == null) {
+        createFormError.value = "Please select a date";
+        return;
+      }
+      createFormError.value = null;
+
       console.log("selected Vendor is", selectedVendor);
       var newFormObject = {
         vendorName: selectedVendor.value.name,
         creationDate: Date.now(),
+        deadline: formDeadline.value,
         content: newForm.value,
         vendorId: selectedVendor.value.id,
       };
@@ -625,6 +647,8 @@ export default {
     };
 
     return {
+      createFormError,
+      formDeadline,
       selectedVendor,
       vendors,
       currId,

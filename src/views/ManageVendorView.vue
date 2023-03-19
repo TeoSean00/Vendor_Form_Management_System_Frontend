@@ -11,14 +11,14 @@
       </div>
 
       <div>
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            data-bs-toggle="modal"
-            data-bs-target="#createVendor"
-          >
-            Add Vendor
-          </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#createVendor"
+        >
+          Add Vendor
+        </button>
         <!-- <button
           type="button"
           class="btn btn-primary"
@@ -115,13 +115,22 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div>
+            <div class="mb-3">
               <label for="vendorName" class="form-label">Vendor Name</label>
               <input
                 type="username"
                 class="form-control"
                 v-model="newVendorName"
                 placeholder="Vendor name here"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="vendorName" class="form-label">Vendor Country</label>
+              <input
+                type="username"
+                class="form-control"
+                v-model="newVendorCountry"
+                placeholder="Vendor country here"
               />
             </div>
             <div class="mb-3">
@@ -132,7 +141,7 @@
                 class="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
-                v-model="newVendorNote"
+                v-model="newVendorDetails"
               ></textarea>
             </div>
           </div>
@@ -191,7 +200,7 @@ export default {
       vendorList.value = state.vendors;
     });
 
-    console.log(vendorList.value)
+    console.log(vendorList.value);
 
     const filteredNames = computed(() => {
       let matchList = [];
@@ -215,16 +224,19 @@ export default {
     const router = useRouter();
 
     var newVendorName = ref("");
-    var newVendorNote = ref("");
+    var newVendorDetails = ref("");
+    var newVendorCountry = ref("");
 
     const toggleNewVendor = (newVendorName) => {
       console.log("toggle create new vendor", newVendorName);
       var newVendor = {
         name: newVendorName,
+        details: newVendorCountry,
+        country: newVendorDetails,
         forms: [],
       };
       vendorStore.addVendor(newVendor);
-      newVendorName = ref("")
+      newVendorName = ref("");
     };
 
     const toggleEditVendor = (vendor) => {
@@ -256,11 +268,12 @@ export default {
     console.log(filteredNames);
 
     return {
+      newVendorCountry,
       searchName,
       filteredNames,
       vendorList,
       newVendorName,
-      newVendorNote,
+      newVendorDetails,
       currentUser,
       toggleNewVendor,
       toggleEditVendor,
