@@ -721,7 +721,7 @@ export default {
       await FormService.addForm(newFormObject)
         .then((response) => {
           alert("Form created!");
-          if (vendorInfo !=null){
+          if (props.vendorId){
             toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
           }
           // console.log(response);
