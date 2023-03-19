@@ -22,13 +22,21 @@ import {
   faSquare,
   faCirclePlus,
   faCircleH,
-  faMagnifyingGlass,
+  faMagnifyingGlass, // Adding from here
+  faH,
+  faT,
+  fa1,
+  faF,
+  faCalendar,
+  faCircleCheck,
+  faRadio,
+  faObjectGroup,
   faStore,
 } from "@fortawesome/free-solid-svg-icons";
 
 
 
-library.add(faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile, faStore);
+library.add(faH, faT, fa1, faF, faCalendar, faCircleCheck, faRadio, faObjectGroup,faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile, faStore);
 
 
 library.add(faMagnifyingGlass,faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);

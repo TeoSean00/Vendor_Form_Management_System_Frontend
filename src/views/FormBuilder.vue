@@ -7,9 +7,9 @@
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
         <h1 class="text-main-blue">Form Builder</h1>
-        {{ previewObj }}
+        <!-- {{ previewObj }}
         {{ formName }}
-        {{ desc }}
+        {{ desc }} -->
         <div class="row">
           <span class="text-secondary-blue"
             >Form Name:
@@ -40,7 +40,7 @@
           ></textarea>
         </div>
       </div>
-      {{ newForm }}
+      <!-- {{ newForm }} -->
       <div class="row p-1 mt-1">
         <div v-for="(section, index) in formSections" :key="index">
           <SectionComponent
@@ -60,24 +60,39 @@
         </div> -->
       </div>
     </div>
-    <div class="col-8 justify-content-center text-center">
-      <button @click="addAdminSection" class="col-4 m-3 btn btn-main-blue">
-        Add Admin Section
-      </button>
-      <button @click="addVendorSection" class="col-4 m-3 btn btn-main-blue">
-        Add Vendor Section
-      </button>
-      <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
+    <div class="col-8 ">
+      <div class="row m-1 mt-3 mb-3 p-2 border rounded border-light border-1 bg-white shadow-sm justify-content-center text-center" >
+        <div class="col-8 ">
+      
+          <div class="p-1">
+            <button
+              class="btn btn-secondary col-12 mx-auto"
+              data-bs-toggle="modal"
+              data-bs-target="#selectTemplateModal"
+            >
+              Select Template
+            </button>
+          </div>
+          <hr>
+          <button @click="addAdminSection" class="col-5  btn btn-main-dark-purple">
+            Add Admin Section
+          </button>
+          <button @click="addVendorSection" class="col-5 mx-2 btn btn-main-blue">
+            Add Vendor Section
+          </button>
+          <!-- <hr class="border border-dark border-2 mt-2 opacity-75" /> -->
 
-      <div class="col-6 m-1 p-1">
-        <TemplateList :list="templates" @addTemplate="addTemplate" />
+          <!-- <div class="col-6 m-1 p-1">
+            <TemplateList :list="templatesList" @addTemplate="addTemplate" />
+          </div> -->
+        </div>
       </div>
     </div>
 
     <div class="col-10">
       <div class="row">
         <button @click="exportForm" class="btn btn-turqouise mb-3">
-          Export Form
+          Save as Template
         </button>
         <button
           type="button"
@@ -112,7 +127,61 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Template Selection Modal -->
+    <div
+      class="modal fade"
+      id="selectTemplateModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Select a Template</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <select
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="selectedTemplateObject"
+            >
+              <template v-for="(templates, index) in templatesList" :key="index">
+                <option :value="templates.details">{{ templates.details.templateInfo.templateName }}</option>
+              </template>
+            </select>
+            <div v-if="selectedTemplateObject" class="alert alert-warning" role="alert">
+              You selected {{ selectedTemplateObject["templateInfo"]["templateName"] }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-main-blue"
+              data-bs-dismiss="modal"
+              @click="addSelectedTemplate"
+            >
+              Add Template.
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Template Preview Modal -->
     <TemplatePreview :newForm="newForm" />
 
     <!-- Modal for selecting vendor to create form for -->
@@ -160,7 +229,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-main-blue"
               data-bs-dismiss="modal"
               @click="toggleCreateForm"
             >
@@ -180,10 +249,11 @@ import UserService from "../services/user/userService";
 import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
-import { useTemplateStore } from "../stores/templateStore";
+import TemplateSelect from "../components/template/TemplateSelect.vue";
 import { ref, watch } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
+import TemplateService from "../services/template/templateService";
 import { useRouter } from "vue-router";
 
 export default {
@@ -193,11 +263,11 @@ export default {
     TemplateList,
     SectionComponent,
     TemplatePreview,
+    TemplateSelect,
   },
   props: ["vendorId"],
   setup(props) {
     var content = ref("");
-    
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
@@ -211,10 +281,18 @@ export default {
       }
     );
 
-    console.log("vendorId Received", props.vendorId);
+    var templatesList = ref(null);
+    var selectedTemplateObject = ref(null);
+    var getTemplatesList = async () => {
+      templatesList.value = await TemplateService.getTemplates();
+      console.log("Got it");
+      console.log(templatesList.value);
+    }
+    getTemplatesList();
 
-    //temporary template data
-    var templates = ref([
+    console.log("vendorId Received", props.vendorId);
+    
+    var vendorAssessmentForm = 
       {
         templateInfo: {
           templateName: "New Vendor Assessment Form",
@@ -374,15 +452,19 @@ export default {
             ],
           },
         ],
-      },
-    ]);
-
-    // var templates = useTemplateStore();
-    console.log("current templates are", templates);
+      };
+    //Adding in a vendor form at every time we refresh...
+    // console.log(vendorAssessmentForm)
+    // TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
     var desc = ref("");
     var formSections = ref([]);
+
+    var addSelectedTemplate = () => {
+      console.log("Checking templateData in createform", selectedTemplateObject);
+      addTemplate(selectedTemplateObject);
+    };
 
     var addAdminSection = () => {
       formSections.value.push({
@@ -396,17 +478,14 @@ export default {
     };
 
     var addTemplate = (template) => {
-      // console.log("template received is", template);
-      for (let i = 0; i < template.templateContents.length; i++) {
-        var section = template.templateContents[i];
+      // console.log("template received is", template.value);
+      for (let i = 0; i < template.value["templateContents"].length; i++) {
+        console.log("wtf", i);
+        var section = template.value["templateContents"][i];
         formSections.value.push(section);
-        // let key = Object.keys(section)[0];
-        // console.log(section[key]);
-        // section[key].forEach((element) => {
-        //   formItems.value.push(element);
-        // });
       }
     };
+ 
 
     function update() {
       //Uncomment this out to check
@@ -425,11 +504,14 @@ export default {
           templateDesc: desc.value,
         },
         templateContents: formSections.value,
-      };
-
+      }
+      //Add template to backend
+      
+      // console.log(outputObj);
+      // const outputJson = JSON.stringify(outputObj);
+      TemplateService.addTemplate(outputObj);
+      console.log("Added");
       console.log(outputObj);
-      const outputJson = JSON.stringify(outputObj);
-      console.log(outputJson);
 
       //for adding template to mongoDB
       // templates.addTemplate(outputObj);
@@ -614,6 +696,7 @@ export default {
 
     return {
       selectedVendor,
+      selectedTemplateObject,
       vendors,
       currId,
       vendorInfo,
@@ -622,11 +705,12 @@ export default {
       content,
       formName,
       desc,
-      templates,
+      templatesList,
       formSections,
       update,
       exportForm,
       addTemplate,
+      addSelectedTemplate,
       addAdminSection,
       addVendorSection,
       removeSection,
