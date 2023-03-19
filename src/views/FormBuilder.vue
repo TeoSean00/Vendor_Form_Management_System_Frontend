@@ -498,7 +498,7 @@ export default {
       };
     //Adding in a vendor form at every time we refresh...
     // console.log(vendorAssessmentForm)
-    // TemplateService.addTemplate(vendorAssessmentForm);
+    TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
     var desc = ref("");

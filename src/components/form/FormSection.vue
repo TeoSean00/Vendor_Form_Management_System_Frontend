@@ -52,6 +52,7 @@
         :placeholder="sectionData.label"
         required
         v-model="sectionData.input"
+        
       />
     </template>
 
