@@ -11,14 +11,14 @@
       </div>
 
       <div>
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            data-bs-toggle="modal"
-            data-bs-target="#createVendor"
-          >
-            Add Vendor
-          </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#createVendor"
+        >
+          Add Vendor
+        </button>
         <!-- <button
           type="button"
           class="btn btn-primary"
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    vendor data here {{ vendorList }}
+    <!-- vendor data here {{ vendorList }} -->
 
     <form action="">
       <div class="input-group mb-2">
@@ -50,8 +50,8 @@
       </div>
     </form>
 
-    <p>Filtered names are</p>
-    <p>{{ filteredNames }}</p>
+    <!-- <p>Filtered names are</p>
+    <p>{{ filteredNames }}</p> -->
 
     <div v-if="!searchName" class="list-group flex">
       <template v-for="vendor in vendorList" :key="vendor">
@@ -65,8 +65,11 @@
             <h3>Company {{ vendor.vendorId }}</h3>
           </span> -->
           <span>
-            <h3>{{ vendor.name }}</h3>
-            <p>{{ vendor.id }}</p>
+            <h3>Name : {{ vendor.name }}</h3>
+            <h5>Country : {{ vendor.country }}</h5>
+            <span>Description : {{ vendor.details }}</span
+            ><br />
+            <span>id : {{ vendor.id }}</span>
           </span>
           <div class="float-right">
             <span class="badge bluebg mx-1 mt-2">In Progress</span>
@@ -115,13 +118,22 @@
             ></button>
           </div>
           <div class="modal-body">
-            <div>
+            <div class="mb-3">
               <label for="vendorName" class="form-label">Vendor Name</label>
               <input
                 type="username"
                 class="form-control"
                 v-model="newVendorName"
                 placeholder="Vendor name here"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="vendorName" class="form-label">Vendor Country</label>
+              <input
+                type="username"
+                class="form-control"
+                v-model="newVendorCountry"
+                placeholder="Vendor country here"
               />
             </div>
             <div class="mb-3">
@@ -132,7 +144,7 @@
                 class="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
-                v-model="newVendorNote"
+                v-model="newVendorDetails"
               ></textarea>
             </div>
           </div>
@@ -191,7 +203,7 @@ export default {
       vendorList.value = state.vendors;
     });
 
-    console.log(vendorList.value)
+    console.log(vendorList.value);
 
     const filteredNames = computed(() => {
       let matchList = [];
@@ -215,16 +227,25 @@ export default {
     const router = useRouter();
 
     var newVendorName = ref("");
-    var newVendorNote = ref("");
+    var newVendorDetails = ref("");
+    var newVendorCountry = ref("");
 
     const toggleNewVendor = (newVendorName) => {
       console.log("toggle create new vendor", newVendorName);
+      console.log("SUMITTED INFO");
+      console.log(newVendorCountry.value);
+      console.log(newVendorName.value);
+      console.log(newVendorDetails.value);
       var newVendor = {
         name: newVendorName,
+        details: newVendorDetails.value,
+        country: newVendorCountry.value,
         forms: [],
       };
       vendorStore.addVendor(newVendor);
-      newVendorName = ref("")
+      newVendorName.value = "";
+      newVendorCountry = "";
+      newVendorDetails = "";
     };
 
     const toggleEditVendor = (vendor) => {
@@ -256,11 +277,12 @@ export default {
     console.log(filteredNames);
 
     return {
+      newVendorCountry,
       searchName,
       filteredNames,
       vendorList,
       newVendorName,
-      newVendorNote,
+      newVendorDetails,
       currentUser,
       toggleNewVendor,
       toggleEditVendor,
