@@ -1,5 +1,5 @@
 <template>
-  <Navbar/>
+  <Navbar />
 
   <div class="row justify-content-center bg-light-grey">
     <div class="col-8">
@@ -7,9 +7,9 @@
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
         <h1 class="text-main-blue">Form Builder</h1>
-        {{ previewObj }}
+        <!-- {{ previewObj }}
         {{ formName }}
-        {{ desc }}
+        {{ desc }} -->
         <div class="row">
           <span class="text-secondary-blue"
             >Form Name:
@@ -40,7 +40,7 @@
           ></textarea>
         </div>
       </div>
-      {{ newForm }}
+      <!-- {{ newForm }} -->
       <div class="row p-1 mt-1">
         <div v-for="(section, index) in formSections" :key="index">
           <SectionComponent
@@ -89,20 +89,19 @@
           Preview Form
         </button>
         <button
-          v-if="selectedVendor == null"
           class="btn btn-main-blue mb-3"
           data-bs-toggle="modal"
           data-bs-target="#createFormModal"
         >
           Create Form
         </button>
-        <button
+        <!-- <button
           v-if="selectedVendor != null"
           class="btn btn-main-blue mb-3"
           @click="toggleCreateForm"
         >
           Create Form
-        </button>
+        </button> -->
       </div>
       <!-- Tyler button to go Do Form page-->
       <div class="row mt-4">
@@ -126,7 +125,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Create Form</h1>
             <button
               type="button"
               class="btn-close"
@@ -138,6 +137,7 @@
             <label class="form-label">Select Vendor</label>
             <hr />
             <select
+              v-if="selectedVendor == null"
               class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
               v-model="selectedVendor"
@@ -146,9 +146,21 @@
                 <option :value="vendor">{{ vendor.name }}</option>
               </template>
             </select>
+            <select
+              v-if="selectedVendor != null"
+              class="form-select form-select-lg mb-3"
+              aria-label=".form-select-lg example"
+              v-model="selectedVendor"
+            >
+              <option :value="selectedVendor" selected>
+                {{ selectedVendor.name }}
+              </option>
+            </select>
             <div v-if="selectedVendor" class="alert alert-warning" role="alert">
               You selected {{ selectedVendor.name }}
             </div>
+            <label class="form-label">Set Deadline for this form</label>
+            <hr />
           </div>
           <div class="modal-footer">
             <button
@@ -197,7 +209,7 @@ export default {
   props: ["vendorId"],
   setup(props) {
     var content = ref("");
-    
+
     UserService.getUserBoard().then(
       (response) => {
         content.value = response.data;
@@ -458,7 +470,7 @@ export default {
 
     var newForm = ref({});
 
-    //create form from template
+    //build form from template
     var createForm = () => {
       console.log("Checking templateData in createform", previewObj.value);
       var info = previewObj.value.templateInfo;
@@ -480,7 +492,6 @@ export default {
 
         // create vendor/admin section
         var sectionItems = [];
-
         for (let row of section[sectionKey]) {
           let type = row.type;
           // console.log("row is", row, "type is", type);
@@ -554,6 +565,7 @@ export default {
       }
     };
 
+    //update the output form based on the template
     watch(previewObj.value, () => {
       console.log("previewData updated!", previewObj.value);
       newForm.value = {};
@@ -571,13 +583,13 @@ export default {
     };
     getVendorInfo();
 
-
     var getVendors = async () => {
       vendors.value = await VendorService.getVendors();
     };
 
     getVendors();
 
+    //add form to vendor
     var toggleCreateForm = async () => {
       console.log("selected Vendor is", selectedVendor);
       var newFormObject = {
@@ -589,7 +601,7 @@ export default {
       await FormService.addForm(newFormObject)
         .then((response) => {
           alert("Form created!");
-          if (vendorInfo !=null){
+          if (vendorInfo != null) {
             toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
           }
           console.log(response);
