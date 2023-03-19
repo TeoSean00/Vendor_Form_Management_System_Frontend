@@ -354,9 +354,9 @@ export default {
     const toggleCreateUserPage = (vendorName, vendorId) => {
       router.push({
         name: "createUser",
-        params: {
-          name: vendorName,
-        },
+        // params: {
+        //   name: vendorName,
+        // },
         query: {
           vendorId: vendorId,
         },
