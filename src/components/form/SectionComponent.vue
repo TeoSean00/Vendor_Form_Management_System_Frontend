@@ -266,16 +266,12 @@ export default {
     function addAcknowledgementInput() {
       formItems.value.push({
         type: "acknowledgement",
-        text: "",
-        required: false,
       });
     }
 
     function addApprovalInput() {
       formItems.value.push({
         type: "approval",
-        text: "",
-        required: false,
       });
     }
 
