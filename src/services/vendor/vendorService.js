@@ -46,6 +46,19 @@ class VendorService {
     });
     return response;
   }
+  getJoinDates() {
+    const response = axios
+      .get(API_URL + "getJoinDates", { headers: authHeader() })
+      .then((response) => {
+        console.log("get request successful!", response);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("get request unsuccessful", error);
+        return error;
+      });
+    return response;
+  }
 }
 
 export default new VendorService();
