@@ -1,15 +1,17 @@
 <template>
   <!-- 2nd chart -->
-  <PolarArea
-    id="days-spent-per-stakeholder-per-form"
-    :options="PolarAreaChartOptions"
-    :data="PolarAreaChart"
-  />
+  <div style="height: 100%; width: 100%;">
+    <PolarArea
+      id="days-spent-per-stakeholder-per-form"
+      :options="PolarAreaChartOptions"
+      :data="PolarAreaChart"
+    />
+  </div>
 </template>
 
 <script>
 import { ref, computed } from 'vue'
-import { PolarArea } from 'vue-chartjs'
+import { PolarArea, Doughnut } from 'vue-chartjs'
 import {
   Chart as ChartJS,
   Title,
@@ -37,7 +39,7 @@ ChartJS.register(
 
 export default {
   components: {
-    PolarArea,
+    PolarArea, Doughnut
   },
   setup () {
     // metadata for Avg days spent per stakeholder polar area chart
@@ -47,28 +49,39 @@ export default {
       // data values corresponding to each stakeholder
       datasets: [
         {
-          label: "Avg days spent on each stakeholder per form",
-          data: [5, 10, 8],
+          label: "Avg Number of Revisions Occured at each Stakeholder",
+          data: [7, 9, 11],
           backgroundColor: [
-            "rgb(153, 51, 255 )",
-            "rgb(54, 162, 235)",
-            "rgb(255, 128, 0)",
+            '#bc5090',
+            'rgb(54, 162, 235)',
+            '#ffa600',
           ],
         },
       ],
     });
     // configuration options for bar chart
     const PolarAreaChartOptions = ref({
-      chartOptions: {
-        responsive: false,
-        maintainAspectRatio: true,
+      responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 0
+        },
         plugins: {
           title: {
             display: true,
-            text: "HELLO",
+            text: "Avg Number of Revisions Per Stakeholder",
+            align: "center",
+            font: {
+              size: 16
+            },
+            padding: {
+              bottom: 18,
+            }
           },
-        },
-      },
+          legend: {
+            display: false,
+          }
+        }
     });
 
     return {

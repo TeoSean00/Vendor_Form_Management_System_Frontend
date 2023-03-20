@@ -73,6 +73,7 @@
           Set Permissions
         </button>
       </div>
+
       <div v-if="stage == 1" class="form-group">
         <h5>Set User Access</h5>
         <hr class="border border-dark border-1 mt-2 opacity-75" />
@@ -138,11 +139,14 @@
             <hr class="border border-dark border-1 mt-2 opacity-75" />
             <div class="row">
               <div class="col-4">
-                <label class="fw-bold" for="access" v-if="currId == null">Select Vendor</label>
-                <label class="fw-bold" for="access" v-if="currId != null">Selected Vendor</label>
+                <label class="fw-bold" for="access" v-if="currId == null"
+                  >Select Vendor</label
+                >
+                <label class="fw-bold" for="access" v-if="currId != null"
+                  >Selected Vendor</label
+                >
               </div>
               <div class="col-8 d-flex flex-column mb-2">
-                
                 <div class="form-check" v-if="currId == null">
                   <template v-for="(vendor, index) in vendors" :key="index">
                     <p>
@@ -224,10 +228,18 @@
         Create User
       </button>
     </div>
-    <button v-if="stage > 0 && submitted" class="btn btn-secondary" @click="toggleVendorPage(user.vendor[0], user.vendor[1])">
+    <button
+      v-if="stage > 0 && submitted"
+      class="btn btn-secondary"
+      @click="toggleVendorPage(user.vendor[0], user.vendor[1])"
+    >
       Back
     </button>
-    <button v-if="stage > 0 && !submitted" class="btn btn-secondary" @click="togglePrevious">
+    <button
+      v-if="stage > 0 && !submitted"
+      class="btn btn-secondary"
+      @click="togglePrevious"
+    >
       Back
     </button>
   </div>
@@ -265,8 +277,6 @@ export default {
     console.log(vendorInfo);
 
     var stage = ref(0);
-    
-    
 
     var review = ref(false);
     var submitted = ref(false);
@@ -277,14 +287,14 @@ export default {
       let response = await AuthService.signup(user)
         .then((response) => {
           submitted.value = true;
-          console.log("status" + submitted)
+          console.log("status" + submitted);
           return response;
         })
         .catch((error) => {
           return error;
         });
       alert(response);
-      if (submitted){
+      if (submitted) {
         toggleVendorPage(user.value.vendor[0], user.value.vendor[1]);
       }
     };
@@ -334,8 +344,6 @@ export default {
       });
     };
 
-    
-
     const colorList = [25, 50, 75, 100];
     const statusList = ["Details", "Permissions", "Review", "Complete"];
     return {
@@ -352,7 +360,7 @@ export default {
       submitted,
       toggleNext,
       togglePrevious,
-      toggleVendorPage
+      toggleVendorPage,
     };
   },
 };

@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <!-- <h2 class="mt-3">Admin's Home Page Dashboards</h2> -->
+    <h2 class="mt-3 mb-4">Admin's Home Page Dashboards</h2>
     <div class="row">
       <!-- 1st chart -->
-      <div class="col my-auto">
+      <div class="col">
         <FormStatusBarChart />
       </div>
       <!-- 2nd chart -->
-      <div class="col my-auto">
+      <div class="col">
         <VendorLineChart />
       </div>
       <!-- 3rd chart -->
