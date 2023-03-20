@@ -67,7 +67,7 @@
           ></textarea>
         </div>
       </div>
-      <!-- {{ newForm }} -->
+      {{ newForm }}
       <div class="row p-1 mt-1">
         <div v-for="(section, index) in formSections" :key="index">
           <SectionComponent
@@ -654,6 +654,7 @@ export default {
               input: [],
               options: row.options,
               type: type,
+              shortAnswer : row.shortAnswer,
             });
           } else if (type == "header") {
             sectionItems.push({
@@ -691,6 +692,16 @@ export default {
               label: row.text,
               input: [],
               options: row.options,
+              type: type,
+            });
+          } else if (type == "acknowledgement") {
+            sectionItems.push({
+              order: row.order,
+              type: type,
+            });
+          } else if (type == "approval") {
+            sectionItems.push({
+              order: row.order,
               type: type,
             });
           }
