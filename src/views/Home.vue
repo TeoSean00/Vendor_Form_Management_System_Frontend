@@ -8,12 +8,23 @@
         <span class="text-main-blue fw-bold">{{ currentUser.username }}</span> !
       </h4>
     </div>
+
     <div class="container">
-      <AdminHomeDashboard />
+      <div class="row">
+        <div class="col-12 mt-5 order-xl-last ">
+          <AdminView/>
+        </div>
+
+        <div class="col-12 order-xl-first">
+          <AdminHomeDashboard />
+        </div>
+        
+        
+      </div>
     </div>
-    <div class="mt-5">
-      <AdminView/>
-    </div>
+    
+    
+
     
   </div>
 </template>

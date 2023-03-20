@@ -13,7 +13,11 @@
       </div> -->
 
       <div class="section-title d-flex justify-content-between">
-        <h1 v-if="vendorInfo" class="text-main-blue">{{ vendorInfo.name }}</h1>
+        <div v-if="vendorInfo">
+          <h1 class="text-main-blue">Vendor: {{ vendorInfo.name }}</h1>
+          <h3 class="text-main-blue">Country: {{ vendorInfo.country }}</h3>
+          <h3 class="text-main-blue">Details: {{ vendorInfo.details }}</h3>
+        </div>
         <div
           class="btn-group mt-auto shadow-0"
           role="group"
@@ -91,11 +95,24 @@
           >
             Add Form
           </button>
-
         </div>
       </div>
 
-      
+      <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col">
+            <FormStatusBarChart :vendorDetails="vendorInfo" />
+          </div>
+          <div class="col">
+            <UpdatesTodayChart :vendorDetails="vendorInfo" />
+          </div>
+          <div class="col">
+            <DeadlinesChart :vendorDetails="vendorInfo" />
+          </div>
+        </div>
+      </div>
+
       <!-- start vendor assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
@@ -111,12 +128,14 @@
           :key="vendorForm.status"
         >
           <FormCard
+            :dateCreated="vendorForm.createDate"
+            :deadline="vendorForm.deadline"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete" @enterForm="enterForm"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
           ></FormCard>
         </template>
-        
       </div>
       <!-- end of vendor assigned form  -->
 
@@ -138,7 +157,8 @@
           <FormCard
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete" @enterForm="enterForm"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
           ></FormCard>
         </template>
       </div>
@@ -159,34 +179,35 @@
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
         >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete" @enterForm="enterForm"></FormCard>
-      </template>
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
+        </template>
       </div>
       <!-- end of approval assigned form  -->
-
 
       <!-- start completed assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
-          <h4 class="text-white m-0">
-            Completed Forms
-          </h4>
+          <h4 class="text-white m-0">Completed Forms</h4>
         </div>
       </div>
 
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-        <template
-          v-for="vendorForm in completedForms"
-          :key="vendorForm.status"
-        >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete" @enterForm="enterForm"></FormCard>
+        <template v-for="vendorForm in completedForms" :key="vendorForm.status">
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
         </template>
         <div class="col mt-4"></div>
       </div>
       <!-- end of completed assigned form  -->
-      
-
-
 
       <!-- Modal confirm delete -->
       <div
@@ -231,7 +252,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 </template>
@@ -248,6 +268,9 @@ import { onMounted, ref, watch } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import FormService from "../services/form/formService";
 import { useRouter } from "vue-router";
+import DeadlinesChart from "../components/dashboard/AdminVendorPage/DeadlinesChart.vue";
+import FormStatusBarChart from "../components/dashboard/AdminVendorPage/FormStatusBarChart.vue";
+import UpdatesTodayChart from "../components/dashboard/AdminVendorPage/UpdatesTodayChart.vue";
 
 export default {
   components: {
@@ -256,7 +279,10 @@ export default {
     TemplateList,
     SectionComponent,
     FormCard,
-  },
+    DeadlinesChart,
+    FormStatusBarChart,
+    UpdatesTodayChart
+},
   props: ["vendorId"],
   setup(props) {
     const currId = ref(props.vendorId);
@@ -268,7 +294,7 @@ export default {
     };
 
     getVendorInfo();
-    console.log(vendorInfo);
+    console.log('After getVendorInfo() called> ', vendorInfo);
 
     var vendorUsers = ref([]);
     var getUserInfo = async () => {
@@ -278,46 +304,25 @@ export default {
     getUserInfo();
 
     var allForms = ref([]);
-    var vendorForms = ref([]);
     var vendorAssignedForms = ref([]);
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
     var completedForms = ref([]);
 
-    var getAllVendorForms = async () => {
-      allForms.value = await FormService.getForms(currId.value);
+    var getAllForms = async () => {
+      allForms.value = await FormService.getVendorForms(currId.value);
       console.log("hi" + allForms.value[0].vendorId);
       for (var i = 0; i < allForms.value.length; i++) {
-        vendorForms.value.push(allForms.value[i]);
         if (allForms.value[i].status == "vendor_response") {
           vendorAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "admin_response") {
           adminAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "approver_response") {
           approvalAssignedForms.value.push(allForms.value[i]);
-        } else if (allForms.value[i].status == "completed") {
-          completedForms.value.push(allForms.value[i]);
         }
       }
     };
-
-    var getAllForms = async () => {
-      allForms.value = await FormService.getForms();
-      console.log("hi" + allForms.value[0].vendorId);
-      for (var i = 0; i < allForms.value.length; i++) {
-        if (allForms.value[i].vendorId == currId.value) {
-          vendorForms.value.push(allForms.value[i]);
-          if (allForms.value[i].status == "vendor_response") {
-            vendorAssignedForms.value.push(allForms.value[i]);
-          } else if (allForms.value[i].status == "admin_response") {
-            adminAssignedForms.value.push(allForms.value[i]);
-          } else if (allForms.value[i].status == "approver_response") {
-            approvalAssignedForms.value.push(allForms.value[i]);
-          }
-        }
-      }
-    };
-    getAllVendorForms();
+    getAllForms();
 
     var toDelete = ref("");
     function upToDelete(vendorFormId) {
@@ -328,10 +333,10 @@ export default {
     function enterForm(vendorFormId) {
       console.log("enter form is " + vendorFormId);
       router.push({
-        path: '/vendorForm' , 
+        path: "/vendorForm",
         query: {
           vendorFormId: vendorFormId,
-        }
+        },
       });
     }
 
@@ -349,7 +354,6 @@ export default {
           error.toString();
       }
     );
-
 
     const toggleCreateUserPage = (vendorName, vendorId) => {
       router.push({
@@ -374,9 +378,6 @@ export default {
         },
       });
     };
-
-
-
 
     //get template data from templatestore
     var templateStore = useTemplateStore();
@@ -559,7 +560,7 @@ export default {
       upToDelete,
       enterForm,
       toggleCreateUserPage,
-      toggleFormBuilderPage
+      toggleFormBuilderPage,
     };
   },
 };

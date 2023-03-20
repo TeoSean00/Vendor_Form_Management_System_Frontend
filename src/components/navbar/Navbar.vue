@@ -10,7 +10,7 @@
         <a href="" class="navbar-brand" @click.prevent></a>
         <div class="navbar-nav m-auto">
           <li class="nav-item">
-            <router-link to="/" class="nav-link">
+            <router-link to="/" class="nav-link" >
               <font-awesome-icon icon="home" />Home
             </router-link>
           </li>
