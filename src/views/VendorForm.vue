@@ -116,7 +116,7 @@
           >
             Submit for approval
           </button>
-          <!-- Vendor response to admin response -->
+          <!-- Vendor response to admin response    -->
           <button
             v-if="formStatus == 'vendor_response' && !role.includes('ROLE_ADMIN')"
             class="btn btn-primary mx-1"
