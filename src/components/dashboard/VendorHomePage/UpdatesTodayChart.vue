@@ -102,10 +102,6 @@
   </div>
 </template>
 
-<style>
-@import 'UpdatesTodayChart.css';
-</style>
-
 <script>
 import { computed, ref } from 'vue'
 
@@ -166,3 +162,28 @@ export default {
   }
 }
 </script>
+
+<style>
+  .carousel-control-prev, 
+  .carousel-control-next {
+      filter: invert(100%);
+  }
+
+  .carousel-control-next-icon {
+      width: 35px;
+      margin-left: 30px;
+  }
+
+  .carousel-control-prev-icon {
+      width: 35px;
+      margin-right: 30px;
+  }
+
+  .btn-sm{
+      height: 2em;
+  }
+
+  .card-body{
+      padding: 12px;
+  }
+</style>
