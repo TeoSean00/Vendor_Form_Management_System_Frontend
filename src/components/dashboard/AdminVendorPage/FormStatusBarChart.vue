@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { Bar } from 'vue-chartjs';
 import FormService from '../../../services/form/formService';
 import {
@@ -39,23 +39,21 @@ export default {
       Bar,
   },
   props: {
-    vendorID: ""
+    vendorDetails: ""
   },
   setup(props) {
-    console.log("vendorID passed from parent page => ", props);
-
     // Method to process overall form status data, to break them down into their respective staus and increment its count accordingly
     const filteredFormData = computed(() => {
-      console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
+      // console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
       let newValues = [0, 0, 0, 0];
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
           let status = formData.value[i].status;
           if (status === "vendor_response") {
             newValues[0] += 1;
-          } else if (status === "admin_review") {
+          } else if (status === "admin_response") {
             newValues[1] += 1;
-          } else if (status === "approver_review") {
+          } else if (status === "approver_response") {
             newValues[2] += 1;
           } else if (status === "completed") {
             newValues[3] += 1;
@@ -78,7 +76,7 @@ export default {
         // data values corresponding to each file status bar in the bar chart
         datasets: [
           {
-            label: "Breakdown of Vendor Sean's Form Statuses",
+            label: formData.value != null ? `Breakdown of Vendor ${props.vendorDetails.name}'s Form Statuses` : "",
             data: filteredFormData.value,
             backgroundColor: [
               "#bc5090",
@@ -92,8 +90,9 @@ export default {
     });
 
     // configuration options for bar chart
-    const formStatusBarChartOptions = ref({
-      responsive: true,
+    var formStatusBarChartOptions = computed(() => {
+      return {
+        responsive: true,
         maintainAspectRatio: false,
         animation: {
           duration: 0
@@ -117,7 +116,7 @@ export default {
         plugins: {
           title: {
             display: true,
-            text: "Breakdown of Vendor Sean's Form Statuses",
+            text: formData.value != null ? `Breakdown of Vendor ${props.vendorDetails.name}'s Form Statuses` : "",
             align: "center",
             font: {
               size: 16
@@ -130,19 +129,28 @@ export default {
             display: false,
           }
         }
-    })
+      }
+    });
 
+    // Method to dynamically fetch all forms under current Vendor, by using watchEffect() and vendorDetails props passed from parent page
     var formData = ref(null);
 
-    var getVendorFormsInfo = async () => {
-      console.log("prior to getVendorForms() invoked> ", formData.value);
-      formData.value = await FormService.getVendorForms(props.vendorID).then((response) => {
-        return response;
-      })
-      console.log("After getVendorForms() invoked> ", formData.value);
-    }
-
-    getVendorFormsInfo();
+    watchEffect(async () => {
+      // console.log("vendor details data passed> ", props.vendorDetails);
+      if (props.vendorDetails != null) {
+        try {
+          // console.log("vendorDetails props succesfully updated, vendorID> ", props.vendorDetails.id)
+          formData.value = await FormService.getVendorForms(props.vendorDetails.id).then((response) => {
+            // console.log(response)
+            return response;
+          })
+        }
+        catch (error) {
+          console.log("error occured while getting forms for vendor", error);
+        }
+      }
+      // console.log("After getVendorForms() with vendor details invoked, vendor's form details> ", formData.value);
+    })
 
     return {
       props,

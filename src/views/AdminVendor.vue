@@ -98,6 +98,21 @@
         </div>
       </div>
 
+      <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col">
+            <FormStatusBarChart :vendorDetails="vendorInfo" />
+          </div>
+          <div class="col">
+            <UpdatesTodayChart :vendorDetails="vendorInfo" />
+          </div>
+          <div class="col">
+            <DeadlinesChart :vendorDetails="vendorInfo" />
+          </div>
+        </div>
+      </div>
+
       <!-- start vendor assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
@@ -253,6 +268,9 @@ import { onMounted, ref, watch } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import FormService from "../services/form/formService";
 import { useRouter } from "vue-router";
+import DeadlinesChart from "../components/dashboard/AdminVendorPage/DeadlinesChart.vue";
+import FormStatusBarChart from "../components/dashboard/AdminVendorPage/FormStatusBarChart.vue";
+import UpdatesTodayChart from "../components/dashboard/AdminVendorPage/UpdatesTodayChart.vue";
 
 export default {
   components: {
@@ -261,7 +279,10 @@ export default {
     TemplateList,
     SectionComponent,
     FormCard,
-  },
+    DeadlinesChart,
+    FormStatusBarChart,
+    UpdatesTodayChart
+},
   props: ["vendorId"],
   setup(props) {
     const currId = ref(props.vendorId);
@@ -273,7 +294,7 @@ export default {
     };
 
     getVendorInfo();
-    console.log(vendorInfo);
+    console.log('After getVendorInfo() called> ', vendorInfo);
 
     var vendorUsers = ref([]);
     var getUserInfo = async () => {
