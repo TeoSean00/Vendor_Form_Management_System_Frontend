@@ -208,6 +208,7 @@ export default {
         text: "",
         options: [],
         required: false,
+        shortAnswer: false,
       });
     }
     function addRadioInput() {
