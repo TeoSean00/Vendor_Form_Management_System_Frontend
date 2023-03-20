@@ -1,6 +1,8 @@
 <template>
   <Navbar />
-  Signed in as {{ currentUser }} displayRole is {{ displayRole }}
+  Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }}
+  <br/>
+  CURRENTLY ROLES HAVE BEEN HARDCODED. WAITING FOR VENDOR TO BE ABLE TO REACH THIS PAGE
   <br />
   <!-- {{ newFormContent }} -->
   <div class="modal-dialog modal-xl">
@@ -11,55 +13,112 @@
       <div class="form-floating m-4">
         <div class="">
           <h4>Form Details</h4>
-          <span> Form Status: {{ formStatus }} </span>
+          <span> Form Status: 
+            <template v-if="formStatus == 'vendor_response'">
+              Waiting for Vendor to submit form to admin
+            </template>
+            <template v-if="formStatus == 'admin_response'">
+              Waiting for Admin to review form
+            </template>
+            <template v-if="formStatus == 'approver_response'">
+              Waiting for Approver to review form
+            </template>
+          </span>
+          <br/>
+          <span>
+            Revision Number: {{ revNumber }}
+          </span>
           <hr class="border border-dark border-2 mt-2 opacity-75" />
         </div>
         <form onsubmit="return false;">
           <template v-for="(section, index) in formContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
-              <h1>{{ i }} Section</h1>
-              <template v-for="sect in sectionData" :key="sect">
-                {{ sect }}
-                <FormSection :sectionData="sect" />
+              <!-- Moderator can view all but edit nothing -->
+              <template v-if="role.includes('ROLE_MODERATOR')">
+                <h1>{{ i }} Section</h1>
+                <template v-for="sect in sectionData" :key="sect">
+                  {{ sect }}
+                  <FormSection :sectionData="sect" :disabled="true" />
+                </template>
+              </template>
+              <template v-else>
+                <!-- To allow admin to view admin part and fill in -->
+                <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
+                  <h1>{{ i }} Section</h1>
+                  <template v-for="sect in sectionData" :key="sect">
+                    {{ sect }}
+                    <FormSection :sectionData="sect" :disabled="false" />
+                  </template>
+                </template>
+                <!-- To allow admin to view vendor part but not fill in -->
+                <template v-if="i == 'vendor' && role.includes('ROLE_ADMIN')">
+                  <h1>{{ i }} Section</h1>
+                  <template v-for="sect in sectionData" :key="sect">
+                    {{ sect }}
+                    <FormSection :sectionData="sect" :disabled="true" />
+                  </template>
+                </template>
+                <!-- To allow vendor to view vendor part only -->
+                <template v-if="i == 'vendor' && !role.includes('ROLE_ADMIN') && formStatus == 'vendor_response'">
+                  <h1>{{ i }} Section</h1>
+                  <template v-for="sect in sectionData" :key="sect">
+                    {{ sect }}
+                    <FormSection :sectionData="sect" :disabled="false" />
+                  </template>
+                </template>
+                <!-- To allow vendor to view vendor part BUT not edit if it has been submitted -->
+                <template v-if="i == 'vendor' && !role.includes('ROLE_ADMIN') && formStatus !== 'vendor_response'">
+                  <h1>{{ i }} Section</h1>
+                  <template v-for="sect in sectionData" :key="sect">
+                    {{ sect }}
+                    <FormSection :sectionData="sect" :disabled="true" />
+                  </template>
+                </template>
               </template>
             </template>
           </template>
           <button
+            v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN') && !role.includes('ROLE_MODERATOR') || formStatus == 'vendor_response' && !role.includes('ROLE_ADMIN')"
             class="btn btn-primary mx-1"
             @click="saveForm()"
           >
             Save Form
           </button>
+          <!-- Approver response to admin response -->
           <button
-            v-if="formStatus == 'approver_response'"
+            v-if="formStatus == 'approver_response' && role.includes('ROLE_MODERATOR')"
             class="btn btn-danger mx-1"
             @click="submitForm('admin_response', 'reject')"
           >
             Reject Form
           </button>
+          <!-- Approver response to complete form -->
           <button
-            v-if="formStatus == 'approver_response'"
+            v-if="formStatus == 'approver_response' && role.includes('ROLE_MODERATOR')"
             class="btn btn-primary mx-1"
             @click="submitForm('form_completed', 'approve')"
           >
             Approve Form
           </button>
+          <!-- Admin response to vendor response -->
           <button
-            v-if="formStatus == 'admin_response'"
+            v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN') && !role.includes('ROLE_MODERATOR')"
             class="btn btn-danger mx-1"
             @click="submitForm('vendor_response', 'reject')"
           >
             Reject Form
           </button>
+          <!-- Admin response to approver response -->
           <button
-            v-if="formStatus == 'admin_response'"
+            v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN') && !role.includes('ROLE_MODERATOR')"
             class="btn btn-primary mx-1"
             @click="submitForm('approver_response', 'approve')"
           >
             Submit for approval
           </button>
+          <!-- Vendor response to admin response    -->
           <button
-            v-if="formStatus == 'vendor_response'"
+            v-if="formStatus == 'vendor_response' && !role.includes('ROLE_ADMIN')"
             class="btn btn-primary mx-1"
             @click="submitForm('admin_response', 'approve')"
           >
@@ -107,14 +166,17 @@ export default {
     var newForm = ref([]);
     var formContent = ref([]);
     var formStatus = ref([]);
-
+    var revNumber = ref(null);
     var submitForm = async (status, action) => {
       var message = "";
       if (action == "reject") {
         message = "Form Rejected!"
+        if(newForm.value.status == "admin_response"){
+          newForm.value.revNumber = newForm.value.revNumber + 1;
+        }
       }
       else if (action == "approve") {
-        message = "Form Approved!"
+        message = "Form Submitted!"
       }
       newForm.value.status = status;
       console.log(newForm);
@@ -152,6 +214,11 @@ export default {
     var displayRole = ref(null);
     var auth = useAuthStore();
     displayRole.value = auth.user;
+    // var role = displayRole.value.roles
+    // hardcoded for now
+    var role = ref(["ROLE_USER"])
+    // var role = ref(["ROLE_USER", "ROLE_ADMIN"])
+    // var role = ref(["ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"])
 
     var loadForm = async (formID) => {
       console.log("Loading Form");
@@ -160,13 +227,9 @@ export default {
           console.log("Loaded form is: ");
           console.log(response);
           newForm.value = response;
+          revNumber.value = newForm.value.revNumber;
           formContent.value = newForm.value.content.FormContent;
           formStatus.value = newForm.value.status;
-          // var loadedForm = response
-          // formStatus.value = loadedForm.status
-          // // Other variables here etc vendorName = response.vendorName
-          // newForm.value = loadedForm.content.FormContent;
-          // ADD THE OTHER FORM VARIABLES HERE
         })
         .catch((error) => {
           console.log(error);
@@ -184,6 +247,8 @@ export default {
       loadForm,
       formContent,
       formStatus,
+      role,
+      revNumber,
     };
   },
 };

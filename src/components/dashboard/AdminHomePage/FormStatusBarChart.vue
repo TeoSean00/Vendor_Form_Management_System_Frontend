@@ -1,10 +1,12 @@
 <template>
 <!-- 1st chart -->
+  <div style="height: 100%; width: 100%;">
     <Bar
-      id="file-status-bar-chart"
-      :options="FileStatusBarChartOptions"
-      :data="barChartData"
-    />
+    id="file-status-bar-chart"
+    :options="FileStatusBarChartOptions"
+    :data="barChartData"
+    />  
+  </div>
 </template>
 
 <script>
@@ -43,7 +45,7 @@ export default {
   setup() {
     // Method to process overall form status data, to break them down into their respective staus and increment its count accordingly
     const filteredFormData = computed(() => {
-      console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
+      // console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
       let newValues = [0, 0, 0, 0];
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
@@ -75,14 +77,13 @@ export default {
         // data values corresponding to each file status bar in the bar chart
         datasets: [
           {
-            label: "Breakdown of overall form statuses",
+            label: "Breakdown of Overall Form Statuses",
             data: filteredFormData.value,
             backgroundColor: [
-              "rgb(153, 51, 255 )",
-              "rgb(54, 162, 235)",
-              "rgb(255, 128, 0)",
-              "rgb(100, 202, 150)",
-              "rgb(255, 75, 132)",
+              '#bc5090',
+              'rgb(54, 162, 235)',
+              '#ffa600',
+              'rgb(100, 202, 150)'
             ],
           },
         ],
@@ -91,21 +92,54 @@ export default {
 
     // configuration options for bar chart
     const FileStatusBarChartOptions = ref({
-      chartOptions: {
-        responsive: false,
-        maintainAspectRatio: true,
-      },
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 0
+        },
+        scales: {
+          x: {
+            ticks: {
+              font: {
+                size: 12.5
+              }
+            }
+          },
+          y: {
+            ticks: {
+              font: {
+                size: 12.5
+              }
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: "Breakdown of Overall Form Statuses",
+            align: "center",
+            font: {
+              size: 16
+            },
+            padding: {
+              bottom: 18,
+            }
+          },
+          legend: {
+            display: false,
+          }
+        }
     });
   
     // async await method call to retrieve the raw overall form status data from Backend
     var formData = ref(null);
 
     var getFormInfo = async () => {
-      console.log("getForms() Backend API call is invoked! Before Value: ", formData.value);
+      // console.log("getForms() Backend API call is invoked! Before Value: ", formData.value);
       formData.value = await FormService.getForms().then((response) => {
         return response;
       });
-      console.log("After retrieval value: ", formData.value);
+      // console.log("After retrieval value: ", formData.value);
     };
 
     getFormInfo();

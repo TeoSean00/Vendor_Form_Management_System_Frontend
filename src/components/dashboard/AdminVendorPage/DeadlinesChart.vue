@@ -1,9 +1,11 @@
 <template>
-  <Bar
-    id="days-spent-per-stakeholder-per-form"
-    :options="FormDeadlineBarChartOptions"
-    :data="FormDeadlineBarChart"
-  />
+  <div style="height: 100%; width: 100%;">
+    <Bar
+      id="days-spent-per-stakeholder-per-form"
+      :options="FormDeadlineBarChartOptions"
+      :data="FormDeadlineBarChart"
+    />
+  </div>
 </template>
 
 <script>
@@ -79,12 +81,12 @@ export default {
       // data values corresponding to each file status bar in the bar chart
       datasets: [
         {
-          label: "Vendor SGXChange forms' days left to deadlines",
+          label: "Vendor Sean's Forms Days Left to Deadline",
           data: FormDeadlineBarChartSort.value[1],
           backgroundColor: [
-            'rgb(153, 51, 255 )',
+            '#bc5090',
             'rgb(54, 162, 235)',
-            'rgb(255, 128, 0)',
+            '#ffa600',
             'rgb(100, 202, 150)'
           ]
         }
@@ -93,10 +95,43 @@ export default {
 
     // configuration options for bar chart
     const FormDeadlineBarChartOptions = ref({
-      chartOptions: {
-        responsive: false,
-        maintainAspectRatio: true
-      }
+      responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 0
+        },
+        scales: {
+          x: {
+            ticks: {
+              font: {
+                size: 12.5
+              }
+            }
+          },
+          y: {
+            ticks: {
+              font: {
+                size: 12.5
+              }
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: "Vendor Sean's Forms Days Left to Deadline",
+            align: "center",
+            font: {
+              size: 16
+            },
+            padding: {
+              bottom: 18,
+            }
+          },
+          legend: {
+            display: false,
+          }
+        }
     })
 
     return {
