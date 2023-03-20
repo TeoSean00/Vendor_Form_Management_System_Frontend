@@ -99,12 +99,10 @@
         <div class="col-8 ">
           <div class="p-1">
             <button
-              class="btn btn-secondary col-12 mx-auto"
+              class="btn btn-outline-secondary mb-2 col-12 mx-auto"
               data-bs-toggle="modal"
               data-bs-target="#selectTemplateModal"
             >
-            <font-awesome-icon icon="fa-solid fa-circle-plus" />
-
               Select Template
             </button>
           </div>
