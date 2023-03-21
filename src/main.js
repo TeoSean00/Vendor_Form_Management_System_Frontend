@@ -49,6 +49,8 @@ library.add(faMagnifyingGlass,faHome, faUser, faUserPlus, faSignInAlt, faSignOut
 import App from "./App.vue";
 import router from "./router";
 
+
+
 import "./assets/main.css";
 
 const app = createApp(App);
