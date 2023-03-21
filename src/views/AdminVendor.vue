@@ -201,6 +201,7 @@
           <FormCard
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
+            :formStatus="vendorForm.status"
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>

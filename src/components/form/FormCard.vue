@@ -29,7 +29,7 @@
               Delete
             </button>
           </div>
-          <div>
+          <div v-if="formStatus == 'form_completed'">
             <button class="btn btn-main-blue" @click="generatePdf">
               Download
             </button>
@@ -46,9 +46,11 @@ import axios from "axios";
 import authHeader from "../../services/authHeader";
 
 export default {
-  props: ["vendorFormId", "formInfo", "dateCreated", "deadline"],
+  props: ["vendorFormId", "formInfo", "dateCreated", "deadline", "formStatus"],
   emits: ["updateToDelete"],
   setup(props, context) {
+    var formStatus = ref("");
+    formStatus.value = props.formStatus;
     var formName = ref("");
     formName.value = props.formInfo.formName;
     var formDesc = ref("");
@@ -69,32 +71,29 @@ export default {
     );
 
     var generatePdf = async () => {
-      myHeaders.append("Content-Type", "application/pdf", authHeader());
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", authHeader().Authorization);
       var requestOptions = {
         method: "GET",
         headers: myHeaders,
-        body: urlencoded,
-        redirect: "follow",
       };
 
-      await axios
-        .get(
-          "http://localhost:8080/api/form/generateForm/" + props.vendorFormId,
-          { headers: authHeader() },
-          { responseType: "blob" }
-        )
-        .then((response) => {
-          console.log(response.data);
-          var link = window.document.createElement("a");
-          link.href = window.URL.createObjectURL(
-            new Blob([response.data], { type: "application/pdf" }),
-            { type: mimeType }
-          );
-          link.download = fileName;
-          document.body.appendChild(link);
+      await fetch(
+        "http://localhost:8080/api/form/generateForm/" + props.vendorFormId,
+        requestOptions
+      )
+        .then((response) => response.blob())
+        .then((blob) => {
+          const fileURL = URL.createObjectURL(blob);
+          // Display PDF using an iframe
+          const iframe = document.createElement("iframe");
+          iframe.src = fileURL;
+          document.body.appendChild(iframe);
+          // Download PDF
+          const link = document.createElement("a");
+          link.href = fileURL;
+          link.download = "example.pdf";
           link.click();
-          document.body.removeChild(link);
-
           // var fileURL = window.URL.createObjectURL(
           //   new Blob([response.data], { type: "application/pdf" })
           // );
@@ -112,6 +111,7 @@ export default {
     };
 
     return {
+      formStatus,
       props,
       context,
       updateToDelete,
