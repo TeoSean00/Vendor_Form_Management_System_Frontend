@@ -69,6 +69,14 @@ export default {
     );
 
     var generatePdf = async () => {
+      myHeaders.append("Content-Type", "application/pdf", authHeader());
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+
       await axios
         .get(
           "http://localhost:8080/api/form/generateForm/" + props.vendorFormId,
@@ -77,9 +85,15 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          setTimeout(() => {
-            console.log("World!");
-          }, 2000);
+          var link = window.document.createElement("a");
+          link.href = window.URL.createObjectURL(
+            new Blob([response.data], { type: "application/pdf" }),
+            { type: mimeType }
+          );
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
 
           // var fileURL = window.URL.createObjectURL(
           //   new Blob([response.data], { type: "application/pdf" })
@@ -91,9 +105,9 @@ export default {
           // document.body.appendChild(fileLink);
 
           // fileLink.click();
-          var file = new Blob([response.data], { type: "application/pdf" });
-          var fileURL = URL.createObjectURL(file);
-          window.open(fileURL);
+          // var file = new Blob([response.data], { type: "application/pdf" });
+          // var fileURL = URL.createObjectURL(file);
+          // window.open(fileURL);
         });
     };
 
