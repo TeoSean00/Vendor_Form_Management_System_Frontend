@@ -1,5 +1,8 @@
 import axios from "axios";
 import authHeader from "./authHeader";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 
 console.log(authHeader());
 
@@ -33,12 +36,19 @@ class AuthService {
         vendorId: user.value.vendor[1],
       })
       .then((response) => {
-        console.log("success! response is", response.data);
-        return response.message;
+        console.log("success! response is", response);
+        toast.success("User successfully created!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        console.log(response);
+        return response.data;
       })
       .catch((error) => {
         console.log("failed! response is", error);
-        return error.message;
+        toast.error("User creation failed!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        return error;
       });
     return response;
   }

@@ -306,20 +306,15 @@ export default {
       await AuthService.signup(user)
         .then((response) => {
           submitted.value = true;
-          toast.success("User successfully created!", {
-            position: toast.POSITION.TOP_CENTER,
-          });
           console.log(response);
         })
         .catch((error) => {
-          toast.error("User creation failed!", {
-            position: toast.POSITION.TOP_CENTER,
-          });
+          submitted.value = false;
           return error;
         });
       if (submitted && user.value.vendor[0]) {
         toggleVendorPage(user.value.vendor[0], user.value.vendor[1]);
-      } else {
+      } else if (submitted) {
         router.push({
           name: "users",
         });
