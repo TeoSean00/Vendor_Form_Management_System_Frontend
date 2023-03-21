@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -40,7 +40,10 @@ export default {
   components: {
     Bar
   },
-  setup () {
+  props: {
+    vendorDetails: "",
+  },
+  setup(props) {
     // ------------------------------------------------------------Bar Chart for Forms Deadlines------------------------------------------------------------
     // computed property to order FormDeadlineBarChart x-axis by y-axis values, leftmost least days left to deadline and rightmost most days left to deadline
     const FormDeadlineBarChartSort = computed(() => {
@@ -132,6 +135,18 @@ export default {
             display: false,
           }
         }
+    })
+
+    // Method to check that vendor details have been successfully passed from parent page, to invoke specific dashboard method afterwards
+    watchEffect(async () => {
+      if (props.vendorDetails != null) {
+        try {
+          // console.log("Vendor Details passed from parent page successfull> ", props.vendorDetails);
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
     })
 
     return {

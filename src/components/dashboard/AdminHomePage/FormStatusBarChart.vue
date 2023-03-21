@@ -52,9 +52,9 @@ export default {
           let status = formData.value[i].status;
           if (status === "vendor_response") {
             newValues[0] += 1;
-          } else if (status === "admin_review") {
+          } else if (status === "admin_response") {
             newValues[1] += 1;
-          } else if (status === "approver_review") {
+          } else if (status === "approver_response") {
             newValues[2] += 1;
           } else if (status === "completed") {
             newValues[3] += 1;

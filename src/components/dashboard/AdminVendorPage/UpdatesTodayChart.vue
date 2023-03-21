@@ -102,15 +102,14 @@
   </div>
 </template>
 
-<style>
-@import 'UpdatesTodayChart.css';
-</style>
-
 <script>
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 
 export default {
-  setup () {
+  props: {
+    vendorDetails: ""
+  },
+  setup(props) {
     // ------------------------------------------------------------Bar Chart for To Do List Today Chart------------------------------------------------------------
     const dateToday = computed(() => {
       const date = new Date()
@@ -158,6 +157,18 @@ export default {
       return count
     })
 
+    // Method to check that vendor details have been successfully passed from parent page, to invoke specific dashboard method afterwards
+    watchEffect(async () => {
+      if (props.vendorDetails != null) {
+        try {
+          console.log("Vendor Details passed from parent page successfull> ", props.vendorDetails);
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
+    })
+
     return {
       dateToday,
       dummyData,
@@ -166,3 +177,28 @@ export default {
   }
 }
 </script>
+
+<style>
+  .carousel-control-prev, 
+  .carousel-control-next {
+      filter: invert(100%);
+  }
+
+  .carousel-control-next-icon {
+      width: 35px;
+      margin-left: 30px;
+  }
+
+  .carousel-control-prev-icon {
+      width: 35px;
+      margin-right: 30px;
+  }
+
+  .btn-sm{
+      height: 2em;
+  }
+
+  .card-body{
+      padding: 12px;
+  }
+</style>

@@ -1,50 +1,31 @@
 <template>
-  <div
-    class="container-fluid bluebg d-flex justify-content-between m-0"
-    style="width: 100%"
-  >
-    <div>
-      <router-link to="/vendorView" class="nav-link text-light" v-if="isUser">
-        <img
-          src="../../assets/Logo.png"
-          alt=""
-          style="width: 80px; height: 80px"
-          class="mt-3 mx-5"
-        />
-      </router-link>
-      <router-link to="/" class="nav-link text-light" v-else>
-        <img
-          src="../../assets/Logo.png"
-          alt=""
-          style="width: 80px; height: 80px"
-          class="mt-3 mx-5"
-        />
-      </router-link>
-    </div>
-    <div>
-      <nav class="navbar navbar-expand navbar-light mt-5 px-0">
-        <a href="" class="navbar-brand" @click.prevent></a>
-
-        <div class="navbar-nav mr-auto mx-4">
-          <li class="nav-item" v-if="isUser">
-            <router-link to="/vendorView" class="nav-link text-light">
-              <font-awesome-icon
-                class="text-light"
-                style="width: 25px; height: 25px"
-                icon="home"
-              />
-            </router-link>
-          </li>
-          <li class="nav-item" v-else>
-            <router-link to="/" class="nav-link text-light">
-              <font-awesome-icon
-                class="text-light"
-                style="width: 25px; height: 25px"
-                icon="home"
-              />
-            </router-link>
-          </li>
-          <!-- <li class="nav-item">
+    <div class="container-fluid bluebg d-flex justify-content-between m-0" style="width: 100%;">
+      <div>
+        <router-link to="/" class="nav-link text-light" v-if="isAdmin || isModerator">
+          <img src="../../assets/Logo.png" alt="" style="width: 80px; height: 80px;" class="mt-3 mx-5">
+        </router-link>
+        <router-link to="/vendorView" class="nav-link text-light" v-else>
+          <img src="../../assets/Logo.png" alt="" style="width: 80px; height: 80px;" class="mt-3 mx-5">
+        </router-link>
+      </div>
+      <div>
+        <nav class="navbar navbar-expand navbar-light mt-5 px-0">
+    
+          <a href="" class="navbar-brand" @click.prevent></a>
+          
+          <div class="navbar-nav mr-auto mx-4">
+  
+            <li class="nav-item " v-if="isAdmin || isModerator">
+              <router-link to="/" class="nav-link text-light">
+                <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="home"/>
+              </router-link>
+            </li>
+            <li class="nav-item " v-else>
+              <router-link to="/vendorView" class="nav-link text-light">
+                <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="home"/>
+              </router-link>
+            </li>
+            <!-- <li class="nav-item">
               <router-link to="#" class="nav-link text-light">
                 <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="bell" />
               </router-link>
@@ -106,37 +87,39 @@
         </div>
       </nav>
     </div>
-  </div>
-</template>
-<script>
-import { ref } from "vue";
-import { useAuthStore } from "../../stores/authStore";
-export default {
-  setup() {
-    var auth = useAuthStore();
-    var currentUser = ref(auth.user);
-    var isUser = ref(currentUser.value.roles.includes("ROLE_USER"));
-    const showAdminBoard = () => {
-      console.log(currentUser);
-      console.log(currentUser.value);
-      if (currentUser.value && currentUser.value.roles) {
-        currentUser.value.roles.includes("ROLE_ADMIN");
-      }
-      return false;
-    };
-    const showModeratorBoard = () => {
-      if (currentUser.value && currentUser.value.roles) {
-        return currentUser.value.roles.includes("ROLE_MODERATOR");
-      }
-      return false;
-    };
-
-    const logOut = async () => {
-      console.log("logout called");
-      console.log(auth);
-      auth.logout();
-    };
-    return { currentUser, showAdminBoard, showModeratorBoard, logOut, isUser };
-  },
-};
-</script>
+  </template>
+  <script>
+  import { ref } from "vue";
+  import { useAuthStore } from "../../stores/authStore";
+  export default {
+    setup() {
+      var auth = useAuthStore();
+      var currentUser = ref(auth.user);
+      var isUser = ref(currentUser.value.roles.includes("ROLE_USER"))
+      var isAdmin = ref(currentUser.value.roles.includes("ROLE_ADMIN"))
+      var isModerator = ref(currentUser.value.roles.includes("ROLE_MODERATOR"))
+      const showAdminBoard = () => {
+        console.log(currentUser);
+        console.log(currentUser.value);
+        if (currentUser.value && currentUser.value.roles) {
+          currentUser.value.roles.includes("ROLE_ADMIN");
+        }
+        return false;
+      };
+      const showModeratorBoard = () => {
+        if (currentUser.value && currentUser.value.roles) {
+          return currentUser.value.roles.includes("ROLE_MODERATOR");
+        }
+        return false;
+      };
+  
+      const logOut = async () => {
+        console.log("logout called");
+        console.log(auth);
+        auth.logout();
+      };
+      return { currentUser, showAdminBoard, showModeratorBoard, logOut, isUser, isAdmin, isModerator };
+    },
+  };
+  </script>
+  
