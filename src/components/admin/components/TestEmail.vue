@@ -8,7 +8,7 @@
       <textarea name="message"></textarea>
       <input type="submit" value="Send">
     </form> -->
-    <button @click="sendEmail">
+    <button @click="sendEmail" class="btn btn-primary">
         Send Email
     </button>
   </template>
@@ -28,7 +28,7 @@
             emailjs.send("service_xquebpj","template_87ifsho",
             {
                 to_name: props.vendorName,
-                send_to: "arcapolis@gmail.com",
+                send_to: "#",
                 dueDate: props.formDueDate,
             },
             "Qubr9KRvmmD-pLaFH")
