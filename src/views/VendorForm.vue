@@ -29,9 +29,13 @@
           </span>
           <hr class="border border-dark border-2 mt-2 opacity-75" />
         </div>
+        <!-- <div>
+          {{ formContent }}
+        </div> -->
         <form onsubmit="return false;">
           <template v-for="(section, index) in formContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
+
               <!-- Moderator can view all but edit nothing -->
               <template v-if="role.includes('ROLE_MODERATOR')">
                 <h1>{{ i }} Section</h1>
@@ -40,6 +44,7 @@
                   <FormSection :sectionData="sect" :disabled="true" />
                 </template>
               </template>
+
               <template v-else>
                 <!-- To allow admin to view admin part and fill in -->
                 <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
@@ -74,6 +79,7 @@
                   </template>
                 </template>
               </template>
+
             </template>
           </template>
           <button

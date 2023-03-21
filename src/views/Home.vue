@@ -16,7 +16,7 @@
         </div>
 
         <div class="col-12 order-xl-first">
-          <AdminHomeDashboard />
+          <AdminHomeDashboard/>
         </div>
         
         

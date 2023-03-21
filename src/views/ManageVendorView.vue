@@ -55,15 +55,14 @@
 
     <div v-if="!searchName" class="list-group flex">
       <template v-for="vendor in vendorList" :key="vendor">
-        <a
+        <vendorListItem :vendorDetails="vendor"/>
+        <!-- <a
           href="#"
           class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
           aria-current="true"
           @click="toggleVendorPage(vendor.name, vendor.id)"
         >
-          <!-- <span v-if="vendor.name == null">
-            <h3>Company {{ vendor.vendorId }}</h3>
-          </span> -->
+
           <span>
             <h3>Name : {{ vendor.name }}</h3>
             <h5>Country : {{ vendor.country }}</h5>
@@ -75,7 +74,8 @@
             <span class="badge bluebg mx-1 mt-2">In Progress</span>
             <span class="badge text-bg-info">Total</span>
           </div>
-        </a>
+        </a> -->
+
       </template>
     </div>
     <div v-else class="list-group flex">
@@ -179,9 +179,10 @@ import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useVendorStore } from "../stores/vendorStore";
 import { useRouter } from "vue-router";
+import vendorListItem from "../components/admin/components/vendorListItem.vue";
 
 export default {
-  components: { NavbarJP },
+  components: { NavbarJP, vendorListItem },
   setup() {
     var searchName = ref("");
 
@@ -289,6 +290,7 @@ export default {
       toggleVendorPage,
       searchName,
       filteredNames,
+      vendorListItem,
     };
   },
 };
