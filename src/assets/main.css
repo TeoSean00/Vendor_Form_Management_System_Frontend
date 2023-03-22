@@ -280,7 +280,13 @@ font-size: 14px;
 }
 /* end adminvendor page  */
 
-
+.empty{
+  text-align: center;
+  vertical-align: middle;
+  background-color: #9e9898;
+  border-radius: 5px;
+  color: rgb(67, 62, 62);
+}
 /* form card */
 /* @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');

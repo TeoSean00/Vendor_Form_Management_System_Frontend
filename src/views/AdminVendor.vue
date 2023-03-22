@@ -174,15 +174,15 @@
       </div>
 
       <!-- start vendor assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
-            Assigned (Vendor fill in Stage) | Waiting for vendor response
+            Waiting for vendor response
           </h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="vendorAssignedForms.length >0">
         <template
           v-for="vendorForm in vendorAssignedForms"
           :key="vendorForm.status"
@@ -198,19 +198,21 @@
           
         </template>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
       <!-- end of vendor assigned form  -->
 
       <!-- start admin assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
-            Awaiting Evaluation (Admin stage) | Waiting for both admin to fill
-            and evaluate
+            Waiting for admin response
           </h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="adminAssignedForms.length > 0">
         <template
           v-for="vendorForm in adminAssignedForms"
           :key="vendorForm.status"
@@ -223,19 +225,21 @@
           ></FormCard>
         </template>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
       <!-- end of admin assigned form  -->
 
       <!-- start approval assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white py-2 mt-5 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
-            Awaiting Approval (approver stage) | Waiting for approval to
-            approve, completed / rejected
+            Waiting for approval
           </h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="approvalAssignedForms.length>0">
         <template
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
@@ -248,16 +252,19 @@
           ></FormCard>
         </template>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
       <!-- end of approval assigned form  -->
 
       <!-- start completed assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 py-2 text-center">
         <div class="card-body">
-          <h4 class="text-white m-0">Completed Forms</h4>
+          <h4 class="text-white m-0">Completed</h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3" v-if="completedForms.length>0">
         <template v-for="vendorForm in completedForms" :key="vendorForm.status">
           <FormCard
             :vendorFormId="vendorForm.id"
@@ -267,8 +274,11 @@
             @enterForm="enterForm"
           ></FormCard>
         </template>
-        <div class="col mt-4"></div>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
+      <div class="col mt-4"></div>
       <!-- end of completed assigned form  -->
 
       <!-- Modal confirm delete -->
