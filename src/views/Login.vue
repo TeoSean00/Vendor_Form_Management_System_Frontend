@@ -117,6 +117,8 @@ import { useAuthStore } from "../stores/authStore";
 import User from "../models/user";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 import { Field, Form } from "vee-validate";
 
@@ -147,7 +149,10 @@ export default {
         await auth.login(user).then(
           (response) => {
             console.log(response);
-            alert("successfully logged in!", response);
+            toast.success("Login successful!", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            console.log(response);
             router.push("/");
           },
           (error) => {
