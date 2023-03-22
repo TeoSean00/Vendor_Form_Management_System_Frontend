@@ -1,9 +1,12 @@
 <template>
   <Navbar />
-  Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }}
+  <!-- Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }} -->
   <br/>
   <br />
-  <!-- {{ newFormContent }} -->
+  <div>
+    {{ newForm }}
+  </div>
+  
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <!-- <div class="m-2">
@@ -129,6 +132,9 @@
           >
             Submit to admin
           </button>
+
+          <testEmail :vendorName="newForm.vendorName" :formDueDate="newForm.deadline"/>
+ 
         </form>
       </div>
     </div>
@@ -143,12 +149,14 @@ import { ref } from "vue";
 import { useAuthStore } from "../stores/authStore";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import testEmail from "../components/admin/components/TestEmail.vue"
 
 export default {
   components: {
     Navbar,
     FormSection,
-    toast
+    toast,
+    testEmail
   },
   props: ['vendorFormId'],
   setup(props) {
@@ -156,6 +164,8 @@ export default {
     const currFormId = ref(props.vendorFormId);
     console.log("formDetails is", currFormId);
     
+    var vendorName = ref("");
+    var formDueDate = ref("");
     var formID = ref(currFormId.value); //TEMP FORM ID. CHANGE TO NON HARDCODED
     // var formInfo = ref(null);
     // var getFormInfo = async () => {
@@ -185,6 +195,7 @@ export default {
       }
       newForm.value.status = status;
       console.log(newForm);
+
       await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
           console.log("Submitted form is: ");
@@ -244,7 +255,7 @@ export default {
     loadForm(formID);
     return {
       currFormId,
-      
+      newForm,
       displayRole,
       saveForm,
       currentUser,
@@ -254,6 +265,9 @@ export default {
       formStatus,
       role,
       revNumber,
+      vendorName,
+      formDueDate,
+      testEmail
     };
   },
 };
