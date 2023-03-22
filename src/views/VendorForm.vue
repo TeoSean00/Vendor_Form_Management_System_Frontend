@@ -143,6 +143,8 @@ import { ref } from "vue";
 import { useAuthStore } from "../stores/authStore";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import testEmail from "../components/admin/components/TestEmail.vue";
+import router from "../router/index"
 
 export default {
   components: {
@@ -196,7 +198,10 @@ export default {
       console.log("Form Submitted");
       toast.success(message, {
         position: toast.POSITION.TOP_CENTER,
+        pauseOnHover: false,
+        autoClose:2000,
       });
+      router.push({ path: '/' })
     };
 
     var loadedForm = ref(null);
@@ -208,11 +213,14 @@ export default {
           console.log(response);
           toast.success("Form Saved!", {
             position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
           });
         })
         .catch((error) => {
           console.log(error);
         });
+        router.push({ path: '/' })
     };
 
     // get the roles
