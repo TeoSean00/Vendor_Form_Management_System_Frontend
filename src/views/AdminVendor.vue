@@ -1,8 +1,68 @@
 <template>
   <Navbar />
+  <header class="header">
+    <div class="text-box mt-6" v-if="vendorInfo">
+      <h1 class="heading-primary">
+        <span class="heading-primary-main">{{ vendorInfo.name }}</span>
+        <span class="heading-primary-sub">{{ vendorInfo.country }}</span>
+      </h1>
+      <a href="#allusers" data-bs-toggle="modal" class="btn btn-white btn-animated mx-2">All Users</a>
+      <a href="#" class="btn btn-white btn-animated mx-2" @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)">Add user</a>
+      <a href="#" class="btn btn-white btn-animated mx-2" @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)">Add Forms</a>
+    </div>
+  </header>
+
+  <div
+    class="modal fade"
+    id="allusers"
+    aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1"
+  >
+    <div
+      class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="allusersLabel">List of Users</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body" id="usermodal">
+          <table
+            class="table align-middle mb-0 bg-white"
+            id="usertable"
+          >
+            <thead class="bg-light">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(user, index) in vendorUsers" :key="user">
+                <td>
+                  <p class="fw-normal mb-1">{{ ++index }}</p>
+                </td>
+                <td>
+                  <p class="fw-bold mb-1">{{ user.username }}</p>
+                  <p class="text-muted mb-0">{{ user.email }}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <section id="forms" class="forms mt-2">
     <div class="container">
+
       <!-- <div>
         Data dump section
         <p>{{ vendorUsers }}</p>
@@ -12,7 +72,7 @@
         <p>{{ toDelete }}</p>
       </div> -->
 
-      <div class="section-title d-flex justify-content-between">
+      <!-- <div class="section-title d-flex justify-content-between">
         <div v-if="vendorInfo">
           <h1 class="text-main-blue">Vendor: {{ vendorInfo.name }}</h1>
           <h3 class="text-main-blue">Country: {{ vendorInfo.country }}</h3>
@@ -96,7 +156,7 @@
             Add Form
           </button>
         </div>
-      </div>
+      </div> -->
 
       <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
       <div class="container mt-5">
@@ -135,6 +195,7 @@
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>
+          
         </template>
       </div>
       <!-- end of vendor assigned form  -->
