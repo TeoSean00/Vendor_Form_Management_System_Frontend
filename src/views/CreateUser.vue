@@ -113,7 +113,7 @@
                   type="radio"
                   class="form-check-input me-2"
                   name="role"
-                  value="moderator"
+                  value="mod"
                 />
                 <label class="form-check-label" for="flexRadioDefault1">
                   Internal Approver
@@ -125,13 +125,18 @@
             <div class="col">
               <label class="fw-bold" for="password">Password</label>
             </div>
-            <div class="col-8">
+            <div class="col">
               <input
                 v-model="user.password"
                 type="password"
                 class="form-control"
                 name="password"
               />
+            </div>
+            <div class="col">
+              <button class="btn btn-primary" @click="generatePassword">
+                Generate Password
+              </button>
             </div>
           </div>
           <div v-if="user.roles == 'user'" class="row">
@@ -202,9 +207,9 @@
           <p class="fw-bold">{{ user.roles }}</p>
         </div>
       </div>
-      <div class="row mb-3">
+      <div class="row mb-3" v-if="user.vendor[0]">
         <div class="col">
-          <label class="fw-bold" for="password">Vendor</label>
+          <label class="fw-bold">Vendor</label>
         </div>
         <div class="col-8">
           <p class="fw-bold">{{ user.vendor[0] }}</p>
@@ -246,15 +251,17 @@
 </template>
 
 <script>
-import Navbar from "../components/navbar/Navbar.vue";
+import Navbar from "../components/navbar/NavbarJP.vue";
 import User from "../models/user";
 import { ref } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import AuthService from "../services/authService";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
-  components: { Navbar },
+  components: { Navbar, toast },
   props: ["vendorId"],
   setup(props) {
     const currId = ref(props.vendorId);
@@ -267,6 +274,18 @@ export default {
       roles: null,
       vendor: [null, null],
     });
+
+    var generatePassword = () => {
+      let chars =
+        "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      let passwordLength = 12;
+      let password = "";
+      for (var i = 0; i <= passwordLength; i++) {
+        var randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber + 1);
+        user.value.password = password;
+      }
+    };
 
     var vendorInfo = ref(null);
     var getVendorInfo = async () => {
@@ -284,18 +303,21 @@ export default {
       if (review.value == false) {
         review.value = true;
       }
-      let response = await AuthService.signup(user)
+      await AuthService.signup(user)
         .then((response) => {
           submitted.value = true;
-          console.log("status" + submitted);
-          return response;
+          console.log(response);
         })
         .catch((error) => {
+          submitted.value = false;
           return error;
         });
-      alert(response);
-      if (submitted) {
+      if (submitted && user.value.vendor[0]) {
         toggleVendorPage(user.value.vendor[0], user.value.vendor[1]);
+      } else if (submitted) {
+        router.push({
+          name: "users",
+        });
       }
     };
 
@@ -347,6 +369,7 @@ export default {
     const colorList = [25, 50, 75, 100];
     const statusList = ["Details", "Permissions", "Review", "Complete"];
     return {
+      generatePassword,
       toggleUsernameError,
       toggleEmailError,
       vendors,

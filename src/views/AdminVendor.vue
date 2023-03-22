@@ -201,6 +201,7 @@
           <FormCard
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
+            :formStatus="vendorForm.status"
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>
@@ -281,8 +282,8 @@ export default {
     FormCard,
     DeadlinesChart,
     FormStatusBarChart,
-    UpdatesTodayChart
-},
+    UpdatesTodayChart,
+  },
   props: ["vendorId"],
   setup(props) {
     const currId = ref(props.vendorId);
@@ -294,7 +295,7 @@ export default {
     };
 
     getVendorInfo();
-    console.log('After getVendorInfo() called> ', vendorInfo);
+    console.log("After getVendorInfo() called> ", vendorInfo);
 
     var vendorUsers = ref([]);
     var getUserInfo = async () => {
@@ -319,6 +320,8 @@ export default {
           adminAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "approver_response") {
           approvalAssignedForms.value.push(allForms.value[i]);
+        } else if (allForms.value[i].status == "form_completed") {
+          completedForms.value.push(allForms.value[i]);
         }
       }
     };

@@ -29,7 +29,7 @@ const requireAdmin = (to, from, next) => {
   let user = JSON.parse(localStorage.getItem("user"));
   console.log("current user in auth guard: ", user);
   // if (!user && to.name != "Home") next({ name: "Home" });
-  if (!user || user.roles.includes("ROLE_ADMIN", "ROLE_MODERATOR") == false)
+  if (!user || (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_MODERATOR")) == false)
     next({ name: "login" });
   else next();
 };
@@ -49,10 +49,11 @@ const router = createRouter({
         if (!user) {
           next({ name: "login" });
         } else {
-          if (user.roles.includes("ROLE_ADMIN", "ROLE_MODERATOR") == false) {
-            next({ name: "VendorView" });
+          console.log("CHECKING ", user.roles.includes("ROLE_MODERATOR"));
+          if (user.roles.includes("ROLE_ADMIN") ||user.roles.includes("ROLE_MODERATOR")) {
+            next();
           }
-          next();
+          next({ name: "VendorView" });
         }
       },
     },
