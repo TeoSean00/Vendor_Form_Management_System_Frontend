@@ -207,7 +207,10 @@ export default {
       console.log("Form Submitted");
       toast.success(message, {
         position: toast.POSITION.TOP_CENTER,
+        pauseOnHover: false,
+        autoClose:2000,
       });
+      router.push({ path: '/' })
     };
 
     var loadedForm = ref(null);
@@ -219,11 +222,14 @@ export default {
           console.log(response);
           toast.success("Form Saved!", {
             position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
           });
         })
         .catch((error) => {
           console.log(error);
         });
+        router.push({ path: '/' })
     };
 
     // get the roles
