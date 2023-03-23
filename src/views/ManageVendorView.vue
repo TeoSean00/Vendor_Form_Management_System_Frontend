@@ -55,15 +55,14 @@
 
     <div v-if="!searchName" class="list-group flex">
       <template v-for="vendor in vendorList" :key="vendor">
-        <a
+        <vendorListItem :vendorDetails="vendor"/>
+        <!-- <a
           href="#"
           class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
           aria-current="true"
           @click="toggleVendorPage(vendor.name, vendor.id)"
         >
-          <!-- <span v-if="vendor.name == null">
-            <h3>Company {{ vendor.vendorId }}</h3>
-          </span> -->
+
           <span>
             <h3>Name : {{ vendor.name }}</h3>
             <h5>Country : {{ vendor.country }}</h5>
@@ -75,7 +74,8 @@
             <span class="badge bluebg mx-1 mt-2">In Progress</span>
             <span class="badge text-bg-info">Total</span>
           </div>
-        </a>
+        </a> -->
+
       </template>
     </div>
     <div v-else class="list-group flex">
@@ -125,6 +125,7 @@
                 class="form-control"
                 v-model="newVendorName"
                 placeholder="Vendor name here"
+                required
               />
             </div>
             <div class="mb-3">
@@ -134,6 +135,7 @@
                 class="form-control"
                 v-model="newVendorCountry"
                 placeholder="Vendor country here"
+                required
               />
             </div>
             <div class="mb-3">
@@ -145,7 +147,15 @@
                 id="exampleFormControlTextarea1"
                 rows="3"
                 v-model="newVendorDetails"
+                required
               ></textarea>
+            </div>
+            <div v-if="errors.length">
+              <template v-for="(error, index) in errors" :key="index"
+                ><div class="alert alert-warning" role="alert">
+                  You selected {{ error }}
+                </div></template
+              >
             </div>
           </div>
           <div class="modal-footer">
@@ -159,7 +169,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              data-bs-dismiss="modal"
+              :data-bs-dismiss="errors.length != 0 ? 'modal' : ''"
               @click="toggleNewVendor(newVendorName)"
             >
               Create Vendor
@@ -179,9 +189,10 @@ import NavbarJP from "../components/navbar/NavbarJP.vue";
 import { useAuthStore } from "../stores/authStore";
 import { useVendorStore } from "../stores/vendorStore";
 import { useRouter } from "vue-router";
+import vendorListItem from "../components/admin/components/vendorListItem.vue";
 
 export default {
-  components: { NavbarJP },
+  components: { NavbarJP, vendorListItem },
   setup() {
     var searchName = ref("");
 
@@ -226,26 +237,48 @@ export default {
 
     const router = useRouter();
 
+    var errors = ref([]);
     var newVendorName = ref("");
     var newVendorDetails = ref("");
     var newVendorCountry = ref("");
 
+    var checkForm = () => {
+      console.log("check form is called!");
+      let check = true;
+      if (newVendorName.value == "") {
+        errors.value.push("Vendor name cannot be left blank");
+        check = false;
+      }
+      if (newVendorCountry.value == "") {
+        errors.value.push("Vendor country cannot be left blank");
+        check = false;
+      }
+
+      if (newVendorDetails.value == "") {
+        errors.value.push("Vendor details cannot be left blank");
+        check = false;
+      }
+      return check;
+    };
+
     const toggleNewVendor = (newVendorName) => {
-      console.log("toggle create new vendor", newVendorName);
-      console.log("SUMITTED INFO");
-      console.log(newVendorCountry.value);
-      console.log(newVendorName.value);
-      console.log(newVendorDetails.value);
-      var newVendor = {
-        name: newVendorName,
-        details: newVendorDetails.value,
-        country: newVendorCountry.value,
-        forms: [],
-      };
-      vendorStore.addVendor(newVendor);
-      newVendorName.value = "";
-      newVendorCountry = "";
-      newVendorDetails = "";
+      // console.log("toggle create new vendor", newVendorName);
+      // console.log("SUMITTED INFO");
+      // console.log(newVendorCountry.value);
+      // console.log(newVendorName.value);
+      // console.log(newVendorDetails.value);
+      if (checkForm()) {
+        var newVendor = {
+          name: newVendorName,
+          details: newVendorDetails.value,
+          country: newVendorCountry.value,
+          forms: [],
+        };
+        vendorStore.addVendor(newVendor);
+        newVendorName.value = "";
+        newVendorCountry = "";
+        newVendorDetails = "";
+      }
     };
 
     const toggleEditVendor = (vendor) => {
@@ -277,6 +310,7 @@ export default {
     console.log(filteredNames);
 
     return {
+      errors,
       newVendorCountry,
       searchName,
       filteredNames,
@@ -289,6 +323,7 @@ export default {
       toggleVendorPage,
       searchName,
       filteredNames,
+      vendorListItem,
     };
   },
 };
