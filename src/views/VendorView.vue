@@ -211,6 +211,8 @@ export default {
           adminAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "approver_response") {
           approvalAssignedForms.value.push(allForms.value[i]);
+        } else if (allForms.value[i].status == "form_completed") {
+          completedForms.value.push(allForms.value[i]);
         }
       }
     };
