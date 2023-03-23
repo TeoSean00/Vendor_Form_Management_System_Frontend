@@ -22,7 +22,6 @@ import {
   faSquare,
   faCirclePlus,
   faCircleH,
-  faMagnifyingGlass, // Adding from here
   faH,
   faT,
   fa1,
@@ -30,7 +29,6 @@ import {
   faCalendar,
   faCircleCheck,
   faRadio,
-  faObjectGroup,
   faObjectGroup,
   faMagnifyingGlass,
   faStore,
