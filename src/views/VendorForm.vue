@@ -1,9 +1,12 @@
 <template>
   <Navbar />
-  Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }}
+  <!-- Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }} -->
   <br/>
   <br />
-  <!-- {{ newFormContent }} -->
+  <div>
+    {{ newForm }}
+  </div>
+  
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <!-- <div class="m-2">
@@ -32,7 +35,7 @@
         <!-- <div>
           {{ formContent }}
         </div> -->
-        <form onsubmit="return false;">
+        <form onsubmit="">
           <template v-for="(section, index) in formContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
 
@@ -86,6 +89,7 @@
             v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN') && !role.includes('ROLE_MODERATOR') || formStatus == 'vendor_response' && !role.includes('ROLE_ADMIN')"
             class="btn btn-primary mx-1"
             @click="saveForm()"
+            type="submit"
           >
             Save Form
           </button>
@@ -129,6 +133,9 @@
           >
             Submit to admin
           </button>
+
+          <testEmail :vendorName="newForm.vendorName" :formDueDate="newForm.deadline"/>
+ 
         </form>
       </div>
     </div>
@@ -143,12 +150,15 @@ import { ref } from "vue";
 import { useAuthStore } from "../stores/authStore";
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import testEmail from "../components/admin/components/TestEmail.vue"
+import router from "../router/index";
 
 export default {
   components: {
     Navbar,
     FormSection,
-    toast
+    toast,
+    testEmail
   },
   props: ['vendorFormId'],
   setup(props) {
@@ -156,6 +166,8 @@ export default {
     const currFormId = ref(props.vendorFormId);
     console.log("formDetails is", currFormId);
     
+    var vendorName = ref("");
+    var formDueDate = ref("");
     var formID = ref(currFormId.value); //TEMP FORM ID. CHANGE TO NON HARDCODED
     // var formInfo = ref(null);
     // var getFormInfo = async () => {
@@ -173,6 +185,7 @@ export default {
     var formStatus = ref([]);
     var revNumber = ref(null);
     var submitForm = async (status, action) => {
+
       var message = "";
       if (action == "reject") {
         message = "Form Rejected!"
@@ -181,10 +194,15 @@ export default {
         }
       }
       else if (action == "approve") {
+        if (!formValidator()){
+          console.log("Form not filled");
+          return;
+        }
         message = "Form Submitted!"
       }
       newForm.value.status = status;
       console.log(newForm);
+
       await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
           console.log("Submitted form is: ");
@@ -196,23 +214,31 @@ export default {
       console.log("Form Submitted");
       toast.success(message, {
         position: toast.POSITION.TOP_CENTER,
+        pauseOnHover: false,
+        autoClose:2000,
       });
+      router.push({ path: '/' })
     };
 
     var loadedForm = ref(null);
 
     // Update Form
     var saveForm = async () => {
+
+      
       await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
           console.log(response);
           toast.success("Form Saved!", {
             position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
           });
         })
         .catch((error) => {
           console.log(error);
         });
+        router.push({ path: '/' })
     };
 
     // get the roles
@@ -241,10 +267,31 @@ export default {
         });
     };
 
+    var formValidator = () => {
+      var check = formContent.value
+      for (let i in check) {
+        var section = check[i]
+        for (let item in section){
+          var sect = section[item]
+          for (let question of sect){
+            if (question.input == "" || question.input == []){
+              toast.error("Form Not Filled Completely!", {
+                position: toast.POSITION.TOP_CENTER,
+                pauseOnHover: false,
+                autoClose:2000,
+              });
+              return false
+            }
+          }
+        }
+      }
+      return true
+    }
+
     loadForm(formID);
     return {
       currFormId,
-      
+      newForm,
       displayRole,
       saveForm,
       currentUser,
@@ -254,6 +301,9 @@ export default {
       formStatus,
       role,
       revNumber,
+      vendorName,
+      formDueDate,
+      testEmail
     };
   },
 };

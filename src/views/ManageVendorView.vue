@@ -80,7 +80,8 @@
     </div>
     <div v-else class="list-group flex">
       <template v-for="vendor in filteredNames" :key="vendor">
-        <a
+        <vendorListItem :vendorDetails="vendor"/>
+        <!-- <a
           href="#"
           class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
           aria-current="true"
@@ -95,7 +96,7 @@
             <span class="badge bluebg mx-1 mt-2">In Progress</span>
             <span class="badge text-bg-info">Total</span>
           </div>
-        </a>
+        </a> -->
       </template>
     </div>
 

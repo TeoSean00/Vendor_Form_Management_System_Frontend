@@ -1,8 +1,68 @@
 <template>
   <Navbar />
+  <header class="header">
+    <div class="text-box mt-6" v-if="vendorInfo">
+      <h1 class="heading-primary">
+        <span class="heading-primary-main">{{ vendorInfo.name }}</span>
+        <span class="heading-primary-sub">{{ vendorInfo.country }}</span>
+      </h1>
+      <a href="#allusers" data-bs-toggle="modal" class="btn btn-white btn-animated mx-2">All Users</a>
+      <a href="#" class="btn btn-white btn-animated mx-2" @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)">Add user</a>
+      <a href="#" class="btn btn-white btn-animated mx-2" @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)">Add Forms</a>
+    </div>
+  </header>
+
+  <div
+    class="modal fade"
+    id="allusers"
+    aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1"
+  >
+    <div
+      class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="allusersLabel">List of Users</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body" id="usermodal">
+          <table
+            class="table align-middle mb-0 bg-white"
+            id="usertable"
+          >
+            <thead class="bg-light">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(user, index) in vendorUsers" :key="user">
+                <td>
+                  <p class="fw-normal mb-1">{{ ++index }}</p>
+                </td>
+                <td>
+                  <p class="fw-bold mb-1">{{ user.username }}</p>
+                  <p class="text-muted mb-0">{{ user.email }}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <section id="forms" class="forms mt-2">
     <div class="container">
+
       <!-- <div>
         Data dump section
         <p>{{ vendorUsers }}</p>
@@ -12,7 +72,7 @@
         <p>{{ toDelete }}</p>
       </div> -->
 
-      <div class="section-title d-flex justify-content-between">
+      <!-- <div class="section-title d-flex justify-content-between">
         <div v-if="vendorInfo">
           <h1 class="text-main-blue">Vendor: {{ vendorInfo.name }}</h1>
           <h3 class="text-main-blue">Country: {{ vendorInfo.country }}</h3>
@@ -96,7 +156,7 @@
             Add Form
           </button>
         </div>
-      </div>
+      </div> -->
 
       <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
       <div class="container mt-5">
@@ -114,15 +174,15 @@
       </div>
 
       <!-- start vendor assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
-            Assigned (Vendor fill in Stage) | Waiting for vendor response
+            Waiting for vendor response
           </h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="vendorAssignedForms.length >0">
         <template
           v-for="vendorForm in vendorAssignedForms"
           :key="vendorForm.status"
@@ -135,21 +195,24 @@
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>
+          
         </template>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
       <!-- end of vendor assigned form  -->
 
       <!-- start admin assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
-            Awaiting Evaluation (Admin stage) | Waiting for both admin to fill
-            and evaluate
+            Waiting for admin response
           </h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="adminAssignedForms.length > 0">
         <template
           v-for="vendorForm in adminAssignedForms"
           :key="vendorForm.status"
@@ -162,19 +225,21 @@
           ></FormCard>
         </template>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
       <!-- end of admin assigned form  -->
 
       <!-- start approval assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white py-2 mt-5 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
-            Awaiting Approval (approver stage) | Waiting for approval to
-            approve, completed / rejected
+            Waiting for approval
           </h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="approvalAssignedForms.length>0">
         <template
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
@@ -187,16 +252,19 @@
           ></FormCard>
         </template>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
       <!-- end of approval assigned form  -->
 
       <!-- start completed assigned form -->
-      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+      <div class="bluebg card text-white mt-5 py-2 text-center">
         <div class="card-body">
-          <h4 class="text-white m-0">Completed Forms</h4>
+          <h4 class="text-white m-0">Completed</h4>
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3" v-if="completedForms.length>0">
         <template v-for="vendorForm in completedForms" :key="vendorForm.status">
           <FormCard
             :vendorFormId="vendorForm.id"
@@ -206,8 +274,11 @@
             @enterForm="enterForm"
           ></FormCard>
         </template>
-        <div class="col mt-4"></div>
       </div>
+      <h2 v-else class="empty text-center py-5">
+        No Form available
+      </h2>
+      <div class="col mt-4"></div>
       <!-- end of completed assigned form  -->
 
       <!-- Modal confirm delete -->

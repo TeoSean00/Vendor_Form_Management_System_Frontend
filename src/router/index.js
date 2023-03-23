@@ -150,6 +150,11 @@ const router = createRouter({
       props: (route) => ({ vendorId: route.query.vendorId }),
       beforeEnter: requireAuth,
     },
+    // {
+    //   path: "/testEmail",
+    //   name: "testEmail",
+    //   component: () => import("../views/unused/TestEmail.vue"),
+    // }
   ],
 });
 

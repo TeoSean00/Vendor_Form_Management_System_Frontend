@@ -16,9 +16,18 @@
             <span>id : {{ vendorDetails.id }}</span>
         </span>
         <div class="float-right">
-            <span class="badge bluebg mx-1 mt-2"> {{filteredFormData[0]}} Awaiting Vendor </span>
-            <span class="badge bluebg mx-1 mt-2"> {{filteredFormData[1]}} Awaiting Vendor </span>
-            <span class="badge bluebg mx-1 mt-2"> {{filteredFormData[2]}} Awaiting Vendor </span>
+            
+            <span v-if="role.includes['ROLE_USER']" class="badge bg-success mx-1 mt-2"> {{filteredFormData[0]}} Awaiting Vendor </span>
+            <span v-else class="badge mx-1 mt-2" style="background-color: lightslategrey;"> {{filteredFormData[0]}} Awaiting Vendor </span>
+
+            <span v-if="role.includes['ROLE_ADMIN']" class="badge bg-success mx-1 mt-2"> {{filteredFormData[1]}} Awaiting Admin </span>
+            <span v-else class="badge bg-success mx-1 mt-2" style="background-color: lightslategrey;"> {{filteredFormData[1]}} Awaiting Admin </span>
+
+            <span v-if="role.includes['ROLE_MODERATOR']" class="badge mx-1 mt-2 bg-success"> {{filteredFormData[2]}} Awaiting Approval </span>
+            <span v-else class="badge mx-1 mt-2" style="background-color: lightslategrey;" > {{filteredFormData[2]}} Awaiting Approval </span>
+
+
+            <span class="badge mx-1 mt-2" style="background-color: lightslategrey;"> {{filteredFormData[2]}} Completed </span>
         </div>
     </a>
 
@@ -31,6 +40,7 @@
 import { computed, ref, watchEffect } from 'vue';
 import FormService from '../../../services/form/formService';
 import { useRouter } from "vue-router";
+import { useAuthStore } from "../../../stores/authStore";
 
 export default {
     props: {
@@ -61,6 +71,11 @@ export default {
       console.log(filteredFormData)
   
       var formData = ref(null);
+
+      var displayRole = ref(null);
+      var auth = useAuthStore();
+      displayRole.value = auth.user;
+      var role = displayRole.value.roles
   
       watchEffect(async () => {
         if (props.vendorDetails != null) {
@@ -92,6 +107,7 @@ export default {
         props,
         filteredFormData,
         toggleVendorPage,
+        role
       }
     }
   }
