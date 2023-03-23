@@ -9,7 +9,7 @@
             <div class="card-body">
               <h5 class="card-title">Updates Today</h5>
               <p class="card-text">
-                {{ dataSize }} new updates for Vendor SGXChange today,
+                {{ dataSize }} new updates for Vendor Sean today,
                 {{ dateToday }}
               </p>
               <div v-if="dataSize == 0">
@@ -36,7 +36,7 @@
               <div class="card-body">
                 <h5 class="card-title">Updates Today</h5>
                 <p class="card-text">
-                  {{ dataSize }} new updates for Vendor SGXChange today,
+                  {{ dataSize }} new updates for Vendor Sean today,
                   {{ dateToday }}
                 </p>
                 <ul class="list-group list-group-flush">
@@ -59,7 +59,7 @@
               <div class="card-body">
                 <h5 class="card-title">Updates Today</h5>
                 <p class="card-text">
-                  {{ dataSize }} new updates for Vendor SGXChange today,
+                  {{ dataSize }} new updates for Vendor Sean today,
                   {{ dateToday }}
                 </p>
                 <ul class="list-group list-group-flush">
@@ -101,10 +101,6 @@
     </div>
   </div>
 </template>
-
-<style>
-@import 'UpdatesTodayChart.css';
-</style>
 
 <script>
 import { computed, ref } from 'vue'
@@ -166,3 +162,28 @@ export default {
   }
 }
 </script>
+
+<style>
+  .carousel-control-prev, 
+  .carousel-control-next {
+      filter: invert(100%);
+  }
+
+  .carousel-control-next-icon {
+      width: 35px;
+      margin-left: 30px;
+  }
+
+  .carousel-control-prev-icon {
+      width: 35px;
+      margin-right: 30px;
+  }
+
+  .btn-sm{
+      height: 2em;
+  }
+
+  .card-body{
+      padding: 12px;
+  }
+</style>

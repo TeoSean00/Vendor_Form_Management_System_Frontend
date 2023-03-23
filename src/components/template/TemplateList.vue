@@ -4,7 +4,7 @@
       @click="$emit('addTemplate', template)"
       class="my-1 btn btn-main-blue"
     >
-      {{ template.templateInfo.templateName }}
+      {{ template.details.templateInfo.templateName }}
     </button>
   </template>
 </template>

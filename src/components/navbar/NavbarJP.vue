@@ -1,7 +1,10 @@
 <template>
     <div class="container-fluid bluebg d-flex justify-content-between m-0" style="width: 100%;">
       <div>
-        <router-link to="/" class="nav-link text-light">
+        <router-link to="/" class="nav-link text-light" v-if="isAdmin || isModerator">
+          <img src="../../assets/Logo.png" alt="" style="width: 80px; height: 80px;" class="mt-3 mx-5">
+        </router-link>
+        <router-link to="/vendorView" class="nav-link text-light" v-else>
           <img src="../../assets/Logo.png" alt="" style="width: 80px; height: 80px;" class="mt-3 mx-5">
         </router-link>
       </div>
@@ -12,8 +15,13 @@
           
           <div class="navbar-nav mr-auto mx-4">
   
-            <li class="nav-item ">
+            <li class="nav-item " v-if="isAdmin || isModerator">
               <router-link to="/" class="nav-link text-light">
+                <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="home"/>
+              </router-link>
+            </li>
+            <li class="nav-item " v-else>
+              <router-link to="/vendorView" class="nav-link text-light">
                 <font-awesome-icon class="text-light" style="width: 25px; height: 25px; " icon="home"/>
               </router-link>
             </li>
@@ -85,6 +93,9 @@
     setup() {
       var auth = useAuthStore();
       var currentUser = ref(auth.user);
+      var isUser = ref(currentUser.value.roles.includes("ROLE_USER"))
+      var isAdmin = ref(currentUser.value.roles.includes("ROLE_ADMIN"))
+      var isModerator = ref(currentUser.value.roles.includes("ROLE_MODERATOR"))
       const showAdminBoard = () => {
         console.log(currentUser);
         console.log(currentUser.value);
@@ -105,7 +116,7 @@
         console.log(auth);
         auth.logout();
       };
-      return { currentUser, showAdminBoard, showModeratorBoard, logOut };
+      return { currentUser, showAdminBoard, showModeratorBoard, logOut, isUser, isAdmin, isModerator };
     },
   };
   </script>

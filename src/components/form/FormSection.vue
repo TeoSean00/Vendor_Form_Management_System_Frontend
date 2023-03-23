@@ -16,6 +16,7 @@
         :placeholder="sectionData.label"
         required
         v-model="sectionData.input"
+        :disabled="disabled"
       />
     </template>
 
@@ -33,6 +34,7 @@
             :value="data"
             id="flexCheckDefault"
             v-model="sectionData.input"
+            :disabled="disabled"
           />
           <label class="form-check-label" for="flexCheckDefault">
             {{ data }}
@@ -52,6 +54,7 @@
         :placeholder="sectionData.label"
         required
         v-model="sectionData.input"
+        :disabled="disabled"
       />
     </template>
 
@@ -63,10 +66,11 @@
         <div class="form-check">
           <input
             class="form-check-input"
-            :type="sectionData.type"
+            type="radio"
             :value="data"
             id="flexCheckDefault"
             v-model="sectionData.input"
+            :disabled="disabled"
           />
           <label class="form-check-label" for="flexCheckDefault">
             {{ data }}
@@ -86,6 +90,7 @@
         :placeholder="sectionData.label"
         required
         v-model="sectionData.input"
+        :disabled="disabled"
       />
     </template>
 
@@ -124,6 +129,7 @@
                   :name="data"
                   v-model="sectionData.input[index]"
                   required
+                  :disabled="disabled"
                 />
               </td>
               <td>
@@ -133,6 +139,7 @@
                   :name="data"
                   v-model="sectionData.input[index]"
                   required
+                  :disabled="disabled"
                 />
               </td>
               <td>
@@ -142,6 +149,7 @@
                   :name="data"
                   v-model="sectionData.input[index]"
                   required
+                  :disabled="disabled"
                 />
               </td>
               <td>
@@ -151,6 +159,7 @@
                   :name="data"
                   v-model="sectionData.input[index]"
                   required
+                  :disabled="disabled"
                 />
               </td>
               <td>
@@ -160,6 +169,7 @@
                   :name="data"
                   v-model="sectionData.input[index]"
                   required
+                  :disabled="disabled"
                 />
               </td>
             </tr>
@@ -172,7 +182,7 @@
 
 <script>
 export default {
-  props: ["sectionData"],
+  props: ["sectionData", "disabled"],
   setup() {},
 };
 </script>

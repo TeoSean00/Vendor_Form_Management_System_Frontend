@@ -13,7 +13,11 @@
       </div> -->
 
       <div class="section-title d-flex justify-content-between">
-        <h1 v-if="vendorInfo" class="text-main-blue">{{ vendorInfo.name }}</h1>
+        <div v-if="vendorInfo">
+          <h1 class="text-main-blue">Vendor: {{ vendorInfo.name }}</h1>
+          <h3 class="text-main-blue">Country: {{ vendorInfo.country }}</h3>
+          <h3 class="text-main-blue">Details: {{ vendorInfo.details }}</h3>
+        </div>
         <div
           class="btn-group mt-auto shadow-0"
           role="group"
@@ -72,366 +76,44 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="modal-footer">
-                  <button
-                    class="btn btn-primary"
-                    data-bs-target="#addusers"
-                    data-bs-toggle="modal"
-                    data-bs-dismiss="modal"
-                  >
-                    Add users
-                  </button>
-                </div>
               </div>
             </div>
           </div>
-          <!-- <div
-            class="modal fade"
-            id="addusers"
-            aria-hidden="true"
-            aria-labelledby="exampleModalToggleLabel2"
-            tabindex="-1"
-          >
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="addusersLabel">Add users</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body text-center">
-                  <input
-                    class="form-control"
-                    list="datalistOptions"
-                    id="users"
-                    placeholder="Type to search..."
-                  />
-                  <datalist id="datalistOptions">
-                    <option value="john"></option>
-                    <option value="Mary"></option>
-                    <option value="may"></option>
-                    <option value="ss"></option>
-                    <option value="iii"></option>
-                  </datalist>
-
-                  <button
-                    class="btn btn-outline-primary mt-3 px-5"
-                    data-bs-toggle="modal"
-                    data-bs-dismiss="modal"
-                    @click="addUsers"
-                  >
-                    Add
-                  </button>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-dismiss="modal"
-                    data-bs-target="#allusers"
-                  >
-                    See users
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div> -->
 
           <button
             type="button"
             class="btn btn-outline-secondary"
-            data-bs-toggle="modal"
-            href="#addusers"
+            @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)"
           >
             Add Users
           </button>
 
-          <div class="btn-group" role="group">
-            <button
-              id="btnGroupDrop1"
-              type="button"
-              class="btn btn-outline-secondary dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Add Forms
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <li>
-                <a class="dropdown-item" href="/formbuilder">Create new form</a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#templatelist"
-                  >Choose from templates</a
-                >
-              </li>
-            </ul>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)"
+          >
+            Add Form
+          </button>
+        </div>
+      </div>
+
+      <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col">
+            <FormStatusBarChart :vendorDetails="vendorInfo" />
+          </div>
+          <div class="col">
+            <UpdatesTodayChart :vendorDetails="vendorInfo" />
+          </div>
+          <div class="col">
+            <DeadlinesChart :vendorDetails="vendorInfo" />
           </div>
         </div>
       </div>
 
-      <!-- Modal for templates -->
-      <div
-        class="modal fade"
-        id="templatelist"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-        >
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="choosetemplateLabel">
-                Choose Template
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body" id="templatemodal">
-              <div class="box">
-                <div class="container">
-                  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card template-box">
-                        <div class="card-body">
-                          <h6 class="card-title">Form 1231</h6>
-                          <p class="card-text">
-                            Form description: <br />Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Rem magni quas ex
-                            numqu.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-dismiss="modal"
-              >
-                Add template
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- start vendor assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
@@ -440,55 +122,24 @@
         </div>
       </div>
 
-      <!-- start of form -->
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
         <template
           v-for="vendorForm in vendorAssignedForms"
           :key="vendorForm.status"
         >
           <FormCard
+            :dateCreated="vendorForm.createDate"
+            :deadline="vendorForm.deadline"
             :vendorFormId="vendorForm.id"
-            :formInfo="vendorForm.status"
+            :formInfo="vendorForm.content.FormInfo"
             @upToDelete="upToDelete"
+            @enterForm="enterForm"
           ></FormCard>
         </template>
-        <!-- <template
-          v-for="vendorForm in vendorAssignedForms"
-          :key="vendorForm.status"
-        >
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                <h2 class="card-title">{{ vendorForm.id }}</h2>
-                <p class="card-text">
-                  Form description: <br />
-                  {{ vendorForm.content.FormInfo }}
-                </p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-6 pr-0">
-                    <button class="btn btn-link btn-block">Enter</button>
-                  </div>
-                  
-                  <div class="col-6 pl-0">
-                    <button
-                      class="btn btn-link btn-block"
-                      data-bs-toggle="modal"
-                      data-bs-target="#confirmModal"
-                      @click="toDelete = vendorForm.id"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template> -->
       </div>
-      <!-- end of form  -->
+      <!-- end of vendor assigned form  -->
 
+      <!-- start admin assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
@@ -503,38 +154,17 @@
           v-for="vendorForm in adminAssignedForms"
           :key="vendorForm.status"
         >
-          <div class="col">
-            <div class="card h-100">
-              <div class="card-body">
-                <h2 class="card-title">{{ vendorForm.id }}</h2>
-                <p class="card-text">
-                  Form description: <br />
-                  {{ vendorForm.content.FormInfo.templateDesc }}
-                </p>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-6 pr-0">
-                    <button class="btn btn-link btn-block">Enter</button>
-                  </div>
-
-                  <div class="col-6 pl-0">
-                    <button
-                      class="btn btn-link btn-block"
-                      data-bs-toggle="modal"
-                      data-bs-target="#confirmModal"
-                      @click="toDelete = vendorForm.id"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
         </template>
       </div>
+      <!-- end of admin assigned form  -->
 
+      <!-- start approval assigned form -->
       <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
@@ -549,10 +179,35 @@
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
         >
-          <FormCard :vendorFormId="vendorForm.id" :formInfo="vendorForm.content.FormInfo" @upToDelete="upToDelete"></FormCard>
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
+        </template>
+      </div>
+      <!-- end of approval assigned form  -->
+
+      <!-- start completed assigned form -->
+      <div class="bluebg card text-white mt-5 mb-4 py-2 text-center">
+        <div class="card-body">
+          <h4 class="text-white m-0">Completed Forms</h4>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3">
+        <template v-for="vendorForm in completedForms" :key="vendorForm.status">
+          <FormCard
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
         </template>
         <div class="col mt-4"></div>
       </div>
+      <!-- end of completed assigned form  -->
 
       <!-- Modal confirm delete -->
       <div
@@ -597,7 +252,6 @@
           </div>
         </div>
       </div>
-      <!-- empty column -->
     </div>
   </section>
 </template>
@@ -613,6 +267,10 @@ import { useTemplateStore } from "../stores/templateStore";
 import { onMounted, ref, watch } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import FormService from "../services/form/formService";
+import { useRouter } from "vue-router";
+import DeadlinesChart from "../components/dashboard/AdminVendorPage/DeadlinesChart.vue";
+import FormStatusBarChart from "../components/dashboard/AdminVendorPage/FormStatusBarChart.vue";
+import UpdatesTodayChart from "../components/dashboard/AdminVendorPage/UpdatesTodayChart.vue";
 
 export default {
   components: {
@@ -621,7 +279,10 @@ export default {
     TemplateList,
     SectionComponent,
     FormCard,
-  },
+    DeadlinesChart,
+    FormStatusBarChart,
+    UpdatesTodayChart
+},
   props: ["vendorId"],
   setup(props) {
     const currId = ref(props.vendorId);
@@ -633,7 +294,7 @@ export default {
     };
 
     getVendorInfo();
-    console.log(vendorInfo);
+    console.log('After getVendorInfo() called> ', vendorInfo);
 
     var vendorUsers = ref([]);
     var getUserInfo = async () => {
@@ -643,47 +304,40 @@ export default {
     getUserInfo();
 
     var allForms = ref([]);
-    var vendorForms = ref([]);
     var vendorAssignedForms = ref([]);
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
+    var completedForms = ref([]);
 
-    var getAllVendorForms = async () => {
-      allForms.value = await FormService.getForms(currId.value);
+    var getAllForms = async () => {
+      allForms.value = await FormService.getVendorForms(currId.value);
       console.log("hi" + allForms.value[0].vendorId);
       for (var i = 0; i < allForms.value.length; i++) {
-        vendorForms.value.push(allForms.value[i]);
         if (allForms.value[i].status == "vendor_response") {
           vendorAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "admin_response") {
           adminAssignedForms.value.push(allForms.value[i]);
-        } else if (allForms.value[i].status == "approval_response") {
+        } else if (allForms.value[i].status == "approver_response") {
           approvalAssignedForms.value.push(allForms.value[i]);
         }
       }
     };
-
-    var getAllForms = async () => {
-      allForms.value = await FormService.getForms();
-      console.log("hi" + allForms.value[0].vendorId);
-      for (var i = 0; i < allForms.value.length; i++) {
-        if (allForms.value[i].vendorId == currId.value) {
-          vendorForms.value.push(allForms.value[i]);
-          if (allForms.value[i].status == "vendor_response") {
-            vendorAssignedForms.value.push(allForms.value[i]);
-          } else if (allForms.value[i].status == "admin_response") {
-            adminAssignedForms.value.push(allForms.value[i]);
-          } else if (allForms.value[i].status == "approval_response") {
-            approvalAssignedForms.value.push(allForms.value[i]);
-          }
-        }
-      }
-    };
-    getAllVendorForms();
+    getAllForms();
 
     var toDelete = ref("");
     function upToDelete(vendorFormId) {
       toDelete.value = vendorFormId;
+    }
+
+    const router = useRouter();
+    function enterForm(vendorFormId) {
+      console.log("enter form is " + vendorFormId);
+      router.push({
+        path: "/vendorForm",
+        query: {
+          vendorFormId: vendorFormId,
+        },
+      });
     }
 
     var content = ref("");
@@ -700,6 +354,30 @@ export default {
           error.toString();
       }
     );
+
+    const toggleCreateUserPage = (vendorName, vendorId) => {
+      router.push({
+        name: "createUser",
+        params: {
+          name: vendorName,
+        },
+        query: {
+          vendorId: vendorId,
+        },
+      });
+    };
+
+    const toggleFormBuilderPage = (vendorName, vendorId) => {
+      router.push({
+        name: "formbuilder",
+        params: {
+          name: vendorName,
+        },
+        query: {
+          vendorId: vendorId,
+        },
+      });
+    };
 
     //get template data from templatestore
     var templateStore = useTemplateStore();
@@ -862,6 +540,7 @@ export default {
       vendorAssignedForms,
       adminAssignedForms,
       approvalAssignedForms,
+      completedForms,
       toDelete,
       addTextInput,
       addHeaderText,
@@ -879,6 +558,9 @@ export default {
       addAdminSection,
       addVendorSection,
       upToDelete,
+      enterForm,
+      toggleCreateUserPage,
+      toggleFormBuilderPage,
     };
   },
 };

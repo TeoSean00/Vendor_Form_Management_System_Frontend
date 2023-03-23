@@ -89,6 +89,7 @@ const router = createRouter({
       path: "/createUser",
       name: "createUser",
       component: CreateUser,
+      props: (route) => ({ vendorId: route.query.vendorId }),
       beforeEnter: requireAdmin,
     },
     // {
@@ -102,7 +103,7 @@ const router = createRouter({
       component: () => import("../views/BoardUser.vue"),
     },
     {
-      path: "/formbuilder",
+      path: "/formbuilder/",
       name: "formbuilder",
       component: FormBuilder,
       props: (route) => ({ vendorId: route.query.vendorId }),
@@ -138,6 +139,7 @@ const router = createRouter({
       path: "/vendorForm",
       name: "VendorForm",
       component: () => import("../views/VendorForm.vue"),
+      props: (route) => ({ vendorFormId: route.query.vendorFormId }),
       beforeEnter: requireAuth,
     },
     {

@@ -34,10 +34,12 @@
           :class="buttonColor"
           data-bs-toggle="tooltip"
           data-bs-placement="right"
+          data-bs-animation="true"
           title="Add Header"
         >
           <font-awesome-icon icon="fa-solid fa-h" />
         </button>
+        
         <button
           @click="addTextInput"
           :class="buttonColor"
@@ -101,6 +103,27 @@
           title="Add Likert Group"
         >
           <font-awesome-icon icon="fa-solid fa-object-group" />
+        </button>
+        
+        <button
+          v-if="assignTo == 'Vendor'"
+          @click="addAcknowledgementInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Acknowledgement"
+        >
+        <font-awesome-icon icon="fa-solid fa-signature" />
+        </button>
+        <button
+          v-if="assignTo == 'Admin'"
+          @click="addApprovalInput"
+          :class="buttonColor"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          title="Add Approval"
+        >
+        <font-awesome-icon icon="fa-solid fa-signature" />
         </button>
       </div>
     </div>
@@ -185,6 +208,7 @@ export default {
         text: "",
         options: [],
         required: false,
+        shortAnswer: false,
       });
     }
     function addRadioInput() {
@@ -239,6 +263,17 @@ export default {
         required: false,
       });
     }
+    function addAcknowledgementInput() {
+      formItems.value.push({
+        type: "acknowledgement",
+      });
+    }
+
+    function addApprovalInput() {
+      formItems.value.push({
+        type: "approval",
+      });
+    }
 
     function update() {
       //Uncomment this out to check
@@ -267,6 +302,8 @@ export default {
       addNumberInput,
       addLikertGroupInput,
       addTextInput,
+      addApprovalInput,
+      addAcknowledgementInput,
       removeQuestion,
       removeSection,
       update,
