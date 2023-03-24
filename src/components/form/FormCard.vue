@@ -5,11 +5,8 @@
       
        
           
-         
-        <h2 class="card-title">{{ formName }}</h2>
-        <span v-if="formStatus == 'vendor_response'" class="float-right">
-            <font-awesome-icon icon="envelope" class="float-right"/>
-        </span>
+          <h2 class="card-title">{{ formName }}</h2>
+          <!-- <font-awesome-icon icon="envelope" class="float-right"/> -->
         <p class="card-text mt-4">
           <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
           <p>Deadline : {{ deadline }}</p>
@@ -35,17 +32,16 @@
               @click="updateToDelete"
             >
               Delete
-            </button>
+          </button>
           </div>
+        </div>
           <div class="row justify-content-center border-0">
-            <div class="col-6">
-              <button
+            <div class="col-6" style="border-right: 0 ; padding-left: 0;">
+              <testEmail
               class="btn btn-link border-0"
               data-bs-toggle="modal"
-              data-bs-target="#remindmModal"
-            >
-              Remind
-            </button>
+              data-bs-target="#remindModal"
+              ></testEmail>
             </div>
           </div>
           <div v-if="formStatus == 'form_completed'">
@@ -53,7 +49,6 @@
               Download
             </button>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -63,83 +58,74 @@
 import { ref } from "vue";
 import axios from "axios";
 import authHeader from "../../services/authHeader";
+import testEmail from "../../components/admin/components/TestEmail.vue"
+
 
 export default {
-  props: ["vendorFormId", "formInfo", "dateCreated", "deadline", "formStatus"],
-  emits: ["updateToDelete"],
-  setup(props, context) {
-    var formStatus = ref("");
-    formStatus.value = props.formStatus;
-    console.log(formStatus)
-    var formName = ref("");
-    formName.value = props.formInfo.formName;
-    var formDesc = ref("");
-    formDesc.value = props.formInfo.formDesc;
-    function updateToDelete() {
-      context.emit("upToDelete", props.vendorFormId);
+    components:{testEmail},
+    props: ["vendorFormId", "formInfo", "dateCreated", "deadline", "formStatus", "vendorUsers"],
+    emits: ["updateToDelete"],
+    setup(props, context) {
+        var formStatus = ref("");
+        formStatus.value = props.formStatus;
+        console.log(formStatus);
+        var formName = ref("");
+        formName.value = props.formInfo.formName;
+        var formDesc = ref("");
+        formDesc.value = props.formInfo.formDesc;
+        function updateToDelete() {
+            context.emit("upToDelete", props.vendorFormId);
+        }
+        function enterForm() {
+            context.emit("enterForm", props.vendorFormId);
+        }
+        console.log("AUTHHEADER IS ", authHeader(), "vendorID is", props.vendorFormId);
+
+        
+        var generatePdf = async () => {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", authHeader().Authorization);
+            var requestOptions = {
+                method: "GET",
+                headers: myHeaders,
+            };
+            await fetch("http://localhost:8080/api/form/generateForm/" + props.vendorFormId, requestOptions)
+                .then((response) => response.blob())
+                .then((blob) => {
+                const fileURL = URL.createObjectURL(blob);
+                // Display PDF using an iframe
+                const iframe = document.createElement("iframe");
+                iframe.src = fileURL;
+                document.body.appendChild(iframe);
+                // Download PDF
+                const link = document.createElement("a");
+                link.href = fileURL;
+                link.download = "example.pdf";
+                link.click();
+                // var fileURL = window.URL.createObjectURL(
+                //   new Blob([response.data], { type: "application/pdf" })
+                // );
+                // var fileLink = document.createElement("a");
+                // fileLink.href = fileURL;
+                // fileLink.setAttribute("download", "file.pdf");
+                // document.body.appendChild(fileLink);
+                // fileLink.click();
+                // var file = new Blob([response.data], { type: "application/pdf" });
+                // var fileURL = URL.createObjectURL(file);
+                // window.open(fileURL);
+            });
+        };
+        return {
+            formStatus,
+            props,
+            context,
+            updateToDelete,
+            enterForm,
+            formName,
+            formDesc,
+            generatePdf,
+            testEmail,
+        };
     }
-
-    function enterForm() {
-      context.emit("enterForm", props.vendorFormId);
-    }
-
-    console.log(
-      "AUTHHEADER IS ",
-      authHeader(),
-      "vendorID is",
-      props.vendorFormId
-    );
-
-    var generatePdf = async () => {
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", authHeader().Authorization);
-      var requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-      };
-
-      await fetch(
-        "http://localhost:8080/api/form/generateForm/" + props.vendorFormId,
-        requestOptions
-      )
-        .then((response) => response.blob())
-        .then((blob) => {
-          const fileURL = URL.createObjectURL(blob);
-          // Display PDF using an iframe
-          const iframe = document.createElement("iframe");
-          iframe.src = fileURL;
-          document.body.appendChild(iframe);
-          // Download PDF
-          const link = document.createElement("a");
-          link.href = fileURL;
-          link.download = "example.pdf";
-          link.click();
-          // var fileURL = window.URL.createObjectURL(
-          //   new Blob([response.data], { type: "application/pdf" })
-          // );
-          // var fileLink = document.createElement("a");
-
-          // fileLink.href = fileURL;
-          // fileLink.setAttribute("download", "file.pdf");
-          // document.body.appendChild(fileLink);
-
-          // fileLink.click();
-          // var file = new Blob([response.data], { type: "application/pdf" });
-          // var fileURL = URL.createObjectURL(file);
-          // window.open(fileURL);
-        });
-    };
-
-    return {
-      formStatus,
-      props,
-      context,
-      updateToDelete,
-      enterForm,
-      formName,
-      formDesc,
-      generatePdf,
-    };
-  },
 };
 </script>

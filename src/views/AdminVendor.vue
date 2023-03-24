@@ -193,6 +193,7 @@
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
             :formStatus="vendorForm.status"
+            :vendorUsers ="vendorUsers"
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>
@@ -325,6 +326,46 @@
           </div>
         </div>
       </div>
+
+      <!-- MODAL for REMINDER -->
+      <div
+        class="modal fade"
+        id="remindModal"
+        tabindex="-1"
+        aria-labelledby="remindModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="remindModalLabel">Send Email</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body ">
+              <form>
+              <div class="form-group mb-2">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" v-model="remindEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              </div>
+
+              <div class="form-group mb-2">
+                <label for="exampleText">Message</label>
+                <input type="textarea" v-model="remindMessage" class="form-control" id="exampleText" placeholder="Message">
+              </div>
+
+            </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" @click="sendEmail">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -344,6 +385,7 @@ import { useRouter } from "vue-router";
 import DeadlinesChart from "../components/dashboard/AdminVendorPage/DeadlinesChart.vue";
 import FormStatusBarChart from "../components/dashboard/AdminVendorPage/FormStatusBarChart.vue";
 import UpdatesTodayChart from "../components/dashboard/AdminVendorPage/UpdatesTodayChart.vue";
+import emailjs from '@emailjs/browser';
 
 export default {
   components: {
@@ -366,6 +408,9 @@ export default {
       vendorInfo.value = await VendorService.getVendor(currId.value);
     };
 
+    var remindEmail = ref("");
+    var remindMessage = ref("");
+
     getVendorInfo();
     console.log("After getVendorInfo() called> ", vendorInfo);
 
@@ -381,6 +426,27 @@ export default {
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
     var completedForms = ref([]);
+
+    const sendEmail = () => {
+            console.log(vendorInfo.value.name)
+            console.log(remindEmail.value)
+            console.log(remindMessage)
+
+            emailjs.send("service_xquebpj","template_87ifsho",
+            {
+                to_name: vendorInfo.value.name,
+                send_to: remindEmail.value,
+                message: remindMessage.value
+            },
+            "Qubr9KRvmmD-pLaFH")
+            .then((result) => {
+                console.log('SUCCESS!', result.text);
+            }, (error) => {
+                console.log('FAILED...', error.text);
+            });
+        }
+
+
 
     var getAllForms = async () => {
       allForms.value = await FormService.getVendorForms(currId.value);
@@ -636,6 +702,9 @@ export default {
       enterForm,
       toggleCreateUserPage,
       toggleFormBuilderPage,
+      sendEmail,
+      remindEmail,
+      remindMessage,
     };
   },
 };
