@@ -2,7 +2,14 @@
   <div class="col">
     <div class="card h-100">
       <div class="card-body">
+      
+       
+          
+         
         <h2 class="card-title">{{ formName }}</h2>
+        <span v-if="formStatus == 'vendor_response'" class="float-right">
+            <font-awesome-icon icon="envelope" class="float-right"/>
+        </span>
         <p class="card-text mt-4">
           <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
           <p>Deadline : {{ deadline }}</p>
@@ -10,6 +17,7 @@
           {{ formDesc }}</p>
           <!-- {{ vendorFormId }} -->
         </p>
+
       </div>
       <div class="card-footer">
         <div class="row">
@@ -28,6 +36,17 @@
             >
               Delete
             </button>
+          </div>
+          <div class="row justify-content-center border-0">
+            <div class="col-6">
+              <button
+              class="btn btn-link border-0"
+              data-bs-toggle="modal"
+              data-bs-target="#remindmModal"
+            >
+              Remind
+            </button>
+            </div>
           </div>
           <div v-if="formStatus == 'form_completed'">
             <button class="btn btn-main-blue" @click="generatePdf">
@@ -51,6 +70,7 @@ export default {
   setup(props, context) {
     var formStatus = ref("");
     formStatus.value = props.formStatus;
+    console.log(formStatus)
     var formName = ref("");
     formName.value = props.formInfo.formName;
     var formDesc = ref("");
