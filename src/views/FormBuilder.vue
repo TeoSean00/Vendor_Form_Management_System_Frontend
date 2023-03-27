@@ -33,10 +33,6 @@
             </button>
           </span>
         </h1>
-
-        <!-- {{ previewObj }}
-        {{ formName }}
-        {{ desc }} -->
         <div class="row">
           <span class="text-secondary-blue"
             >Form Name:
@@ -289,7 +285,7 @@ import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
 import TemplateSelect from "../components/template/TemplateSelect.vue";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
 import TemplateService from "../services/template/templateService";
@@ -500,8 +496,10 @@ export default {
     var formName = ref("");
     var desc = ref("");
     var formSections = ref([]);
+
+
+
     var checkEmptyFields = () => {
-      
       var anyEmptyFields = false;
       anyEmptyFields = false;
       if (formName.value.length ==0 ){
@@ -535,6 +533,7 @@ export default {
     var addTemplate = (template) => {
       if (checkEmptyFields()) {
         console.log("Empty fields detected!");
+        alert("Please fill in the Form Name and Description!");
       } else {
         for (let i = 0; i < template.value["templateContents"].length; i++) {
           var section = template.value["templateContents"][i];
@@ -555,6 +554,7 @@ export default {
     function exportForm() {
       if (checkEmptyFields()) {
         console.log("Empty fields detected!");
+        alert("Please fill in the Form Name and Description!");
       } else {
         //Packages the form content into a JSON string
         //This is where we write the ajax code
@@ -741,6 +741,10 @@ export default {
     var createFormError = ref(null);
     //add form to vendor
     var toggleCreateForm = async () => {
+      if (checkEmptyFields()) {
+        console.log("Empty fields detected!");
+        alert("Please fill in the Form Name and Description!");
+      } 
       if (formDeadline.value == null) {
         createFormError.value = "Please select a date";
         return;
