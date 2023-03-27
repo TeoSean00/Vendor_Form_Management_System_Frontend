@@ -125,42 +125,6 @@
             Vendor Section
           </button>
         </div>
-        <!-- Form Utilities -->
-        <!-- <div class="col-8 justify-content-center text-center mt-1">
-          <button @click="exportForm" class="col-3 mx-2 btn btn-turqouise mb-3">
-            Save Template
-          </button>
-          <button
-            type="button"
-            class="col-2 mx-2 btn btn-secondary-blue mb-3"
-            data-bs-toggle="modal"
-            data-bs-target="#templatePreview"
-            @click="togglePreview"
-          >
-            Preview
-          </button>
-          <button
-            v-if="selectedVendor == null"
-            class="col-3 mx-2 btn btn-main-blue mb-3"
-            data-bs-toggle="modal"
-            data-bs-target="#createFormModal"
-          >
-            Create Form
-          </button>
-          <button
-            v-if="selectedVendor != null"
-            class="col-3 mx-2 btn btn-main-blue mb-3"
-            @click="toggleCreateForm"
-          >
-            Create Form
-          </button>
-        </div> -->
-        <!-- Tyler button to go Do Form page
-        <div class="row mt-4">
-          <router-link to="/vendorForm">
-            <button class="btn btn-turqouise mb-3">Go to Form (TYLER)</button>
-          </router-link>
-        </div> -->
       </div>
     </div>
 
@@ -531,12 +495,26 @@ export default {
       ],
     };
     //Adding in a vendor form at every time we refresh...
-    // console.log(vendorAssessmentForm)
-    TemplateService.addTemplate(vendorAssessmentForm);
+    // TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
     var desc = ref("");
     var formSections = ref([]);
+    var checkEmptyFields = () => {
+      
+      var anyEmptyFields = false;
+      anyEmptyFields = false;
+      if (formName.value.length ==0 ){
+        anyEmptyFields = true;
+      }
+      if (desc.value.length == 0){
+        anyEmptyFields = true;
+      }
+      return anyEmptyFields;
+
+
+
+    }
 
     var addSelectedTemplate = () => {
       // console.log("Checking templateData in createform", selectedTemplateObject);
@@ -555,11 +533,15 @@ export default {
     };
 
     var addTemplate = (template) => {
-      // console.log("template received is", template.value);
-      for (let i = 0; i < template.value["templateContents"].length; i++) {
-        var section = template.value["templateContents"][i];
-        formSections.value.push(section);
+      if (checkEmptyFields()) {
+        console.log("Empty fields detected!");
+      } else {
+        for (let i = 0; i < template.value["templateContents"].length; i++) {
+          var section = template.value["templateContents"][i];
+          formSections.value.push(section);
+        }
       }
+      // console.log("template received is", template.value);
     };
 
     function update() {
@@ -571,33 +553,37 @@ export default {
       formSections.value.splice(toRemove, 1);
     }
     function exportForm() {
-      //Packages the form content into a JSON string
-      //This is where we write the ajax code
-      const outputObj = {
-        templateInfo: {
-          templateName: formName.value,
-          templateDesc: desc.value,
-        },
-        templateContents: formSections.value,
-      };
-      //Add template to backend
-
-      // console.log(outputObj);
-      // const outputJson = JSON.stringify(outputObj);
-      TemplateService.addTemplate(outputObj);
-      // console.log("Added");
-      // console.log(outputObj);
-
-      //for adding template to mongoDB
-      // templates.addTemplate(outputObj);
-      // console.log("-----------------------------------------");
-      // console.log("Form has been exported, details below:");
-      // console.log("Form name: " + formName.value);
-      // console.log("Form assigned to: " + assignedTo.value);
-      // console.log("Form desc: " + desc.value);
-      // console.log("--------------Form Contents--------------");
-      // console.log(formItems.value);
-      // console.log("-----------------------------------------");
+      if (checkEmptyFields()) {
+        console.log("Empty fields detected!");
+      } else {
+        //Packages the form content into a JSON string
+        //This is where we write the ajax code
+        const outputObj = {
+          templateInfo: {
+            templateName: formName.value,
+            templateDesc: desc.value,
+          },
+          templateContents: formSections.value,
+        };
+        //Add template to backend
+  
+        // console.log(outputObj);
+        // const outputJson = JSON.stringify(outputObj);
+        TemplateService.addTemplate(outputObj);
+        // console.log("Added");
+        // console.log(outputObj);
+  
+        //for adding template to mongoDB
+        // templates.addTemplate(outputObj);
+        // console.log("-----------------------------------------");
+        // console.log("Form has been exported, details below:");
+        // console.log("Form name: " + formName.value);
+        // console.log("Form assigned to: " + assignedTo.value);
+        // console.log("Form desc: " + desc.value);
+        // console.log("--------------Form Contents--------------");
+        // console.log(formItems.value);
+        // console.log("-----------------------------------------");
+      }
     }
 
     var previewObj = ref({
@@ -820,6 +806,7 @@ export default {
       removeSection,
       togglePreview,
       toggleVendorPage,
+      checkEmptyFields,
       newForm,
     };
   },
