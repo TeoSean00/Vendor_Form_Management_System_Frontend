@@ -7,24 +7,8 @@
         <span class="heading-primary-main">{{ vendorInfo.name }}</span>
         <span class="heading-primary-sub">{{ vendorInfo.country }}</span>
       </h1>
-      <a
-        href="#allusers"
-        data-bs-toggle="modal"
-        class="btn btn-white btn-animated mx-2"
-        >All Users</a
-      >
-      <a
-        href="#"
-        class="btn btn-white btn-animated mx-2"
-        @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)"
-        >Add user</a
-      >
-      <a
-        href="#"
-        class="btn btn-white btn-animated mx-2"
-        @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)"
-        >Add Forms</a
-      >
+      <a href="#allusers" data-bs-toggle="modal" class="btn btn-white btn-animated mx-2">All Users</a>
+      
     </div>
   </header>
 
