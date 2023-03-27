@@ -63,7 +63,7 @@
           ></textarea>
         </div>
       </div>
-      {{ newForm }}
+      <!-- {{ newForm }} -->
       <div class="row p-1 mt-1">
         <div v-for="(section, index) in formSections" :key="index">
           <SectionComponent
@@ -531,14 +531,11 @@ export default {
     };
 
     var addTemplate = (template) => {
-      if (checkEmptyFields()) {
-        console.log("Empty fields detected!");
-        alert("Please fill in the Form Name and Description!");
-      } else {
+ 
         for (let i = 0; i < template.value["templateContents"].length; i++) {
           var section = template.value["templateContents"][i];
           formSections.value.push(section);
-        }
+        
       }
       // console.log("template received is", template.value);
     };
