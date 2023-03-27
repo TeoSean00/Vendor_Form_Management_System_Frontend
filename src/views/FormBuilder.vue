@@ -34,25 +34,24 @@
           </span>
         </h1>
         <div class="row">
-          <span class="text-secondary-blue"
+          <span class="col-3 text-secondary-blue"
             >Form Name:
             <input
-              class="col-6"
               type="text"
               placeholder="Give this form a name!"
               v-model="formName"
             />
           </span>
-        </div>
-        <!-- <div class="row">
-          <span class="text-secondary-blue"
-            >Assigned to:
-            <select v-model="assignedTo">
-              <option>Vendor</option>
-              <option>Admin</option>
-            </select>
+          <span class="col-3 text-secondary-blue"
+            >Form Code:
+            <input
+              type="text"
+              placeholder="Enter in form code."
+              v-model="formCode"
+            />
           </span>
-        </div> -->
+        </div>
+  
         <div class="row">
           <span class="text-secondary-blue">Description: </span>
           <textarea
@@ -494,6 +493,7 @@ export default {
     // TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
+    var formCode = ref("");
     var desc = ref("");
     var formSections = ref([]);
 
@@ -505,13 +505,17 @@ export default {
       if (formName.value.length ==0 ){
         anyEmptyFields = true;
       }
+      if (formCode.value.length ==0 ){
+        anyEmptyFields = true;
+      }
       if (desc.value.length == 0){
         anyEmptyFields = true;
       }
+      if (formSections.value.length == 0){
+        anyEmptyFields = true;
+      }
+
       return anyEmptyFields;
-
-
-
     }
 
     var addSelectedTemplate = () => {
@@ -551,7 +555,7 @@ export default {
     function exportForm() {
       if (checkEmptyFields()) {
         console.log("Empty fields detected!");
-        alert("Please fill in the Form Name and Description!");
+        alert("Please fill in the Form Name, Description or Section!");
       } else {
         //Packages the form content into a JSON string
         //This is where we write the ajax code
@@ -559,6 +563,7 @@ export default {
           templateInfo: {
             templateName: formName.value,
             templateDesc: desc.value,
+            templateCode: formCode.value,
           },
           templateContents: formSections.value,
         };
@@ -587,6 +592,7 @@ export default {
       templateInfo: {
         formName: formName,
         formDesc: desc,
+        formCode:formCode
       },
       templateContents: formSections,
     });
@@ -793,6 +799,7 @@ export default {
       previewObj,
       content,
       formName,
+      formCode,
       desc,
       templatesList,
       formSections,
