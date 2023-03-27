@@ -151,6 +151,8 @@ export default {
             console.log(response);
             toast.success("Login successful!", {
               position: toast.POSITION.TOP_CENTER,
+              pauseOnHover: false,
+              autoClose:2000,
             });
             console.log(response);
             router.push("/");
