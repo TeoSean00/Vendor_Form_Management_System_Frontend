@@ -26,6 +26,8 @@
         </div>
       </div>
     </div>
+
+  
     <!-- <header class="jumbotron">
       <h3>
         <strong>{{ currentUser.username }}</strong> Profile
@@ -59,8 +61,9 @@
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
 import Navbar from "../components/navbar/NavbarJP.vue";
+import Footer from "../components/navbar/Footer.vue";
 export default {
-  components: { Navbar },
+  components: { Navbar},
   setup() {
     var auth = useAuthStore();
     var router = useRouter();
