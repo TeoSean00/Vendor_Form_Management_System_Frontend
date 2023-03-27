@@ -183,12 +183,17 @@ input{
 }
 
 /* TOAST STUFF */
-.Toastify__toast {
+.Toastify__toast--success {
   border-radius: 50px;
   background-color: green;
   color: white;;
 }
 
+.Toastify__toast--error {
+  border-radius: 50px;
+  background-color: rgb(202, 158, 158);
+  color: white;;
+}
 
 
 

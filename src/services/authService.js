@@ -39,6 +39,8 @@ class AuthService {
         console.log("success! response is", response);
         toast.success("User successfully created!", {
           position: toast.POSITION.TOP_CENTER,
+          pauseOnHover: false,
+          autoClose:2000,
         });
         console.log(response);
         return response.data;
@@ -47,6 +49,8 @@ class AuthService {
         console.log("failed! response is", error);
         toast.error("User creation failed!", {
           position: toast.POSITION.TOP_CENTER,
+          pauseOnHover: false,
+          autoClose:2000,
         });
         return error;
       });
