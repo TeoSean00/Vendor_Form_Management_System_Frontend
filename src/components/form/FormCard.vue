@@ -8,13 +8,14 @@
               data-bs-target="#remindModal"/></div>
         </div>
         
-        <p class="card-text mt-4">
+        <div class="card-text mt-4">
           <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
           <p>Deadline : {{ deadline }}</p>
           <p>
             Form description: <br />
             {{ formDesc }}
           </p>
+        
           <!-- {{ vendorFormId }} -->
         </div>
       </div>
