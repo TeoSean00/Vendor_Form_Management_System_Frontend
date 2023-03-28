@@ -645,7 +645,7 @@ export default {
               input: [],
               options: row.options,
               type: type,
-              // shortAnswer: row.shortAnswer,
+              shortAnswer: row.shortAnswer,
               // shortAnswerArr : new Array(row.options.length()).fill(null)
             });
           } else if (type == "header") {
