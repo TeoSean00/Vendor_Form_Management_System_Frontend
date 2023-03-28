@@ -139,17 +139,15 @@ export default {
       // console.log("vendor details data passed> ", props.vendorDetails);
       if (props.vendorDetails != null) {
         try {
-          // console.log("vendorDetails props succesfully updated, vendorID> ", props.vendorDetails.id)
           formData.value = await FormService.getVendorForms(props.vendorDetails.id).then((response) => {
-            // console.log(response)
             return response;
           })
         }
         catch (error) {
-          console.log("error occured while getting forms for vendor", error);
+          // console.log("error occured while getting forms for vendor", error);
         }
       }
-      // console.log("After getVendorForms() with vendor details invoked, vendor's form details> ", formData.value);
+      // console.log("After getVendorForms() invoked> ", formData.value);    
     })
 
     return {
