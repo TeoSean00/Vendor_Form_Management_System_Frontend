@@ -8,8 +8,8 @@
       <textarea name="message"></textarea>
       <input type="submit" value="Send">
     </form> -->
-    <button @click="sendEmail" class="btn btn-primary">
-        Send Email
+    <button class="btn btn-primary">
+        Remind
     </button>
   </template>
   
@@ -17,11 +17,8 @@
   import emailjs from '@emailjs/browser';
   
   export default {
-    props:{
-        // vendorEmail,
-        formDueDate: "",
-        vendorName : "",
-    },
+    props:["vendorEmail", "formDueDate","vendorName","vendorUsers"],
+
     setup(props) {
 
         const sendEmail = () => {

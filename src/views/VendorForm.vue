@@ -155,10 +155,8 @@
             Submit to admin
           </button>
 
-          <testEmail
-            :vendorName="newForm.vendorName"
-            :formDueDate="newForm.deadline"
-          />
+          <!-- <testEmail :vendorName="newForm.vendorName" :formDueDate="newForm.deadline"/> -->
+ 
         </form>
       </div>
     </div>
