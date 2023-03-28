@@ -444,6 +444,10 @@ export default {
             }, (error) => {
                 console.log('FAILED...', error.text);
             });
+
+            remindEmail.value = "";
+            remindMessage.value = "";
+
         }
 
 

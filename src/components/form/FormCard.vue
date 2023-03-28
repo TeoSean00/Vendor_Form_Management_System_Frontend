@@ -2,17 +2,18 @@
   <div class="col">
     <div class="card h-100">
       <div class="card-body">
-      
-       
-          
-          <h2 class="card-title">{{ formName }}</h2>
-          <!-- <font-awesome-icon icon="envelope" class="float-right"/> -->
+        <div class="row d-flex">
+          <div class="col-10"><h2 class="card-title">{{ formName }}</h2></div>
+          <div class="col-2"><font-awesome-icon icon="envelope" class="" data-bs-toggle="modal"
+              data-bs-target="#remindModal"/></div>
+        </div>
+        
         <p class="card-text mt-4">
           <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
-          <p>Deadline : {{ deadline }}</p>
-          <p>Form description: <br />
+        <p>Deadline : {{ deadline }}</p>
+        <p>Form description: <br />
           {{ formDesc }}</p>
-          <!-- {{ vendorFormId }} -->
+        <!-- {{ vendorFormId }} -->
         </p>
 
       </div>
@@ -35,7 +36,8 @@
           </button>
           </div>
         </div>
-          <div class="row justify-content-center border-0">
+        <!--EMAIL FUNCTION-->
+          <!-- <div class="row justify-content-center border-0">
             <div class="col-6" style="border-right: 0 ; padding-left: 0;">
               <testEmail
               class="btn btn-link border-0"
@@ -43,7 +45,7 @@
               data-bs-target="#remindModal"
               ></testEmail>
             </div>
-          </div>
+          </div> -->
           <div v-if="formStatus == 'form_completed'">
             <button class="btn btn-main-blue" @click="generatePdf">
               Download
