@@ -637,13 +637,16 @@ export default {
               type: type,
             });
           } else if (type == "radio" || type == "checkbox") {
+            // if row.shortAnswer is true, push together with a shortAnswerArr: new Array(5).fill(null);
+            // if false just push normally
             sectionItems.push({
               order: row.order,
               label: row.text,
               input: [],
               options: row.options,
               type: type,
-              shortAnswer : row.shortAnswer,
+              // shortAnswer: row.shortAnswer,
+              // shortAnswerArr : new Array(row.options.length()).fill(null)
             });
           } else if (type == "header") {
             sectionItems.push({
