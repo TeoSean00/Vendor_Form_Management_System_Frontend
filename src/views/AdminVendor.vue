@@ -179,6 +179,16 @@
           <h4 class="text-white m-0">
             Waiting for vendor response
           </h4>
+
+          <div class="row justify-content-center text-white text-center">
+            <div class="col-2 ms-2">
+              <div class="form-check form-switch" style="text-align: start;">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Auto Remind</label>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
 
