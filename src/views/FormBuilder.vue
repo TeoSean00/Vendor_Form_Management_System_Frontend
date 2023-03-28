@@ -331,6 +331,8 @@ import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
 import TemplateService from "../services/template/templateService";
 import { useRouter } from "vue-router";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
   components: {
@@ -586,6 +588,11 @@ export default {
       // console.log(outputObj);
       // const outputJson = JSON.stringify(outputObj);
       TemplateService.addTemplate(outputObj);
+      toast.success("Form Created!", {
+            position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
+          });
       // console.log("Added");
       // console.log(outputObj);
 
@@ -761,14 +768,22 @@ export default {
       };
       await FormService.addForm(newFormObject)
         .then((response) => {
-          alert("Form created!");
+          toast.success("Form Created!", {
+            position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
+          });
           if (props.vendorId) {
             toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
           }
           // console.log(response);
         })
         .catch((error) => {
-          alert(error);
+          toast.error(error, {
+                  position: toast.POSITION.TOP_CENTER,
+                  pauseOnHover: false,
+                  autoClose:2000,
+                });
         });
     };
 
