@@ -51,7 +51,7 @@
             />
           </span>
         </div>
-  
+
         <div class="row">
           <span class="text-secondary-blue">Description: </span>
           <textarea
@@ -237,6 +237,13 @@
             <div v-if="selectedVendor" class="alert alert-warning" role="alert">
               You selected {{ selectedVendor.name }}
             </div>
+            <div
+              v-if="selectVendorError"
+              class="alert alert-danger"
+              role="alert"
+            >
+              {{ selectVendorError }}
+            </div>
             <label class="form-label">Set Deadline for this form</label>
             <hr />
             <input
@@ -264,7 +271,13 @@
             <button
               type="button"
               class="btn btn-primary"
-              :data-bs-dismiss="formDeadline != null ? 'modal' : ''"
+              :data-bs-dismiss="
+                (formDeadline != null) &
+                (Date.parse(formDeadline) > Date.now()) &
+                (selectedVendor != '')
+                  ? 'modal'
+                  : ''
+              "
               @click="toggleCreateForm"
             >
               Create form
@@ -289,8 +302,8 @@ import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
 import TemplateService from "../services/template/templateService";
 import { useRouter } from "vue-router";
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
   components: {
@@ -499,26 +512,24 @@ export default {
     var desc = ref("");
     var formSections = ref([]);
 
-
-
     var checkEmptyFields = () => {
       var anyEmptyFields = false;
       anyEmptyFields = false;
-      if (formName.value.length ==0 ){
+      if (formName.value.length == 0) {
         anyEmptyFields = true;
       }
-      if (formCode.value.length ==0 ){
+      if (formCode.value.length == 0) {
         anyEmptyFields = true;
       }
-      if (desc.value.length == 0){
+      if (desc.value.length == 0) {
         anyEmptyFields = true;
       }
-      if (formSections.value.length == 0){
+      if (formSections.value.length == 0) {
         anyEmptyFields = true;
       }
 
       return anyEmptyFields;
-    }
+    };
 
     var addSelectedTemplate = () => {
       // console.log("Checking templateData in createform", selectedTemplateObject);
@@ -537,11 +548,9 @@ export default {
     };
 
     var addTemplate = (template) => {
- 
-        for (let i = 0; i < template.value["templateContents"].length; i++) {
-          var section = template.value["templateContents"][i];
-          formSections.value.push(section);
-        
+      for (let i = 0; i < template.value["templateContents"].length; i++) {
+        var section = template.value["templateContents"][i];
+        formSections.value.push(section);
       }
       // console.log("template received is", template.value);
     };
@@ -572,10 +581,10 @@ export default {
       // console.log("Added");
       // console.log(outputObj);
       toast.success("Form Created!", {
-            position: toast.POSITION.TOP_CENTER,
-            pauseOnHover: false,
-            autoClose:2000,
-          });
+        position: toast.POSITION.TOP_CENTER,
+        pauseOnHover: false,
+        autoClose: 2000,
+      });
       //for adding template to mongoDB
       // templates.addTemplate(outputObj);
       // console.log("-----------------------------------------");
@@ -592,7 +601,7 @@ export default {
       templateInfo: {
         formName: formName,
         formDesc: desc,
-        formCode:formCode
+        formCode: formCode,
       },
       templateContents: formSections,
     });
@@ -754,16 +763,37 @@ export default {
 
     getVendors();
 
+    var getDate = () => {
+      const date = new Date();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    };
+
     var formDeadline = ref(null);
     var createFormError = ref(null);
+    var selectVendorError = ref(null);
     //add form to vendor
     var toggleCreateForm = async () => {
       if (checkEmptyFields()) {
         console.log("Empty fields detected!");
         alert("Please fill in the Form Name and Description!");
-      } 
+        return;
+      }
+      if (selectedVendor.value == "") {
+        selectVendorError.value = "Please select a Vendor";
+        return;
+      }
       if (formDeadline.value == null) {
         createFormError.value = "Please select a date";
+        return;
+      }
+      let deadlineDate = Date.parse(formDeadline.value);
+      let todayDate = Date.now();
+
+      if (deadlineDate < todayDate) {
+        createFormError.value = "Your date cannot be earlier than " + getDate();
         return;
       }
       createFormError.value = null;
@@ -781,7 +811,7 @@ export default {
           toast.success("Form Created!", {
             position: toast.POSITION.TOP_CENTER,
             pauseOnHover: false,
-            autoClose:2000,
+            autoClose: 2000,
           });
           if (props.vendorId) {
             toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
@@ -790,10 +820,10 @@ export default {
         })
         .catch((error) => {
           toast.error(error, {
-                  position: toast.POSITION.TOP_CENTER,
-                  pauseOnHover: false,
-                  autoClose:2000,
-                });
+            position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose: 2000,
+          });
         });
     };
 
@@ -811,6 +841,7 @@ export default {
     };
 
     return {
+      selectVendorError,
       createFormError,
       formDeadline,
       selectedVendor,

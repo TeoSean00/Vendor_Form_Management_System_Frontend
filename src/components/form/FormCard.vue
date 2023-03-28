@@ -3,13 +3,15 @@
     <div class="card h-100">
       <div class="card-body">
         <h2 class="card-title">{{ formName }}</h2>
-        <p class="card-text mt-4">
+        <div class="card-text mt-4">
           <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
           <p>Deadline : {{ deadline }}</p>
-          <p>Form description: <br />
-          {{ formDesc }}</p>
+          <p>
+            Form description: <br />
+            {{ formDesc }}
+          </p>
           <!-- {{ vendorFormId }} -->
-        </p>
+        </div>
       </div>
       <div class="card-footer">
         <div class="row">
