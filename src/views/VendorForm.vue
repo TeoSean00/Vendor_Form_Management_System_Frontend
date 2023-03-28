@@ -35,7 +35,7 @@
         <!-- <div>
           {{ formContent }}
         </div> -->
-        <form onsubmit="">
+        <form onsubmit="return false;">
           <template v-for="(section, index) in formContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
 
@@ -185,7 +185,6 @@ export default {
     var formStatus = ref([]);
     var revNumber = ref(null);
     var submitForm = async (status, action) => {
-
       var message = "";
       if (action == "reject") {
         message = "Form Rejected!"
@@ -201,6 +200,7 @@ export default {
         message = "Form Submitted!"
       }
       newForm.value.status = status;
+      console.log("FORM IS ")
       console.log(newForm);
 
       await FormService.updateForm(formID.value, newForm.value)
@@ -238,7 +238,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        router.push({ path: '/' })
+        router.push({ path: '/vendorView' })
     };
 
     // get the roles
@@ -273,14 +273,30 @@ export default {
         var section = check[i]
         for (let item in section){
           var sect = section[item]
-          for (let question of sect){
-            if (question.input == "" || question.input == []){
-              toast.error("Form Not Filled Completely!", {
-                position: toast.POSITION.TOP_CENTER,
-                pauseOnHover: false,
-                autoClose:2000,
-              });
-              return false
+          if (role.includes("ROLE_USER")){
+            if (sect == "vendor"){
+              for (let question of sect){
+                if (question.input == "" || question.input == []){
+                  toast.error("Form Not Filled Completely!", {
+                    position: toast.POSITION.TOP_CENTER,
+                    pauseOnHover: false,
+                    autoClose:2000,
+                  });
+                  return false
+                }
+              }
+            }
+          }
+          else{
+            for (let question of sect){
+              if (question.input == "" || question.input == []){
+                toast.error("Form Not Filled Completely!", {
+                  position: toast.POSITION.TOP_CENTER,
+                  pauseOnHover: false,
+                  autoClose:2000,
+                });
+                return false
+              }
             }
           }
         }

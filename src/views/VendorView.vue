@@ -13,18 +13,6 @@
         class="btn btn-white btn-animated mx-2"
         >All Users</a
       >
-      <a
-        href="#"
-        class="btn btn-white btn-animated mx-2"
-        @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)"
-        >Add user</a
-      >
-      <a
-        href="#"
-        class="btn btn-white btn-animated mx-2"
-        @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)"
-        >Add Forms</a
-      >
     </div>
   </header>
 

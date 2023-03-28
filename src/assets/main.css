@@ -183,12 +183,17 @@ input{
 }
 
 /* TOAST STUFF */
-.Toastify__toast {
+.Toastify__toast--success {
   border-radius: 50px;
   background-color: green;
   color: white;;
 }
 
+.Toastify__toast--error {
+  border-radius: 50px;
+  background-color: rgb(202, 158, 158);
+  color: white;;
+}
 
 
 
@@ -283,9 +288,9 @@ font-size: 14px;
 .empty{
   text-align: center;
   vertical-align: middle;
-  background-color: #9e9898;
+  background-color: #ADD8E6;
   border-radius: 5px;
-  color: rgb(67, 62, 62);
+  color: #4B2D0B;
 }
 /* form card */
 /* @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
