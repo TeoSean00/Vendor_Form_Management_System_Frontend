@@ -33,30 +33,25 @@
             </button>
           </span>
         </h1>
-
-        <!-- {{ previewObj }}
-        {{ formName }}
-        {{ desc }} -->
         <div class="row">
-          <span class="text-secondary-blue"
+          <span class="col-3 text-secondary-blue"
             >Form Name:
             <input
-              class="col-6"
               type="text"
               placeholder="Give this form a name!"
               v-model="formName"
             />
           </span>
-        </div>
-        <!-- <div class="row">
-          <span class="text-secondary-blue"
-            >Assigned to:
-            <select v-model="assignedTo">
-              <option>Vendor</option>
-              <option>Admin</option>
-            </select>
+          <span class="col-3 text-secondary-blue"
+            >Form Code:
+            <input
+              type="text"
+              placeholder="Enter in form code."
+              v-model="formCode"
+            />
           </span>
-        </div> -->
+        </div>
+  
         <div class="row">
           <span class="text-secondary-blue">Description: </span>
           <textarea
@@ -94,12 +89,11 @@
         <div class="col-8">
           <div class="p-1">
             <button
-              class="btn btn-secondary col-12 mx-auto"
+              class="btn btn-outline-secondary mb-2 col-12 mx-auto"
               data-bs-toggle="modal"
               data-bs-target="#selectTemplateModal"
             >
               <font-awesome-icon icon="fa-solid fa-circle-plus" />
-
               Select Template
             </button>
           </div>
@@ -126,42 +120,6 @@
             Vendor Section
           </button>
         </div>
-        <!-- Form Utilities -->
-        <!-- <div class="col-8 justify-content-center text-center mt-1">
-          <button @click="exportForm" class="col-3 mx-2 btn btn-turqouise mb-3">
-            Save Template
-          </button>
-          <button
-            type="button"
-            class="col-2 mx-2 btn btn-secondary-blue mb-3"
-            data-bs-toggle="modal"
-            data-bs-target="#templatePreview"
-            @click="togglePreview"
-          >
-            Preview
-          </button>
-          <button
-            v-if="selectedVendor == null"
-            class="col-3 mx-2 btn btn-main-blue mb-3"
-            data-bs-toggle="modal"
-            data-bs-target="#createFormModal"
-          >
-            Create Form
-          </button>
-          <button
-            v-if="selectedVendor != null"
-            class="col-3 mx-2 btn btn-main-blue mb-3"
-            @click="toggleCreateForm"
-          >
-            Create Form
-          </button>
-        </div> -->
-        <!-- Tyler button to go Do Form page
-        <div class="row mt-4">
-          <router-link to="/vendorForm">
-            <button class="btn btn-turqouise mb-3">Go to Form (TYLER)</button>
-          </router-link>
-        </div> -->
       </div>
     </div>
 
@@ -326,7 +284,7 @@ import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import TemplatePreview from "../components/template/TemplatePreview.vue";
 import TemplateSelect from "../components/template/TemplateSelect.vue";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
 import TemplateService from "../services/template/templateService";
@@ -534,12 +492,33 @@ export default {
       ],
     };
     //Adding in a vendor form at every time we refresh...
-    // console.log(vendorAssessmentForm)
-    TemplateService.addTemplate(vendorAssessmentForm);
+    // TemplateService.addTemplate(vendorAssessmentForm);
 
     var formName = ref("");
+    var formCode = ref("");
     var desc = ref("");
     var formSections = ref([]);
+
+
+
+    var checkEmptyFields = () => {
+      var anyEmptyFields = false;
+      anyEmptyFields = false;
+      if (formName.value.length ==0 ){
+        anyEmptyFields = true;
+      }
+      if (formCode.value.length ==0 ){
+        anyEmptyFields = true;
+      }
+      if (desc.value.length == 0){
+        anyEmptyFields = true;
+      }
+      if (formSections.value.length == 0){
+        anyEmptyFields = true;
+      }
+
+      return anyEmptyFields;
+    }
 
     var addSelectedTemplate = () => {
       // console.log("Checking templateData in createform", selectedTemplateObject);
@@ -558,11 +537,13 @@ export default {
     };
 
     var addTemplate = (template) => {
-      // console.log("template received is", template.value);
-      for (let i = 0; i < template.value["templateContents"].length; i++) {
-        var section = template.value["templateContents"][i];
-        formSections.value.push(section);
+ 
+        for (let i = 0; i < template.value["templateContents"].length; i++) {
+          var section = template.value["templateContents"][i];
+          formSections.value.push(section);
+        
       }
+      // console.log("template received is", template.value);
     };
 
     function update() {
@@ -588,14 +569,13 @@ export default {
       // console.log(outputObj);
       // const outputJson = JSON.stringify(outputObj);
       TemplateService.addTemplate(outputObj);
+      // console.log("Added");
+      // console.log(outputObj);
       toast.success("Form Created!", {
             position: toast.POSITION.TOP_CENTER,
             pauseOnHover: false,
             autoClose:2000,
           });
-      // console.log("Added");
-      // console.log(outputObj);
-
       //for adding template to mongoDB
       // templates.addTemplate(outputObj);
       // console.log("-----------------------------------------");
@@ -612,6 +592,7 @@ export default {
       templateInfo: {
         formName: formName,
         formDesc: desc,
+        formCode:formCode
       },
       templateContents: formSections,
     });
@@ -705,6 +686,16 @@ export default {
               options: row.options,
               type: type,
             });
+          } else if (type == "acknowledgement") {
+            sectionItems.push({
+              order: row.order,
+              type: type,
+            });
+          } else if (type == "approval") {
+            sectionItems.push({
+              order: row.order,
+              type: type,
+            });
           }
         }
         var sectionObject = {};
@@ -756,6 +747,10 @@ export default {
     var createFormError = ref(null);
     //add form to vendor
     var toggleCreateForm = async () => {
+      if (checkEmptyFields()) {
+        console.log("Empty fields detected!");
+        alert("Please fill in the Form Name and Description!");
+      } 
       if (formDeadline.value == null) {
         createFormError.value = "Please select a date";
         return;
@@ -815,6 +810,7 @@ export default {
       previewObj,
       content,
       formName,
+      formCode,
       desc,
       templatesList,
       formSections,
@@ -829,6 +825,7 @@ export default {
       removeSection,
       togglePreview,
       toggleVendorPage,
+      checkEmptyFields,
       newForm,
     };
   },

@@ -18,6 +18,14 @@
               class="col-6 bg-light-grey p-2 my-3 rounded"
               v-model="itemInfo.options[i-1]"
           />
+          &nbsp
+          <input 
+              v-if="itemInfo.shortAnswer"
+              type="text"
+              placeholder="Short Answer"
+              class="col-2 bg-light-grey p-2 my-3 rounded"
+              disabled
+          />
           <button @click="removeOption(i)" class="borderless-button px-3">  
             <font-awesome-icon icon="fa-solid fa-xmark" />
           </button>
@@ -28,6 +36,8 @@
   <div class="row">
     <div class="col-12 text-end px-5 py-1">
       <span >
+        Short Answer
+        <input v-model="itemInfo.shortAnswer" class="form-check-input bg-dark-grey mx-2" type="checkbox">
         Required
         <input v-model="itemInfo.required" class="form-check-input bg-dark-grey mx-2" type="checkbox">
         <button class="borderless-button mx-2" @click="removeQuestion">
@@ -48,6 +58,8 @@
     emits: ["updateText", "removeQuestion"],
     setup(props, context) {
       var noOfOptions = ref(1);
+
+      const shortAnswer = ref(false);
 
       function updateText() {
         context.emit("updateText", props.itemInfo.value);
