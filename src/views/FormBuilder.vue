@@ -289,6 +289,8 @@ import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
 import TemplateService from "../services/template/templateService";
 import { useRouter } from "vue-router";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
   components: {
@@ -553,39 +555,37 @@ export default {
       formSections.value.splice(toRemove, 1);
     }
     function exportForm() {
-      if (checkEmptyFields()) {
-        console.log("Empty fields detected!");
-        alert("Please fill in the Form Name, Description or Section!");
-      } else {
-        //Packages the form content into a JSON string
-        //This is where we write the ajax code
-        const outputObj = {
-          templateInfo: {
-            templateName: formName.value,
-            templateDesc: desc.value,
-            templateCode: formCode.value,
-          },
-          templateContents: formSections.value,
-        };
-        //Add template to backend
-  
-        // console.log(outputObj);
-        // const outputJson = JSON.stringify(outputObj);
-        TemplateService.addTemplate(outputObj);
-        // console.log("Added");
-        // console.log(outputObj);
-  
-        //for adding template to mongoDB
-        // templates.addTemplate(outputObj);
-        // console.log("-----------------------------------------");
-        // console.log("Form has been exported, details below:");
-        // console.log("Form name: " + formName.value);
-        // console.log("Form assigned to: " + assignedTo.value);
-        // console.log("Form desc: " + desc.value);
-        // console.log("--------------Form Contents--------------");
-        // console.log(formItems.value);
-        // console.log("-----------------------------------------");
-      }
+      //Packages the form content into a JSON string
+      //This is where we write the ajax code
+      const outputObj = {
+        templateInfo: {
+          templateName: formName.value,
+          templateDesc: desc.value,
+        },
+        templateContents: formSections.value,
+      };
+      //Add template to backend
+
+      // console.log(outputObj);
+      // const outputJson = JSON.stringify(outputObj);
+      TemplateService.addTemplate(outputObj);
+      // console.log("Added");
+      // console.log(outputObj);
+      toast.success("Form Created!", {
+            position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
+          });
+      //for adding template to mongoDB
+      // templates.addTemplate(outputObj);
+      // console.log("-----------------------------------------");
+      // console.log("Form has been exported, details below:");
+      // console.log("Form name: " + formName.value);
+      // console.log("Form assigned to: " + assignedTo.value);
+      // console.log("Form desc: " + desc.value);
+      // console.log("--------------Form Contents--------------");
+      // console.log(formItems.value);
+      // console.log("-----------------------------------------");
     }
 
     var previewObj = ref({
@@ -764,14 +764,22 @@ export default {
       };
       await FormService.addForm(newFormObject)
         .then((response) => {
-          alert("Form created!");
+          toast.success("Form Created!", {
+            position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
+          });
           if (props.vendorId) {
             toggleVendorPage(vendorInfo.value.name, vendorInfo.value.id);
           }
           // console.log(response);
         })
         .catch((error) => {
-          alert(error);
+          toast.error(error, {
+                  position: toast.POSITION.TOP_CENTER,
+                  pauseOnHover: false,
+                  autoClose:2000,
+                });
         });
     };
 
