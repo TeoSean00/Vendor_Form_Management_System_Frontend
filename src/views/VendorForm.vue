@@ -238,7 +238,13 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-        router.push({ path: '/vendorView' })
+        if (role.includes("ROLE_USER")) {
+          router.push({ path: '/vendorView' })
+        }
+        else{
+          router.push({ path: '/' })
+        }
+        
     };
 
     // get the roles

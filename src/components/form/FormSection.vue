@@ -36,10 +36,22 @@
             v-model="sectionData.input"
             :disabled="disabled"
           />
+          {{ data }}
           <!-- v-if short answer is true -->
-          <label class="form-check-label" for="flexCheckDefault">
-            {{ data }}
-          </label>
+          <template v-if="sectionData.shortAnswer">
+            <span class=" mx-3">
+              Input:
+              <input  v-if="sectionData.input.includes(index)" type="text" 
+              v-model="sectionData.shortAnswerArr[index]"
+              :disabled="disabled"
+              class=" border border-1"
+              >
+              <input  v-else type="text" 
+              value=""
+              disabled
+              >
+            </span>
+          </template>
         </div>
       </template>
     </template>
