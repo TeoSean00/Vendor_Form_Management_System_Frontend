@@ -139,7 +139,7 @@ export default {
       formData.value = await FormService.getForms().then((response) => {
         return response;
       });
-      // console.log("After retrieval value: ", formData.value);
+      console.log("After retrieval value: ", formData.value);
     };
 
     getFormInfo();

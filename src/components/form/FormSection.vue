@@ -31,11 +31,12 @@
           <input
             class="form-check-input"
             :type="sectionData.type"
-            :value="data"
+            :value="index"
             id="flexCheckDefault"
             v-model="sectionData.input"
             :disabled="disabled"
           />
+          <!-- v-if short answer is true -->
           <label class="form-check-label" for="flexCheckDefault">
             {{ data }}
           </label>
