@@ -10,6 +10,22 @@
         @removeQuestion="remove"
       />
     </div>
+    <div v-if="itemInfo.type == 'acknowledgement'">
+      <AcknowledgementInput
+        :itemInfo="itemInfo"
+        :idx="idx"
+        @updateText="updateQuestion"
+        @removeQuestion="remove"
+      />
+    </div>
+    <div v-if="itemInfo.type == 'approval'">
+      <ApprovalInput
+        :itemInfo="itemInfo"
+        :idx="idx"
+        @updateText="updateQuestion"
+        @removeQuestion="remove"
+      />
+    </div>
     <div v-if="itemInfo.type == 'text'">
       <TextInput
         :itemInfo="itemInfo"
@@ -79,6 +95,8 @@ import BooleanInput from "../formComponents/BooleanInput.vue";
 import DateInput from "../formComponents/DateInput.vue";
 import NumericInput from "../formComponents/NumericInput.vue";
 import LikertGroupInput from "../formComponents/LikertGroupInput.vue";
+import AcknowledgementInput from "../formComponents/AcknowledgementInput.vue";
+import ApprovalInput from "../formComponents/ApprovalInput.vue"
 
 export default {
   props: ["itemInfo", "idx"],
@@ -92,7 +110,9 @@ export default {
     DateInput,
     NumericInput,
     LikertGroupInput,
-  },
+    AcknowledgementInput,
+    ApprovalInput
+},
   setup(props, context) {
     const title = ref();
 

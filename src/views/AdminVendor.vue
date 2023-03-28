@@ -464,7 +464,6 @@ export default {
 
     var getAllForms = async () => {
       allForms.value = await FormService.getVendorForms(currId.value);
-      console.log("hi" + allForms.value[0].vendorId);
       for (var i = 0; i < allForms.value.length; i++) {
         if (allForms.value[i].status == "vendor_response") {
           vendorAssignedForms.value.push(allForms.value[i]);
@@ -649,7 +648,16 @@ export default {
 
     function deleteForm(toDelete) {
       FormService.deleteForm(toDelete);
-      console.log("Form deleted");
+      toast.success("Form Deleted!", {
+            position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
+          });
+      setTimeout(() => {
+        location.reload()
+      }, 3000);
+      // const timeout = setTimeout(location.reload(), 10000);
+      // timeout;
     }
 
     function exportForm() {

@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
-import { Line } from 'vue-chartjs'
+import { ref, computed } from 'vue';
+import { Line } from 'vue-chartjs';
+import VendorService from "../../../services/vendor/vendorService";
 import {
   Chart as ChartJS,
   Title,
@@ -42,19 +43,52 @@ export default {
     Line,
   },
   setup () {
+    var year = new Date().getFullYear();
+
+    // method to process the overall vendor month created data, to tag them to their specific displayed months on dashboard
+    const filteredVendorData = computed(() => {
+      let newValues = [0, 0, 0, 0, 0];
+      if (vendorData.value) {
+        // console.log('vendorData populated, filtering now', vendorData.value[year]["months"]);
+        let data = vendorData.value[year]["months"];
+        for (const month in data) {
+          if (month == "January" || month == "February") {
+            newValues[0] = data[month];
+          }
+          else if (month == "March" || month == "April") {
+            newValues[1] = data[month];
+          }
+          else if (month == "May" || month == "June" || month == "July") {
+            newValues[2] = data[month];
+          }
+          else if (month == "August" || month == "September" || month == "October") {
+            newValues[3] = data[month];
+          }
+          else if (month == "November" || month == "December") {
+            newValues[4] = data[month];
+          }
+        }
+      }
+      return newValues;
+    })
+  
+
     // metadata for vendor line chart
-    const VendorLineChart = ref({
-      // labels for each month in the line chart
-      labels: ["January", "March", "May", "August", "November"],
-      // data values corresponding to each month in the line chart
-      datasets: [
-        {
-          label: "Number of Vendors Over Time",
-          data: [5, 10, 12, 18, 20],
-          backgroundColor: ["rgb(153, 51, 255)"],
-        },
-      ],
+    const VendorLineChart = computed(() => {
+      return {
+        // labels for each month in the line chart
+        labels: ["January", "March", "May", "August", "November"],
+        // data values corresponding to each month in the line chart
+        datasets: [
+          {
+            label: "Number of Vendors Over Time",
+            data: filteredVendorData.value,
+            backgroundColor: ["rgb(153, 51, 255)"],
+          },
+        ],
+      }
     });
+
     // configuration options for bar chart
     const VendorLineChartOptions = ref({
       responsive: true,
@@ -81,7 +115,7 @@ export default {
         plugins: {
           title: {
             display: true,
-            text: "Number of Vendors Over Time",
+            text: "Number of Newly Onboarded Vendors in " + year,
             align: "center",
             font: {
               size: 16
@@ -96,9 +130,23 @@ export default {
         }
     });
 
+    // async await method call to retrieve the raw overall vendor creation dates data from Backend
+    var vendorData = ref(null);
+
+    var getVendorInfo = async () => {
+      // console.log("before getVendorInfo invoked", vendorData.value);
+      vendorData.value = await VendorService.getJoinDates().then((response) => {
+        return response;
+      })
+      // console.log("after getVendorInfo invoked", vendorData.value);
+    }
+
+    getVendorInfo();
+
     return {
       VendorLineChart,
       VendorLineChartOptions,
+      filteredVendorData
     }
   }
 }

@@ -10,12 +10,13 @@
         
         <p class="card-text mt-4">
           <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
-        <p>Deadline : {{ deadline }}</p>
-        <p>Form description: <br />
-          {{ formDesc }}</p>
-        <!-- {{ vendorFormId }} -->
-        </p>
-
+          <p>Deadline : {{ deadline }}</p>
+          <p>
+            Form description: <br />
+            {{ formDesc }}
+          </p>
+          <!-- {{ vendorFormId }} -->
+        </div>
       </div>
       <div class="card-footer">
         <div class="row">
