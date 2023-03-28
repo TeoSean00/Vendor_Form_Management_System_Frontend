@@ -343,6 +343,8 @@ import { useRouter } from "vue-router";
 import DeadlinesChart from "../components/dashboard/AdminVendorPage/DeadlinesChart.vue";
 import FormStatusBarChart from "../components/dashboard/AdminVendorPage/FormStatusBarChart.vue";
 import UpdatesTodayChart from "../components/dashboard/AdminVendorPage/UpdatesTodayChart.vue";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
   components: {
@@ -568,7 +570,16 @@ export default {
 
     function deleteForm(toDelete) {
       FormService.deleteForm(toDelete);
-      console.log("Form deleted");
+      toast.success("Form Deleted!", {
+            position: toast.POSITION.TOP_CENTER,
+            pauseOnHover: false,
+            autoClose:2000,
+          });
+      setTimeout(() => {
+        location.reload()
+      }, 3000);
+      // const timeout = setTimeout(location.reload(), 10000);
+      // timeout;
     }
 
     function exportForm() {
