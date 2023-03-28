@@ -7,8 +7,12 @@
         <span class="heading-primary-main">{{ vendorInfo.name }}</span>
         <span class="heading-primary-sub">{{ vendorInfo.country }}</span>
       </h1>
-      <a href="#allusers" data-bs-toggle="modal" class="btn btn-white btn-animated mx-2">All Users</a>
-      
+      <a
+        href="#allusers"
+        data-bs-toggle="modal"
+        class="btn btn-white btn-animated mx-2"
+        >All Users</a
+      >
     </div>
   </header>
 
