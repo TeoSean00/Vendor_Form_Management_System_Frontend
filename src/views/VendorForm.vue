@@ -383,8 +383,27 @@ export default {
         for (let item in section) {
           var sect = section[item];
           if (role.includes("ROLE_USER")) {
-            if (sect == "vendor") {
+            if (item == "vendor") {
               for (let question of sect) {
+
+                if (question.required === true) {
+                  console.log("QUESTION");
+                  console.log(question);
+                  console.log(question)
+                  if (question.input === "" || question.input === []) {
+                    toast.error("Form Not Filled Completely!", {
+                      position: toast.POSITION.TOP_CENTER,
+                      pauseOnHover: false,
+                      autoClose: 2000,
+                    });
+                    return false;
+                  }
+                }
+              }
+            }
+          } else {
+            for (let question of sect) {
+              if (question.required){
                 if (question.input === "" || question.input === []) {
                   toast.error("Form Not Filled Completely!", {
                     position: toast.POSITION.TOP_CENTER,
@@ -393,19 +412,6 @@ export default {
                   });
                   return false;
                 }
-              }
-            }
-          } else {
-            for (let question of sect) {
-              if (question.input === "" || question.input === []) {
-                console.log("ERROR ")
-                console.log(question)
-                toast.error("Form Not Filled Completely!", {
-                  position: toast.POSITION.TOP_CENTER,
-                  pauseOnHover: false,
-                  autoClose: 2000,
-                });
-                return false;
               }
             }
           }
