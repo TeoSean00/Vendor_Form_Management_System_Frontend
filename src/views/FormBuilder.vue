@@ -98,11 +98,11 @@
             </button>
           </div>
           <button
-            @click="addAdminSection"
-            class="col-5 me-2 btn btn-main-dark-purple"
+            @click="addVendorSection"
+            class="col-5 meimage.png-2 btn btn-main-blue"
           >
             <font-awesome-icon icon="fa-solid fa-circle-plus" />
-            Admin Section
+            Vendor Section
           </button>
           <button
             type="button"
@@ -112,12 +112,11 @@
             <font-awesome-icon icon="fa-solid fa-chevron-up" />
           </button>
           <button
-            @click="addVendorSection"
-            class="col-5 ms-2 btn btn-main-blue"
+            @click="addAdminSection"
+            class="col-5 ms-2 btn btn-main-dark-purple"
           >
             <font-awesome-icon icon="fa-solid fa-circle-plus" />
-
-            Vendor Section
+            Admin Section
           </button>
         </div>
       </div>
@@ -788,7 +787,7 @@ export default {
     var toggleCreateForm = async () => {
       if (checkEmptyFields()) {
         console.log("Empty fields detected!");
-        alert("Please fill in the Form Name and Description!");
+        alert("Please fill in the Form Name,description and have at least one input!");
         return;
       }
       if (selectedVendor.value == "") {

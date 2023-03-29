@@ -3,9 +3,9 @@
   <!-- Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }} -->
   <br />
   <br />
-  <div>
+  <!-- <div>
     {{ newForm }}
-  </div>
+  </div> -->
 
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -18,7 +18,7 @@
           <span>
             Form Status:
             <template v-if="formStatus == 'vendor_response'">
-              Waiting for Vendor to submit form to admin
+              Waiting for Vendor to submit form to Admin
             </template>
             <template v-if="formStatus == 'admin_response'">
               Waiting for Admin to review form
@@ -39,18 +39,18 @@
             <template v-for="(sectionData, i) in section" :key="i">
               <!-- Display all as disabled if status is deleted -->
               <template v-if="formStatus === 'deleted'">
-                <h1>{{ i }} Section</h1>
+                <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                 <template v-for="sect in sectionData" :key="sect">
-                  {{ sect }}
+                  <!-- {{ sect }} -->
                   <FormSection :sectionData="sect" :disabled="true" />
                 </template>
               </template>
               <template v-else>
                 <!-- Moderator can view all but edit nothing -->
                 <template v-if="role.includes('ROLE_MODERATOR')">
-                  <h1>{{ i }} Section</h1>
+                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                   <template v-for="sect in sectionData" :key="sect">
-                    {{ sect }}
+                    <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="true" />
                   </template>
                 </template>
@@ -65,9 +65,9 @@
                   </template>
                   <!-- To allow admin to view vendor part but not fill in -->
                   <template v-if="i == 'vendor' && role.includes('ROLE_ADMIN')">
-                    <h1>{{ i }} Section</h1>
+                    <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                     <template v-for="sect in sectionData" :key="sect">
-                      {{ sect }}
+                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="true" />
                     </template>
                   </template>
@@ -79,9 +79,9 @@
                       formStatus == 'vendor_response'
                     "
                   >
-                    <h1>{{ i }} Section</h1>
+                    <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                     <template v-for="sect in sectionData" :key="sect">
-                      {{ sect }}
+                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="false" />
                     </template>
                   </template>
@@ -93,9 +93,9 @@
                       formStatus !== 'vendor_response'
                     "
                   >
-                    <h1>{{ i }} Section</h1>
+                    <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                     <template v-for="sect in sectionData" :key="sect">
-                      {{ sect }}
+                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="true" />
                     </template>
                   </template>
@@ -237,6 +237,10 @@
     </div>
   </div>
 </template>
+<style>
+body {background-color : F7F7F7}
+
+</style>
 <script>
 import Navbar from "../components/navbar/NavbarJP.vue";
 import FormSection from "../components/form/FormSection.vue";
