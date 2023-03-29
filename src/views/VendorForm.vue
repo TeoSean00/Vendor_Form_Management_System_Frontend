@@ -389,7 +389,7 @@ export default {
           if (role.includes("ROLE_USER")) {
             if (sect == "vendor") {
               for (let question of sect) {
-                if (question.input == "" || question.input == []) {
+                if (question.input === "" || question.input === []) {
                   toast.error("Form Not Filled Completely!", {
                     position: toast.POSITION.TOP_CENTER,
                     pauseOnHover: false,
@@ -401,7 +401,9 @@ export default {
             }
           } else {
             for (let question of sect) {
-              if (question.input == "" || question.input == []) {
+              if (question.input === "" || question.input === []) {
+                console.log("ERROR ")
+                console.log(question)
                 toast.error("Form Not Filled Completely!", {
                   position: toast.POSITION.TOP_CENTER,
                   pauseOnHover: false,
