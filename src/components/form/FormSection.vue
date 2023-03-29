@@ -9,7 +9,17 @@
     <!-- Text Input -->
     <template v-if="sectionData.type == 'text'">
       <!-- <p>{{ sectionData }}</p> -->
-      <label for="email"><h4>{{ sectionData.label }}</h4></label>
+      <div class="row">
+        <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
+
+        <div v-if="sectionData.required == true" class="col-2 text-end">
+          <small style="font-style: italic">Required &nbsp 
+            <span  style="color: red;">★</span>
+          </small>
+        </div>
+        
+      </div>
+      
       <input
         :type="sectionData.type"
         id="email"
@@ -26,7 +36,17 @@
       v-if="sectionData.type == 'radio' || sectionData.type == 'checkbox'"
     >
       <!-- <p>{{ sectionData }}</p> -->
-      <label for="email"><h4>{{ sectionData.label }}</h4></label>
+      <div class="row">
+        <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
+
+        <div v-if="sectionData.required == true" class="col-2 text-end">
+          <small style="font-style: italic" >Required &nbsp 
+            <span  style="color: red;">★</span>
+          </small>
+        </div>
+        
+      </div>
+
       <template v-for="(data, index) in sectionData.options" :key="index">
         <div class="form-check">
           <input
@@ -60,7 +80,18 @@
     <!-- Number input -->
     <template v-if="sectionData.type == 'number'">
       <!-- <p>{{ sectionData }}</p> -->
-      <label for="email"><h4>{{ sectionData.label }}</h4></label>
+
+      <div class="row">
+        <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
+
+        <div v-if="sectionData.required == true" class="col-2 text-end">
+          <small style="font-style: italic" >Required &nbsp 
+            <span  style="color: red;">★</span>
+          </small>
+        </div>
+        
+      </div>
+
       <input
         :type="sectionData.type"
         id="email"
@@ -75,7 +106,17 @@
     <!-- Boolean Input -->
     <template v-if="sectionData.type == 'boolean'">
       <!-- <p>{{ sectionData }}</p> -->
-      <label for="email"><h4>{{ sectionData.label }}</h4></label>
+      <div class="row">
+        <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
+
+        <div v-if="sectionData.required == true" class="col-2 text-end">
+          <small style="font-style: italic" >Required &nbsp 
+            <span  style="color: red;">★</span>
+          </small>
+        </div>
+        
+      </div>
+
       <template v-for="(data, index) in sectionData.options" :key="index">
         <div class="form-check">
           <input
@@ -96,7 +137,17 @@
     <!-- Date input -->
     <template v-if="sectionData.type == 'date'">
       <!-- <p>{{ sectionData }}</p> -->
-      <label for="email"><h4>{{ sectionData.label }}</h4></label>
+      <div class="row">
+        <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
+
+        <div v-if="sectionData.required == true" class="col-2 text-end">
+          <small style="font-style: italic" >Required &nbsp 
+            <span  style="color: red;">★</span>
+          </small>
+        </div>
+        
+      </div>
+
       <input
         :type="sectionData.type"
         id="email"
@@ -112,14 +163,25 @@
     <template v-if="sectionData.type == 'likertGroup'">
       <!-- <p>{{ sectionData }}</p> -->
 
+      <div class="row">
+        <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
+
+        <div v-if="sectionData.required == true" class="col-2 text-end">
+          <small style="font-style: italic" >Required &nbsp 
+            <span  style="color: red;">★</span>
+          </small>
+        </div>
+        
+      </div>
+
       <table class="table">
-        <thead>
+        <!-- <thead>
           <tr>
             <th>
               <h4>{{ sectionData.label }}</h4>
             </th>
           </tr>
-        </thead>
+        </thead> -->
         <tbody>
           <tr>
             <td></td>
