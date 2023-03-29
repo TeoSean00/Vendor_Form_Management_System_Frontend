@@ -192,7 +192,13 @@ input{
 .Toastify__toast--error {
   border-radius: 50px;
   background-color: rgb(202, 158, 158);
-  color: white;;
+  color: white;
+  
+
+}
+:root{
+  --toastify-icon-color-success: white;
+  --toastify-icon-color-error: white;
 }
 
 
