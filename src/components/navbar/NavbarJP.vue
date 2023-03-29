@@ -21,9 +21,8 @@
           </router-link>
           <router-link to="/vendorView" class="nav-link text-dark-grey" v-else>
             <img
-              src="../../assets/Logo.png"
+              src="../../assets/Quantum Logo v2.PNG"
               alt=""
-              style="width: 80px; height: 80px"
               class="mt-3 mx-5"
             />
           </router-link>
@@ -41,29 +40,30 @@
             </router-link>
           </li>
           <li class="nav-item mx-3" v-else>
-            <router-link to="/vendorView" class="nav-link text-light">
-              <font-awesome-icon
+            <router-link to="/vendorView" class="nav-link text-secondary-blue">
+              Home
+              <!-- <font-awesome-icon
               class="text-dark"
                 style="width: 25px; height: 25px"
                 icon="home"
-              />
+              /> -->
             </router-link>
           </li>
           <li class="nav-item mx-5">
-            <router-link to="/formbuilder" class="nav-link text-dark-grey">
+            <router-link v-if="isAdmin || isModerator" to="/formbuilder" class="nav-link text-dark-grey">
               FormBuilder
             </router-link>
           </li>
         </div>
         <div v-if="!currentUser" class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link to="/register" class="nav-link text-light">
+            <router-link to="/register" class="nav-link text-secondary-blue">
               <!-- <font-awesome-icon icon="user-plus" /> -->
               &nbsp; Sign Up
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/login" class="nav-link text-light">
+            <router-link to="/login" class="nav-link text-secondary-blue">
               <!-- <font-awesome-icon icon="sign-in-alt" /> -->
               &nbsp; Login
             </router-link>
