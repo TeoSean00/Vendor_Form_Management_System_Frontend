@@ -44,7 +44,7 @@ export default {
   setup(props) {
     // Method to process overall form status data, to break them down into their respective staus and increment its count accordingly
     const filteredFormData = computed(() => {
-      console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
+      // console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
       let newValues = [0, 0, 0, 0];
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
