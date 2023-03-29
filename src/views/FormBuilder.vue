@@ -787,7 +787,11 @@ export default {
     var toggleCreateForm = async () => {
       if (checkEmptyFields()) {
         console.log("Empty fields detected!");
-        alert("Please fill in the Form Name,description and have at least one input!");
+        toast.error("Please include Form Name,description and at least one input!", {
+          position: toast.POSITION.TOP_CENTER,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
         return;
       }
       if (selectedVendor.value == "") {
