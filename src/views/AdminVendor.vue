@@ -368,10 +368,31 @@
                 <input type="textarea" v-model="remindMessage" class="form-control" id="exampleText" placeholder="Message">
               </div>
 
-            </form>
+              </form>
+              <div v-if="errors.length">
+                <template v-for="error in errors"
+                  ><div class="alert alert-warning" role="alert">
+                    {{ error }}
+                  </div>
+                  </template
+                >
+              </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" @click="sendEmail">Submit</button>
+              <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" 
+                class="btn btn-primary" 
+                :data-bs-dismiss="errors.length != 0 ? 'modal' : ''"
+                @click="sendEmail()"
+                >
+                Submit
+              </button>
             </div>
           </div>
         </div>
@@ -438,29 +459,65 @@ export default {
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
     var completedForms = ref([]);
+    var errors = ref([])
+    
+    var checkEmail = (inputText) =>{
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+      if(inputText.match(mailformat)){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+
+    var formCheck = () =>{
+      console.log("Checking FORMS")
+      let flag = true;
+      if(remindEmail.value == ""){
+        flag = false
+        errors.value.push("Email cannot be left empty")
+      }
+      else if(!checkEmail(remindEmail.value)){
+        flag = false
+        errors.value.push("Email Invalid")
+      }
+      if(remindMessage.value == ""){
+        flag = false
+        errors.value.push("Email message cannot be left empty")
+      }
+
+      return flag
+    }
 
     const sendEmail = () => {
-            console.log(vendorInfo.value.name)
-            console.log(remindEmail.value)
-            console.log(remindMessage)
 
-            emailjs.send("service_xquebpj","template_87ifsho",
-            {
-                to_name: vendorInfo.value.name,
-                send_to: remindEmail.value,
-                message: remindMessage.value
-            },
-            "Qubr9KRvmmD-pLaFH")
-            .then((result) => {
-                console.log('SUCCESS!', result.text);
-            }, (error) => {
-                console.log('FAILED...', error.text);
+      if (formCheck()){
+        emailjs.send("service_xquebpj","template_87ifsho",
+        {
+            to_name: vendorInfo.value.name,
+            send_to: remindEmail.value,
+            message: remindMessage.value
+        },
+        "Qubr9KRvmmD-pLaFH")
+        .then((result) => {
+            console.log('SUCCESS!', result.text);
+        }, (error) => {
+            console.log('FAILED...', error.text);
+        });
+
+        remindEmail.value = "";
+        remindMessage.value = "";
+        errors.value  = [];
+
+        toast.success("Email Sent Successfully!", {
+              position: toast.POSITION.TOP_CENTER,
+              pauseOnHover: false,
+              autoClose:2000,
             });
-
-            remindEmail.value = "";
-            remindMessage.value = "";
-
         }
+      }
 
 
 
@@ -729,6 +786,9 @@ export default {
       sendEmail,
       remindEmail,
       remindMessage,
+      errors,
+      formCheck,
+      checkEmail
     };
   },
 };
