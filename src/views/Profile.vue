@@ -61,7 +61,6 @@
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
 import Navbar from "../components/navbar/NavbarJP.vue";
-import Footer from "../components/navbar/Footer.vue";
 export default {
   components: { Navbar},
   setup() {
