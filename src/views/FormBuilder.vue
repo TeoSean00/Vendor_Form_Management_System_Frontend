@@ -644,6 +644,7 @@ export default {
               label: row.text,
               input: "",
               type: type,
+              required: row.required
             });
           } else if (type == "radio" || type == "checkbox") {
             if (row.shortAnswer == true) {
@@ -654,7 +655,8 @@ export default {
                 options: row.options,
                 type: type,
                 shortAnswer: row.shortAnswer,
-                shortAnswerArr : new Array(row.options.length).fill("")
+                shortAnswerArr : new Array(row.options.length).fill(""),
+                required: row.required
               });
             }
             else{
@@ -665,6 +667,7 @@ export default {
               options: row.options,
               type: type,
               shortAnswer: row.shortAnswer,
+              required: row.required
             });
             }
 
@@ -674,6 +677,7 @@ export default {
               label: row.text,
               style: row.style,
               type: type,
+              required: row.required
             });
           } else if (type == "number") {
             sectionItems.push({
@@ -681,6 +685,7 @@ export default {
               label: row.text,
               input: "",
               type: type,
+              required: row.required
             });
           } else if (type == "boolean") {
             sectionItems.push({
@@ -689,6 +694,7 @@ export default {
               input: [],
               options: row.options,
               type: type,
+              required: row.required
             });
           } else if (type == "date") {
             sectionItems.push({
@@ -697,6 +703,7 @@ export default {
               input: "",
               options: row.options,
               type: type,
+              required: row.required
             });
           } else if (type == "likertGroup") {
             sectionItems.push({
@@ -705,16 +712,19 @@ export default {
               input: [],
               options: row.options,
               type: type,
+              required: row.required
             });
           } else if (type == "acknowledgement") {
             sectionItems.push({
               order: row.order,
               type: type,
+              required: row.required
             });
           } else if (type == "approval") {
             sectionItems.push({
               order: row.order,
               type: type,
+              required: row.required
             });
           }
         }
