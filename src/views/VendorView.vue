@@ -127,12 +127,9 @@
       </div> -->
     <!-- </div> -->
 
-    <div class="bluebg card text-white mt-5 py-2 text-center">
-      <div class="card-body">
-        <h4 class="text-white m-0">Waiting for vendor response</h4>
-      </div>
+    <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 ">
+        <h4 class="text-white fs-6 fw-light ">Waiting for vendor response</h4>
     </div>
-
     <div
       class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2"
       v-if="vendorAssignedForms.length > 0"
@@ -150,7 +147,10 @@
         ></VendorFormCard>
       </template>
     </div>
-    <h2 v-else class="empty text-center py-5">No Form available</h2>
+
+    <h2 v-else class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey">
+      No forms currently available.
+    </h2>
 
     <div class="bluebg card text-white mt-5 py-2 text-center">
       <div class="card-body">
@@ -177,27 +177,26 @@
     </div>
     <h2 v-else class="empty text-center py-5">No Form available</h2>
 
-    <div class="bluebg card text-white mt-5 py-2 text-center">
-      <div class="card-body">
-        <h4 class="text-white m-0">Completed</h4>
+    <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 ">
+        <h4 class="text-white fs-6 fw-light">Completed</h4>
+    </div>
+    <div class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey">
+      <div
+        class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2 "
+        v-if="completedForms.length > 0"
+      >
+        <template v-for="vendorForm in completedForms" :key="vendorForm.status">
+          <VendorFormCard class="mx-2"
+            :dateCreated="vendorForm.createDate"
+            :deadline="vendorForm.deadline"
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @enterForm="enterForm"
+          ></VendorFormCard>
+        </template>
       </div>
+      <h2 v-else class="empty text-center py-5">No Form available</h2>
     </div>
-
-    <div
-      class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2"
-      v-if="completedForms.length > 0"
-    >
-      <template v-for="vendorForm in completedForms" :key="vendorForm.status">
-        <VendorFormCard
-          :dateCreated="vendorForm.createDate"
-          :deadline="vendorForm.deadline"
-          :vendorFormId="vendorForm.id"
-          :formInfo="vendorForm.content.FormInfo"
-          @enterForm="enterForm"
-        ></VendorFormCard>
-      </template>
-    </div>
-    <h2 v-else class="empty text-center py-5">No Form available</h2>
   </div>
 </template>
 
