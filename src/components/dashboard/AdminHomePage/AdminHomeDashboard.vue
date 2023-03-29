@@ -4,15 +4,15 @@
     <div class="row">
       <!-- 1st chart -->
       <div class="col">
-        <FormStatusBarChart />
+        <FormStatusBarChart style="height: 14em;" />
       </div>
       <!-- 2nd chart -->
       <div class="col">
-        <VendorLineChart />
+        <VendorLineChart style="height: 14em;" />
       </div>
       <!-- 3rd chart -->
       <div class="col my-auto">
-        <DaysBreakdownPolarChart />
+        <RejectionRatePerVendorChart style="height: 14em;" />
       </div>
     </div>
   </div>
@@ -21,13 +21,13 @@
 <script>
 import FormStatusBarChart from "./FormStatusBarChart.vue";
 import VendorLineChart from "./VendorLineChart.vue";
-import DaysBreakdownPolarChart from "./DaysBreakdownPolarChart.vue";
+import RejectionRatePerVendorChart from "./RejectionRatePerVendorChart.vue.vue";
 
 export default {
   components: {
     FormStatusBarChart,
     VendorLineChart,
-    DaysBreakdownPolarChart
+    RejectionRatePerVendorChart
   },
   setup() {
   },
