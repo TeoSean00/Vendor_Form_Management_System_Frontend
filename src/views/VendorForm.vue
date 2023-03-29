@@ -3,9 +3,9 @@
   <!-- Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }} -->
   <br />
   <br />
-  <div>
+  <!-- <div>
     {{ newForm }}
-  </div>
+  </div> -->
 
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -18,7 +18,7 @@
           <span>
             Form Status:
             <template v-if="formStatus == 'vendor_response'">
-              Waiting for Vendor to submit form to admin
+              Waiting for Vendor to submit form to Admin
             </template>
             <template v-if="formStatus == 'admin_response'">
               Waiting for Admin to review form
@@ -39,9 +39,9 @@
             <template v-for="(sectionData, i) in section" :key="i">
               <!-- Moderator can view all but edit nothing -->
               <template v-if="role.includes('ROLE_MODERATOR')">
-                <h1>{{ i }} Section</h1>
+                <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                 <template v-for="sect in sectionData" :key="sect">
-                  {{ sect }}
+                  <!-- {{ sect }} -->
                   <FormSection :sectionData="sect" :disabled="true" />
                 </template>
               </template>
@@ -49,17 +49,17 @@
               <template v-else>
                 <!-- To allow admin to view admin part and fill in -->
                 <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
-                  <h1>{{ i }} Section</h1>
+                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                   <template v-for="sect in sectionData" :key="sect">
-                    {{ sect }}
+                    <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="false" />
                   </template>
                 </template>
                 <!-- To allow admin to view vendor part but not fill in -->
                 <template v-if="i == 'vendor' && role.includes('ROLE_ADMIN')">
-                  <h1>{{ i }} Section</h1>
+                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                   <template v-for="sect in sectionData" :key="sect">
-                    {{ sect }}
+                    <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="true" />
                   </template>
                 </template>
@@ -71,9 +71,9 @@
                     formStatus == 'vendor_response'
                   "
                 >
-                  <h1>{{ i }} Section</h1>
+                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                   <template v-for="sect in sectionData" :key="sect">
-                    {{ sect }}
+                    <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="false" />
                   </template>
                 </template>
@@ -85,9 +85,9 @@
                     formStatus !== 'vendor_response'
                   "
                 >
-                  <h1>{{ i }} Section</h1>
+                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                   <template v-for="sect in sectionData" :key="sect">
-                    {{ sect }}
+                    <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="true" />
                   </template>
                 </template>
@@ -224,6 +224,10 @@
     </div>
   </div>
 </template>
+<style>
+body {background-color : F7F7F7}
+
+</style>
 <script>
 import Navbar from "../components/navbar/NavbarJP.vue";
 import FormSection from "../components/form/FormSection.vue";
@@ -383,8 +387,27 @@ export default {
         for (let item in section) {
           var sect = section[item];
           if (role.includes("ROLE_USER")) {
-            if (sect == "vendor") {
+            if (item == "vendor") {
               for (let question of sect) {
+
+                if (question.required === true) {
+                  console.log("QUESTION");
+                  console.log(question);
+                  console.log(question)
+                  if (question.input === "" || question.input === []) {
+                    toast.error("Form Not Filled Completely!", {
+                      position: toast.POSITION.TOP_CENTER,
+                      pauseOnHover: false,
+                      autoClose: 2000,
+                    });
+                    return false;
+                  }
+                }
+              }
+            }
+          } else {
+            for (let question of sect) {
+              if (question.required){
                 if (question.input === "" || question.input === []) {
                   toast.error("Form Not Filled Completely!", {
                     position: toast.POSITION.TOP_CENTER,
@@ -393,19 +416,6 @@ export default {
                   });
                   return false;
                 }
-              }
-            }
-          } else {
-            for (let question of sect) {
-              if (question.input === "" || question.input === []) {
-                console.log("ERROR ")
-                console.log(question)
-                toast.error("Form Not Filled Completely!", {
-                  position: toast.POSITION.TOP_CENTER,
-                  pauseOnHover: false,
-                  autoClose: 2000,
-                });
-                return false;
               }
             }
           }

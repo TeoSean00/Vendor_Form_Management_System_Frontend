@@ -97,20 +97,23 @@ export default {
       var currentDate = monthNow + "/" + dateNow + "/" + yearNow;
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
-          let formDates = formData.value[i].deadline.split("-");
-          let formYear = formDates[0];
-          let formMonth = formDates[1];
-          let formDate = formDates[2];
-          if (formDate.length == 1) {
-            formDate = "0" + formDate;
+          let formStatus = formData.value[i].status;
+          if (formStatus === "vendor_response") {
+            let formDates = formData.value[i].deadline.split("-");
+            let formYear = formDates[0];
+            let formMonth = formDates[1];
+            let formDate = formDates[2];
+            if (formDate.length == 1) {
+              formDate = "0" + formDate;
+            }
+            let formDeadline = moment(formMonth + "/" + formDate + "/" + formYear, "MM/DD/YYYY");
+            let currentDateNow = moment(currentDate, "MM/DD/YYYY");
+            var daysLeft = formDeadline.diff(currentDateNow, 'days');
+            let currentFormName = formData.value[i].content.FormInfo.formName;
+            // console.log("deadline:", formDeadline, "datenow:", currentDateNow, "daysleft: ", daysLeft, "currentForm:", currentFormName, "formStatus:", formStatus);
+            formLabels.push(currentFormName);
+            formDaysLeft.push(daysLeft);
           }
-          let formDeadline = moment(formMonth + "/" + formDate + "/" + formYear, "MM/DD/YYYY");
-          let currentDateNow = moment(currentDate, "MM/DD/YYYY");
-          var daysLeft = formDeadline.diff(currentDateNow, 'days');
-          let currentFormName = formData.value[i].content.FormInfo.formName;
-          // console.log("deadline:", formDeadline, "datenow:", currentDateNow, "daysleft: ", daysLeft, "currentForm:", currentFormName);
-          formLabels.push(currentFormName);
-          formDaysLeft.push(daysLeft);
         }
       }
       return [formLabels, formDaysLeft];

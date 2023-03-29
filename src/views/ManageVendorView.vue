@@ -154,7 +154,7 @@
             <div v-if="errors.length">
               <template v-for="(error, index) in errors" :key="index"
                 ><div class="alert alert-warning" role="alert">
-                  You selected {{ error }}
+                  {{ error }}
                 </div></template
               >
             </div>
@@ -191,6 +191,8 @@ import { useAuthStore } from "../stores/authStore";
 import { useVendorStore } from "../stores/vendorStore";
 import { useRouter } from "vue-router";
 import vendorListItem from "../components/admin/components/vendorListItem.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
   components: { NavbarJP, vendorListItem },
@@ -269,16 +271,27 @@ export default {
       // console.log(newVendorName.value);
       // console.log(newVendorDetails.value);
       if (checkForm()) {
+
         var newVendor = {
           name: newVendorName,
           details: newVendorDetails.value,
           country: newVendorCountry.value,
           forms: [],
         };
+
         vendorStore.addVendor(newVendor);
+        toast.success("Vendor Added Successfully!", {
+              position: toast.POSITION.TOP_CENTER,
+              pauseOnHover: false,
+              autoClose:2000,
+            });
+
         newVendorName.value = "";
         newVendorCountry = "";
         newVendorDetails = "";
+
+        
+
       }
     };
 
