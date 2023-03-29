@@ -127,7 +127,7 @@ export default {
         // data values corresponding to each file status bar in the bar chart
         datasets: [
           {
-            label: formData.value != null ? `Vendor ${props.vendorDetails.name}'s Forms Days Left to Deadlines` : "",
+            label: formData.value != null ? `Vendor ${props.vendorDetails.name}'s Forms Days Left to Deadline` : "",
             data: FormDeadlineBarChartSort.value[1],
             backgroundColor: [
               "#bc5090",
@@ -167,7 +167,7 @@ export default {
         plugins: {
           title: {
             display: true,
-            text: formData.value != null ? `Vendor ${props.vendorDetails.name}'s Forms Days Left to Deadlines` : "",
+            text: formData.value != null ? `Vendor ${props.vendorDetails.name}'s Forms Days Left to Deadline` : "",
             align: "center",
             font: {
               size: 16
