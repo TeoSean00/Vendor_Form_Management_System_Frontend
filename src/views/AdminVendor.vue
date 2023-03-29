@@ -370,7 +370,7 @@
 
               </form>
               <div v-if="errors.length">
-                <template v-for="error in errors"
+                <template v-for="error in errors" :key="error"
                   ><div class="alert alert-warning" role="alert">
                     {{ error }}
                   </div>

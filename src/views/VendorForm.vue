@@ -59,7 +59,7 @@
                   <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
                     <h1>{{ i }} Section</h1>
                     <template v-for="sect in sectionData" :key="sect">
-                      {{ sect }}
+                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="false" />
                     </template>
                   </template>
