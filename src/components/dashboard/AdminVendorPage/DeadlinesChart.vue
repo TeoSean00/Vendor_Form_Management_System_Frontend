@@ -110,7 +110,7 @@ export default {
             let currentDateNow = moment(currentDate, "MM/DD/YYYY");
             var daysLeft = formDeadline.diff(currentDateNow, 'days');
             let currentFormName = formData.value[i].content.FormInfo.formName;
-            console.log("deadline:", formDeadline, "datenow:", currentDateNow, "daysleft: ", daysLeft, "currentForm:", currentFormName);
+            // console.log("deadline:", formDeadline, "datenow:", currentDateNow, "daysleft: ", daysLeft, "currentForm:", currentFormName, "formStatus:", formStatus);
             formLabels.push(currentFormName);
             formDaysLeft.push(daysLeft);
           }

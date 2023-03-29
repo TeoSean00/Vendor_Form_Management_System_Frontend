@@ -59,6 +59,21 @@
     </div>
   </div>
 
+  <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <FormStatusBarChart :vendorDetails="vendorInfo" />
+      </div>
+      <div class="col">
+        <UpdatesTodayChart :vendorDetails="vendorInfo" />
+      </div>
+      <div class="col">
+        <DeadlinesChart :vendorDetails="vendorInfo" />
+      </div>
+    </div>
+  </div>
+
   <div class="container mt-2">
     <!-- <div class="section-title d-flex justify-content-between">
       <div v-if="vendorInfo">
@@ -208,6 +223,10 @@ import VendorService from "../services/vendor/vendorService";
 import UserService from "../services/user/userService";
 import VendorFormCard from "../components/form/VendorFormCard.vue";
 import FormService from "../services/form/formService";
+import FormStatusBarChart from "../components/dashboard/VendorHomePage/FormStatusBarChart.vue";
+import DeadlinesChart from "../components/dashboard/VendorHomePage/DeadlinesChart.vue";
+import UpdatesTodayChart from "../components/dashboard/VendorHomePage/UpdatesTodayChart.vue";
+
 
 import { useAuthStore } from "../stores/authStore";
 import { useRouter } from "vue-router";
@@ -216,6 +235,9 @@ export default {
   components: {
     Navbar,
     VendorFormCard,
+    FormStatusBarChart,
+    DeadlinesChart,
+    UpdatesTodayChart
   },
   setup() {
     var auth = useAuthStore();
@@ -243,8 +265,9 @@ export default {
 
     var getAllForms = async () => {
       allForms.value = await FormService.getVendorForms(vendorId.value);
-      console.log("hi" + allForms.value[0].vendorId);
-      for (var i = 0; i < allForms.value.length; i++) {
+      if (allForms.value) {
+        // console.log(allForms.value[0].vendorId);
+        for (var i = 0; i < allForms.value.length; i++) {
         if (allForms.value[i].status == "vendor_response") {
           vendorAssignedForms.value.push(allForms.value[i]);
         } else if (
@@ -254,6 +277,7 @@ export default {
           adminAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "form_completed") {
           completedForms.value.push(allForms.value[i]);
+        }
         }
       }
     };
