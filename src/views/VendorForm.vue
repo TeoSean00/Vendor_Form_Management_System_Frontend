@@ -386,14 +386,15 @@ export default {
         if (!formValidator()) {
           console.log("Form not filled");
           return;
-        }
-        if (newForm.value.status == "approver_response") {
-          newForm.value.latestCompletor = "admin";
-          newForm.value.latestCompletionDate = Date.now();
-        }
-        if (newForm.value.status == "admin_response") {
-          newForm.value.latestCompletor = "vendor";
-          newForm.value.latestCompletionDate = Date.now();
+        } else {
+          if (newForm.value.status == "admin_response") {
+            newForm.value.latestCompletor = "admin";
+            newForm.value.latestCompletedDate = Date.now();
+          }
+          if (newForm.value.status == "vendor_response") {
+            newForm.value.latestCompletor = "vendor";
+            newForm.value.latestCompletedDate = Date.now();
+          }
         }
         message = "Form Submitted!";
       }
