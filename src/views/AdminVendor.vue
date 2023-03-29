@@ -396,6 +396,8 @@ import DeadlinesChart from "../components/dashboard/AdminVendorPage/DeadlinesCha
 import FormStatusBarChart from "../components/dashboard/AdminVendorPage/FormStatusBarChart.vue";
 import UpdatesTodayChart from "../components/dashboard/AdminVendorPage/UpdatesTodayChart.vue";
 import emailjs from '@emailjs/browser';
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
   components: {
