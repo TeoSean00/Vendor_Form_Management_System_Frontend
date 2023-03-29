@@ -649,17 +649,30 @@ export default {
     }
 
     function deleteForm(toDelete) {
-      FormService.deleteForm(toDelete);
-      toast.success("Form Deleted!", {
-            position: toast.POSITION.TOP_CENTER,
-            pauseOnHover: false,
-            autoClose:2000,
+      FormService.getForm(toDelete)
+        .then((response) => {
+          // console.log("FORM TO DELETE: ");
+          // console.log(response);
+          const newForm = response;
+          newForm.status = "deleted";
+          FormService.updateForm(toDelete, newForm)
+          .then((response) => {
+            toast.success("Form Deleted!", {
+              position: toast.POSITION.TOP_CENTER,
+              pauseOnHover: false,
+              autoClose:2000,
+            });
+            setTimeout(() => {
+              location.reload()
+            }, 2000);
+          })
+          .catch((error) => {
+            console.log(error);
           });
-      setTimeout(() => {
-        location.reload()
-      }, 3000);
-      // const timeout = setTimeout(location.reload(), 10000);
-      // timeout;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
 
     function exportForm() {

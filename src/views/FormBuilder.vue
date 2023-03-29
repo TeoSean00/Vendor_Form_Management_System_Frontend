@@ -580,7 +580,7 @@ export default {
       TemplateService.addTemplate(outputObj);
       // console.log("Added");
       // console.log(outputObj);
-      toast.success("Form Created!", {
+      toast.success("Template Created!", {
         position: toast.POSITION.TOP_CENTER,
         pauseOnHover: false,
         autoClose: 2000,
