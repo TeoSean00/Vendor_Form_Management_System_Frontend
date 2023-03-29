@@ -154,7 +154,7 @@
             <div v-if="errors.length">
               <template v-for="(error, index) in errors" :key="index"
                 ><div class="alert alert-warning" role="alert">
-                  You selected {{ error }}
+                  {{ error }}
                 </div></template
               >
             </div>
