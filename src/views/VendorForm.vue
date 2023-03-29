@@ -37,123 +37,136 @@
         <form onsubmit="return false;">
           <template v-for="(section, index) in formContent" :key="index">
             <template v-for="(sectionData, i) in section" :key="i">
-              <!-- Moderator can view all but edit nothing -->
-              <template v-if="role.includes('ROLE_MODERATOR')">
+              <!-- Display all as disabled if status is deleted -->
+              <template v-if="formStatus === 'deleted'">
                 <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                 <template v-for="sect in sectionData" :key="sect">
                   <!-- {{ sect }} -->
                   <FormSection :sectionData="sect" :disabled="true" />
                 </template>
               </template>
-
               <template v-else>
-                <!-- To allow admin to view admin part and fill in -->
-                <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
-                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
-                  <template v-for="sect in sectionData" :key="sect">
-                    <!-- {{ sect }} -->
-                    <FormSection :sectionData="sect" :disabled="false" />
-                  </template>
-                </template>
-                <!-- To allow admin to view vendor part but not fill in -->
-                <template v-if="i == 'vendor' && role.includes('ROLE_ADMIN')">
+                <!-- Moderator can view all but edit nothing -->
+                <template v-if="role.includes('ROLE_MODERATOR')">
                   <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
                   <template v-for="sect in sectionData" :key="sect">
                     <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="true" />
                   </template>
                 </template>
-                <!-- To allow vendor to view vendor part only -->
-                <template
-                  v-if="
-                    i == 'vendor' &&
-                    role.includes('ROLE_USER') &&
-                    formStatus == 'vendor_response'
-                  "
-                >
-                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
-                  <template v-for="sect in sectionData" :key="sect">
-                    <!-- {{ sect }} -->
-                    <FormSection :sectionData="sect" :disabled="false" />
+                <template v-else>
+                  <!-- To allow admin to view admin part and fill in -->
+                  <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
+                    <h1>{{ i }} Section</h1>
+                    <template v-for="sect in sectionData" :key="sect">
+                      {{ sect }}
+                      <FormSection :sectionData="sect" :disabled="false" />
+                    </template>
                   </template>
-                </template>
-                <!-- To allow vendor to view vendor part BUT not edit if it has been submitted -->
-                <template
-                  v-if="
-                    i == 'vendor' &&
-                    role.includes('ROLE_USER') &&
-                    formStatus !== 'vendor_response'
-                  "
-                >
-                  <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
-                  <template v-for="sect in sectionData" :key="sect">
-                    <!-- {{ sect }} -->
-                    <FormSection :sectionData="sect" :disabled="true" />
+                  <!-- To allow admin to view vendor part but not fill in -->
+                  <template v-if="i == 'vendor' && role.includes('ROLE_ADMIN')">
+                    <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
+                    <template v-for="sect in sectionData" :key="sect">
+                      <!-- {{ sect }} -->
+                      <FormSection :sectionData="sect" :disabled="true" />
+                    </template>
+                  </template>
+                  <!-- To allow vendor to view vendor part only -->
+                  <template
+                    v-if="
+                      i == 'vendor' &&
+                      role.includes('ROLE_USER') &&
+                      formStatus == 'vendor_response'
+                    "
+                  >
+                    <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
+                    <template v-for="sect in sectionData" :key="sect">
+                      <!-- {{ sect }} -->
+                      <FormSection :sectionData="sect" :disabled="false" />
+                    </template>
+                  </template>
+                  <!-- To allow vendor to view vendor part BUT not edit if it has been submitted -->
+                  <template
+                    v-if="
+                      i == 'vendor' &&
+                      role.includes('ROLE_USER') &&
+                      formStatus !== 'vendor_response'
+                    "
+                  >
+                    <h2 class="mt-4">{{ i.charAt(0).toUpperCase() + i.slice(1) }} Section</h2>
+                    <template v-for="sect in sectionData" :key="sect">
+                      <!-- {{ sect }} -->
+                      <FormSection :sectionData="sect" :disabled="true" />
+                    </template>
                   </template>
                 </template>
               </template>
+
             </template>
           </template>
-          <button
-            v-if="
-              (formStatus == 'admin_response' &&
-                role.includes('ROLE_ADMIN') &&
-                !role.includes('ROLE_MODERATOR')) ||
-              (formStatus == 'vendor_response' && !role.includes('ROLE_ADMIN'))
-            "
-            class="btn btn-primary mx-1"
-            @click="saveForm()"
-            type="submit"
-          >
-            Save Form
-          </button>
-          <!-- Approver response to admin response -->
-          <button
-            v-if="
-              formStatus == 'approver_response' &&
-              role.includes('ROLE_MODERATOR')
-            "
-            class="btn btn-danger mx-1"
-            @click="submitForm('admin_response', 'reject')"
-          >
-            Reject Form
-          </button>
-          <!-- Approver response to complete form -->
-          <button
-            v-if="
-              formStatus == 'approver_response' &&
-              role.includes('ROLE_MODERATOR')
-            "
-            class="btn btn-primary mx-1"
-            @click="submitForm('form_completed', 'approve')"
-          >
-            Approve Form
-          </button>
-          <!-- Admin response to vendor response -->
-          <button
-            v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN')"
-            class="btn btn-danger mx-1"
-            data-bs-toggle="modal"
-            data-bs-target="#setDeadline"
-          >
-            Reject Form
-          </button>
-          <!-- Admin response to approver response -->
-          <button
-            v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN')"
-            class="btn btn-primary mx-1"
-            @click="submitForm('approver_response', 'approve')"
-          >
-            Submit for approval
-          </button>
-          <!-- Vendor response to admin response    -->
-          <button
-            v-if="formStatus == 'vendor_response' && role.includes('ROLE_USER')"
-            class="btn btn-primary mx-1"
-            @click="submitForm('admin_response', 'approve')"
-          >
-            Submit to admin
-          </button>
+          <template v-if="formStatus !== 'deleted'">
+            <button
+              v-if="
+                (formStatus == 'admin_response' &&
+                  role.includes('ROLE_ADMIN') &&
+                  !role.includes('ROLE_MODERATOR')) ||
+                (formStatus == 'vendor_response' && !role.includes('ROLE_ADMIN'))
+              "
+              class="btn btn-primary mx-1"
+              @click="saveForm()"
+              type="submit"
+            >
+              Save Form
+            </button>
+            <!-- Approver response to admin response -->
+            <button
+              v-if="
+                formStatus == 'approver_response' &&
+                role.includes('ROLE_MODERATOR')
+              "
+              class="btn btn-danger mx-1"
+              @click="submitForm('admin_response', 'reject')"
+            >
+              Reject Form
+            </button>
+            <!-- Approver response to complete form -->
+            <button
+              v-if="
+                formStatus == 'approver_response' &&
+                role.includes('ROLE_MODERATOR')
+              "
+              class="btn btn-primary mx-1"
+              @click="submitForm('form_completed', 'approve')"
+            >
+              Approve Form
+            </button>
+            <!-- Admin response to vendor response -->
+            <button
+              v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN')"
+              class="btn btn-danger mx-1"
+              data-bs-toggle="modal"
+              data-bs-target="#setDeadline"
+            >
+              Reject Form
+            </button>
+            <!-- Admin response to approver response -->
+            <button
+              v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN')"
+              class="btn btn-primary mx-1"
+              @click="submitForm('approver_response', 'approve')"
+            >
+              Submit for approval
+            </button>
+            <!-- Vendor response to admin response    -->
+            <button
+              v-if="formStatus == 'vendor_response' && role.includes('ROLE_USER')"
+              class="btn btn-primary mx-1"
+              @click="submitForm('admin_response', 'approve')"
+            >
+              Submit to admin
+            </button>
+          </template>
+
 
           <!-- <testEmail :vendorName="newForm.vendorName" :formDueDate="newForm.deadline"/> -->
  
