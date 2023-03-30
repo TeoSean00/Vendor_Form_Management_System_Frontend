@@ -89,7 +89,7 @@
             <div class="col-2 ms-2">
               <div class="form-check form-switch" style="text-align: start;">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Auto Remind</label>
+                <label class="form-check-label"   for="flexSwitchCheckDefault">Auto Remind</label>
               </div>
             </div>
           </div>
