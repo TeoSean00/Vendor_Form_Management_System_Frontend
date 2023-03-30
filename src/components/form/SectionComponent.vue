@@ -273,6 +273,7 @@ export default {
     function addApprovalInput() {
       formItems.value.push({
         type: "approval",
+        required: true,
       });
     }
 
