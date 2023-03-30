@@ -89,6 +89,7 @@
         >
           <VendorFormCard
             class="mx-2"
+            :formStatus="vendorForm.status"
             :dateCreated="vendorForm.createDate"
             :deadline="vendorForm.deadline.substring(0,10)"
             :vendorFormId="vendorForm.id"
@@ -119,6 +120,7 @@
         >
           <VendorFormCard
             class="mx-2"
+            :formStatus="vendorForm.status"
             :dateCreated="vendorForm.createDate"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
@@ -145,6 +147,7 @@
         <template v-for="vendorForm in completedForms" :key="vendorForm.status">
           <VendorFormCard
             class="mx-2"
+            :formStatus="vendorForm.status"
             :dateCreated="vendorForm.createDate"
             :deadline="vendorForm.deadline"
             :vendorFormId="vendorForm.id"
@@ -172,6 +175,7 @@
         >
           <VendorFormCard
             class="mx-2"
+            :formStatus="vendorForm.status"
             :deadline="vendorForm.deadline.substring(0,10)"
             :dateCreated="vendorForm.createDate"
             :vendorFormId="vendorForm.id"

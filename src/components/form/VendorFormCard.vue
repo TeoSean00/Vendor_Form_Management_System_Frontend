@@ -3,13 +3,13 @@
       <div class="card h-100">
         <div class="card-body">
           <h2 class="card-title">{{ formName }}</h2>
-          <p class="card-text mt-4">
+          <div class="card-text mt-4">
             <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
-            <p>Deadline : {{ deadline }}</p>
+            <p v-if="formStatus=='vendor_response'">Deadline : {{ deadline }}</p>
             <p>Form description: <br />
             {{ formDesc }}</p>
             <!-- {{ vendorFormId }} -->
-          </p>
+            </div>
         </div>
         <div class="card-footer">
           <div class="row">
@@ -28,8 +28,10 @@
   import { ref } from "vue";
   
   export default {
-    props: ["vendorFormId", "formInfo", "dateCreated", "deadline"],
+    props: ["vendorFormId", "formInfo", "dateCreated", "deadline", "formStatus"],
     setup(props, context) {
+      var formStatus = ref("");
+      formStatus.value = props.formStatus;
       var formName = ref("");
       formName.value = props.formInfo.formName;
       var formDesc = ref("");

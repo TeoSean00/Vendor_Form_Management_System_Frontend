@@ -10,7 +10,7 @@
         
         <div class="card-text mt-4">
           <!-- Date created : <br />{{ Date(dateCreated).toString() }}<br /> -->
-          <p>Deadline : {{ deadline }}</p>
+          <p v-if="formStatus=='vendor_response'">Deadline : {{ deadline }}</p>
           <p>
             Form description: <br />
             {{ formDesc }}
@@ -20,7 +20,29 @@
         </div>
       </div>
       <div class="card-footer">
-        <div class="row" v-if="formStatus != 'deleted'">
+        <div class="row" v-if="formStatus == 'deleted'">
+          <button class="btn btn-link btn-block" @click="enterForm">
+            Enter
+          </button>
+        </div>
+        <!--EMAIL FUNCTION-->
+        <!-- <div class="row justify-content-center border-0">
+          <div class="col-6" style="border-right: 0 ; padding-left: 0;">
+            <testEmail
+            class="btn btn-link border-0"
+            data-bs-toggle="modal"
+            data-bs-target="#remindModal"
+            ></testEmail>
+          </div>
+        </div> -->
+        <div class="row" v-else-if="formStatus == 'form_completed'">
+          <div class="col text-center">
+            <button class="btn btn-link btn-block" @click="generatePdf">
+              Download
+            </button>
+          </div>
+        </div>
+        <div class="row" v-else>
           <div class="col-6 pr-0">
             <button class="btn btn-link btn-block" @click="enterForm">
               Enter
@@ -38,23 +60,6 @@
           </button>
           </div>
         </div>
-        <!--EMAIL FUNCTION-->
-          <!-- <div class="row justify-content-center border-0">
-            <div class="col-6" style="border-right: 0 ; padding-left: 0;">
-              <testEmail
-              class="btn btn-link border-0"
-              data-bs-toggle="modal"
-              data-bs-target="#remindModal"
-              ></testEmail>
-            </div>
-          </div> -->
-          <div class="row" v-if="formStatus == 'form_completed'">
-            <div class="col text-center">
-              <button class="btn btn-link btn-block" @click="generatePdf">
-                Download
-              </button>
-            </div>
-          </div>
           
       </div>
     </div>

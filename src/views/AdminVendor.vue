@@ -204,6 +204,7 @@
             :dateCreated="vendorForm.createDate"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
+            :formStatus="vendorForm.status"
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>
@@ -214,7 +215,7 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No Form currently available
+      No form currently available
       </h2>
       <!-- end of completed assigned form  -->
       
