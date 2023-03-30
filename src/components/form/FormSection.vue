@@ -77,6 +77,16 @@
       </template>
     </template>
 
+
+    <!--Approval Section-->
+    <template v-if="sectionData.type == 'approval'">
+      <div class="text-center">
+        <h5 style="font-style: italic;">Approval Section</h5>
+        <small style="font-style: italic;">No action required</small>
+      </div>
+      
+    </template>
+
     <!-- Number input -->
     <template v-if="sectionData.type == 'number'">
       <!-- <p>{{ sectionData }}</p> -->
