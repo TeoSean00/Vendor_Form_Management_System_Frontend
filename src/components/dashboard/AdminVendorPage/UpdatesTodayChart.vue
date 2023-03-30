@@ -23,7 +23,7 @@
                   <div v-for="(value, index) in filteredUpdateFormData[0].rejected">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       Form {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} rejected
-                      <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
+                      <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
                 </ul>
@@ -52,7 +52,7 @@
                   <div v-for="(value, index) in filteredUpdateFormData[0].completed">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       Form {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} completed
-                      <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
+                      <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
                 </ul>
@@ -81,7 +81,7 @@
                   <div v-for="(value, index) in filteredUpdateFormData[0].assigned">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       Form {{ value["content"]["FormInfo"]["formName"] }} - assigned to {{ vendorDetails ? vendorDetails.name : "" }}
-                      <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
+                      <a @click="enterForm(value.id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
                 </ul>
@@ -117,13 +117,24 @@
 <script>
 import { computed, ref, watchEffect } from 'vue';
 import FormService from "../../../services/form/formService";
+import { useRouter } from "vue-router";
 
 export default {
   props: {
     vendorDetails: ""
   },
   setup(props) {
-    // ------------------------------------------------------------Bar Chart for To Do List Today Chart------------------------------------------------------------
+    const router = useRouter();
+    function enterForm(vendorFormId) {
+      console.log("entering form with vendorFormId> " + vendorFormId);
+      router.push({
+        path: "/vendorForm",
+        query: {
+          vendorFormId: vendorFormId,
+        },
+      });
+    }
+
     const dateToday = computed(() => {
       const date = new Date()
       let day = date.getDate()
@@ -218,7 +229,8 @@ export default {
 
     return {
       dateToday,
-      filteredUpdateFormData
+      filteredUpdateFormData,
+      enterForm
     }
   }
 }
