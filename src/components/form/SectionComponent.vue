@@ -198,7 +198,7 @@ export default {
         type: "text",
         order: formItems.value.length,
         text: "",
-        required: false,
+        required: true,
       });
     }
     function addCheckboxInput() {
@@ -207,7 +207,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
-        required: false,
+        required: true,
         shortAnswer: false,
       });
     }
@@ -217,7 +217,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
-        required: false,
+        required: true,
       });
     }
     function addHeaderText() {
@@ -226,7 +226,7 @@ export default {
         order: formItems.value.length,
         text: "",
         style: "h1",
-        required: false,
+        required: true,
       });
     }
     function addBooleanInput() {
@@ -235,7 +235,7 @@ export default {
         order: formItems.value.length,
         text: "",
         options: ["Yes", "No"],
-        required: false,
+        required: true,
       });
     }
     function addDateInput() {
@@ -243,7 +243,7 @@ export default {
         type: "date",
         order: formItems.value.length,
         text: "",
-        required: false,
+        required: true,
       });
     }
     function addNumberInput() {
@@ -251,7 +251,7 @@ export default {
         type: "number",
         order: formItems.value.length,
         text: "",
-        required: false,
+        required: true,
       });
     }
     function addLikertGroupInput() {
@@ -260,12 +260,13 @@ export default {
         order: formItems.value.length,
         text: "",
         options: [],
-        required: false,
+        required: true,
       });
     }
     function addAcknowledgementInput() {
       formItems.value.push({
         type: "acknowledgement",
+        required: true,
       });
     }
 

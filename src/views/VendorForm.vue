@@ -400,9 +400,8 @@ export default {
         for (let item in section) {
           var sect = section[item];
           if (role.includes("ROLE_USER")) {
-            if (item == "vendor") {
+            if (item === "vendor") {
               for (let question of sect) {
-
                 if (question.required === true) {
                   console.log("QUESTION");
                   console.log(question);
