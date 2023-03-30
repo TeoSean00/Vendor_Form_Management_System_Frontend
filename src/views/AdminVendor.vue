@@ -113,7 +113,7 @@
         <FormCard
           class = "mx-2"
           :dateCreated="vendorForm.createDate"
-          :deadline="vendorForm.deadline"
+          :deadline="vendorForm.deadline.substring(0,10)"
           :vendorFormId="vendorForm.id"
           :formInfo="vendorForm.content.FormInfo"
           :formStatus="vendorForm.status"
@@ -193,7 +193,7 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No Form available
+      No Form currently  available
     </h2>
       <!-- end of approval assigned form  -->
 
@@ -226,12 +226,12 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No Form available
+      No Form currently available
       </h2>
       <!-- end of completed assigned form  -->
       
       <!-- start of deleted forms -->
-      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+    <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
       <h4 class="text-white fs-6 fw-light">Deleted Forms</h4>
     </div>
 
@@ -259,7 +259,7 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No Form available
+      No Form currently available
       </h2>
       <!-- end of deleted forms -->
     </div>

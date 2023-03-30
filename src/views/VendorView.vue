@@ -90,7 +90,7 @@
           <VendorFormCard
             class="mx-2"
             :dateCreated="vendorForm.createDate"
-            :deadline="vendorForm.deadline"
+            :deadline="vendorForm.deadline.substring(0,10)"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
             @enterForm="enterForm"
@@ -102,7 +102,7 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No forms currently available.
+      No form currently available.
     </h2>
 
     <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
@@ -120,7 +120,6 @@
           <VendorFormCard
             class="mx-2"
             :dateCreated="vendorForm.createDate"
-            :deadline="vendorForm.deadline"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
             @enterForm="enterForm"
@@ -132,11 +131,11 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No Form available
+      No form currently available
     </h2>
 
     <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
-      <h4 class="text-white fs-6 fw-light">Completed</h4>
+      <h4 class="text-white fs-6 fw-light">Completed Forms</h4>
     </div>
     <div
       v-if="completedForms.length > 0"
@@ -155,7 +154,43 @@
         </template>
       </div>
     </div>
-    <h2 v-else class="empty text-center py-5">No Form available</h2>
+    <h2 v-else  class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey">No form currently available</h2>
+
+    <!-- start of deleted forms -->
+    <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+      <h4 class="text-white fs-6 fw-light">Deleted Forms</h4>
+    </div>
+
+    <div
+      v-if="deletedForms.length > 0"
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+    >
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+        <template
+          v-for="vendorForm in deletedForms"
+          :key="vendorForm.status"
+        >
+          <VendorFormCard
+            class="mx-2"
+            :deadline="vendorForm.deadline.substring(0,10)"
+            :dateCreated="vendorForm.createDate"
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @enterForm="enterForm"
+          ></VendorFormCard>
+        </template>
+      </div>
+    </div>
+      <h2
+      v-else
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+    >
+      No form currently available
+      </h2>
+
+
+
+    <!-- end of deleted forms -->
   </div>
 </template>
 
@@ -204,6 +239,7 @@ export default {
     var vendorAssignedForms = ref([]);
     var adminAssignedForms = ref([]);
     var completedForms = ref([]);
+    var deletedForms = ref([]);
 
     var getAllForms = async () => {
       allForms.value = await FormService.getVendorForms(vendorId.value);
@@ -219,7 +255,9 @@ export default {
             adminAssignedForms.value.push(allForms.value[i]);
           } else if (allForms.value[i].status == "form_completed") {
             completedForms.value.push(allForms.value[i]);
-          }
+          } else if (allForms.value[i].status == "deleted") {
+          deletedForms.value.push(allForms.value[i]);
+        }
         }
       }
     };
@@ -247,6 +285,7 @@ export default {
       vendorAssignedForms,
       adminAssignedForms,
       completedForms,
+      deletedForms,
       getAllForms,
       enterForm,
     };
