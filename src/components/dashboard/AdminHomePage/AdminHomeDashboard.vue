@@ -21,7 +21,7 @@
 <script>
 import FormStatusBarChart from "./FormStatusBarChart.vue";
 import VendorLineChart from "./VendorLineChart.vue";
-import RejectionRatePerVendorChart from "./RejectionRatePerVendorChart.vue.vue";
+import RejectionRatePerVendorChart from "./RejectionRatePerVendorChart.vue";
 
 export default {
   components: {
