@@ -58,6 +58,69 @@
 
         </div>
       </div>
+      <div v-if="stage == 1" class="row col-8 offset-2 bg-white shadow rounded mt-1">
+        <div class="fw-bold fs-1 mt-3">
+          Set User Access
+        </div>
+        <div class="row text-start">
+          <div class="row">
+            <div class="col-6 text-end">
+              <label  for="access"> Access Type</label>
+              
+            </div>
+          
+            <div class="col-4 form-check ">
+                <p>
+                  <input v-model="user.roles" type="radio" class="form-check-input border border-secondary me-2 radio-inline" name="role" value="user" />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    External Vendor
+                  </label>
+                </p>
+            
+                <p>
+                  <input v-model="user.roles" type="radio" class="form-check-input border border-secondary me-2 radio-inline" name="role" value="admin" />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Internal Admin
+                  </label>
+                </p>
+                <p>
+                  <input v-model="user.roles" type="radio" class="form-check-input border border-secondary me-2" name="role" value="mod" />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Internal Approver
+                  </label>
+                </p>
+              </div>
+              <!-- Passwords -->
+              <!-- <div class="input-group flex-nowrap">
+<span class="input-group-text" id="addon-wrapping">@</span>
+<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+</div> -->
+              <div class="row">
+                <div class="col-6 offset-3">
+                  <label for="username" class="form-label">
+                  Password<span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                  <input v-model="user.password" id="password" type="password" class="form-control border border-secondary"
+                    name="password" placeholder="Provide or generate a password." />
+                    <button class="btn btn-secondary" @click="generatePassword">
+                        Generate
+                      </button>
+
+                </div>
+                </div>
+                  <!-- <div class="col-4">
+                    <input v-model="user.password" type="password" class="form-control" name="password" />
+                  </div> -->
+                  <!-- <div class="col">
+                    <button class="btn btn-primary" @click="generatePassword">
+                      Generate Password
+                    </button>
+                  </div> -->
+              </div>
+          </div>
+        </div>        
+      </div>
    
 
 
@@ -72,9 +135,9 @@
                   Set User Details
                 </h6>
               </div>
-              <div v-if="stage == 1">
+              <!-- <div v-if="stage == 1">
                 <h6 class="text-white text-capitalize ps-3">Set User Access</h6>
-              </div>
+              </div> -->
               <div v-if="stage == 2">
                 <h6 class="text-white text-capitalize ps-3">
                   Review new user details
@@ -113,7 +176,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="stage == 1">
+            <!-- <div v-if="stage == 1">
               <div class="row">
                 <div class="col-4">
                   <label class="fw-bold" for="access">Access Type</label>
@@ -182,7 +245,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div v-if="stage == 2">
               <div class="row mb-3">
                 <div class="col">
