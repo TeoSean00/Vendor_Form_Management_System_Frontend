@@ -62,14 +62,14 @@
   <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
   <div class="container mt-5">
     <div class="row">
-      <div class="col">
-        <FormStatusBarChart :vendorDetails="vendorInfo" />
+      <div class="col my-auto">
+        <FormStatusBarChart :vendorDetails="vendorInfo" style="height: 15em;" />
       </div>
-      <div class="col">
+      <div class="col my-auto">
         <UpdatesTodayChart :vendorDetails="vendorInfo" />
       </div>
-      <div class="col">
-        <DeadlinesChart :vendorDetails="vendorInfo" />
+      <div class="col my-auto">
+        <DeadlinesChart :vendorDetails="vendorInfo" style="height: 15em;" />
       </div>
     </div>
   </div>
