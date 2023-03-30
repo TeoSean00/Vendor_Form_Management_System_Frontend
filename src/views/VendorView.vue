@@ -63,13 +63,13 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col">
-        <FormStatusBarChart :vendorDetails="vendorInfo" />
+        <FormStatusBarChart :vendorDetails="vendorInfo" style="height: 15em;" />
       </div>
       <div class="col">
         <UpdatesTodayChart :vendorDetails="vendorInfo" />
       </div>
       <div class="col">
-        <DeadlinesChart :vendorDetails="vendorInfo" />
+        <DeadlinesChart :vendorDetails="vendorInfo" style="height: 15em;" />
       </div>
     </div>
   </div>
