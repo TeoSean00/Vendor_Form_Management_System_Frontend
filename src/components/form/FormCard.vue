@@ -48,11 +48,14 @@
               ></testEmail>
             </div>
           </div> -->
-          <div v-if="formStatus == 'form_completed'">
-            <button class="btn btn-main-blue" @click="generatePdf">
-              Download
-            </button>
+          <div class="row" v-if="formStatus == 'form_completed'">
+            <div class="col text-center">
+              <button class="btn btn-link btn-block" @click="generatePdf">
+                Download
+              </button>
+            </div>
           </div>
+          
       </div>
     </div>
   </div>
