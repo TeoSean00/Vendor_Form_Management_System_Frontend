@@ -63,101 +63,6 @@
   <section id="forms" class="forms mt-2">
     <div class="container">
 
-      <!-- <div>
-        Data dump section
-        <p>{{ vendorUsers }}</p>
-        <p>{{ vendorInfo }}</p>
-        <p>{{ templateList }}</p>
-        <p>{{ allForms }}</p>
-        <p>{{ toDelete }}</p>
-      </div> -->
-
-      <!-- <div class="section-title d-flex justify-content-between">
-        <div v-if="vendorInfo">
-          <h1 class="text-main-blue">Vendor: {{ vendorInfo.name }}</h1>
-          <h3 class="text-main-blue">Country: {{ vendorInfo.country }}</h3>
-          <h3 class="text-main-blue">Details: {{ vendorInfo.details }}</h3>
-        </div>
-        <div
-          class="btn-group mt-auto shadow-0"
-          role="group"
-          aria-label="Button group with nested dropdown"
-        >
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            data-bs-toggle="modal"
-            href="#allusers"
-          >
-            All Users
-          </button>
-
-          <div
-            class="modal fade"
-            id="allusers"
-            aria-hidden="true"
-            aria-labelledby="exampleModalToggleLabel"
-            tabindex="-1"
-          >
-            <div
-              class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-            >
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="allusersLabel">List of Users</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body" id="usermodal">
-                  <table
-                    class="table align-middle mb-0 bg-white"
-                    id="usertable"
-                  >
-                    <thead class="bg-light">
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(user, index) in vendorUsers" :key="user">
-                        <td>
-                          <p class="fw-normal mb-1">{{ ++index }}</p>
-                        </td>
-                        <td>
-                          <p class="fw-bold mb-1">{{ user.username }}</p>
-                          <p class="text-muted mb-0">{{ user.email }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)"
-          >
-            Add Users
-          </button>
-
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)"
-          >
-            Add Form
-          </button>
-        </div>
-      </div> -->
-
       <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
       <div class="container mt-4">
         <div class="row">
@@ -174,7 +79,7 @@
       </div>
 
       <!-- start vendor assigned form -->
-      <div class="bluebg card text-white mt-4 py-2 text-center">
+      <div class="bluebg card text-white mt-2 py-2 text-center">
         <div class="card-body">
           <h4 class="text-white m-0">
             Waiting for vendor response
@@ -188,48 +93,65 @@
               </div>
             </div>
           </div>
-          
         </div>
-      </div>
+        <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 justify-content-between d-flex">
+          <h4 class="text-white fs-6 fw-light">Waiting for vendor response</h4>
+          <div class="text-white text-center">
+              <div class="form-check form-switch" style="text-align: start;">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Auto Remind</label>
+              </div>  
+          </div>
+        </div>
+        <div
+      v-if="vendorAssignedForms.length > 0"
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+    >
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="vendorAssignedForms.length >0">
-        <template
-          v-for="vendorForm in vendorAssignedForms"
-          :key="vendorForm.status"
-        >
-          <FormCard
-            :dateCreated="vendorForm.createDate"
-            :deadline="vendorForm.deadline"
-            :vendorFormId="vendorForm.id"
-            :formInfo="vendorForm.content.FormInfo"
-            :formStatus="vendorForm.status"
-            :vendorUsers ="vendorUsers"
-            @upToDelete="upToDelete"
-            @enterForm="enterForm"
-          ></FormCard>
-          
-        </template>
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+      <template
+      v-for="vendorForm in vendorAssignedForms"
+      :key="vendorForm.status"
+      >
+        <FormCard
+          class = "mx-2"
+          :dateCreated="vendorForm.createDate"
+          :deadline="vendorForm.deadline"
+          :vendorFormId="vendorForm.id"
+          :formInfo="vendorForm.content.FormInfo"
+          :formStatus="vendorForm.status"
+          :vendorUsers ="vendorUsers"
+          @upToDelete="upToDelete"
+          @enterForm="enterForm"
+        ></FormCard>
+      
+      </template>
       </div>
-      <h2 v-else class="empty text-center py-5">
-        No Form available
-      </h2>
+    </div>
+    <h2
+      v-else
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+    >
+      No forms currently available.
+    </h2>
       <!-- end of vendor assigned form  -->
 
       <!-- start admin assigned form -->
-      <div class="bluebg card text-white mt-5 py-2 text-center">
-        <div class="card-body">
-          <h4 class="text-white m-0">
-            Waiting for admin response
-          </h4>
-        </div>
-      </div>
+    <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+      <h4 class="text-white fs-6 fw-light">Waiting for admin response</h4>
+    </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="adminAssignedForms.length > 0">
+    <div
+      v-if="adminAssignedForms.length > 0"
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+    >
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
         <template
           v-for="vendorForm in adminAssignedForms"
           :key="vendorForm.status"
         >
           <FormCard
+            class="mx-2"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
             @upToDelete="upToDelete"
@@ -237,26 +159,31 @@
           ></FormCard>
         </template>
       </div>
-      <h2 v-else class="empty text-center py-5">
-        No Form available
-      </h2>
+    </div>
+      <h2
+      v-else
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+    >
+      No Form available
+    </h2>
       <!-- end of admin assigned form  -->
 
       <!-- start approval assigned form -->
-      <div class="bluebg card text-white py-2 mt-5 text-center">
-        <div class="card-body">
-          <h4 class="text-white m-0">
-            Waiting for approval
-          </h4>
-        </div>
-      </div>
+      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+      <h4 class="text-white fs-6 fw-light">Waiting for approver response</h4>
+    </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="approvalAssignedForms.length>0">
+    <div
+      v-if="approvalAssignedForms.length > 0"
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+    >
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
         <template
           v-for="vendorForm in approvalAssignedForms"
           :key="vendorForm.status"
         >
           <FormCard
+            class="mx-2"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
             @upToDelete="upToDelete"
@@ -264,34 +191,88 @@
           ></FormCard>
         </template>
       </div>
-      <h2 v-else class="empty text-center py-5">
-        No Form available
-      </h2>
+    </div>
+      <h2
+      v-else
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+    >
+      No Form available
+    </h2>
       <!-- end of approval assigned form  -->
 
       <!-- start completed assigned form -->
-      <div class="bluebg card text-white mt-5 py-2 text-center">
-        <div class="card-body">
-          <h4 class="text-white m-0">Completed</h4>
-        </div>
-      </div>
+      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+      <h4 class="text-white fs-6 fw-light">Completed Forms</h4>
+    </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3" v-if="completedForms.length>0">
-        <template v-for="vendorForm in completedForms" :key="vendorForm.status">
+    <div
+      v-if="completedForms.length > 0"
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+    >
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+        <template
+          v-for="vendorForm in completedForms"
+          :key="vendorForm.status"
+        >
           <FormCard
+            class="mx-2"
+            :dateCreated="vendorForm.createDate"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
-            :formStatus="vendorForm.status"
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>
         </template>
       </div>
-      <h2 v-else class="empty text-center py-5">
-        No Form available
+    </div>
+      <h2
+      v-else
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+    >
+      No Form available
       </h2>
-      <div class="col mt-4"></div>
       <!-- end of completed assigned form  -->
+      
+      <!-- start of deleted forms -->
+      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+      <h4 class="text-white fs-6 fw-light">Deleted Forms</h4>
+    </div>
+
+    <div
+      v-if="deletedForms.length > 0"
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+    >
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+        <template
+          v-for="vendorForm in deletedForms"
+          :key="vendorForm.status"
+        >
+          <FormCard
+            class="mx-2"
+            :dateCreated="vendorForm.createDate"
+            :vendorFormId="vendorForm.id"
+            :formInfo="vendorForm.content.FormInfo"
+            @upToDelete="upToDelete"
+            @enterForm="enterForm"
+          ></FormCard>
+        </template>
+      </div>
+    </div>
+      <h2
+      v-else
+      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+    >
+      No Form available
+      </h2>
+      <!-- end of deleted forms -->
+    </div>
+    <div class="col mt-4"></div>
+
+
+
+
+
+
 
       <!-- Modal confirm delete -->
       <div
@@ -459,6 +440,7 @@ export default {
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
     var completedForms = ref([]);
+    var deletedForms = ref([]);
     var errors = ref([])
     
     var checkEmail = (inputText) =>{
@@ -532,6 +514,8 @@ export default {
           approvalAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "form_completed") {
           completedForms.value.push(allForms.value[i]);
+        }else if (allForms.value[i].status == "deleted") {
+          deletedForms.value.push(allForms.value[i]);
         }
       }
     };
@@ -776,6 +760,7 @@ export default {
       adminAssignedForms,
       approvalAssignedForms,
       completedForms,
+      deletedForms,
       toDelete,
       addTextInput,
       addHeaderText,
