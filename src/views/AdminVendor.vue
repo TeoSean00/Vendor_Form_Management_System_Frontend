@@ -64,24 +64,27 @@
     <div class="container">
 
       <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
-      <div class="container mt-5">
+      <div class="container mt-4">
         <div class="row">
-          <div class="col">
-            <FormStatusBarChart :vendorDetails="vendorInfo" />
+          <div class="col my-auto">
+            <FormStatusBarChart :vendorDetails="vendorInfo" style="height: 15em;"/>
           </div>
-          <div class="col">
-            <UpdatesTodayChart :vendorDetails="vendorInfo" />
+          <div class="col my-auto">
+            <UpdatesTodayChart :vendorDetails="vendorInfo"/>
           </div>
-          <div class="col">
-            <DeadlinesChart :vendorDetails="vendorInfo" />
+          <div class="col my-auto">
+            <DeadlinesChart :vendorDetails="vendorInfo" style="height: 15em;"/>
           </div>
         </div>
       </div>
 
       <!-- start vendor assigned form -->
-      <div class="container mt-2">
-        <!-- <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
-          <h4 class="text-white fs-6 fw-light">Waiting for vendor response</h4>
+      <div class="bluebg card text-white mt-2 py-2 text-center">
+        <div class="card-body">
+          <h4 class="text-white m-0">
+            Waiting for vendor response
+          </h4>
+
           <div class="row justify-content-center text-white text-center">
             <div class="col-2 ms-2">
               <div class="form-check form-switch" style="text-align: start;">
@@ -90,7 +93,7 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
         <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 justify-content-between d-flex">
           <h4 class="text-white fs-6 fw-light">Waiting for vendor response</h4>
           <div class="text-white text-center">

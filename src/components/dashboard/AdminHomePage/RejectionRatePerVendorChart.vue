@@ -137,9 +137,9 @@
   
       var getVendorInfo = async () => {
         // console.log("getForms() Backend API call is invoked! Before Value: ", vendorData.value);
-        vendorData.value = await VendorService.getVendorRejectionRate().then((response) => {
-          return response;
-        });
+        // vendorData.value = await VendorService.getVendorRejectionRate().then((response) => {
+        //   return response;
+        // });
         console.log("After retrieval value: ", vendorData.value);
       };
   

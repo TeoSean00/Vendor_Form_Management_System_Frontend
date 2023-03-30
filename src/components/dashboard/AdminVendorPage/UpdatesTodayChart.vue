@@ -1,28 +1,29 @@
 <template>
-  <!-- 2nd chart -->
   <div class="col my-auto">
     <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-inner">
+
+        <!-- first page for form rejections only -->
         <div class="carousel-item active">
           <div class="card mx-auto border-secondary" style="width: 88%">
-            <!-- first page to do list -->
             <div class="card-body">
-              <div class="border border-light mb-3 p-1">
+              <div class="border border-light mb-2 p-1">
                 <h5 class="card-title">New Form Updates Today</h5>
                 <p class="card-text">
-                  {{ dataSize }} new form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
+                  {{ filteredUpdateFormData[1] }} new overall form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
                   {{ dateToday }}
                 </p>  
               </div>
-              <div v-if="dataSize == 0">
-                <p>There are no new updates for today!</p>
+              <div v-if="filteredUpdateFormData[0].rejected.length == 0">
+                <p>There are no new form rejection updates for today!</p>
               </div>
               <div v-else>
-                <ul class="list-group list-group-flush">
-                  <div v-for="(status, form, index) in dummyData">
+                <ul class="list-group list-group-flush p-1">
+                  <h6 class="mt-0">Forms Rejected:</h6>
+                  <div v-for="(value, index) in filteredUpdateFormData[0].rejected">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ index + 1 }}. {{ form }} - {{ status }}
-                        <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
+                      Form {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} rejected
+                      <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
                 </ul>
@@ -31,23 +32,27 @@
           </div>
         </div>
 
-        <!-- second page to do list -->
-        <div v-if="dataSize > 4">
-          <div class="carousel-item">
-            <div class="card mx-auto border-secondary" style="width: 88%">
-              <div class="card-body">
-                <div class="border border-light mb-3 p-1">
-                  <h5 class="card-title">New Form Updates Today</h5>
-                  <p class="card-text">
-                    {{ dataSize }} new form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
-                    {{ dateToday }}
-                  </p>  
-                </div>
-                <ul class="list-group list-group-flush">
-                  <div v-for="(status, form, index) in dummyData">
-                    <li v-if="index > 3 && index < 8" class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ index + 1 }}. {{ form }} - {{ status }}
-                        <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>  
+        <!-- second page for form completed only -->
+        <div class="carousel-item">
+          <div class="card mx-auto border-secondary" style="width: 88%">
+            <div class="card-body">
+              <div class="border border-light mb-2 p-1">
+                <h5 class="card-title">New Form Updates Today</h5>
+                <p class="card-text">
+                  {{ filteredUpdateFormData[1] }} new overall form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
+                  {{ dateToday }}
+                </p>  
+              </div>
+              <div v-if="filteredUpdateFormData[0].completed.length == 0">
+                <p>There are no new form completion updates for today!</p>
+              </div>
+              <div v-else>
+                <ul class="list-group list-group-flush p-1">
+                  <h6 class="mt-0">Forms Completed:</h6>
+                  <div v-for="(value, index) in filteredUpdateFormData[0].completed">
+                    <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
+                      Form {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} completed
+                      <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
                 </ul>
@@ -56,25 +61,27 @@
           </div>
         </div>
 
-        <!-- third page to do list -->
-        <div v-if="dataSize > 8">
-          <div class="carousel-item">
-            <div class="card mx-auto" style="width: 88%">
-              <div class="card-body">
-                <div class="border border-light mb-3 p-1">
-                  <h5 class="card-title">New Form Updates Today</h5>
-                  <p class="card-text">
-                    {{ dataSize }} new form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
-                    {{ dateToday }}
-                  </p>  
-                </div>
-                <ul class="list-group list-group-flush">
-                  <div v-for="(status, form, index) in dummyData">
-                    <li v-if="index > 7 && index < 12" class="list-group-item d-flex justify-content-between align-items-center">
-                      {{ index + 1 }}. {{ form }} - {{ status }}
-                      <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">
-                        Form
-                      </a>
+        <!-- third page for form assigned only -->
+        <div class="carousel-item">
+          <div class="card mx-auto border-secondary" style="width: 88%">
+            <div class="card-body">
+              <div class="border border-light mb-2 p-1">
+                <h5 class="card-title">New Form Updates Today</h5>
+                <p class="card-text">
+                  {{ filteredUpdateFormData[1] }} new overall form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
+                  {{ dateToday }}
+                </p>  
+              </div>
+              <div v-if="filteredUpdateFormData[0].assigned.length == 0">
+                <p>There are no new form assignment updates for today!</p>
+              </div>
+              <div v-else>
+                <ul class="list-group list-group-flush p-1">
+                  <h6 class="mt-0">Forms Assigned:</h6>
+                  <div v-for="(value, index) in filteredUpdateFormData[0].assigned">
+                    <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
+                      Form {{ value["content"]["FormInfo"]["formName"] }} - assigned to {{ vendorDetails ? vendorDetails.name : "" }}
+                      <a href="#" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
                 </ul>
@@ -82,9 +89,7 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div v-if="dataSize > 4">
         <button
           class="carousel-control-prev"
           type="button"
@@ -103,13 +108,15 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
+
       </div>
-    </div>
   </div>
+</div>
 </template>
 
 <script>
-import { computed, ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue';
+import FormService from "../../../services/form/formService";
 
 export default {
   props: {
@@ -138,47 +145,80 @@ export default {
       return currentDate
     })
 
-    const dummyData = ref({
-      formA: 'Awaiting Vendor',
-      formB: 'Awaiting Admin',
-      formC: 'Awaiting Approver',
-      formD: 'Awaiting Vendor',
-      formE: 'Awaiting Admin',
-      formF: 'Awaiting Approver',
-      formG: 'Awaiting Approver',
-      formH: 'Awaiting Vendor',
-      formI: 'Awaiting Admin',
-      formJ: 'Awaiting Approver',
-      formK: 'Awaiting Vendor',
-      formL: 'Awaiting Admin'
-    })
-
-    const dataSize = computed(() => {
-      const value = dummyData.value
-      let count = 0
-      for (let v in value) {
-        count += 1
-      }
-      // console.log(count)
-      return count
-    })
-
     // Method to check that vendor details have been successfully passed from parent page, to invoke specific dashboard method afterwards
+    var formData = ref(null);
+
     watchEffect(async () => {
       if (props.vendorDetails != null) {
         try {
-          console.log("Vendor Details passed from parent page successfull> ", props.vendorDetails);
+          // console.log("Vendor Details passed from parent page successfull> ", props.vendorDetails);
+          formData.value = await FormService.getVendorUpdateForms(props.vendorDetails.id)
+            .then((response) => {
+              // console.log("getVendorUpdateForms successful");
+              return response;
+            }
+          )
         }
         catch (error) {
-          console.log(error);
+          console.log("getVendorUpdateForms error when called", error);
         }
       }
+      // console.log("after getVendorUpdateForms retrieval> ", formData.value);
+    })
+
+    // Method to filter the getVendorUpdateForms data into their respective categories to be displayed
+    const filteredUpdateFormData = computed(() => {
+      const date = new Date()
+      let monthNow = (parseInt(date.getMonth()) + 1).toString();
+      if (monthNow.length == 1) {
+        monthNow = "0" + monthNow;
+      }
+      var dateToday = date.getFullYear() + "-" + monthNow + "-" + date.getDate()
+      var filteredForms = {
+        "rejected": [],
+        "completed": [],
+        "assigned": []
+      }
+      var totalUpdates = 0
+      if (formData.value) {
+        for (let i = 0; i < formData.value.length; i++) {
+          if (formData.value[i].latestRejectionDate != null) {
+            let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
+            // console.log("rejectionDate> ", rejectionDate)
+            if (rejectionDate == dateToday) {
+              let key = formData.value[i].latestRejector
+              let value = formData.value[i]
+              filteredForms.rejected.push([key, value])
+              totalUpdates += 1
+            }
+          }
+          else if (formData.value[i].latestCompletedDate != null) {
+            let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
+            // console.log("completedDate> ", completedDate)
+            if (completedDate == dateToday) {
+              let key = formData.value[i].latestCompletor
+              let value = formData.value[i]
+              filteredForms.completed.push([key, value])
+              totalUpdates += 1
+            }
+          }
+          else {
+            let createDate = formData.value[i].createDate.split("T")[0]
+            // console.log("createdDate", createDate)
+            if (createDate == dateToday) {
+              filteredForms.assigned.push(formData.value[i])
+              totalUpdates += 1
+            }
+          }
+        }
+      }
+      console.log(filteredForms)
+      return [filteredForms, totalUpdates];
     })
 
     return {
       dateToday,
-      dummyData,
-      dataSize
+      filteredUpdateFormData
     }
   }
 }
