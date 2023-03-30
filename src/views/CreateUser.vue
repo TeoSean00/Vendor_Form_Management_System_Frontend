@@ -6,8 +6,8 @@
 
 <template>
   <Navbar />
-  <div class="container">
-    <div class="progress-stacked m-5">
+  <div class="container-fluid text-center">
+    <div class="progress-stacked m-5 col-8 mx-auto">
       <div
         class="progress"
         role="progressbar"
@@ -30,6 +30,72 @@
           </div>
         </template>
       </div>
+      <div>
+        <!-- This is a test form -->
+        <div v-if="stage == 0" class="row bg-white shadow rounded-bottom">
+          <div class="fw-bold fs-1 mt-3">
+            Set User Details
+
+          </div>
+          <div v-if="stage == 0" class="col-8 offset-2 my-3">
+              <div class="row ">
+                <div class="form-group mb-3 text-start">
+                  <label for="username" class="form-label">
+                    Username<span class="text-danger">*</span>
+                  </label>
+                  <input
+                    v-model="user.username"
+                    id="username"
+                    type="text"
+                    class="form-control border border-secondary"
+                    name="username"
+                    placeholder="Provide a username."
+                  />
+                </div>
+                <div class="">
+                  <div
+                    v-if="toggleUsernameError"
+                    class="alert alert-danger mt-2"
+                    role="alert"
+                  >
+                    Fill in username.
+                  </div>
+                </div>
+                </div>
+                <div class="row">
+                  <!-- //Email starts here -->
+                  <div class="form-group mb-3 text-start">
+                    <label for="email" class="form-label">
+                      Email<span class="text-danger">*</span>
+                    </label>
+                    <input
+                    id="email"
+                    v-model="user.email"
+                    type="email"
+                    class="form-control border border-secondary"
+                    placeholder="Please enter an email."
+                    name="email"
+                  />
+                  <div
+                    v-if="toggleEmailError"
+                    class="alert alert-danger mt-2"
+                    role="alert"
+                  >
+                    Fill in valid email.
+                  </div>
+                  </div>
+                </div>
+                <button
+                  v-if="stage == 0"
+                  class="btn btn-main-blue ms-auto me-2 col-1"
+                  @click="toggleNext"
+                >
+                  Next
+                </button>
+             
+            </div>
+        </div>
+      </div>
     </div>
 
     <div class="row">
@@ -38,7 +104,7 @@
         <div class="card my-4 bg-light">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div
-              class="bg-gradient bg-main-blue shadow-success rounded pt-4 pb-3 d-flex"
+              class=" bg-main-blue shadow-success rounded pt-4 pb-3 d-flex"
             >
               <div v-if="stage == 0">
                 <h6 class="text-white text-capitalize ps-3">
