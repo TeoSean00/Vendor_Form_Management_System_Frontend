@@ -79,22 +79,7 @@
       </div>
 
       <!-- start vendor assigned form -->
-      <div class="bluebg card text-white mt-2 py-2 text-center">
-        <div class="card-body">
-          <h4 class="text-white m-0">
-            Waiting for vendor response
-          </h4>
-
-          <div class="row justify-content-center text-white text-center">
-            <div class="col-2 ms-2">
-              <div class="form-check form-switch" style="text-align: start;">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                <label class="form-check-label"   for="flexSwitchCheckDefault">Auto Remind</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 justify-content-between d-flex">
+      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 justify-content-between d-flex">
           <h4 class="text-white fs-6 fw-light">Waiting for vendor response</h4>
           <div class="text-white text-center">
               <div class="form-check form-switch" style="text-align: start;">
@@ -132,7 +117,7 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No forms currently available.
+      No form currently available
     </h2>
       <!-- end of vendor assigned form  -->
 
@@ -164,7 +149,7 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No Form available
+      No form currently available
     </h2>
       <!-- end of admin assigned form  -->
 
@@ -196,7 +181,7 @@
       v-else
       class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
     >
-      No Form currently  available
+      No form currently available
     </h2>
       <!-- end of approval assigned form  -->
 
@@ -252,6 +237,7 @@
             :dateCreated="vendorForm.createDate"
             :vendorFormId="vendorForm.id"
             :formInfo="vendorForm.content.FormInfo"
+            :formStatus="vendorForm.status"
             @upToDelete="upToDelete"
             @enterForm="enterForm"
           ></FormCard>
@@ -378,7 +364,7 @@
           </div>
         </div>
       </div>
-    </div>
+
   </section>
 </template>
 

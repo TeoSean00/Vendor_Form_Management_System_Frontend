@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="card-footer">
-        <div class="row">
+        <div class="row" v-if="formStatus != 'deleted'">
           <div class="col-6 pr-0">
             <button class="btn btn-link btn-block" @click="enterForm">
               Enter
