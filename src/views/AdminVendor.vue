@@ -276,7 +276,7 @@
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3" v-if="completedForms.length>0">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2" v-if="completedForms.length>0">
         <template v-for="vendorForm in completedForms" :key="vendorForm.status">
           <FormCard
             :vendorFormId="vendorForm.id"
