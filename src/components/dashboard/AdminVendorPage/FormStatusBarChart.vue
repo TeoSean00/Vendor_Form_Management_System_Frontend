@@ -1,9 +1,11 @@
 <template>
-  <Bar
+  <div style="height: 100%; width: 100%;">
+    <Bar
     id="form-status-bar-chart"
     :options="formStatusBarChartOptions"
     :data="formStatusBarChartData"
-  />
+    />
+  </div>
 </template>
 
 <script>

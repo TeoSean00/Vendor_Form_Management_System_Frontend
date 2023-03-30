@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <h2 class="mt-3 mb-4">Admin's Home Page Dashboards</h2>
+  <div class="container mt-5">
     <div class="row">
       <!-- 1st chart -->
       <div class="col">
