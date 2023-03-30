@@ -11,52 +11,68 @@ class VendorService {
     const response = axios
       .post(API_URL, data, { headers: authHeader() })
       .then((response) => {
-        console.log("post request successful!");
+        console.log("addVendor post request successful!");
         return response.data;
       })
       .catch((error) => {
-        console.log("post request unsuccessful", error);
+        console.log("addVendor post request unsuccessful", error);
         return error;
       });
     return response;
   }
+
   getVendors() {
     const response = axios
       .get(API_URL + "all", { headers: authHeader() })
       .then((response) => {
-        console.log("get request successful!", response);
+        console.log("getVendors request successful!", response);
         return response.data;
       })
       .catch((error) => {
-        console.log("get request unsuccessful", error);
+        console.log("getVendors request unsuccessful", error);
         return error;
       });
     return response;
   }
+
   getVendor(vendorId){
     const response = axios
     .get(API_URL + vendorId,{headers:authHeader()})
     .then((response)=>{
-      console.log("get request successful!",response)
+      console.log("getVendor request successful!",response)
       return response.data;
     })
     .catch((error)=>{
-      console.log("get request unsuccessful", error)
+      console.log("getVendor request unsuccessful", error)
       return error;
     });
     return response;
   }
+
   getJoinDates() {
     const response = axios
       .get(API_URL + "getJoinDates", { headers: authHeader() })
       .then((response) => {
-        console.log("get request successful!", response);
+        console.log("getJoinDates request successful!", response);
         return response.data;
       })
       .catch((error) => {
-        console.log("get request unsuccessful", error);
+        console.log("getJoinDates request unsuccessful", error);
         return error;
       });
+    return response;
+  }
+
+  getVendorRejectionRate() {
+    const response = axios.get(API_URL + "getAverageRejection", { headers: authHeader() })
+    .then((response) => {
+      console.log("getVendorRejectionRate successful", response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.log("getVendorRejectionRate unsucessful", error);
+      return error;
+    })
     return response;
   }
 }

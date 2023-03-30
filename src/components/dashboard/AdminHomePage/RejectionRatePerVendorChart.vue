@@ -13,6 +13,7 @@
   import { ref, computed } from "vue";
   import { Bar } from "vue-chartjs";
   import FormService from "../../../services/form/formService";
+  import VendorService from "../../../services/vendor/vendorService";
   import {
     Chart as ChartJS,
     Title,
@@ -44,12 +45,12 @@
     },
     setup() {
       // Method to process overall form status data, to break them down into their respective staus and increment its count accordingly
-      const filteredFormData = computed(() => {
-        // console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
+      const filteredvendorData = computed(() => {
+        // console.log("Overall form status data pulled, processing into respective status now, current data: ", vendorData.value);
         let newValues = [0, 0, 0, 0];
-        if (formData.value) {
-          for (let i = 0; i < formData.value.length; i++) {
-            let status = formData.value[i].status;
+        if (vendorData.value) {
+          for (let i = 0; i < vendorData.value.length; i++) {
+            let status = vendorData.value[i].status;
             if (status === "vendor_response") {
               newValues[0] += 1;
             } else if (status === "admin_response") {
@@ -132,21 +133,21 @@
       });
     
       // async await method call to retrieve the raw overall form status data from Backend
-      var formData = ref(null);
+      var vendorData = ref(null);
   
-      var getFormInfo = async () => {
-        // console.log("getForms() Backend API call is invoked! Before Value: ", formData.value);
-        formData.value = await FormService.getForms().then((response) => {
+      var getVendorInfo = async () => {
+        // console.log("getForms() Backend API call is invoked! Before Value: ", vendorData.value);
+        vendorData.value = await VendorService.getVendorRejectionRate().then((response) => {
           return response;
         });
-        console.log("After retrieval value: ", formData.value);
+        console.log("After retrieval value: ", vendorData.value);
       };
   
-      getFormInfo();
+      getVendorInfo();
   
       return {
         barChartData,
-        formData,
+        vendorData,
         FileStatusBarChartOptions,
       }
     }
