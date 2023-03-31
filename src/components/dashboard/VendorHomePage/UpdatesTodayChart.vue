@@ -22,7 +22,7 @@
                   <h6 class="mt-0">Forms Rejected:</h6>
                   <div v-for="(value, index) in filteredUpdateFormData[0].rejected">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
-                      Form {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} rejected
+                      {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} rejected
                       <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
@@ -51,7 +51,7 @@
                   <h6 class="mt-0">Forms Completed:</h6>
                   <div v-for="(value, index) in filteredUpdateFormData[0].completed">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
-                      Form {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} completed
+                      {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} completed
                       <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
@@ -80,7 +80,7 @@
                   <h6 class="mt-0">Forms Assigned:</h6>
                   <div v-for="(value, index) in filteredUpdateFormData[0].assigned">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
-                      Form {{ value["content"]["FormInfo"]["formName"] }} - assigned to {{ vendorDetails ? vendorDetails.name : "" }}
+                      {{ value["content"]["FormInfo"]["formName"] }} - assigned to {{ vendorDetails ? vendorDetails.name : "" }}
                       <a @click="enterForm(value.id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
                     </li>
                   </div>
