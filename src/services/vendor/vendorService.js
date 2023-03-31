@@ -37,7 +37,7 @@ class VendorService {
 
   updateVendor(vendorId, vendorObject) {
     const response = axios
-      .get(API_URL + vendorId, vendorObject, { headers: authHeader() })
+      .put(API_URL + vendorId, vendorObject, { headers: authHeader() })
       .then((response) => {
         console.log("updateVendor request successful!", response);
         return response.data;
