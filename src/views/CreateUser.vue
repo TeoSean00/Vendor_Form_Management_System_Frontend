@@ -6,65 +6,147 @@
 
 <template>
   <Navbar />
-  <div class="container">
-    <div class="progress-stacked m-5">
-      <div
-        class="progress"
-        role="progressbar"
-        aria-label="status"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
+  <div class="container-fluid text-center">
+    <div class="progress-stacked mt-4 mb-4 col-8 offset-2 mx-auto shadow">
+      <div class="progress" role="progressbar" aria-label="status" aria-valuemin="0" aria-valuemax="100">
         <template v-for="(bar, num) in statusList" :key="num">
-          <div
-            id="progress-bar"
-            class="progress-bar fs-5"
-            :class="{
-              'bg-success': num < stage,
-              'bg-warning': num == stage,
-              'bg-secondary': num > stage,
-            }"
-            style="width: 25%"
-          >
+          <div id="progress-bar" class="progress-bar fs-5" :class="{
+            'bg-success': num < stage,
+            'bg-warning': num == stage,
+            'bg-secondary': num > stage,
+          }" style="width: 25%">
             {{ statusList[num] }}
           </div>
         </template>
       </div>
     </div>
+      <div v-if="stage == 0" class="row col-8 offset-2 bg-white shadow rounded mt-1">
+        <div class="fw-bold fs-1 mt-3">
+          Set User Details
+        </div>
+        <div v-if="stage == 0" class="col-8 offset-2 my-3">
+          <div class="row ">
+            <div class="form-group mb-3 text-start">
+              <label for="username" class="form-label">
+                Username<span class="text-danger">*</span>
+              </label>
+              <input v-model="user.username" id="username" type="text" class="form-control border border-secondary"
+                name="username" placeholder="Provide a username." />
+            </div>
+            <div class="">
+              <div v-if="toggleUsernameError" class="alert alert-danger mt-2" role="alert">
+                Fill in username.
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- //Email starts here -->
+            <div class="form-group mb-3 text-start">
+              <label for="email" class="form-label">
+                Email<span class="text-danger">*</span>
+              </label>
+              <input id="email" v-model="user.email" type="email" class="form-control border border-secondary"
+                placeholder="Please enter an email." name="email" />
+              <div v-if="toggleEmailError" class="alert alert-danger mt-2" role="alert">
+                Fill in valid email.
+              </div>
+            </div>
+          </div>
+          <button v-if="stage == 0" class="btn btn-main-blue ms-auto me-2 col-1" @click="toggleNext">
+            Next
+          </button>
+
+        </div>
+      </div>
+      <div v-if="stage == 1" class="row col-8 offset-2 bg-white shadow rounded mt-1">
+        <div class="fw-bold fs-1 mt-3">
+          Set User Access
+        </div>
+        <div class="row text-start">
+          <div class="row">
+            <div class="col-6 text-end">
+              <label  for="access"> Access Type</label>
+              
+            </div>
+          
+            <div class="col-4 form-check ">
+                <p>
+                  <input v-model="user.roles" type="radio" class="form-check-input border border-secondary me-2 radio-inline" name="role" value="user" />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    External Vendor
+                  </label>
+                </p>
+            
+                <p>
+                  <input v-model="user.roles" type="radio" class="form-check-input border border-secondary me-2 radio-inline" name="role" value="admin" />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Internal Admin
+                  </label>
+                </p>
+                <p>
+                  <input v-model="user.roles" type="radio" class="form-check-input border border-secondary me-2" name="role" value="mod" />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Internal Approver
+                  </label>
+                </p>
+              </div>
+              <!-- Passwords -->
+              <!-- <div class="input-group flex-nowrap">
+<span class="input-group-text" id="addon-wrapping">@</span>
+<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+</div> -->
+              <div class="row">
+                <div class="col-6 offset-3">
+                  <label for="username" class="form-label">
+                  Password<span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                  <input v-model="user.password" id="password" type="password" class="form-control border border-secondary"
+                    name="password" placeholder="Provide or generate a password." />
+                    <button class="btn btn-secondary" @click="generatePassword">
+                        Generate
+                      </button>
+
+                </div>
+                </div>
+                  <!-- <div class="col-4">
+                    <input v-model="user.password" type="password" class="form-control" name="password" />
+                  </div> -->
+                  <!-- <div class="col">
+                    <button class="btn btn-primary" @click="generatePassword">
+                      Generate Password
+                    </button>
+                  </div> -->
+              </div>
+          </div>
+        </div>        
+      </div>
+   
+
 
     <div class="row">
       <div class="class col-2"></div>
       <div class="col-8">
         <div class="card my-4 bg-light">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-            <div
-              class="bg-gradient bg-main-blue shadow-success rounded pt-4 pb-3 d-flex"
-            >
+            <div class=" bg-main-blue shadow-success rounded pt-4 pb-3 d-flex">
               <div v-if="stage == 0">
                 <h6 class="text-white text-capitalize ps-3">
                   Set User Details
                 </h6>
               </div>
-              <div v-if="stage == 1">
+              <!-- <div v-if="stage == 1">
                 <h6 class="text-white text-capitalize ps-3">Set User Access</h6>
-              </div>
+              </div> -->
               <div v-if="stage == 2">
                 <h6 class="text-white text-capitalize ps-3">
                   Review new user details
                 </h6>
               </div>
-              <button
-                v-if="stage == 0"
-                class="btn btn-light ms-auto me-2"
-                @click="toggleNext"
-              >
+              <button v-if="stage == 0" class="btn btn-light ms-auto me-2" @click="toggleNext">
                 Set Permissions
               </button>
-              <button
-                v-if="stage == 1"
-                class="btn btn-light ms-auto me-2"
-                @click="toggleNext"
-              >
+              <button v-if="stage == 1" class="btn btn-light ms-auto me-2" @click="toggleNext">
                 Review
               </button>
             </div>
@@ -76,17 +158,8 @@
                   <label class="fw-bold" for="username">Username</label>
                 </div>
                 <div class="col-8">
-                  <input
-                    v-model="user.username"
-                    type="text"
-                    class="form-control"
-                    name="username"
-                  />
-                  <div
-                    v-if="toggleUsernameError"
-                    class="alert alert-danger mt-2"
-                    role="alert"
-                  >
+                  <input v-model="user.username" type="text" class="form-control" name="username" />
+                  <div v-if="toggleUsernameError" class="alert alert-danger mt-2" role="alert">
                     Fill in username.
                   </div>
                 </div>
@@ -96,23 +169,14 @@
                   <label class="fw-bold" for="email">Email</label>
                 </div>
                 <div class="col-8">
-                  <input
-                    v-model="user.email"
-                    type="email"
-                    class="form-control"
-                    name="email"
-                  />
-                  <div
-                    v-if="toggleEmailError"
-                    class="alert alert-danger mt-2"
-                    role="alert"
-                  >
+                  <input v-model="user.email" type="email" class="form-control" name="email" />
+                  <div v-if="toggleEmailError" class="alert alert-danger mt-2" role="alert">
                     Fill in valid email.
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="stage == 1">
+            <!-- <div v-if="stage == 1">
               <div class="row">
                 <div class="col-4">
                   <label class="fw-bold" for="access">Access Type</label>
@@ -120,37 +184,19 @@
                 <div class="col-8 d-flex flex-column mb-2">
                   <div class="form-check">
                     <p>
-                      <input
-                        v-model="user.roles"
-                        type="radio"
-                        class="form-check-input me-2"
-                        name="role"
-                        value="user"
-                      />
+                      <input v-model="user.roles" type="radio" class="form-check-input me-2" name="role" value="user" />
                       <label class="form-check-label" for="flexRadioDefault1">
                         External Vendor
                       </label>
                     </p>
                     <p>
-                      <input
-                        v-model="user.roles"
-                        type="radio"
-                        class="form-check-input me-2"
-                        name="role"
-                        value="admin"
-                      />
+                      <input v-model="user.roles" type="radio" class="form-check-input me-2" name="role" value="admin" />
                       <label class="form-check-label" for="flexRadioDefault1">
                         Internal Admin
                       </label>
                     </p>
                     <p>
-                      <input
-                        v-model="user.roles"
-                        type="radio"
-                        class="form-check-input me-2"
-                        name="role"
-                        value="mod"
-                      />
+                      <input v-model="user.roles" type="radio" class="form-check-input me-2" name="role" value="mod" />
                       <label class="form-check-label" for="flexRadioDefault1">
                         Internal Approver
                       </label>
@@ -162,12 +208,7 @@
                     <label class="fw-bold" for="password">Password</label>
                   </div>
                   <div class="col-4">
-                    <input
-                      v-model="user.password"
-                      type="password"
-                      class="form-control"
-                      name="password"
-                    />
+                    <input v-model="user.password" type="password" class="form-control" name="password" />
                   </div>
                   <div class="col">
                     <button class="btn btn-primary" @click="generatePassword">
@@ -177,38 +218,21 @@
                 </div>
                 <div v-if="user.roles == 'user'">
                   <div class="row">
-                    <div
-                      class="bg-gradient bg-main-blue shadow-success rounded pt-4 pb-3 mt-2 col-12"
-                    >
+                    <div class="bg-gradient bg-main-blue shadow-success rounded pt-4 pb-3 mt-2 col-12">
                       <h5>Add user to vendor group</h5>
                     </div>
                     <hr class="border border-dark border-1 mt-2 opacity-75" />
                     <div class="col-4">
-                      <label class="fw-bold" for="access" v-if="currId == null"
-                        >Select Vendor</label
-                      >
-                      <label class="fw-bold" for="access" v-if="currId != null"
-                        >Selected Vendor</label
-                      >
+                      <label class="fw-bold" for="access" v-if="currId == null">Select Vendor</label>
+                      <label class="fw-bold" for="access" v-if="currId != null">Selected Vendor</label>
                     </div>
                     <div class="col-8 d-flex flex-column mb-2">
                       <div class="form-check" v-if="currId == null">
-                        <template
-                          v-for="(vendor, index) in vendors"
-                          :key="index"
-                        >
+                        <template v-for="(vendor, index) in vendors" :key="index">
                           <p>
-                            <input
-                              v-model="user.vendor"
-                              type="radio"
-                              class="form-check-input me-2"
-                              name="vendor"
-                              :value="[vendor.name, vendor.id]"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="flexRadioDefault1"
-                            >
+                            <input v-model="user.vendor" type="radio" class="form-check-input me-2" name="vendor"
+                              :value="[vendor.name, vendor.id]" />
+                            <label class="form-check-label" for="flexRadioDefault1">
                               {{ vendor.name }}
                             </label>
                           </p>
@@ -221,7 +245,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div v-if="stage == 2">
               <div class="row mb-3">
                 <div class="col">
@@ -258,13 +282,7 @@
               <h5>Additional Options</h5>
               <hr class="border border-dark border-1 mt-2 opacity-75" />
               <div class="mb-3">
-                <input
-                  type="checkbox"
-                  class="form-check-input me-2"
-                  name="role"
-                  value="user"
-                  v-model="sendEmailCheck"
-                />
+                <input type="checkbox" class="form-check-input me-2" name="role" value="user" v-model="sendEmailCheck" />
                 <label class="form-check-label" for="flexRadioDefault1">
                   Send email to user
                 </label>
@@ -274,18 +292,11 @@
                 Create User
               </button>
             </div>
-            <button
-              v-if="stage > 0 && submitted"
-              class="btn btn-secondary"
-              @click="toggleVendorPage(user.vendor[0], user.vendor[1])"
-            >
+            <button v-if="stage > 0 && submitted" class="btn btn-secondary"
+              @click="toggleVendorPage(user.vendor[0], user.vendor[1])">
               Back
             </button>
-            <button
-              v-if="stage > 0 && !submitted"
-              class="btn btn-secondary"
-              @click="togglePrevious"
-            >
+            <button v-if="stage > 0 && !submitted" class="btn btn-secondary" @click="togglePrevious">
               Back
             </button>
           </div>
@@ -293,6 +304,7 @@
       </div>
       <div class="class col-2"></div>
     </div>
+
   </div>
 </template>
 
@@ -322,13 +334,13 @@ export default {
       vendor: [null, null],
     });
 
-    var checkEmail = (inputText) =>{
+    var checkEmail = (inputText) => {
       var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-      if(inputText.match(mailformat)){
+      if (inputText.match(mailformat)) {
         return true;
       }
-      else{
+      else {
         return false;
       }
     }
@@ -374,23 +386,23 @@ export default {
           return error;
         });
 
-        if(sendEmailCheck){
-          console.log("SendingEmail")
-          emailjs.send("service_xquebpj","template_zuqge75",
+      if (sendEmailCheck) {
+        console.log("SendingEmail")
+        emailjs.send("service_xquebpj", "template_zuqge75",
           {
-              to_name: vendorInfo.value.name,
-              to_email: user.value.email,
-              username: user.value.username,
-              password: user.value.password
+            to_name: vendorInfo.value.name,
+            to_email: user.value.email,
+            username: user.value.username,
+            password: user.value.password
           },
           "Qubr9KRvmmD-pLaFH")
           .then((result) => {
-              console.log('SUCCESS!', result.text);
+            console.log('SUCCESS!', result.text);
           }, (error) => {
-              console.log('FAILED...', error.text);
+            console.log('FAILED...', error.text);
           });
 
-        }
+      }
       if (submitted && user.value.vendor[0]) {
         toggleVendorPage(user.value.vendor[0], user.value.vendor[1]);
       } else if (submitted) {
@@ -416,13 +428,13 @@ export default {
         if (user.value.username == "") {
           toggleUsernameError.value = true;
         }
-        else{
+        else {
           toggleUsernameError.value = false;
         }
         if (user.value.email == "") {
           toggleEmailError.value = true;
         }
-        if (!checkEmail(user.value.email)){
+        if (!checkEmail(user.value.email)) {
           toggleEmailError.value = true;
         }
         if (user.value.email != "" && user.value.username != "" && checkEmail(user.value.email)) {

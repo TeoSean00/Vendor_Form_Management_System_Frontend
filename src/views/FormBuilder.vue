@@ -2,12 +2,14 @@
   <Navbar />
 
   <div class="row justify-content-center bg-light-grey">
-    <div class="col-8">
+ 
+    <div class="col-8" >
       <div
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
         <h1 class="text-main-blue">
           Form Builder
+          
           <span class="float-end">
             <button
               type="button"
@@ -285,7 +287,8 @@
         </div>
       </div>
     </div>
-  </div>
+  
+</div>
 </template>
 
 <script>
@@ -299,7 +302,7 @@ import TemplateSelect from "../components/template/TemplateSelect.vue";
 import { ref, watch, computed } from "vue";
 import FormService from "../services/form/formService";
 import VendorService from "../services/vendor/vendorService";
-import TemplateService from "../services/template/templateService";
+import templateService from "../services/template/templateService";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -313,11 +316,8 @@ export default {
     TemplatePreview,
     TemplateSelect,
   },
-  props: ["vendorId"],
+  props: ["vendorId", "selectedTemplate"],
   setup(props) {
-    if (props.vendorId) {
-      console.log("here");
-    }
     var content = ref("");
     UserService.getUserBoard().then(
       (response) => {
@@ -334,14 +334,14 @@ export default {
 
     var templatesList = ref(null);
     var selectedTemplateObject = ref(null);
+    
     var getTemplatesList = async () => {
-      templatesList.value = await TemplateService.getTemplates();
-      // console.log("Got it");
-      // console.log(templatesList.value);
+      templatesList.value = await templateService.getTemplates();
     };
     getTemplatesList();
 
-    // console.log("vendorId Received", props.vendorId);
+
+
 
     var vendorAssessmentForm = {
       templateInfo: {
@@ -533,6 +533,7 @@ export default {
     var addSelectedTemplate = () => {
       // console.log("Checking templateData in createform", selectedTemplateObject);
       addTemplate(selectedTemplateObject);
+
     };
 
     var addAdminSection = () => {
@@ -562,7 +563,23 @@ export default {
     function removeSection(toRemove) {
       formSections.value.splice(toRemove, 1);
     }
+
+    
+    const selectedTemplateId = props.selectedTemplate;
+    if (selectedTemplateId){
+      selectedTemplateObject.value = JSON.parse(selectedTemplateId);
+      addSelectedTemplate();
+    }
     function exportForm() {
+      if (checkEmptyFields()) {
+        console.log("Empty fields detected!");
+        toast.error("Please include Form Name,description and at least one input!", {
+          position: toast.POSITION.TOP_CENTER,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
+        return;
+      }
       //Packages the form content into a JSON string
       //This is where we write the ajax code
       const outputObj = {
@@ -572,28 +589,20 @@ export default {
         },
         templateContents: formSections.value,
       };
-      //Add template to backend
 
-      // console.log(outputObj);
-      // const outputJson = JSON.stringify(outputObj);
-      TemplateService.addTemplate(outputObj);
-      // console.log("Added");
-      // console.log(outputObj);
+      templateService.addTemplate(outputObj);
+
       toast.success("Template Created!", {
         position: toast.POSITION.TOP_CENTER,
         pauseOnHover: false,
         autoClose: 2000,
       });
-      //for adding template to mongoDB
-      // templates.addTemplate(outputObj);
-      // console.log("-----------------------------------------");
-      // console.log("Form has been exported, details below:");
-      // console.log("Form name: " + formName.value);
-      // console.log("Form assigned to: " + assignedTo.value);
-      // console.log("Form desc: " + desc.value);
-      // console.log("--------------Form Contents--------------");
-      // console.log(formItems.value);
-      // console.log("-----------------------------------------");
+      
+      setTimeout(()=>{
+        router.push({
+          name:"ManageTemplates"
+        })
+      },500)
     }
 
     var previewObj = ref({

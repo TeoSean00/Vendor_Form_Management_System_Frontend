@@ -154,7 +154,7 @@ export default {
     };
 
     const toggleFormBuilder = () => {
-      router.push("/formbuilder");
+      router.push("/managetemplates");
     };
 
     return { toggleWorkflow, toggleUserView, toggleFormBuilder };

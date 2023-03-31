@@ -33,6 +33,33 @@ class TemplateService {
             });
         return response;
     }
+
+    getTemplate(id){
+        const response = axios.get(API_URL + id,{headers: authHeader()})
+        .then(response=>{
+            console.log("gottenn");
+            console.log(response.data);
+            return response.data;
+
+        }).catch(error=>{
+            console.log("ohno",error);
+            return error
+        });
+        return response
+    }
+    async deleteTemplates(id){
+        const response = axios.delete(API_URL + id,{headers: authHeader()})
+        .then(response=>{
+            console.log("delete successful!");
+            return response.data;
+
+        }).catch(error=>{
+            console.log("ohno",error);
+            return error
+        });
+        return response
+
+    }
 }
 
 export default new TemplateService();
