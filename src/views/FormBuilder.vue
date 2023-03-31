@@ -2,7 +2,8 @@
   <Navbar />
 
   <div class="row justify-content-center bg-light-grey">
-    <div class="col-8">
+ 
+    <div class="col-8" >
       <div
         class="row m-1 mt-3 p-2 border rounded border-light border-1 bg-white shadow-sm"
       >
@@ -286,7 +287,8 @@
         </div>
       </div>
     </div>
-  </div>
+  
+</div>
 </template>
 
 <script>
@@ -568,7 +570,6 @@ export default {
       selectedTemplateObject.value = JSON.parse(selectedTemplateId);
       addSelectedTemplate();
     }
-
     function exportForm() {
       //Packages the form content into a JSON string
       //This is where we write the ajax code
@@ -591,6 +592,14 @@ export default {
         pauseOnHover: false,
         autoClose: 2000,
       });
+
+      //Dimming screen
+      
+      setTimeout(()=>{
+        router.push({
+          name:"ManageTemplates"
+        })
+      },500)
       //for adding template to mongoDB
       // templates.addTemplate(outputObj);
       // console.log("-----------------------------------------");
@@ -876,6 +885,7 @@ export default {
       desc,
       templatesList,
       formSections,
+      dim,
       toggleCreateForm,
       scrollToTop,
       update,
