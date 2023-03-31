@@ -57,7 +57,7 @@
     props: ["itemInfo", "idx"],
     emits: ["updateText", "removeQuestion"],
     setup(props, context) {
-      var noOfOptions = ref(1);
+      var noOfOptions = ref(Math.max(1, props.itemInfo.options.length));
 
       const shortAnswer = ref(false);
 
