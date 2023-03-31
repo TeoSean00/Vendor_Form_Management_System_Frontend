@@ -2,14 +2,14 @@
     <div class="container-flex">
       <Navbar/>
       <div class="row">
-        <div class="col-8 offset-2 fs-2 fw-bold my-2">
+        <div class="col-8 offset-2 fs-5 fw-bold mt-5 mb-2 text-main-blue ">
           Template Manager
         </div>
         <div class="col-8 offset-2 text-center">
-          <table class="table table-bordered table-striped">
+          <table class="table table-bordered table-striped text-main-blue">
               <thead>
               <tr>
-                <th class="col-1" scope="col">Index</th>
+                <th class="col-1" scope="col">No.</th>
                 <th class="col-2" scope="col">Name</th>
                 <th class="col-3" scope="col">Description</th>
                 <th class="col-1" scope="col">Action</th>
@@ -21,26 +21,39 @@
                 <td>{{template.details.templateInfo.templateName}}</td>
                 <td>{{template.details.templateInfo.templateDesc}}</td>
                 <td>
-                  <button @click="enterForm(template.details)">View</button>
-                  <button @click="deleteTemplate(template.id)">Delete</button>
+                  <button class="btn btn-main-blue btn-sm mx-1" @click="enterForm(template.details)">View</button>
+                  
+                  <!-- <button class="btn btn-danger btn-sm mx-1" @click="deleteTemplate(template.id)">Delete</button> -->
+                  <button type="button" class="btn btn-danger btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" @click="setDeletedId(template.id)">
+                    Delete
+                  </button>
+                  <!-- @click="deleteTemplate(template.id) -->
                 </td>
               </tr>
             </tbody>
           </table>
 
-        </div>
-        <!-- <div class="row">
-          <div v-for="(template,index) in templatesList">
-            <div class="p-3 col-8 offset-2 border border-secondary bg-light-grey shadow-sm">
 
-              {{ template.details.templateInfo.templateName }}
-              Index is {{index + 1}}
-              {{ template.details.templateInfo.templateDesc }}
+        <!-- Modal -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true" ref="">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Are you sure?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                You cannot recover a deleted template! Are you sure you want to proceed?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" @click="deleteTemplate()">Delete Template</button>
+              </div>
             </div>
-
           </div>
-        </div> -->
-        <!-- {{ templatesList }} -->
+        </div>
+
+        </div>
       </div>
     </div>
   </template>
@@ -58,17 +71,19 @@
         templatesList.value = await templateService.getTemplates();
         };
       getTemplatesList();
-      
-      function deleteTemplate(id) {
-        templateService.deleteTemplates(id)
+      var toDelete = null;
+      function setDeletedId(id){
+        toDelete = id;
+      }
+
+      function deleteTemplate() {
+        templateService.deleteTemplates(toDelete)
         .then(()=>{
-          templatesList.value = templatesList.value.filter(template => template.id !== id)
+          templatesList.value = templatesList.value.filter(template => template.id !== toDelete)
         });
       }
       const router = useRouter();
     function enterForm(selectObject) {
-      console.log("enter form is " + JSON.stringify(selectObject));
-      
       router.push({
         name: "formbuilder",
         // path: "/formbuilder",
@@ -82,7 +97,7 @@
     }
 
   
-      return { templatesList, deleteTemplate, enterForm};
+      return { templatesList, deleteTemplate, enterForm, setDeletedId};
     },
   };
   </script>

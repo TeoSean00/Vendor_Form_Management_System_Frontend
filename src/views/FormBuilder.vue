@@ -316,8 +316,6 @@ export default {
   },
   props: ["vendorId", "selectedTemplate"],
   setup(props) {
-
-
     var content = ref("");
     UserService.getUserBoard().then(
       (response) => {
@@ -570,7 +568,7 @@ export default {
       selectedTemplateObject.value = JSON.parse(selectedTemplateId);
       addSelectedTemplate();
     }
-    
+
     function exportForm() {
       //Packages the form content into a JSON string
       //This is where we write the ajax code
