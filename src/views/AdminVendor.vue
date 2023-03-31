@@ -327,8 +327,12 @@
             <div class="modal-body ">
               <form>
               <div class="form-group mb-2">
+                
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" v-model="remindEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <select name="inputEmail" class="form-control" v-model="remindEmail">
+                  <option v-for="user in vendorUsers" :value="user.email">{{ user.email }}</option>
+                </select>
+                <!-- <input type="email" v-model="remindEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
               </div>
 
               <div class="form-group mb-2">
@@ -713,6 +717,8 @@ export default {
           console.log(error);
         });
     }
+    console.log("VENDOR USERS")
+    console.log(vendorUsers.value)
 
     function exportForm() {
       //Packages the form content into a JSON string
@@ -740,6 +746,7 @@ export default {
       // console.log("--------------Form Contents--------------");
       // console.log(formItems.value);
       // console.log("-----------------------------------------");
+     
     }
 
     return {
