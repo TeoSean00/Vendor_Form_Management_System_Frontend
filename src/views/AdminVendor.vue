@@ -6,9 +6,24 @@
         <span class="heading-primary-main">{{ vendorInfo.name }}</span>
         <span class="heading-primary-sub">{{ vendorInfo.country }}</span>
       </h1>
-      <a href="#allusers" data-bs-toggle="modal" class="btn btn-white btn-animated mx-2">All Users</a>
-      <a href="#" class="btn btn-white btn-animated mx-2" @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)">Add user</a>
-      <a href="#" class="btn btn-white btn-animated mx-2" @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)">Add Forms</a>
+      <a
+        href="#allusers"
+        data-bs-toggle="modal"
+        class="btn btn-white btn-animated mx-2"
+        >All Users</a
+      >
+      <a
+        href="#"
+        class="btn btn-white btn-animated mx-2"
+        @click="toggleCreateUserPage(vendorInfo.name, vendorInfo.id)"
+        >Add user</a
+      >
+      <a
+        href="#"
+        class="btn btn-white btn-animated mx-2"
+        @click="toggleFormBuilderPage(vendorInfo.name, vendorInfo.id)"
+        >Add Forms</a
+      >
     </div>
   </header>
 
@@ -19,9 +34,7 @@
     aria-labelledby="exampleModalToggleLabel"
     tabindex="-1"
   >
-    <div
-      class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-    >
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="allusersLabel">List of Users</h5>
@@ -33,10 +46,7 @@
           ></button>
         </div>
         <div class="modal-body" id="usermodal">
-          <table
-            class="table align-middle mb-0 bg-white"
-            id="usertable"
-          >
+          <table class="table align-middle mb-0 bg-white" id="usertable">
             <thead class="bg-light">
               <tr>
                 <th>#</th>
@@ -62,270 +72,274 @@
 
   <section id="forms" class="forms mt-2">
     <div class="container">
-
       <!-- container for the dashboards pertaining to this particular vendor in admin's view, passing of this vendor details over to dashboards too -->
       <div class="container mt-4">
         <div class="row">
           <div class="col my-auto">
-            <FormStatusBarChart :vendorDetails="vendorInfo" style="height: 15em;"/>
+            <FormStatusBarChart
+              :vendorDetails="vendorInfo"
+              style="height: 15em"
+            />
           </div>
           <div class="col my-auto">
-            <UpdatesTodayChart :vendorDetails="vendorInfo"/>
+            <UpdatesTodayChart :vendorDetails="vendorInfo" />
           </div>
           <div class="col my-auto">
-            <DeadlinesChart :vendorDetails="vendorInfo" style="height: 15em;"/>
+            <DeadlinesChart :vendorDetails="vendorInfo" style="height: 15em" />
           </div>
         </div>
       </div>
 
       <!-- start vendor assigned form -->
-      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 justify-content-between d-flex">
-          <h4 class="text-white fs-6 fw-light">Waiting for vendor response</h4>
-          <div class="text-white text-center">
-              <div class="form-check form-switch" style="text-align: start;">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Auto Remind</label>
-              </div>  
+      <div
+        class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3 justify-content-between d-flex"
+      >
+        <h4 class="text-white fs-6 fw-light">Waiting for vendor response</h4>
+        <div class="text-white text-center">
+          <div class="form-check form-switch" style="text-align: start">
+            <template v-if="vendorInfo">
+              <input
+                class="form-check-input"
+                v-model="vendorInfo.reminderStatus"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault"
+                >Auto Remind is {{ reminderStatus }}</label
+              >
+            </template>
+            <template v-else> Loading... </template>
           </div>
         </div>
-        <div
-      v-if="vendorAssignedForms.length > 0"
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
-    >
-
-    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
-      <template
-      v-for="vendorForm in vendorAssignedForms"
-      :key="vendorForm.status"
-      >
-        <FormCard
-          class = "mx-2"
-          :dateCreated="vendorForm.createDate"
-          :deadline="vendorForm.deadline.substring(0,10)"
-          :vendorFormId="vendorForm.id"
-          :formInfo="vendorForm.content.FormInfo"
-          :formStatus="vendorForm.status"
-          :vendorUsers ="vendorUsers"
-          @upToDelete="upToDelete"
-          @enterForm="enterForm"
-        ></FormCard>
-      
-      </template>
       </div>
-    </div>
-    <h2
-      v-else
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
-    >
-      No form currently available
-    </h2>
+      <div
+        v-if="vendorAssignedForms.length > 0"
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+      >
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+          <template
+            v-for="vendorForm in vendorAssignedForms"
+            :key="vendorForm.status"
+          >
+            <FormCard
+              class="mx-2"
+              :dateCreated="vendorForm.createDate"
+              :deadline="vendorForm.deadline.substring(0, 10)"
+              :vendorFormId="vendorForm.id"
+              :formInfo="vendorForm.content.FormInfo"
+              :formStatus="vendorForm.status"
+              :vendorUsers="vendorUsers"
+              @upToDelete="upToDelete"
+              @enterForm="enterForm"
+            ></FormCard>
+          </template>
+        </div>
+      </div>
+      <h2
+        v-else
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+      >
+        No form currently available
+      </h2>
       <!-- end of vendor assigned form  -->
 
       <!-- start admin assigned form -->
-    <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
-      <h4 class="text-white fs-6 fw-light">Waiting for admin response</h4>
-    </div>
-
-    <div
-      v-if="adminAssignedForms.length > 0"
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
-    >
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
-        <template
-          v-for="vendorForm in adminAssignedForms"
-          :key="vendorForm.status"
-        >
-          <FormCard
-            class="mx-2"
-            :vendorFormId="vendorForm.id"
-            :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete"
-            @enterForm="enterForm"
-          ></FormCard>
-        </template>
+      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+        <h4 class="text-white fs-6 fw-light">Waiting for admin response</h4>
       </div>
-    </div>
+
+      <div
+        v-if="adminAssignedForms.length > 0"
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+      >
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+          <template
+            v-for="vendorForm in adminAssignedForms"
+            :key="vendorForm.status"
+          >
+            <FormCard
+              class="mx-2"
+              :vendorFormId="vendorForm.id"
+              :formInfo="vendorForm.content.FormInfo"
+              @upToDelete="upToDelete"
+              @enterForm="enterForm"
+            ></FormCard>
+          </template>
+        </div>
+      </div>
       <h2
-      v-else
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
-    >
-      No form currently available
-    </h2>
+        v-else
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+      >
+        No form currently available
+      </h2>
       <!-- end of admin assigned form  -->
 
       <!-- start approval assigned form -->
       <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
-      <h4 class="text-white fs-6 fw-light">Waiting for approver response</h4>
-    </div>
-
-    <div
-      v-if="approvalAssignedForms.length > 0"
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
-    >
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
-        <template
-          v-for="vendorForm in approvalAssignedForms"
-          :key="vendorForm.status"
-        >
-          <FormCard
-            class="mx-2"
-            :vendorFormId="vendorForm.id"
-            :formInfo="vendorForm.content.FormInfo"
-            @upToDelete="upToDelete"
-            @enterForm="enterForm"
-          ></FormCard>
-        </template>
+        <h4 class="text-white fs-6 fw-light">Waiting for approver response</h4>
       </div>
-    </div>
+
+      <div
+        v-if="approvalAssignedForms.length > 0"
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+      >
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+          <template
+            v-for="vendorForm in approvalAssignedForms"
+            :key="vendorForm.status"
+          >
+            <FormCard
+              class="mx-2"
+              :vendorFormId="vendorForm.id"
+              :formInfo="vendorForm.content.FormInfo"
+              @upToDelete="upToDelete"
+              @enterForm="enterForm"
+            ></FormCard>
+          </template>
+        </div>
+      </div>
       <h2
-      v-else
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
-    >
-      No form currently available
-    </h2>
+        v-else
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+      >
+        No form currently available
+      </h2>
       <!-- end of approval assigned form  -->
 
       <!-- start completed assigned form -->
       <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
-      <h4 class="text-white fs-6 fw-light">Completed Forms</h4>
-    </div>
-
-    <div
-      v-if="completedForms.length > 0"
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
-    >
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
-        <template
-          v-for="vendorForm in completedForms"
-          :key="vendorForm.status"
-        >
-          <FormCard
-            class="mx-2"
-            :dateCreated="vendorForm.createDate"
-            :vendorFormId="vendorForm.id"
-            :formInfo="vendorForm.content.FormInfo"
-            :formStatus="vendorForm.status"
-            @upToDelete="upToDelete"
-            @enterForm="enterForm"
-          ></FormCard>
-        </template>
+        <h4 class="text-white fs-6 fw-light">Completed Forms</h4>
       </div>
-    </div>
+
+      <div
+        v-if="completedForms.length > 0"
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+      >
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+          <template
+            v-for="vendorForm in completedForms"
+            :key="vendorForm.status"
+          >
+            <FormCard
+              class="mx-2"
+              :dateCreated="vendorForm.createDate"
+              :vendorFormId="vendorForm.id"
+              :formInfo="vendorForm.content.FormInfo"
+              :formStatus="vendorForm.status"
+              @upToDelete="upToDelete"
+              @enterForm="enterForm"
+            ></FormCard>
+          </template>
+        </div>
+      </div>
       <h2
-      v-else
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
-    >
-      No form currently available
+        v-else
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+      >
+        No form currently available
       </h2>
       <!-- end of completed assigned form  -->
-      
-      <!-- start of deleted forms -->
-    <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
-      <h4 class="text-white fs-6 fw-light">Deleted Forms</h4>
-    </div>
 
-    <div
-      v-if="deletedForms.length > 0"
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
-    >
-      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
-        <template
-          v-for="vendorForm in deletedForms"
-          :key="vendorForm.status"
-        >
-          <FormCard
-            class="mx-2"
-            :dateCreated="vendorForm.createDate"
-            :vendorFormId="vendorForm.id"
-            :formInfo="vendorForm.content.FormInfo"
-            :formStatus="vendorForm.status"
-            @upToDelete="upToDelete"
-            @enterForm="enterForm"
-          ></FormCard>
-        </template>
+      <!-- start of deleted forms -->
+      <div class="bg-secondary rounded-top mt-5 pt-2 pb-1 px-3">
+        <h4 class="text-white fs-6 fw-light">Deleted Forms</h4>
       </div>
-    </div>
+
+      <div
+        v-if="deletedForms.length > 0"
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center pb-3 fs-6 text-dark-grey"
+      >
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
+          <template v-for="vendorForm in deletedForms" :key="vendorForm.status">
+            <FormCard
+              class="mx-2"
+              :dateCreated="vendorForm.createDate"
+              :vendorFormId="vendorForm.id"
+              :formInfo="vendorForm.content.FormInfo"
+              :formStatus="vendorForm.status"
+              @upToDelete="upToDelete"
+              @enterForm="enterForm"
+            ></FormCard>
+          </template>
+        </div>
+      </div>
       <h2
-      v-else
-      class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
-    >
-      No Form currently available
+        v-else
+        class="border border-secondary border-2 bg-light-grey rounded-bottom text-center py-5 fs-6 text-dark-grey"
+      >
+        No Form currently available
       </h2>
       <!-- end of deleted forms -->
     </div>
     <div class="col mt-4"></div>
 
-
-
-
-
-
-
-      <!-- Modal confirm delete -->
-      <div
-        class="modal fade"
-        id="confirmModal"
-        tabindex="-1"
-        aria-labelledby="confirmModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="confirmModalLabel">Are you sure?</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body text-center">
-              Do you really want to delete these records? <br />This process
-              cannot be undone.
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal"
-                @click="deleteForm(toDelete)"
-              >
-                Delete
-              </button>
-            </div>
+    <!-- Modal confirm delete -->
+    <div
+      class="modal fade"
+      id="confirmModal"
+      tabindex="-1"
+      aria-labelledby="confirmModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmModalLabel">Are you sure?</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            Do you really want to delete these records? <br />This process
+            cannot be undone.
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+              @click="deleteForm(toDelete)"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- MODAL for REMINDER -->
-      <div
-        class="modal fade"
-        id="remindModal"
-        tabindex="-1"
-        aria-labelledby="remindModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="remindModalLabel">Send Email</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body ">
-              <form>
+    <!-- MODAL for REMINDER -->
+    <div
+      class="modal fade"
+      id="remindModal"
+      tabindex="-1"
+      aria-labelledby="remindModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="remindModalLabel">Send Email</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
               <div class="form-group mb-2">
                 
                 <label for="exampleInputEmail1">Email address</label>
@@ -337,21 +351,25 @@
 
               <div class="form-group mb-2">
                 <label for="exampleText">Message</label>
-                <input type="textarea" v-model="remindMessage" class="form-control" id="exampleText" placeholder="Message">
+                <input
+                  type="textarea"
+                  v-model="remindMessage"
+                  class="form-control"
+                  id="exampleText"
+                  placeholder="Message"
+                />
               </div>
-
-              </form>
-              <div v-if="errors.length">
-                <template v-for="error in errors" :key="error"
-                  ><div class="alert alert-warning" role="alert">
-                    {{ error }}
-                  </div>
-                  </template
-                >
-              </div>
+            </form>
+            <div v-if="errors.length">
+              <template v-for="error in errors" :key="error"
+                ><div class="alert alert-warning" role="alert">
+                  {{ error }}
+                </div>
+              </template>
             </div>
-            <div class="modal-footer">
-              <button
+          </div>
+          <div class="modal-footer">
+            <button
               type="button"
               class="btn btn-secondary"
               id="closeEmailButton"
@@ -381,14 +399,14 @@ import FormComponent from "../components/form/FormComponent.vue";
 import SectionComponent from "../components/form/SectionComponent.vue";
 import FormCard from "../components/form/FormCard.vue";
 import { useTemplateStore } from "../stores/templateStore";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import VendorService from "../services/vendor/vendorService";
 import FormService from "../services/form/formService";
 import { useRouter } from "vue-router";
 import DeadlinesChart from "../components/dashboard/AdminVendorPage/DeadlinesChart.vue";
 import FormStatusBarChart from "../components/dashboard/AdminVendorPage/FormStatusBarChart.vue";
 import UpdatesTodayChart from "../components/dashboard/AdminVendorPage/UpdatesTodayChart.vue";
-import emailjs from '@emailjs/browser';
+import emailjs from "@emailjs/browser";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
@@ -426,27 +444,39 @@ export default {
     };
     getUserInfo();
 
+    const reminderStatus = computed({
+      get() {
+        console.log("COMPUTED reminderstatus");
+        reminderStatus.value = vendorInfo.value;
+        return vendorInfo.value.reminderStatus ? "On" : "Off";
+      },
+
+      async set() {
+        console.log("updating vendor!");
+        await VendorService.updateVendor(vendorInfo.value.id, vendorInfo.value);
+      },
+    });
+
     var allForms = ref([]);
     var vendorAssignedForms = ref([]);
     var adminAssignedForms = ref([]);
     var approvalAssignedForms = ref([]);
     var completedForms = ref([]);
     var deletedForms = ref([]);
-    var errors = ref([])
-    
-    var checkEmail = (inputText) =>{
+    var errors = ref([]);
+
+    var checkEmail = (inputText) => {
       var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-      if(inputText.match(mailformat)){
+      if (inputText.match(mailformat)) {
         return true;
-      }
-      else{
+      } else {
         return false;
       }
-    }
+    };
 
-    var formCheck = () =>{
-      console.log("Checking FORMS")
+    var formCheck = () => {
+      console.log("Checking FORMS");
       let flag = true;
       if(remindEmail.value == ""){
         flag = false
@@ -473,24 +503,30 @@ export default {
     }
 
     const sendEmail = () => {
-
-      if (formCheck()){
-        emailjs.send("service_xquebpj","template_87ifsho",
-        {
-            to_name: vendorInfo.value.name,
-            send_to: remindEmail.value,
-            message: remindMessage.value
-        },
-        "Qubr9KRvmmD-pLaFH")
-        .then((result) => {
-            console.log('SUCCESS!', result.text);
-        }, (error) => {
-            console.log('FAILED...', error.text);
-        });
+      if (formCheck()) {
+        emailjs
+          .send(
+            "service_xquebpj",
+            "template_87ifsho",
+            {
+              to_name: vendorInfo.value.name,
+              send_to: remindEmail.value,
+              message: remindMessage.value,
+            },
+            "Qubr9KRvmmD-pLaFH"
+          )
+          .then(
+            (result) => {
+              console.log("SUCCESS!", result.text);
+            },
+            (error) => {
+              console.log("FAILED...", error.text);
+            }
+          );
 
         remindEmail.value = "";
         remindMessage.value = "";
-        errors.value  = [];
+        errors.value = [];
 
         toast.success("Email Sent Successfully!", {
               position: toast.POSITION.TOP_CENTER,
@@ -503,8 +539,6 @@ export default {
         
       }
 
-
-
     var getAllForms = async () => {
       allForms.value = await FormService.getVendorForms(currId.value);
       for (var i = 0; i < allForms.value.length; i++) {
@@ -516,7 +550,7 @@ export default {
           approvalAssignedForms.value.push(allForms.value[i]);
         } else if (allForms.value[i].status == "form_completed") {
           completedForms.value.push(allForms.value[i]);
-        }else if (allForms.value[i].status == "deleted") {
+        } else if (allForms.value[i].status == "deleted") {
           deletedForms.value.push(allForms.value[i]);
         }
       }
@@ -699,19 +733,19 @@ export default {
           const newForm = response;
           newForm.status = "deleted";
           FormService.updateForm(toDelete, newForm)
-          .then((response) => {
-            toast.success("Form Deleted!", {
-              position: toast.POSITION.TOP_CENTER,
-              pauseOnHover: false,
-              autoClose:2000,
+            .then((response) => {
+              toast.success("Form Deleted!", {
+                position: toast.POSITION.TOP_CENTER,
+                pauseOnHover: false,
+                autoClose: 2000,
+              });
+              setTimeout(() => {
+                location.reload();
+              }, 2000);
+            })
+            .catch((error) => {
+              console.log(error);
             });
-            setTimeout(() => {
-              location.reload()
-            }, 2000);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
         })
         .catch((error) => {
           console.log(error);
@@ -750,6 +784,7 @@ export default {
     }
 
     return {
+      reminderStatus,
       vendorUsers,
       vendorInfo,
       currId,
@@ -791,7 +826,7 @@ export default {
       remindMessage,
       errors,
       formCheck,
-      checkEmail
+      checkEmail,
     };
   },
 };

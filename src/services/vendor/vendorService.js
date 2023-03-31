@@ -35,17 +35,31 @@ class VendorService {
     return response;
   }
 
-  getVendor(vendorId){
+  updateVendor(vendorId, vendorObject) {
     const response = axios
-    .get(API_URL + vendorId,{headers:authHeader()})
-    .then((response)=>{
-      console.log("getVendor request successful!",response)
-      return response.data;
-    })
-    .catch((error)=>{
-      console.log("getVendor request unsuccessful", error)
-      return error;
-    });
+      .put(API_URL + vendorId, vendorObject, { headers: authHeader() })
+      .then((response) => {
+        console.log("updateVendor request successful!", response);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("updateVendor request unsuccessful", error);
+        return error;
+      });
+    return response;
+  }
+
+  getVendor(vendorId) {
+    const response = axios
+      .get(API_URL + vendorId, { headers: authHeader() })
+      .then((response) => {
+        console.log("getVendor request successful!", response);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("getVendor request unsuccessful", error);
+        return error;
+      });
     return response;
   }
 
@@ -64,15 +78,16 @@ class VendorService {
   }
 
   getVendorRejectionRate() {
-    const response = axios.get(API_URL + "getAverageRejection", { headers: authHeader() })
-    .then((response) => {
-      console.log("getVendorRejectionRate successful", response);
-      return response.data;
-    })
-    .catch((error) => {
-      console.log("getVendorRejectionRate unsucessful", error);
-      return error;
-    })
+    const response = axios
+      .get(API_URL + "getAverageRejection", { headers: authHeader() })
+      .then((response) => {
+        console.log("getVendorRejectionRate successful", response);
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("getVendorRejectionRate unsucessful", error);
+        return error;
+      });
     return response;
   }
 }

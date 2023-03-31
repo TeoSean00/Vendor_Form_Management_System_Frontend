@@ -36,22 +36,63 @@ import {
   faEye,
   faFloppyDisk,
   faChevronUp,
-  faEnvelope
-  
+  faEnvelope,
+  faFileWord,
+  faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
 
+library.add(
+  faFilePdf,
+  faFileWord,
+  faSignature,
+  faChevronUp,
+  faFloppyDisk,
+  faEye,
+  faH,
+  faT,
+  fa1,
+  faF,
+  faCalendar,
+  faCircleCheck,
+  faRadio,
+  faObjectGroup,
+  faCircleH,
+  faCirclePlus,
+  faSquare,
+  faXmark,
+  faTrash,
+  faHome,
+  faUser,
+  faUserPlus,
+  faSignInAlt,
+  faSignOutAlt,
+  faClipboard,
+  faPlus,
+  faPenToSquare,
+  faUsers,
+  faBell,
+  faFile,
+  faStore,
+  faEnvelope
+);
 
-
-library.add(faSignature,faChevronUp, faFloppyDisk, faEye, faH, faT, fa1, faF, faCalendar, faCircleCheck, faRadio, faObjectGroup,faCircleH,faCirclePlus,faSquare,faXmark,faTrash, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile, faStore, faEnvelope);
-
-
-library.add(faMagnifyingGlass,faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt,faClipboard, faPlus, faPenToSquare, faUsers,faBell, faFile);
-
+library.add(
+  faMagnifyingGlass,
+  faHome,
+  faUser,
+  faUserPlus,
+  faSignInAlt,
+  faSignOutAlt,
+  faClipboard,
+  faPlus,
+  faPenToSquare,
+  faUsers,
+  faBell,
+  faFile
+);
 
 import App from "./App.vue";
 import router from "./router";
-
-
 
 import "./assets/main.css";
 
