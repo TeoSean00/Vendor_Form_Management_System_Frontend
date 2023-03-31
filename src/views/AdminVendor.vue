@@ -350,13 +350,13 @@
               <button
               type="button"
               class="btn btn-secondary"
+              id="closeEmailButton"
               data-bs-dismiss="modal"
               >
                 Close
               </button>
               <button type="submit" 
                 class="btn btn-primary" 
-                :data-bs-dismiss="errors.length != 0 ? 'modal' : ''"
                 @click="sendEmail()"
                 >
                 Submit
@@ -446,15 +446,23 @@ export default {
       let flag = true;
       if(remindEmail.value == ""){
         flag = false
-        errors.value.push("Email cannot be left empty")
+        if(!errors.value.includes("Email cannot be left empty")){
+          errors.value.push("Email cannot be left empty")
+        }
+
       }
       else if(!checkEmail(remindEmail.value)){
         flag = false
-        errors.value.push("Email Invalid")
+        if(!errors.value.includes("Email Invalid")){
+          errors.value.push("Email Invalid")
+        }
       }
       if(remindMessage.value == ""){
         flag = false
-        errors.value.push("Email message cannot be left empty")
+        if(!errors.value.includes("Email message cannot be left empty")){
+          errors.value.push("Email message cannot be left empty")
+        }
+        
       }
 
       return flag
@@ -485,7 +493,10 @@ export default {
               pauseOnHover: false,
               autoClose:2000,
             });
+
+            document.getElementById("closeEmailButton").click();
         }
+        
       }
 
 

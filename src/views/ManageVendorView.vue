@@ -252,18 +252,15 @@ export default {
       let check = true;
       if (newVendorName.value == "") {
         errors.value.push("Vendor name cannot be left blank");
-        errorFlag = true;
         check = false;
       }
       if (newVendorCountry.value == "") {
         errors.value.push("Vendor country cannot be left blank");
-        errorFlag = true;
         check = false;
       }
 
       if (newVendorDetails.value == "") {
         errors.value.push("Vendor details cannot be left blank");
-        errorFlag = true;
         check = false;
       }
 
