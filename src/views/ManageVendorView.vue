@@ -138,7 +138,7 @@
                 placeholder="Vendor country here"
                 required
               /> -->
-              <select id="country" name="country" class="form-control" v-model="newVendorCountry" placeholder="Country">
+              <select id="country" name="country" class="form-control" v-model="newVendorCountry">
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Albania">Albania</option>
@@ -384,6 +384,7 @@
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
             </select>
+              
             </div>
             <div class="mb-3">
               <label for="vendorNotes" class="form-label"
@@ -522,12 +523,13 @@ export default {
     const toggleNewVendor = () => {
       // console.log("toggle create new vendor", newVendorName);
       // console.log("SUMITTED INFO");
-      // console.log(newVendorCountry.value);
-      // console.log(newVendorName.value);
-      // console.log(newVendorDetails.value);
+      console.log(newVendorCountry.value);
+      console.log(newVendorName.value);
+      console.log(newVendorDetails.value);
+
       if (checkForm()) {
         var newVendor = {
-          name: newVendorName,
+          name: newVendorName.value,
           details: newVendorDetails.value,
           country: newVendorCountry.value,
           forms: [],
