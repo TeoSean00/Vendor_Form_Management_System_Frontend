@@ -161,6 +161,7 @@
           </div>
           <div class="modal-footer">
             <button
+              id="closeButton"
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
@@ -170,7 +171,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              :data-bs-dismiss="errors.length != 0 ? 'modal' : ''"
+              
               @click="toggleNewVendor(newVendorName)"
             >
               Create Vendor
@@ -241,6 +242,7 @@ export default {
     const router = useRouter();
 
     var errors = ref([]);
+    var errorFlag = false;
     var newVendorName = ref("");
     var newVendorDetails = ref("");
     var newVendorCountry = ref("");
@@ -250,28 +252,31 @@ export default {
       let check = true;
       if (newVendorName.value == "") {
         errors.value.push("Vendor name cannot be left blank");
+        errorFlag = true;
         check = false;
       }
       if (newVendorCountry.value == "") {
         errors.value.push("Vendor country cannot be left blank");
+        errorFlag = true;
         check = false;
       }
 
       if (newVendorDetails.value == "") {
         errors.value.push("Vendor details cannot be left blank");
+        errorFlag = true;
         check = false;
       }
+
       return check;
     };
 
-    const toggleNewVendor = (newVendorName) => {
+    const toggleNewVendor = () => {
       // console.log("toggle create new vendor", newVendorName);
       // console.log("SUMITTED INFO");
       // console.log(newVendorCountry.value);
       // console.log(newVendorName.value);
       // console.log(newVendorDetails.value);
       if (checkForm()) {
-
         var newVendor = {
           name: newVendorName,
           details: newVendorDetails.value,
@@ -286,9 +291,11 @@ export default {
               autoClose:2000,
             });
 
+        document.getElementById('closeButton').click();
         newVendorName.value = "";
-        newVendorCountry = "";
-        newVendorDetails = "";
+        newVendorCountry.value = "";
+        newVendorDetails.value = "";
+        errors.value = []
 
         
 
@@ -338,6 +345,7 @@ export default {
       searchName,
       filteredNames,
       vendorListItem,
+      errorFlag
     };
   },
 };
