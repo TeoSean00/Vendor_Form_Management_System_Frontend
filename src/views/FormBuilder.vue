@@ -571,6 +571,15 @@ export default {
       addSelectedTemplate();
     }
     function exportForm() {
+      if (checkEmptyFields()) {
+        console.log("Empty fields detected!");
+        toast.error("Please include Form Name,description and at least one input!", {
+          position: toast.POSITION.TOP_CENTER,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
+        return;
+      }
       //Packages the form content into a JSON string
       //This is where we write the ajax code
       const outputObj = {
@@ -580,36 +589,20 @@ export default {
         },
         templateContents: formSections.value,
       };
-      //Add template to backend
 
-      // console.log(outputObj);
-      // const outputJson = JSON.stringify(outputObj);
       templateService.addTemplate(outputObj);
-      // console.log("Added");
-      // console.log(outputObj);
+
       toast.success("Template Created!", {
         position: toast.POSITION.TOP_CENTER,
         pauseOnHover: false,
         autoClose: 2000,
       });
-
-      //Dimming screen
       
       setTimeout(()=>{
         router.push({
           name:"ManageTemplates"
         })
       },500)
-      //for adding template to mongoDB
-      // templates.addTemplate(outputObj);
-      // console.log("-----------------------------------------");
-      // console.log("Form has been exported, details below:");
-      // console.log("Form name: " + formName.value);
-      // console.log("Form assigned to: " + assignedTo.value);
-      // console.log("Form desc: " + desc.value);
-      // console.log("--------------Form Contents--------------");
-      // console.log(formItems.value);
-      // console.log("-----------------------------------------");
     }
 
     var previewObj = ref({
@@ -885,7 +878,6 @@ export default {
       desc,
       templatesList,
       formSections,
-      dim,
       toggleCreateForm,
       scrollToTop,
       update,
