@@ -10,11 +10,12 @@
               <div class="border border-light mb-2 p-1">
                 <h5 class="card-title">New Form Updates Today</h5>
                 <p class="card-text">
-                  {{ filteredUpdateFormData[1] }} new overall form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
+                  <strong>{{ filteredUpdateFormData[1] }} new overall</strong> form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
                   {{ dateToday }}
                 </p>  
               </div>
               <div v-if="filteredUpdateFormData[0].rejected.length == 0">
+                <h6 class="mt-2 mb-1">Forms Rejected:</h6>
                 <p>There are no new form rejection updates for today!</p>
               </div>
               <div v-else>
@@ -39,11 +40,12 @@
               <div class="border border-light mb-2 p-1">
                 <h5 class="card-title">New Form Updates Today</h5>
                 <p class="card-text">
-                  {{ filteredUpdateFormData[1] }} new overall form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
+                  <strong>{{ filteredUpdateFormData[1] }} new overall</strong> form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
                   {{ dateToday }}
                 </p>  
               </div>
               <div v-if="filteredUpdateFormData[0].completed.length == 0">
+                <h6 class="mt-2 mb-1">Forms Completed:</h6>
                 <p>There are no new form completion updates for today!</p>
               </div>
               <div v-else>
@@ -68,11 +70,12 @@
               <div class="border border-light mb-2 p-1">
                 <h5 class="card-title">New Form Updates Today</h5>
                 <p class="card-text">
-                  {{ filteredUpdateFormData[1] }} new overall form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
+                  <strong>{{ filteredUpdateFormData[1] }} new overall</strong> form updates for Vendor {{ vendorDetails ? vendorDetails.name : "" }} today,
                   {{ dateToday }}
                 </p>  
               </div>
               <div v-if="filteredUpdateFormData[0].assigned.length == 0">
+                <h6 class="mt-2 mb-1">Forms Assigned:</h6>
                 <p>There are no new form assignment updates for today!</p>
               </div>
               <div v-else>
