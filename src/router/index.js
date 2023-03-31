@@ -12,6 +12,7 @@ import VendorForm from "../views/VendorForm.vue";
 import AdminVendor from "../views/AdminVendor.vue";
 import authVerify from "../services/authVerify";
 import VendorView from "../views/VendorView.vue";
+import ManageTemplates from "../views/ManageTemplates.vue";
 
 const requireAuth = (to, from, next) => {
   // verify if jwt token is still valid
@@ -155,6 +156,13 @@ const router = createRouter({
     //   name: "testEmail",
     //   component: () => import("../views/unused/TestEmail.vue"),
     // }
+    {
+      path: "/managetemplates",
+      name: "ManageTemplates",
+      component: ManageTemplates,
+      // props: (route) => ({ vendorId: route.query.vendorId }),
+      beforeEnter: requireAuth,
+    },
   ],
 });
 

@@ -9,7 +9,7 @@
             <div
               class="bg-gradient bg-main-blue shadow-success rounded pt-4 pb-3 d-flex"
             >
-              <h6 class="text-white text-capitalize ps-3">Manager Users</h6>
+              <h6 class="text-white text-capitalize ps-3">Manage Users</h6>
               <button
                 class="btn btn-light ms-auto me-2"
                 @click="toggleCreateUser"
