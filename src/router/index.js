@@ -108,7 +108,7 @@ const router = createRouter({
       path: "/formbuilder/",
       name: "formbuilder",
       component: FormBuilder,
-      props: (route) => ({ vendorId: route.query.vendorId }),
+      props: (route) => ({ vendorId: route.query.vendorId },({selectedTemplate:route.query.selectedTemplate})),
       beforeEnter: requireAdmin,
     },
     {
@@ -160,7 +160,7 @@ const router = createRouter({
       path: "/managetemplates",
       name: "ManageTemplates",
       component: ManageTemplates,
-      // props: (route) => ({ vendorId: route.query.vendorId }),
+      props: (route) => ({selectedTemplate:route.query.selectedTemplate}),
       beforeEnter: requireAuth,
     },
   ],

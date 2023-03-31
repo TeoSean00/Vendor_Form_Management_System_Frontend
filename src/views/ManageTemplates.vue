@@ -1,12 +1,10 @@
 <template>
     <div class="container-flex">
       <Navbar/>
-      <button @click="refresh">Refresh</button>
       <div class="row">
         <div class="col-8 offset-2 fs-2 fw-bold my-2">
           Template Manager
         </div>
-        {{ templatesList }}
         <div class="col-8 offset-2 text-center">
           <table class="table table-bordered table-striped">
               <thead>
@@ -23,7 +21,7 @@
                 <td>{{template.details.templateInfo.templateName}}</td>
                 <td>{{template.details.templateInfo.templateDesc}}</td>
                 <td>
-                  <button>View</button>
+                  <button @click="enterForm(template.details)">View</button>
                   <button @click="deleteTemplate(template.id)">Delete</button>
                 </td>
               </tr>
@@ -66,15 +64,25 @@
         .then(()=>{
           templatesList.value = templatesList.value.filter(template => template.id !== id)
         });
-     
+      }
+      const router = useRouter();
+    function enterForm(selectObject) {
+      console.log("enter form is " + JSON.stringify(selectObject));
+      
+      router.push({
+        name: "formbuilder",
+        // path: "/formbuilder",
+        // params: {
+        //   selectedTemplate : selectObject,
+        // },
+        query:{
+          selectedTemplate:JSON.stringify(selectObject)
+        }
+      });
+    }
 
-      }
-      function refresh(){
-        console.log(templatesList);
-        getTemplatesList();
-      }
   
-      return { templatesList, deleteTemplate, refresh};
+      return { templatesList, deleteTemplate, enterForm};
     },
   };
   </script>
