@@ -341,15 +341,12 @@
           <div class="modal-body">
             <form>
               <div class="form-group mb-2">
+                
                 <label for="exampleInputEmail1">Email address</label>
-                <input
-                  type="email"
-                  v-model="remindEmail"
-                  class="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                />
+                <select name="inputEmail" class="form-control" v-model="remindEmail">
+                  <option v-for="user in vendorUsers" :value="user.email">{{ user.email }}</option>
+                </select>
+                <!-- <input type="email" v-model="remindEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> -->
               </div>
 
               <div class="form-group mb-2">
@@ -375,22 +372,22 @@
             <button
               type="button"
               class="btn btn-secondary"
+              id="closeEmailButton"
               data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              :data-bs-dismiss="errors.length != 0 ? 'modal' : ''"
-              @click="sendEmail()"
-            >
-              Submit
-            </button>
+              >
+                Close
+              </button>
+              <button type="submit" 
+                class="btn btn-primary" 
+                @click="sendEmail()"
+                >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
   </section>
 </template>
 
@@ -481,20 +478,29 @@ export default {
     var formCheck = () => {
       console.log("Checking FORMS");
       let flag = true;
-      if (remindEmail.value == "") {
-        flag = false;
-        errors.value.push("Email cannot be left empty");
-      } else if (!checkEmail(remindEmail.value)) {
-        flag = false;
-        errors.value.push("Email Invalid");
+      if(remindEmail.value == ""){
+        flag = false
+        if(!errors.value.includes("Email cannot be left empty")){
+          errors.value.push("Email cannot be left empty")
+        }
+
       }
-      if (remindMessage.value == "") {
-        flag = false;
-        errors.value.push("Email message cannot be left empty");
+      else if(!checkEmail(remindEmail.value)){
+        flag = false
+        if(!errors.value.includes("Email Invalid")){
+          errors.value.push("Email Invalid")
+        }
+      }
+      if(remindMessage.value == ""){
+        flag = false
+        if(!errors.value.includes("Email message cannot be left empty")){
+          errors.value.push("Email message cannot be left empty")
+        }
+        
       }
 
-      return flag;
-    };
+      return flag
+    }
 
     const sendEmail = () => {
       if (formCheck()) {
@@ -523,12 +529,15 @@ export default {
         errors.value = [];
 
         toast.success("Email Sent Successfully!", {
-          position: toast.POSITION.TOP_CENTER,
-          pauseOnHover: false,
-          autoClose: 2000,
-        });
+              position: toast.POSITION.TOP_CENTER,
+              pauseOnHover: false,
+              autoClose:2000,
+            });
+
+            document.getElementById("closeEmailButton").click();
+        }
+        
       }
-    };
 
     var getAllForms = async () => {
       allForms.value = await FormService.getVendorForms(currId.value);
@@ -742,6 +751,8 @@ export default {
           console.log(error);
         });
     }
+    console.log("VENDOR USERS")
+    console.log(vendorUsers.value)
 
     function exportForm() {
       //Packages the form content into a JSON string
@@ -769,6 +780,7 @@ export default {
       // console.log("--------------Form Contents--------------");
       // console.log(formItems.value);
       // console.log("-----------------------------------------");
+     
     }
 
     return {

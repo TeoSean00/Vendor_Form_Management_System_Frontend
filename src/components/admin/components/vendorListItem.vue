@@ -9,11 +9,11 @@
         <h3>Company {{ vendor.vendorId }}</h3>
         </span> -->
         <span>
-            <h3>Name : {{ vendorDetails.name }}</h3>
-            <h5>Country : {{ vendorDetails.country }}</h5>
-            <span>Description : {{ vendorDetails.details }}</span
+            <h3>{{ vendorDetails.name }}</h3>
+            <h5>{{ vendorDetails.country }}</h5>
+            <span>{{ vendorDetails.details }}</span
             ><br />
-            <span>id : {{ vendorDetails.id }}</span>
+            <!-- <span>{{ vendorDetails.id }}</span> -->
         </span>
         <div class="float-right">
             
