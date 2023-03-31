@@ -7,12 +7,11 @@
             <h2 class="card-title">{{ formName }}</h2>
           </div>
           <div class="col-4">
-            <button class="btn bg-light">
+            <button class="btn bg-light" data-bs-toggle="modal"
+                data-bs-target="#remindModal">
               <font-awesome-icon
                 icon="envelope"
                 class=""
-                data-bs-toggle="modal"
-                data-bs-target="#remindModal"
               />
             </button>
           </div>
