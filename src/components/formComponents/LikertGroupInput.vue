@@ -17,7 +17,7 @@
         class="col-6 bg-light-grey p-2 my-3 rounded"
         v-model="itemInfo.options[i - 1]" 
     />
-    [1,2,3,4,5]
+    1 (Poor) - 5 (Good)
         <button @click="removeOption(i)" class="borderless-button px-3">  
         <font-awesome-icon icon="fa-solid fa-xmark" />
     </button>
@@ -43,7 +43,7 @@ export default {
   props: ["itemInfo", "idx"],
   emits: ["updateText", "removeQuestion"],
   setup(props, context) {
-    var noOfOptions = ref(1);
+    var noOfOptions = ref(Math.max(1, props.itemInfo.options.length));
 
     function updateText() {
       context.emit("updateText", props.itemInfo.value);
