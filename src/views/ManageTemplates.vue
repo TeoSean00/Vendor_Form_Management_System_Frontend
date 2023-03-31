@@ -7,12 +7,21 @@
         </div>
         <div class="col-8 offset-2 text-center">
           <table class="table table-bordered table-striped text-main-blue">
-              <thead>
+            <thead v-if="templatesList.length != 0">
               <tr>
                 <th class="col-1" scope="col">No.</th>
                 <th class="col-2" scope="col">Name</th>
                 <th class="col-3" scope="col">Description</th>
                 <th class="col-1" scope="col">Action</th>
+              </tr>
+            </thead>
+            <thead v-else> 
+              <tr>
+                <th class="col-1 py-5" scope="col">
+                  You have zero templates currently. <br>
+                  <button class="btn btn-main-blue mt-3" @click="goToFormBuilder"> Create one now!</button>
+                </th>
+          
               </tr>
             </thead>
             <tbody>
@@ -86,18 +95,19 @@
     function enterForm(selectObject) {
       router.push({
         name: "formbuilder",
-        // path: "/formbuilder",
-        // params: {
-        //   selectedTemplate : selectObject,
-        // },
         query:{
           selectedTemplate:JSON.stringify(selectObject)
         }
       });
     }
+    function goToFormBuilder(){
+      router.push({
+        name:"formbuilder"
+      })
+    }
 
   
-      return { templatesList, deleteTemplate, enterForm, setDeletedId};
+      return { templatesList, deleteTemplate, enterForm, setDeletedId, goToFormBuilder};
     },
   };
   </script>
