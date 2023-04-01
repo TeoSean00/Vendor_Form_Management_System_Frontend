@@ -57,7 +57,7 @@ export default {
               newValues[1] += 1;
             } else if (status === "approver_response") {
               newValues[2] += 1;
-            } else if (status === "completed") {
+            } else if (status === "form_completed") {
               newValues[3] += 1;
             }
           }
