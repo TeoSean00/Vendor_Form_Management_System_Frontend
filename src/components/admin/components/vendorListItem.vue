@@ -24,7 +24,7 @@
             
 
             <span class="badge mx-1 mt-2" style="background-color: rgb(255, 128, 0);"> {{filteredFormData[2]}} Awaiting Approval </span>
-            <span class="badge mx-1 mt-2" style="background-color: rgb(100, 202, 150);"> {{filteredFormData[2]}} Completed </span>
+            <span class="badge mx-1 mt-2" style="background-color: rgb(100, 202, 150);"> {{filteredFormData[3]}} Completed </span>
         </div>
     </a>
 
