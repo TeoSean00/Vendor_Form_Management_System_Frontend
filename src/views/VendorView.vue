@@ -1,20 +1,26 @@
 <template>
   <Navbar />
 
-  <header class="header">
-    <div class="text-box mt-6" v-if="vendorInfo">
-      <h1 class="heading-primary">
-        <span class="heading-primary-main">{{ vendorInfo.name }}</span>
-        <span class="heading-primary-sub">{{ vendorInfo.country }}</span>
+  <div class="container-fluid header">
+    <div class="text-box" v-if="vendorInfo">
+      <h1 class="heading-primary row">
+        <span class="heading-primary-main pt-3">{{ vendorInfo.name }}</span>
       </h1>
+      <div class="heading-primary-cty row">
+        <span class="heading-primary-sub">{{ vendorInfo.country }}</span>
+      </div>
+      <div class="row">
+        <div class="pb-4">
       <a
         href="#allusers"
         data-bs-toggle="modal"
         class="btn btn-white btn-animated mx-2"
         >All Users</a
       >
+      </div>
+      </div>
     </div>
-  </header>
+  </div>
 
   <div
     class="modal fade"
