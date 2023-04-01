@@ -77,7 +77,6 @@
             </label>
           </div>
           <div class="col-3">
-          {{user.roles}}
             <select class="form-select" v-model="user.roles" name="role">
               <option selected value="user">External Vendor</option>
               <option value="admin">Internal Admin</option>
