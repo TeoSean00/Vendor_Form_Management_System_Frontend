@@ -77,9 +77,9 @@
             </label>
           </div>
           <div class="col-3">
-           
+          {{user.roles}}
             <select class="form-select" v-model="user.roles" name="role">
-              <option selected  value="user">External Vendor</option>
+              <option selected value="user">External Vendor</option>
               <option value="admin">Internal Admin</option>
               <option value="mod">Internal Approver</option>
             </select>
@@ -378,10 +378,9 @@ export default {
     console.log("vendorDetails is", currId);
 
     var user = ref({
-      username: "",
       email: "",
       password: "",
-      roles: null,
+      roles: 'user',
       vendor: [null, null],
     });
 
