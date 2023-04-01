@@ -201,6 +201,20 @@ export default {
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
           if (formData.value[i].status != "deleted") {
+            if (formData.value[i].status == "form_completed") {
+                let key = "approver"
+                let value = formData.value[i]
+                filteredForms.completed.push([key, value])
+                totalUpdates += 1
+                continue;
+            }
+            // // not allowing vendor to view forms with the status of approver rejecting to admin
+            // if (formData.value[i].latestRejectionDate != null || formData.value[i].latestCompletedDate != null) {
+            //   if(formData.value[i].latestRejector == "approver") {
+            //     // console.log("this form not for vendor viewing", formData.value[i])
+            //     continue;
+            //   }
+            // }
             if (formData.value[i].latestRejectionDate != null && formData.value[i].latestCompletedDate != null) {
               // console.log(formData.value[i], "rejection and completed not null")
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
