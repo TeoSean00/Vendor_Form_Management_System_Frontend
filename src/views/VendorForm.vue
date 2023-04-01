@@ -60,9 +60,11 @@
             <template v-for="(sectionData, i) in section" :key="i">
               <!-- Display all as disabled if status is deleted -->
               <template v-if="formStatus === 'deleted'">
-                <h2 class="mt-4">
-                  {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                </h2>
+                <div class="rounded-2 p-4 mt-3" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                  <h2>
+                    {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
+                  </h2>
+                </div>
                 <template v-for="sect in sectionData" :key="sect">
                   <!-- {{ sect }} -->
                   <FormSection :sectionData="sect" :disabled="true" />
@@ -70,10 +72,14 @@
               </template>
               <template v-else>
                 <!-- Moderator can view all but edit nothing -->
+                
                 <template v-if="role.includes('ROLE_MODERATOR')">
-                  <h2 class="mt-4">
+                  <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                    <h2>
                     {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                  </h2>
+                    </h2>
+                  </div>
+      
                   <template v-for="sect in sectionData" :key="sect">
                     <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="true" />
@@ -82,7 +88,11 @@
                 <template v-else>
                   <!-- To allow admin to view admin part and fill in -->
                   <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
-                    <h1>{{ i }} Section</h1>
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                      <h2>
+                      {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
+                      </h2>
+                    </div>
                     <template v-for="sect in sectionData" :key="sect">
                       <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="false" />
@@ -90,9 +100,11 @@
                   </template>
                   <!-- To allow admin to view vendor part but not fill in -->
                   <template v-if="i == 'vendor' && role.includes('ROLE_ADMIN')">
-                    <h2 class="mt-4">
-                      {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                    </h2>
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                        <h2 >
+                        {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
+                        </h2>
+                      </div>
                     <template v-for="sect in sectionData" :key="sect">
                       <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="true" />
@@ -106,9 +118,11 @@
                       formStatus == 'vendor_response'
                     "
                   >
-                    <h2 class="mt-4">
-                      {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                    </h2>
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                        <h2>
+                        {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
+                        </h2>
+                    </div>
                     <template v-for="sect in sectionData" :key="sect">
                       <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="false" />
@@ -122,9 +136,11 @@
                       formStatus !== 'vendor_response'
                     "
                   >
-                    <h2 class="mt-4">
-                      {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                    </h2>
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                        <h2>
+                        {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
+                        </h2>
+                    </div>
                     <template v-for="sect in sectionData" :key="sect">
                       <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="true" />
