@@ -202,6 +202,14 @@ export default {
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
           if (formData.value[i].status != "deleted") {
+            console.log(formData.value[i])
+            if (formData.value[i].status == "form_completed") {
+                let key = "approver"
+                let value = formData.value[i]
+                filteredForms.completed.push([key, value])
+                totalUpdates += 1
+                continue;
+            }
             if (formData.value[i].latestRejectionDate != null && formData.value[i].latestCompletedDate != null) {
               // console.log(formData.value[i], "rejection and completed not null")
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
@@ -226,6 +234,7 @@ export default {
                 else if (rejectionDuration < completedDuration) {
                   let key = formData.value[i].latestCompletor
                   let value = formData.value[i]
+                  console.log(key, value)
                   filteredForms.completed.push([key, value])
                   totalUpdates += 1
                 }
@@ -264,7 +273,7 @@ export default {
           }
         }
       }
-      // console.log("overall updateFormData> ", filteredForms)
+      console.log("overall updateFormData> ", filteredForms)
       return [filteredForms, totalUpdates];
     })
 

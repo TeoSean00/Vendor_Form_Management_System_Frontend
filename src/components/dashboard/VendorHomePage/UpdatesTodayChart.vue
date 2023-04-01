@@ -201,6 +201,13 @@ export default {
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
           if (formData.value[i].status != "deleted") {
+            if (formData.value[i].status == "form_completed") {
+                let key = "approver"
+                let value = formData.value[i]
+                filteredForms.completed.push([key, value])
+                totalUpdates += 1
+                continue;
+            }
             if (formData.value[i].latestRejectionDate != null && formData.value[i].latestCompletedDate != null) {
               // console.log(formData.value[i], "rejection and completed not null")
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
