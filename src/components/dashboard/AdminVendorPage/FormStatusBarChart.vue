@@ -46,7 +46,6 @@ export default {
   setup(props) {
     // Method to process overall form status data, to break them down into their respective staus and increment its count accordingly
     const filteredFormData = computed(() => {
-      // console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
       let newValues = [0, 0, 0, 0];
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
@@ -136,9 +135,7 @@ export default {
 
     // Method to dynamically fetch all forms under current Vendor, by using watchEffect() and vendorDetails props passed from parent page
     var formData = ref(null);
-
     watchEffect(async () => {
-      // console.log("vendor details data passed> ", props.vendorDetails);
       if (props.vendorDetails != null) {
         try {
           formData.value = await FormService.getVendorForms(props.vendorDetails.id).then((response) => {
@@ -146,10 +143,8 @@ export default {
           })
         }
         catch (error) {
-          // console.log("error occured while getting forms for vendor", error);
         }
       }
-      // console.log("After getVendorForms() invoked> ", formData.value);    
     })
 
     return {
