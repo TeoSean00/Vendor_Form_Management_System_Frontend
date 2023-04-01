@@ -16,7 +16,7 @@
     </div>
     <div class="col-4">
       <mini-statistics-card
-        :title="{ text: 'Manager Users', value: '2,300' }"
+        :title="{ text: 'Manage Users', value: '2,300' }"
         detail="<span class='text-success text-sm font-weight-bolder'>+3%</span> than last month"
         :icon="{
           name: 'leaderboard',
