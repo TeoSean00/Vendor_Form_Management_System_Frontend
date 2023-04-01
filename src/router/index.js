@@ -108,7 +108,7 @@ const router = createRouter({
       path: "/formbuilder/",
       name: "formbuilder",
       component: FormBuilder,
-      props: (route) => ({ vendorId: route.query.vendorId },({selectedTemplate:route.query.selectedTemplate})),
+      props: (route) => ({ vendorId: route.query.vendorId, selectedTemplate:route.query.selectedTemplate }),
       beforeEnter: requireAdmin,
     },
     {

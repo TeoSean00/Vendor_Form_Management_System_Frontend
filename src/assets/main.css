@@ -216,7 +216,7 @@ input{
 } */
 
 .header {
-  height: 30vh;
+  /* height: 30vh; */
   background: linear-gradient(#0378A6, #a18bbd);
   /* background-color: #0378A6; */
   /* background-image: 
@@ -234,10 +234,10 @@ input{
 
 .text-box {
   font-family: 'arial black', sans-serif;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
   text-align: center;
 }
 
@@ -245,7 +245,14 @@ input{
   color: #fff;
   text-transform: uppercase;
   backface-visibility: hidden;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
+}
+
+.heading-primary-cty {
+  color: #fff;
+  text-transform: uppercase;
+  backface-visibility: hidden;
+  margin-bottom: 20px;
 }
 
 .heading-primary-main {

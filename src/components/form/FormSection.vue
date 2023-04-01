@@ -82,7 +82,15 @@
     <template v-if="sectionData.type == 'approval'">
       <div class="text-center">
         <h5 style="font-style: italic;">Approval Section</h5>
-        <small style="font-style: italic;">No action required</small>
+        <small style="font-style: italic;">No action required now</small>
+      </div>
+      
+    </template>
+
+    <template v-if="sectionData.type == 'acknowledgement'">
+      <div class="text-center">
+        <h5 style="font-style: italic;">Acknowledge Section</h5>
+        <small style="font-style: italic;">No action required now</small>
       </div>
       
     </template>
