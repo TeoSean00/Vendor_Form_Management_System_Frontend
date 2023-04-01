@@ -7,12 +7,12 @@
             <h2 class="card-title">{{ formName }}</h2>
           </div>
           <div class="col-4">
-            <button class="btn bg-light" data-bs-toggle="modal"
-                data-bs-target="#remindModal">
-              <font-awesome-icon
-                icon="envelope"
-                class=""
-              />
+            <button
+              class="btn bg-light"
+              data-bs-toggle="modal"
+              data-bs-target="#remindModal"
+            >
+              <font-awesome-icon icon="envelope" class="" />
             </button>
           </div>
         </div>
@@ -26,7 +26,10 @@
             Form description: <br />
             {{ formDesc }}
           </p>
-
+          <p v-if="lastReminder">
+            Last Automated Reminder Sent: <br />
+            {{ lastReminder.split("T")[0] }}
+          </p>
           <!-- {{ vendorFormId }} -->
         </div>
       </div>
@@ -107,6 +110,7 @@ export default {
     "deadline",
     "formStatus",
     "vendorUsers",
+    "lastReminder",
   ],
   emits: ["updateToDelete"],
   setup(props, context) {

@@ -130,6 +130,7 @@
               :formInfo="vendorForm.content.FormInfo"
               :formStatus="vendorForm.status"
               :vendorUsers="vendorUsers"
+              :lastReminder="vendorForm.lastReminderDate"
               @upToDelete="upToDelete"
               @enterForm="enterForm"
             ></FormCard>
