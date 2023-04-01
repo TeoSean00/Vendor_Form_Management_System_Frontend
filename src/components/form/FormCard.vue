@@ -123,12 +123,6 @@ export default {
     function enterForm() {
       context.emit("enterForm", props.vendorFormId);
     }
-    console.log(
-      "AUTHHEADER IS ",
-      authHeader(),
-      "vendorID is",
-      props.vendorFormId
-    );
 
     var generatePdf = async () => {
       var myHeaders = new Headers();

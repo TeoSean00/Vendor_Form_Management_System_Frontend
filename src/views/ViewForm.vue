@@ -93,7 +93,6 @@ export default {
       var info = templateData.templateInfo;
       var content = templateData.templateContents;
       for (let key in content) {
-        console.log("KEY IS ", key);
         var type = content[key].type;
         if (type == "text") {
           newForm.value.push({
@@ -123,8 +122,7 @@ export default {
     createForm();
 
     const handleSubmit = () => {
-      console.log("submit called");
-      console.log(newForm.value);
+
     };
 
     return { templateData, newForm, handleSubmit };

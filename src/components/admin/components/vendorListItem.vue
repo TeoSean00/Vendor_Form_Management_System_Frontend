@@ -5,15 +5,11 @@
         aria-current="true"
         @click="toggleVendorPage(vendorDetails.name, vendorDetails.id)"
     >
-        <!-- <span v-if="vendor.name == null">
-        <h3>Company {{ vendor.vendorId }}</h3>
-        </span> -->
         <span>
             <h3>{{ vendorDetails.name }}</h3>
             <h5>{{ vendorDetails.country }}</h5>
             <span>{{ vendorDetails.details }}</span
             ><br />
-            <!-- <span>{{ vendorDetails.id }}</span> -->
         </span>
         <div class="float-right">
             
@@ -64,9 +60,6 @@ export default {
         }
         return newValues;
       });
-
-      console.log(filteredFormData)
-  
       var formData = ref(null);
 
       var displayRole = ref(null);

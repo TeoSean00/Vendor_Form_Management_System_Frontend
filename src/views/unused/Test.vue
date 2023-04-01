@@ -32,7 +32,6 @@ export default {
       await axios
         .get(API_URL + "all", { headers: authHeader() })
         .then((response) => {
-          console.log(response);
           result.value = response.data;
         })
         .catch((error) => {
@@ -49,7 +48,6 @@ export default {
       const response = axios
         .post(API_URL, data, { headers: authHeader() })
         .then((response) => {
-          console.log("post request successful!");
           addVendorResult.value = response.data;
           return response.data;
         })

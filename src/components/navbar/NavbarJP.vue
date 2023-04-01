@@ -35,21 +35,11 @@
           <li class="nav-item ms-1 me-3" v-if="isAdmin || isModerator">
             <router-link to="/" class="nav-link text-secondary-blue fw-bold">
               Home
-              <!-- <font-awesome-icon
-                class="text-dark"
-                style="width: 25px; height: 25px"
-                icon="home"
-              /> -->
             </router-link>
           </li>
           <li class="nav-item ms-1 me-3" v-else>
             <router-link to="/vendorView" class="nav-link text-secondary-blue fw-bold">
               Home
-              <!-- <font-awesome-icon
-              class="text-dark"
-                style="width: 25px; height: 25px"
-                icon="home"
-              /> -->
             </router-link>
           </li>
           <li class="nav-item mx-5">
@@ -133,8 +123,6 @@ export default {
     var isAdmin = ref(currentUser.value.roles.includes("ROLE_ADMIN"));
     var isModerator = ref(currentUser.value.roles.includes("ROLE_MODERATOR"));
     const showAdminBoard = () => {
-      console.log(currentUser);
-      console.log(currentUser.value);
       if (currentUser.value && currentUser.value.roles) {
         currentUser.value.roles.includes("ROLE_ADMIN");
       }
@@ -148,8 +136,6 @@ export default {
     };
 
     const logOut = async () => {
-      console.log("logout called");
-      console.log(auth);
       auth.logout();
     };
     return {

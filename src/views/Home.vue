@@ -39,10 +39,6 @@ export default {
     var content = ref("");
     var auth = useAuthStore();
     var currentUser = auth.user;
-    // var adminStatus = ref(false);
-    // if (currentUser) {
-    //   adminStatus = currentUser.roles.includes("ROLE_ADMIN") ? true : false;
-    // }
     return { content, currentUser };
   },
 };

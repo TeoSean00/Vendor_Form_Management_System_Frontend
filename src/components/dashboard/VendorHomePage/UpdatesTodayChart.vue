@@ -21,7 +21,7 @@
               <div v-else>
                 <ul class="list-group list-group-flush p-1">
                   <h6 class="mt-0">Forms Rejected:</h6>
-                  <div v-for="(value, index) in filteredUpdateFormData[0].rejected">
+                  <div v-for="(value, index) in filteredUpdateFormData[0].rejected" :key="index">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} rejected
                       <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
@@ -51,7 +51,7 @@
               <div v-else>
                 <ul class="list-group list-group-flush p-1">
                   <h6 class="mt-0">Forms Completed:</h6>
-                  <div v-for="(value, index) in filteredUpdateFormData[0].completed">
+                  <div v-for="(value, index) in filteredUpdateFormData[0].completed" :key="index">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} completed
                       <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
@@ -81,7 +81,7 @@
               <div v-else>
                 <ul class="list-group list-group-flush p-1">
                   <h6 class="mt-0">Forms Assigned:</h6>
-                  <div v-for="(value, index) in filteredUpdateFormData[0].assigned">
+                  <div v-for="(value, index) in filteredUpdateFormData[0].assigned" :key="index">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       {{ value["content"]["FormInfo"]["formName"] }} - assigned to {{ vendorDetails ? vendorDetails.name : "" }}
                       <a @click="enterForm(value.id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
@@ -129,7 +129,6 @@ export default {
   setup(props) {
     const router = useRouter();
     function enterForm(vendorFormId) {
-      console.log("entering form with vendorFormId> " + vendorFormId);
       router.push({
         path: "/vendorForm",
         query: {
@@ -205,13 +204,6 @@ export default {
                 totalUpdates += 1
                 continue;
             }
-            // // not allowing vendor to view forms with the status of approver rejecting to admin
-            // if (formData.value[i].latestRejectionDate != null || formData.value[i].latestCompletedDate != null) {
-            //   if(formData.value[i].latestRejector == "approver") {
-            //     // console.log("this form not for vendor viewing", formData.value[i])
-            //     continue;
-            //   }
-            // }
             if (formData.value[i].latestRejectionDate != null && formData.value[i].latestCompletedDate != null) {
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
               let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
@@ -264,7 +256,6 @@ export default {
           }
         }
       }
-      console.log(filteredForms)
       return [filteredForms, totalUpdates];
     })
 

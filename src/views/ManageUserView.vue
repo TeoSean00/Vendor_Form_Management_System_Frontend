@@ -31,7 +31,8 @@
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.roles[0].name }}</td>
-              <td v-if="user.vendorId == null">Testing Organisation</td>
+              <td v-if="user.vendorId == null">Quantum Leap Incorporation</td>
+              <td v-else>{{ user.vendorName }}</td>
             </tr>
           </tbody>
         </table>
@@ -44,6 +45,7 @@
 import Navbar from "../components/navbar/NavbarJP.vue";
 import { useRouter } from "vue-router";
 import UserService from "../services/user/userService";
+import VendorService from "../services/vendor/vendorService";
 import { ref } from "vue";
 export default {
   components: { Navbar },
@@ -52,8 +54,21 @@ export default {
 
     var getUsers = async () => {
       users.value = await UserService.getUsers();
+      updateUsers();
     };
+    var updateUsers = async () => {
+      for (var i = 0; i < users.value.length; i++) {
+        if (users.value[i].vendorId != null) {
+          var vendorNum = users.value[i].vendorId;
+          console.log(vendorNum)
+          var vendor = await VendorService.getVendor(vendorNum);
+          console.log(vendor);
+          users.value[i].vendorName = vendor.name;
+        }
+      }
+    }
     getUsers();
+    
     var router = useRouter();
 
     var toggleCreateUser = () => {

@@ -128,34 +128,6 @@
       </div>
     </div>
   </div>
-  <!-- <div class="col-1 text-center">
-    <div class="row m-1 p-1">
-      <button @click="addHeaderText" class="borderless-button">
-        <font-awesome-icon icon="fa-solid fa-circle-h" class="fa-2xl" />
-      </button>
-      <button @click="addTextInput" class="my-1 btn btn-main-dark-purple">
-        <font-awesome-icon icon="fa-solid fa-circle-t" />
-      </button>
-      <button @click="addNumberInput" class="my-1 btn btn-main-blue">
-        Add Number Input
-      </button>
-      <button @click="addBooleanInput" class="my-1 btn btn-main-blue">
-        Add BooleanInput
-      </button>
-      <button @click="addDateInput" class="my-1 btn btn-main-blue">
-        Add DateInput
-      </button>
-      <button @click="addCheckboxInput" class="my-1 btn btn-main-blue">
-        Add Checkbox Input
-      </button>
-      <button @click="addRadioInput" class="my-1 btn btn-main-blue">
-        Add Radio Input
-      </button>
-      <button @click="addLikertGroupInput" class="my-1 btn btn-main-blue">
-        Add Likert Group
-      </button>
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -166,7 +138,6 @@ export default {
   props: ["sectionInfo", "order"],
   setup(props, context) {
     var formItems = ref(props.sectionInfo[Object.keys(props.sectionInfo)[0]]);
-    // console.log(formItems.value);
     const assignTo = computed(() => {
       if (Object.keys(props.sectionInfo)[0] == "admin") {
         return "Admin";

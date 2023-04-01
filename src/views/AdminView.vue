@@ -1,19 +1,6 @@
 <template>
   <div class="container">
     <Dashboard />
-    <!-- <div class="container">
-      <div class="d-flex">
-        <button class="btn btn-primary me-2" @click="toggleWorkflow">
-          Manage Vendors
-        </button>
-        <button class="btn btn-success me-2" @click="toggleUserView">
-          Manage Users
-        </button>
-        <button class="btn btn-secondary-blue me-2" @click="toggleFormBuilder">
-          Manage Templates
-        </button>
-      </div>
-    </div> -->
   </div>
 </template>
 

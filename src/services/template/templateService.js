@@ -12,7 +12,7 @@ class TemplateService {
         .then(response=>{
             return response.data;
         }).catch(error=>{
-            console.log("ohno",error);
+            console.log(error);
             return error
         });
         return response
@@ -24,7 +24,7 @@ class TemplateService {
                 return response.data;
             })
             .catch((error) => {
-                console.log("ohno",error);
+                console.log(error);
                 return error;
             });
         return response;
@@ -36,7 +36,7 @@ class TemplateService {
             return response.data;
 
         }).catch(error=>{
-            console.log("ohno",error);
+            console.log(error);
             return error
         });
         return response
@@ -46,7 +46,7 @@ class TemplateService {
         .then(response=>{
             return response.data;
         }).catch(error=>{
-            console.log("ohno",error);
+            console.log(error);
             return error
         });
         return response
