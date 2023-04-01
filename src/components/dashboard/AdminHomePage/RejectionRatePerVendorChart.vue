@@ -7,12 +7,11 @@
       :data="barChartData"
       />  
     </div>
-  </template>
+</template>
   
   <script>
   import { ref, computed } from "vue";
   import { Bar } from "vue-chartjs";
-  import FormService from "../../../services/form/formService";
   import VendorService from "../../../services/vendor/vendorService";
   import {
     Chart as ChartJS,
@@ -44,42 +43,16 @@
       Bar,
     },
     setup() {
-      // Method to process overall form status data, to break them down into their respective staus and increment its count accordingly
-      const filteredvendorData = computed(() => {
-        // console.log("Overall form status data pulled, processing into respective status now, current data: ", vendorData.value);
-        let newValues = [0, 0, 0, 0];
-        if (vendorData.value) {
-          for (let i = 0; i < vendorData.value.length; i++) {
-            let status = vendorData.value[i].status;
-            if (status === "vendor_response") {
-              newValues[0] += 1;
-            } else if (status === "admin_response") {
-              newValues[1] += 1;
-            } else if (status === "approver_response") {
-              newValues[2] += 1;
-            } else if (status === "form_completed") {
-              newValues[3] += 1;
-            }
-          }
-        }
-        return newValues;
-      });
-  
       // Metadata for Form Status Bar Chart, computed() is used as data fetched is dynamic as it is calling the Backend for data
       const barChartData = computed(() => {
         return {
           // labels for each file status in the bar chart
-          labels: [
-            "Vendor A",
-            "Vendor B",
-            "Vendor C",
-            "Vendor D",
-          ],
+          labels: FormRejectionBarChartSort.value[0],
           // data values corresponding to each file status bar in the bar chart
           datasets: [
             {
               label: "Avg Number of Form Rejections Per Vendor",
-              data: [4,3,2,1],
+              data: FormRejectionBarChartSort.value[1],
               backgroundColor: [
                 '#bc5090',
                 'rgb(54, 162, 235)',
@@ -137,17 +110,63 @@
   
       var getVendorInfo = async () => {
         // console.log("getForms() Backend API call is invoked! Before Value: ", vendorData.value);
-        // vendorData.value = await VendorService.getVendorRejectionRate().then((response) => {
-        //   return response;
-        // });
+        vendorData.value = await VendorService.getVendorRejectionRate().then((response) => {
+          return response;
+        });
         console.log("After retrieval value: ", vendorData.value);
       };
-  
+
       getVendorInfo();
+
+      // sorting the rejection rate data in a desecnding order, showing top 4 vendors with highest rates only
+      const FormRejectionBarChartSort = computed(() => {
+        var labels = []
+        var values = []
+        if (vendorData.value != null) {
+          for (const vendor in vendorData.value) {
+            labels.push(vendor)
+            values.push(vendorData.value[vendor])
+          }
+        }
+        else {
+          labels = ["defaultVendor", "defaultVendor", "defaultVendor", "defaultVendor"]
+          values = [0, 0, 0, 0]
+        }
+        const dict = {}
+        for (let i = 0; i < labels.length; i++) {
+          dict[labels[i]] = values[i]
+        }
+
+        let sortable = []
+        for (var labelsort in dict) {
+          sortable.push([labelsort, dict[labelsort]])
+        }
+        sortable.sort(function (a, b) {
+          return b[1] - a[1]
+        })
+
+        const sorteddict = {}
+        for (let index in sortable) {
+          sorteddict[sortable[index][0]] = sortable[index][1]
+        }
+
+        const finalLabel = []
+        const finalValues = []
+        for (let i = 0; i < sortable.length; i++) {
+          finalLabel.push(sortable[i][0])
+          finalValues.push(sortable[i][1])
+        }
+        // console.log(sorteddict, finalLabel, finalValues)
+        if (finalLabel.length > 4 && finalValues.length > 4) {
+          return [finalLabel.slice(0, 4), finalValues.slice(0, 4)];
+        }
+        else {
+          return [finalLabel, finalValues];
+        }
+    });
   
       return {
         barChartData,
-        vendorData,
         FileStatusBarChartOptions,
       }
     }
