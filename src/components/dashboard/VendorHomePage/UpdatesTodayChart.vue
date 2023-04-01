@@ -187,7 +187,11 @@ export default {
       if (monthNow.length == 1) {
         monthNow = "0" + monthNow;
       }
-      var dateToday = date.getFullYear() + "-" + monthNow + "-" + date.getDate()
+      let dateNow = parseInt(date.getDate())
+      if (dateNow < 10) {
+        dateNow = "0" + dateNow.toString()
+      }
+      var dateToday = date.getFullYear() + "-" + monthNow + "-" + dateNow
       var filteredForms = {
         "rejected": [],
         "completed": [],
@@ -196,43 +200,45 @@ export default {
       var totalUpdates = 0
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
-          var formStatus = formData.value[i].status
-          if (formData.value[i].latestRejectionDate != null) {
-            if (formStatus === "vendor_response") {
-              let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
-              // console.log("rejectionDate> ", rejectionDate)
-              if (rejectionDate == dateToday) {
-                let key = formData.value[i].latestRejector
-                let value = formData.value[i]
-                filteredForms.rejected.push([key, value])
-                totalUpdates += 1
+          if (formData.value[i].status != "deleted") {
+            var formStatus = formData.value[i].status
+            if (formData.value[i].latestRejectionDate != null) {
+              if (formStatus === "vendor_response") {
+                let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
+                // console.log("rejectionDate> ", rejectionDate)
+                if (rejectionDate == dateToday) {
+                  let key = formData.value[i].latestRejector
+                  let value = formData.value[i]
+                  filteredForms.rejected.push([key, value])
+                  totalUpdates += 1
+                }
               }
             }
-          }
-          else if (formData.value[i].latestCompletedDate != null) {
-            if (formStatus === "vendor_response" || formStatus === "admin_response") {
-              let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
-              // console.log("completedDate> ", completedDate)
-              if (completedDate == dateToday) {
-                let key = formData.value[i].latestCompletor
-                let value = formData.value[i]
-                filteredForms.completed.push([key, value])
-                totalUpdates += 1
+            else if (formData.value[i].latestCompletedDate != null) {
+              if (formStatus === "vendor_response" || formStatus === "admin_response") {
+                let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
+                // console.log("completedDate> ", completedDate)
+                if (completedDate == dateToday) {
+                  let key = formData.value[i].latestCompletor
+                  let value = formData.value[i]
+                  filteredForms.completed.push([key, value])
+                  totalUpdates += 1
+                }
               }
             }
-          }
-          else {
-            if (formStatus === "vendor_response") {
-              let createDate = formData.value[i].createDate.split("T")[0]
-              // console.log("createdDate", createDate)
-              if (createDate == dateToday) {
-                filteredForms.assigned.push(formData.value[i])
-                totalUpdates += 1
+            else {
+              if (formStatus === "vendor_response") {
+                let createDate = formData.value[i].createDate.split("T")[0]
+                // console.log("createdDate", createDate)
+                if (createDate == dateToday) {
+                  filteredForms.assigned.push(formData.value[i])
+                  totalUpdates += 1
+                }
               }
             }
-          }
           }
         }
+      }
       console.log(filteredForms)
       return [filteredForms, totalUpdates];
     })
