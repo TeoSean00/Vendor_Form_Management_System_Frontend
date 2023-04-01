@@ -444,6 +444,10 @@ export default {
             newForm.value.latestCompletor = "vendor";
             newForm.value.latestCompletedDate = Date.now();
           }
+          if (newForm.value.status == "approver_response") {
+            newForm.value.finalApprover = auth.user.username;
+            newForm.value.finalApprovedDate = Date.now();
+          }
         }
         message = "Form Submitted!";
       }
