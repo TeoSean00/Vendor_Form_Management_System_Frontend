@@ -39,6 +39,7 @@ import {
   faEnvelope,
   faFileWord,
   faFilePdf,
+  faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -73,7 +74,8 @@ library.add(
   faBell,
   faFile,
   faStore,
-  faEnvelope
+  faEnvelope,
+  faCircleUser
 );
 
 library.add(

@@ -15,22 +15,25 @@
             <img
               src="../../assets/Quantum Logo v2.PNG"
               alt=""
-              class="mt-3 mx-5"
+              class="mt-3 mx-1"
             />
           </div>      
           </router-link>
           <router-link to="/vendorView" class="nav-link text-dark-grey" v-else>
-            <img
-              src="../../assets/Quantum Logo v2.PNG"
-              alt=""
-              class="mt-3 mx-5"
-            />
+            <div class="d-flex align-items-baseline pb-3 ps-5">
+              <img
+                src="../../assets/Quantum Logo v2.PNG"
+                alt=""
+                class="mt-3 mx-1"
+              />
+
+            </div>
           </router-link>
         </div>
         <a href="" class="navbar-brand" @click.prevent></a>
         <div class="navbar-nav mr-auto mx-5">
-          <li class="nav-item mx-3" v-if="isAdmin || isModerator">
-            <router-link to="/" class="nav-link text-secondary-blue">
+          <li class="nav-item ms-1 me-3" v-if="isAdmin || isModerator">
+            <router-link to="/" class="nav-link text-secondary-blue fw-bold">
               Home
               <!-- <font-awesome-icon
                 class="text-dark"
@@ -39,8 +42,8 @@
               /> -->
             </router-link>
           </li>
-          <li class="nav-item mx-3" v-else>
-            <router-link to="/vendorView" class="nav-link text-secondary-blue">
+          <li class="nav-item ms-1 me-3" v-else>
+            <router-link to="/vendorView" class="nav-link text-secondary-blue fw-bold">
               Home
               <!-- <font-awesome-icon
               class="text-dark"
@@ -50,11 +53,28 @@
             </router-link>
           </li>
           <li class="nav-item mx-5">
-            <router-link v-if="isAdmin || isModerator" to="/formbuilder" class="nav-link text-dark-grey">
+            <router-link v-if="isAdmin || isModerator" to="/formbuilder" class="nav-link text-main-blue fw-bold">
               FormBuilder
             </router-link>
           </li>
+          <li class="nav-item mx-5">
+            <router-link v-if="isAdmin || isModerator" to="/vendors" class="nav-link text-dark-grey">
+              Vendors
+            </router-link>
+          </li>
+          <li class="nav-item mx-5">
+            <router-link v-if="isAdmin || isModerator" to="/users" class="nav-link text-dark-grey">
+              Users
+            </router-link>
+          </li>
+          <li class="nav-item mx-5">
+            <router-link v-if="isAdmin || isModerator" to="/managetemplates" class="nav-link text-dark-grey">
+              Templates
+            </router-link>
+          </li>
         </div>
+
+
         <div v-if="!currentUser" class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link to="/register" class="nav-link text-secondary-blue">
@@ -69,14 +89,15 @@
             </router-link>
           </li>
         </div>
-        <div v-if="currentUser" class="navbar-nav ml-auto">
+        <div v-if="currentUser" class="navbar-nav ml-auto text-end " style="margin-left:200px">
           <li class="nav-item ms-auto">
-            <router-link to="/profile" class="nav-link text-dark">
+            <router-link to="/profile" class="nav-link text-main-blue">
+              <font-awesome-icon :icon="['fas', 'circle-user']" size="xl" class="mx-2"/>
               {{ currentUser.username }}
             </router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark" href @click.prevent="logOut">
+            <a class="nav-link text-secondary" href @click.prevent="logOut">
               <!-- <font-awesome-icon icon="sign-out-alt" /> -->
               Log Out
             </a>
