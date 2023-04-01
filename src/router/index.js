@@ -18,7 +18,6 @@ const requireAuth = (to, from, next) => {
   // verify if jwt token is still valid
   authVerify();
   let user = JSON.parse(localStorage.getItem("user"));
-  console.log("current user in auth guard: ", user);
   // if (!user && to.name != "Home") next({ name: "Home" });
   if (!user) next({ name: "login" });
   else next();
@@ -28,7 +27,6 @@ const requireAdmin = (to, from, next) => {
   // verify if jwt token is still valid
   authVerify();
   let user = JSON.parse(localStorage.getItem("user"));
-  console.log("current user in auth guard: ", user);
   // if (!user && to.name != "Home") next({ name: "Home" });
   if (!user || (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_MODERATOR")) == false)
     next({ name: "login" });
@@ -45,12 +43,10 @@ const router = createRouter({
       beforeEnter(to, from, next) {
         authVerify();
         let user = JSON.parse(localStorage.getItem("user"));
-        console.log("current user in auth guard: ", user);
         // if (!user && to.name != "Home") next({ name: "Home" });
         if (!user) {
           next({ name: "login" });
         } else {
-          console.log("CHECKING ", user.roles.includes("ROLE_MODERATOR"));
           if (user.roles.includes("ROLE_ADMIN") ||user.roles.includes("ROLE_MODERATOR")) {
             next();
           }

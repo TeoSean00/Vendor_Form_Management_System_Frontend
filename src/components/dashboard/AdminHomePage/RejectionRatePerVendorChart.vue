@@ -112,7 +112,6 @@
         vendorData.value = await VendorService.getVendorRejectionRate().then((response) => {
           return response;
         });
-        console.log("After retrieval value: ", vendorData.value);
       };
 
       getVendorInfo();

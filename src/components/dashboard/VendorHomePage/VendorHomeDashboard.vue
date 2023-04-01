@@ -6,12 +6,10 @@
       <div class="col">
         <FormStatusBarChart vendorID="6409bf14f5a8a3592938ed73" />
       </div>
-
       <!-- 2nd chart -->
       <div class="col">
         <UpdatesTodayChart />
       </div>
-
       <!-- 3rd chart -->
       <div class="col">
         <DeadlinesChart />
