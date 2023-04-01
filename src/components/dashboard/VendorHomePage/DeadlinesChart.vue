@@ -110,7 +110,6 @@ export default {
             let currentDateNow = moment(currentDate, "MM/DD/YYYY");
             var daysLeft = formDeadline.diff(currentDateNow, 'days');
             let currentFormName = formData.value[i].content.FormInfo.formName;
-            // console.log("deadline:", formDeadline, "datenow:", currentDateNow, "daysleft: ", daysLeft, "currentForm:", currentFormName, "formStatus:", formStatus);
             formLabels.push(currentFormName);
             formDaysLeft.push(daysLeft);
           }
@@ -187,7 +186,6 @@ export default {
     var formData = ref(null);
 
     watchEffect(async () => {
-      // console.log("vendor details data passed> ", props.vendorDetails);
       if (props.vendorDetails != null) {
         try {
           formData.value = await FormService.getVendorForms(props.vendorDetails.id).then((response) => {
@@ -198,7 +196,6 @@ export default {
           console.log("error occured while getting forms for vendor", error);
         }
       }
-      // console.log("After getVendorForms() invoked> ", formData.value);    
     })
 
     return {

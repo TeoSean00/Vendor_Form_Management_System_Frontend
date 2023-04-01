@@ -2,7 +2,6 @@
   <div class="col my-auto">
     <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-inner">
-
         <!-- first page for form rejections only -->
         <div class="carousel-item active">
           <div class="card mx-auto border-secondary" style="width: 88%">
@@ -162,14 +161,11 @@ export default {
 
     // Method to check that vendor details have been successfully passed from parent page, to invoke specific dashboard method afterwards
     var formData = ref(null);
-
     watchEffect(async () => {
       if (props.vendorDetails != null) {
         try {
-          // console.log("Vendor Details passed from parent page successfull> ", props.vendorDetails);
           formData.value = await FormService.getVendorUpdateForms(props.vendorDetails.id)
             .then((response) => {
-              // console.log("getVendorUpdateForms successful");
               return response;
             }
           )
@@ -178,7 +174,6 @@ export default {
           console.log("getVendorUpdateForms error when called", error);
         }
       }
-      // console.log("after getVendorUpdateForms retrieval> ", formData.value);
     })
 
     // Method to filter the getVendorUpdateForms data into their respective categories to be displayed
@@ -211,20 +206,15 @@ export default {
                 continue;
             }
             if (formData.value[i].latestRejectionDate != null && formData.value[i].latestCompletedDate != null) {
-              // console.log(formData.value[i], "rejection and completed not null")
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
               let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
-              // console.log("rejectionDate> ", rejectionDate, "completedDate> ", completedDate)
               if (rejectionDate == completedDate) {
-                // console.log(formData.value[i].latestRejectionDate.split("T")[1], formData.value[i].latestCompletedDate.split("T")[1])
                 let rejectionTime = formData.value[i].latestRejectionDate.split("T")[1]
                 let rejectionTimeList = rejectionTime.split(":")
                 let rejectionDuration = (Number(rejectionTimeList[0])*60*60) + (Number(rejectionTimeList[1])*60) + Number(rejectionTimeList[2].split(".")[0])
                 let completedTime = formData.value[i].latestCompletedDate.split("T")[1]
                 let completedTimeList = completedTime.split(":")
                 let completedDuration = (Number(completedTimeList[0])*60*60) + (Number(completedTimeList[1])*60) + Number(completedTimeList[2].split(".")[0])
-                // console.log("rejectionTime> ", rejectionTime, "completedTime> ", completedTime)
-                // console.log("rejectionDuration> ", rejectionDuration, "completedDuration> ", completedDuration)
                 if (rejectionDuration > completedDuration) {
                   let key = formData.value[i].latestRejector
                   let value = formData.value[i]
@@ -241,9 +231,7 @@ export default {
               }
             }
             else if (formData.value[i].latestRejectionDate != null) {
-              // console.log(formData.value[i], "rejection not null")
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
-              // console.log("rejectionDate> ", rejectionDate)
               if (rejectionDate == dateToday) {
                 let key = formData.value[i].latestRejector
                 let value = formData.value[i]
@@ -252,9 +240,7 @@ export default {
               }
             }
             else if (formData.value[i].latestCompletedDate != null) {
-              // console.log(formData.value[i], "completed not null")
               let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
-              // console.log("completedDate> ", completedDate)
               if (completedDate == dateToday) {
                 let key = formData.value[i].latestCompletor
                 let value = formData.value[i]
@@ -263,7 +249,6 @@ export default {
               }
             }
             else if (formData.value[i].createDate != null) {
-              // console.log(formData.value[i], "assigned not null")
               let createDate = formData.value[i].createDate.split("T")[0]
               if (createDate == dateToday) {
                 filteredForms.assigned.push(formData.value[i])

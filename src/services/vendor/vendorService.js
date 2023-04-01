@@ -1,8 +1,6 @@
 import axios from "axios";
 import authHeader from "../authHeader";
 
-console.log(authHeader());
-
 const API_URL = "http://localhost:8080/api/vendor/";
 
 class VendorService {
@@ -11,7 +9,6 @@ class VendorService {
     const response = axios
       .post(API_URL, data, { headers: authHeader() })
       .then((response) => {
-        console.log("addVendor post request successful!");
         return response.data;
       })
       .catch((error) => {
@@ -25,7 +22,6 @@ class VendorService {
     const response = axios
       .get(API_URL + "all", { headers: authHeader() })
       .then((response) => {
-        console.log("getVendors request successful!", response);
         return response.data;
       })
       .catch((error) => {
@@ -39,7 +35,6 @@ class VendorService {
     const response = axios
       .put(API_URL + vendorId, vendorObject, { headers: authHeader() })
       .then((response) => {
-        console.log("updateVendor request successful!", response);
         return response.data;
       })
       .catch((error) => {
@@ -53,7 +48,6 @@ class VendorService {
     const response = axios
       .get(API_URL + vendorId, { headers: authHeader() })
       .then((response) => {
-        console.log("getVendor request successful!", response);
         return response.data;
       })
       .catch((error) => {
@@ -67,7 +61,6 @@ class VendorService {
     const response = axios
       .get(API_URL + "getJoinDates", { headers: authHeader() })
       .then((response) => {
-        console.log("getJoinDates request successful!", response);
         return response.data;
       })
       .catch((error) => {
@@ -81,7 +74,6 @@ class VendorService {
     const response = axios
       .get(API_URL + "getAverageRejection", { headers: authHeader() })
       .then((response) => {
-        console.log("getVendorRejectionRate successful", response);
         return response.data;
       })
       .catch((error) => {

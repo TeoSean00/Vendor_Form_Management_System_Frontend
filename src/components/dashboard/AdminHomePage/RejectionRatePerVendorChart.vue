@@ -109,11 +109,9 @@
       var vendorData = ref(null);
   
       var getVendorInfo = async () => {
-        // console.log("getForms() Backend API call is invoked! Before Value: ", vendorData.value);
         vendorData.value = await VendorService.getVendorRejectionRate().then((response) => {
           return response;
         });
-        console.log("After retrieval value: ", vendorData.value);
       };
 
       getVendorInfo();
@@ -156,7 +154,6 @@
           finalLabel.push(sortable[i][0])
           finalValues.push(sortable[i][1])
         }
-        // console.log(sorteddict, finalLabel, finalValues)
         if (finalLabel.length > 4 && finalValues.length > 4) {
           return [finalLabel.slice(0, 4), finalValues.slice(0, 4)];
         }
@@ -164,7 +161,6 @@
           return [finalLabel, finalValues];
         }
     });
-  
       return {
         barChartData,
         FileStatusBarChartOptions,
