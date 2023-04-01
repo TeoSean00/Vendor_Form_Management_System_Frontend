@@ -4,12 +4,10 @@
       class="row offset-1 col-9 justify-content-center align-items-center h-100"
     >
       <div class="card my-auto" style="height: 75vh">
-        <!-- <img class="card-img-top" src="../assets/Quantum Logo.PNG" style="scale: 0.1;"> -->
         <h2 class="card-title text-center mt-5 pt-3 text-main-blue">
           Quantum Leap Incorporation
         </h2>
         <div class="card-body">
-          <!-- <h5 class="card-title text-center my-2 pt-3 text-secondary-blue">Login</h5> -->
           <!-- Form begins -->
           <!-- Username -->
           <div class="offset-3 col-6 text-center my-2 pt-3">
@@ -65,50 +63,6 @@
         </div>
       </div>
     </div>
-    <!-- Form copied above already, not sure if needed or not  -->
-    <!-- <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
-      <form name="form" @submit.prevent="handleLogin">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            :rules="isRequired"
-            v-model="user.username"
-            type="text"
-            class="form-control"
-            name="username"
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            v-model="user.password"
-            type="password"
-            class="form-control"
-            name="password"
-          />
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-block" :disabled="loading">
-            <span
-              v-show="loading"
-              class="spinner-border spinner-border-sm"
-            ></span>
-            <span>Login</span>
-          </button>
-        </div>
-        <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">
-            {{ message }}
-            {{ auth }}
-          </div>
-        </div>
-      </form>
-    </div> -->
   </div>
 </template>
 
@@ -135,26 +89,21 @@ export default {
     const router = useRouter();
 
     if (auth.status.loggedIn) {
-      // can change this later
       router.push("/");
     } else {
       console.log("not logged in");
     }
 
     const handleLogin = async () => {
-      console.log("store object is", auth);
       loading.value = true;
-      //add in veevalidate here when solved
       if (user.username && user.password) {
         await auth.login(user).then(
           (response) => {
-            console.log(response);
             toast.success("Login successful!", {
               position: toast.POSITION.TOP_CENTER,
               pauseOnHover: false,
               autoClose:2000,
             });
-            console.log(response);
             router.push("/");
           },
           (error) => {

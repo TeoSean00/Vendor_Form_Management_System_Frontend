@@ -240,12 +240,10 @@ export default {
 
     function showModalFn() {
       showModal = true;
-      console.log("Shown Modal");
     }
 
     function toggleCollapse(vendor) {
       vendor.collapse = !vendor.collapse;
-      console.log("Toggle Collapse");
     }
 
     var auth = useAuthStore();
@@ -270,7 +268,6 @@ export default {
     };
 
     const toggleEditVendor = (vendor) => {
-      console.log(vendor.vendorId);
       var newName = prompt("Enter new vendor name!");
       vendor.name = newName;
     };

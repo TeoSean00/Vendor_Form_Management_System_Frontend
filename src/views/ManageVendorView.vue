@@ -11,123 +11,44 @@
       </div>
 
       <div>
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          data-bs-toggle="modal"
-          data-bs-target="#createVendor"
-        >
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createVendor">
           Add Vendor
         </button>
-        <!-- <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#createVendor"
-        >
-          Add Vendor
-        </button> -->
       </div>
     </div>
 
-    <!-- vendor data here {{ vendorList }} -->
-
     <form action="">
       <div class="input-group mb-2">
-        <span
-          class="input-group-text bluebg text-light"
-          @click="filter"
-          id="basic-addon3"
-          >Search</span
-        >
-        <input
-          v-model="searchName"
-          type="text"
-          class="form-control"
-          id="basic-url"
-          aria-describedby="basic-addon3"
-        />
+        <span class="input-group-text bluebg text-light" @click="filter" id="basic-addon3">Search</span>
+        <input v-model="searchName" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" />
       </div>
     </form>
 
-    <!-- <p>Filtered names are</p>
-    <p>{{ filteredNames }}</p> -->
 
     <div v-if="!searchName" class="list-group flex">
       <template v-for="vendor in vendorList" :key="vendor">
-        <vendorListItem :vendorDetails="vendor"/>
-        <!-- <a
-          href="#"
-          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
-          aria-current="true"
-          @click="toggleVendorPage(vendor.name, vendor.id)"
-        >
-
-          <span>
-            <h3>Name : {{ vendor.name }}</h3>
-            <h5>Country : {{ vendor.country }}</h5>
-            <span>Description : {{ vendor.details }}</span
-            ><br />
-            <span>id : {{ vendor.id }}</span>
-          </span>
-          <div class="float-right">
-            <span class="badge bluebg mx-1 mt-2">In Progress</span>
-            <span class="badge text-bg-info">Total</span>
-          </div>
-        </a> -->
+        <vendorListItem :vendorDetails="vendor" />
 
       </template>
     </div>
     <div v-else class="list-group flex">
       <template v-for="vendor in filteredNames" :key="vendor">
-        <vendorListItem :vendorDetails="vendor"/>
-        <!-- <a
-          href="#"
-          class="justify-content-between list-group-item list-group-item-action text-main-blue p-4 d-flex"
-          aria-current="true"
-        >
-          <span v-if="vendor.name == null">
-            <h3>Company {{ vendor.vendorId }}</h3>
-          </span>
-          <span v-else>
-            <h3>{{ vendor.name }}</h3>
-          </span>
-          <div class="float-right">
-            <span class="badge bluebg mx-1 mt-2">In Progress</span>
-            <span class="badge text-bg-info">Total</span>
-          </div>
-        </a> -->
+        <vendorListItem :vendorDetails="vendor" />
       </template>
     </div>
 
-    <div
-      class="modal fade"
-      id="createVendor"
-      tabindex="-1"
-      aria-labelledby="createVendorLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="createVendor" tabindex="-1" aria-labelledby="createVendorLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Create Vendor</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
               <label for="vendorName" class="form-label">Vendor Name</label>
-              <input
-                type="username"
-                class="form-control"
-                v-model="newVendorName"
-                placeholder="Vendor name here"
-                required
-              />
+              <input type="username" class="form-control" v-model="newVendorName" placeholder="Vendor name here"
+                required />
             </div>
             <div class="mb-3">
               <label for="vendorName" class="form-label">Vendor Country</label>
@@ -268,7 +189,8 @@
                 <option value="Lithuania">Lithuania</option>
                 <option value="Luxembourg">Luxembourg</option>
                 <option value="Macao">Macao</option>
-                <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of
+                </option>
                 <option value="Madagascar">Madagascar</option>
                 <option value="Malawi">Malawi</option>
                 <option value="Malaysia">Malaysia</option>
@@ -341,7 +263,8 @@
                 <option value="Solomon Islands">Solomon Islands</option>
                 <option value="Somalia">Somalia</option>
                 <option value="South Africa">South Africa</option>
-                <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands
+                </option>
                 <option value="Spain">Spain</option>
                 <option value="Sri Lanka">Sri Lanka</option>
                 <option value="Sudan">Sudan</option>
@@ -383,44 +306,27 @@
                 <option value="Yemen">Yemen</option>
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
-            </select>
-              
+              </select>
+
             </div>
             <div class="mb-3">
-              <label for="vendorNotes" class="form-label"
-                >Additional Details</label
-              >
-              <textarea
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-                v-model="newVendorDetails"
-                required
-              ></textarea>
+              <label for="vendorNotes" class="form-label">Additional Details</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="newVendorDetails"
+                required></textarea>
             </div>
             <div v-if="errors.length">
-              <template v-for="(error, index) in errors" :key="index"
-                ><div class="alert alert-warning" role="alert">
+              <template v-for="(error, index) in errors" :key="index">
+                <div class="alert alert-warning" role="alert">
                   {{ error }}
-                </div></template
-              >
+                </div>
+              </template>
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              id="closeButton"
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button id="closeButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              
-              @click="toggleNewVendor(newVendorName)"
-            >
+            <button type="button" class="btn btn-primary" @click="toggleNewVendor(newVendorName)">
               Create Vendor
             </button>
           </div>
@@ -452,36 +358,28 @@ export default {
 
     var vendorList = ref([]);
 
-    console.log("vendors value is", vendorStore.vendors);
-    console.log("vendorList is an " + typeof vendorList);
-
     vendorStore.getVendors();
 
     var searchName = ref("");
 
     //watching the vendorStore state for changes
     watch(vendorStore.$state, (state) => {
-      console.log("CHANGE DETECTED", state);
       vendorList.value = state.vendors;
     });
 
-    console.log(vendorList.value);
 
     const filteredNames = computed(() => {
       let matchList = [];
       matchList = vendorList.value.filter(function (vendor) {
-        console.log("matching with vendor", vendor, searchName.value);
         if (
           vendor.name.toLowerCase().includes(searchName.value.toLowerCase())
         ) {
-          console.log("MATCHED", vendor.name, searchName.value);
           return vendor;
         }
       });
       return matchList;
     });
 
-    console.log("vendors value is", vendorStore.vendors);
 
     var auth = useAuthStore();
     var currentUser = ref(auth.user);
@@ -495,23 +393,22 @@ export default {
     var newVendorCountry = ref("");
 
     var checkForm = () => {
-      console.log("check form is called!");
       let check = true;
       if (newVendorName.value == "") {
-        if(!errors.value.includes("Vendor name cannot be left blank")){
+        if (!errors.value.includes("Vendor name cannot be left blank")) {
           errors.value.push("Vendor name cannot be left blank");
         }
         check = false;
       }
       if (newVendorCountry.value == "") {
-        if(!errors.value.includes("Vendor country cannot be left blank")){
+        if (!errors.value.includes("Vendor country cannot be left blank")) {
           errors.value.push("Vendor country cannot be left blank");
         }
         check = false;
       }
 
       if (newVendorDetails.value == "") {
-        if(!errors.value.includes("Vendor details cannot be left blank")){
+        if (!errors.value.includes("Vendor details cannot be left blank")) {
           errors.value.push("Vendor details cannot be left blank");
         }
         check = false;
@@ -521,12 +418,6 @@ export default {
     };
 
     const toggleNewVendor = () => {
-      // console.log("toggle create new vendor", newVendorName);
-      // console.log("SUMITTED INFO");
-      console.log(newVendorCountry.value);
-      console.log(newVendorName.value);
-      console.log(newVendorDetails.value);
-
       if (checkForm()) {
         var newVendor = {
           name: newVendorName.value,
@@ -537,10 +428,10 @@ export default {
 
         vendorStore.addVendor(newVendor);
         toast.success("Vendor Added Successfully!", {
-              position: toast.POSITION.TOP_CENTER,
-              pauseOnHover: false,
-              autoClose:2000,
-            });
+          position: toast.POSITION.TOP_CENTER,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
 
         document.getElementById('closeButton').click();
         newVendorName.value = "";
@@ -548,13 +439,12 @@ export default {
         newVendorDetails.value = "";
         errors.value = []
 
-        
+
 
       }
     };
 
     const toggleEditVendor = (vendor) => {
-      console.log(vendor.vendorId);
       var newName = prompt("Enter new vendor name!");
       vendor.name = newName;
     };
@@ -570,17 +460,6 @@ export default {
         },
       });
     };
-
-    // const toggleFormbuilder = () => {
-    //   router.push("/formbuilder");
-    // };
-
-    // const toggleFormview = () => {
-    //   router.push("/viewform");
-    // };
-
-    console.log(filteredNames);
-
     return {
       errors,
       newVendorCountry,

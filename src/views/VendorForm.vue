@@ -1,17 +1,10 @@
 <template>
   <Navbar />
-  <!-- Signed in as {{ currentUser }} displayRole is {{ displayRole }} has {{ role }} -->
   <br />
   <br />
-  <!-- <div>
-    {{ newForm }}
-  </div> -->
 
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <!-- <div class="m-2">
-          {{ templateData }}
-        </div> -->
       <div class="form-floating m-4">
         <div class="">
           <h4>Form Details</h4>
@@ -31,24 +24,28 @@
           <span> Revision Number: {{ revNumber }} </span>
 
           <!-- Rejection ARea -->
-          <div v-if="formStatus == 'vendor_response' && role.includes('ROLE_USER') && newForm.rejectionDetails.vendor != null" class=" mt-2 alert alert-danger">
+          <div
+            v-if="formStatus == 'vendor_response' && role.includes('ROLE_USER') && newForm.rejectionDetails.vendor != null"
+            class=" mt-2 alert alert-danger">
 
-            <h5>Reason for previous rejection by Admin on {{ newForm.latestRejectionDate.slice(0,10) }}:</h5>
+            <h5>Reason for previous rejection by Admin on {{ newForm.latestRejectionDate.slice(0, 10) }}:</h5>
             {{ newForm.rejectionDetails.vendor }}
             <br>
             <br>
             <h5>New Deadline :</h5>
-            {{ newForm.deadline.slice(0,10) }}
+            {{ newForm.deadline.slice(0, 10) }}
           </div>
 
-          <div v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN') && newForm.rejectionDetails.admin != null" class=" mt-2 alert alert-danger">
+          <div
+            v-if="formStatus == 'admin_response' && role.includes('ROLE_ADMIN') && newForm.rejectionDetails.admin != null"
+            class=" mt-2 alert alert-danger">
 
-            <h5>Reason for previous rejection by Approver on {{ newForm.latestRejectionDate.slice(0,10) }}:</h5>
+            <h5>Reason for previous rejection by Approver on {{ newForm.latestRejectionDate.slice(0, 10) }}:</h5>
             {{ newForm.rejectionDetails.admin }}
             <br>
             <br>
             <h5>New Deadline :</h5>
-            {{ newForm.deadline.slice(0,10) }}
+            {{ newForm.deadline.slice(0, 10) }}
 
           </div>
           <hr class="border border-dark border-2 mt-2 opacity-75" />
@@ -72,14 +69,15 @@
               </template>
               <template v-else>
                 <!-- Moderator can view all but edit nothing -->
-                
+
                 <template v-if="role.includes('ROLE_MODERATOR')">
-                  <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                  <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center"
+                    style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
                     <h2>
-                    {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
+                      {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
                     </h2>
                   </div>
-      
+
                   <template v-for="sect in sectionData" :key="sect">
                     <!-- {{ sect }} -->
                     <FormSection :sectionData="sect" :disabled="true" />
@@ -88,61 +86,56 @@
                 <template v-else>
                   <!-- To allow admin to view admin part and fill in -->
                   <template v-if="i == 'admin' && role.includes('ROLE_ADMIN')">
-                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center"
+                      style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
                       <h2>
-                      {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
+                        {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
                       </h2>
                     </div>
                     <template v-for="sect in sectionData" :key="sect">
-                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="false" />
                     </template>
                   </template>
                   <!-- To allow admin to view vendor part but not fill in -->
                   <template v-if="i == 'vendor' && role.includes('ROLE_ADMIN')">
-                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
-                        <h2 >
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center"
+                      style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                      <h2>
                         {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                        </h2>
-                      </div>
+                      </h2>
+                    </div>
                     <template v-for="sect in sectionData" :key="sect">
-                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="true" />
                     </template>
                   </template>
                   <!-- To allow vendor to view vendor part only -->
-                  <template
-                    v-if="
-                      i == 'vendor' &&
-                      role.includes('ROLE_USER') &&
-                      formStatus == 'vendor_response'
-                    "
-                  >
-                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
-                        <h2>
+                  <template v-if="
+                    i == 'vendor' &&
+                    role.includes('ROLE_USER') &&
+                    formStatus == 'vendor_response'
+                  ">
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center"
+                      style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                      <h2>
                         {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                        </h2>
+                      </h2>
                     </div>
                     <template v-for="sect in sectionData" :key="sect">
-                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="false" />
                     </template>
                   </template>
-                  <!-- To allow vendor to view vendor part BUT not edit if it has been submitted -->
-                  <template
-                    v-if="
-                      i == 'vendor' &&
-                      role.includes('ROLE_USER') &&
-                      formStatus !== 'vendor_response'
-                    "
-                  >
-                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
-                        <h2>
+                  <template v-if="
+                    i == 'vendor' &&
+                    role.includes('ROLE_USER') &&
+                    formStatus !== 'vendor_response'
+                  ">
+                    <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center"
+                      style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+                      <h2>
                         {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                        </h2>
+                      </h2>
                     </div>
                     <template v-for="sect in sectionData" :key="sect">
-                      <!-- {{ sect }} -->
                       <FormSection :sectionData="sect" :disabled="true" />
                     </template>
                   </template>
@@ -153,152 +146,95 @@
 
           <template v-if="formStatus !== 'deleted'">
             <div class="row justify-content-center mt-3">
-              <div class="col-4 text-center" 
-                  v-if="
-                    (formStatus == 'admin_response' &&
-                      role.includes('ROLE_ADMIN') &&
-                      !role.includes('ROLE_MODERATOR')) ||
-                    (formStatus == 'vendor_response' &&
-                      !role.includes('ROLE_ADMIN'))
-                  ">
-                <button
-                  class="btn btn-primary mx-1"
-                  @click="saveForm()"
-                  type="submit"
-                >
+              <div class="col-4 text-center" v-if="
+                (formStatus == 'admin_response' &&
+                  role.includes('ROLE_ADMIN') &&
+                  !role.includes('ROLE_MODERATOR')) ||
+                (formStatus == 'vendor_response' &&
+                  !role.includes('ROLE_ADMIN'))
+              ">
+                <button class="btn btn-primary mx-1" @click="saveForm()" type="submit">
                   Save Form
                 </button>
               </div>
 
-              <div class="col-4 text-center" 
-                  v-if="
-                    formStatus == 'approver_response' &&
-                    role.includes('ROLE_MODERATOR')
-                  ">
+              <div class="col-4 text-center" v-if="
+                formStatus == 'approver_response' &&
+                role.includes('ROLE_MODERATOR')
+              ">
                 <!-- Approver response to admin response -->
-                <button
-                  
-                  class="btn btn-danger mx-1"
-                  data-bs-toggle="modal"
-                  data-bs-target="#setDeadline"
-                >
+                <button class="btn btn-danger mx-1" data-bs-toggle="modal" data-bs-target="#setDeadline">
                   Reject Form
                 </button>
 
               </div>
 
-              <div class="col-4 text-center" 
-                  v-if="
-                    formStatus == 'approver_response' &&
-                    role.includes('ROLE_MODERATOR')
-                  ">
+              <div class="col-4 text-center" v-if="
+                formStatus == 'approver_response' &&
+                role.includes('ROLE_MODERATOR')
+              ">
                 <!-- Approver response to complete form -->
-                <button
-                  
-                  class="btn btn-primary mx-1"
-                  @click="submitForm('form_completed', 'approve')"
-                >
+                <button class="btn btn-primary mx-1" @click="submitForm('form_completed', 'approve')">
                   Approve Form
                 </button>
 
               </div>
 
-              <div class="col-4 text-center" 
-                v-if="
-                  formStatus == 'admin_response' && role.includes('ROLE_ADMIN')
-                ">
+              <div class="col-4 text-center" v-if="
+                formStatus == 'admin_response' && role.includes('ROLE_ADMIN')
+              ">
                 <!-- Admin response to vendor response -->
-                <button
-                  class="btn btn-danger mx-1"
-                  data-bs-toggle="modal"
-                  data-bs-target="#setDeadline"
-                >
+                <button class="btn btn-danger mx-1" data-bs-toggle="modal" data-bs-target="#setDeadline">
                   Reject Form
                 </button>
               </div>
 
-              <div class="col-4 text-center" 
-                  v-if="
-                    formStatus == 'admin_response' && role.includes('ROLE_ADMIN')
-                  ">
-                  <!-- Admin response to approver response -->
-                <button
-                  class="btn btn-primary mx-1"
-                  @click="submitForm('approver_response', 'approve')"
-                >
+              <div class="col-4 text-center" v-if="
+                formStatus == 'admin_response' && role.includes('ROLE_ADMIN')
+              ">
+                <!-- Admin response to approver response -->
+                <button class="btn btn-primary mx-1" @click="submitForm('approver_response', 'approve')">
                   Submit for approval
                 </button>
               </div>
 
-              <div class="col-4 text-center" 
-                  v-if="
-                    formStatus == 'vendor_response' && role.includes('ROLE_USER')
-                  ">
+              <div class="col-4 text-center" v-if="
+                formStatus == 'vendor_response' && role.includes('ROLE_USER')
+              ">
                 <!-- Vendor response to admin response    -->
-                <button
-                  
-                  class="btn btn-primary mx-1"
-                  @click="submitForm('admin_response', 'approve')"
-                >
+                <button class="btn btn-primary mx-1" @click="submitForm('admin_response', 'approve')">
                   Submit to admin
                 </button>
               </div>
 
             </div>
           </template>
-          
-
-          <!-- <testEmail :vendorName="newForm.vendorName" :formDueDate="newForm.deadline"/> -->
         </form>
-        
+
       </div>
     </div>
   </div>
 
-  <div
-    class="modal fade"
-    id="setDeadline"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="setDeadline" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">
             Set New Deadline
           </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <label for="vendorNotes" class="form-label"
-            >Feedback on form reject</label
-          >
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="3"
-            v-model.lazy="formFeedback"
-            required
-          ></textarea>
+          <label for="vendorNotes" class="form-label">Feedback on form reject</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model.lazy="formFeedback"
+            required></textarea>
           <div v-if="feedbackError" class="alert alert-warning" role="alert">
             {{ feedbackError }}
           </div>
           <template v-if="formStatus == 'admin_response'">
             <label class="form-label mb-0 mt-3">Select new deadline here</label>
             <hr />
-            <input
-              type="date"
-              id="deadline"
-              name="form-deadline"
-              class="mb-3"
-              v-model.lazy="formDeadline"
-            />
+            <input type="date" id="deadline" name="form-deadline" class="mb-3" v-model.lazy="formDeadline" />
             <div v-if="formDeadline" class="alert alert-warning" role="alert">
               You selected {{ formDeadline }}
             </div>
@@ -308,36 +244,23 @@
           </template>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Close
           </button>
           <template v-if="formStatus == 'admin_response'">
-            <button
-              type="button"
-              class="btn btn-primary"
-              :data-bs-dismiss="
-                (formDeadline != null) &
+            <button type="button" class="btn btn-primary" :data-bs-dismiss="
+              (formDeadline != null) &
                 (Date.parse(formDeadline) > Date.now()) &
                 (formFeedback != '')
-                  ? 'modal'
-                  : ''
-              "
-              @click="submitForm('vendor_response', 'reject')"
-            >
+                ? 'modal'
+                : ''
+            " @click="submitForm('vendor_response', 'reject')">
               Reject form
             </button>
           </template>
           <template v-else>
-            <button
-              type="button"
-              class="btn btn-primary"
-              :data-bs-dismiss="formFeedback != '' ? 'modal' : ''"
-              @click="submitForm('admin_response', 'reject')"
-            >
+            <button type="button" class="btn btn-primary" :data-bs-dismiss="formFeedback != '' ? 'modal' : ''"
+              @click="submitForm('admin_response', 'reject')">
               Reject form
             </button>
           </template>
@@ -373,19 +296,10 @@ export default {
   props: ["vendorFormId"],
   setup(props) {
     const currFormId = ref(props.vendorFormId);
-    console.log("formDetails is", currFormId);
 
     var vendorName = ref("");
     var formDueDate = ref("");
-    var formID = ref(currFormId.value); //TEMP FORM ID. CHANGE TO NON HARDCODED
-    // var formInfo = ref(null);
-    // var getFormInfo = async () => {
-    //   formInfo.value = await FormService.getForm(currFormId.value);
-    //   console.log(formInfo.value.id);
-    //   formID.value = formInfo.value.id;
-    // };
-
-    // getFormInfo();
+    var formID = ref(currFormId.value);
 
     var getDate = () => {
       const date = new Date();
@@ -449,7 +363,7 @@ export default {
         }
       } else if (action == "approve") {
         if (!formValidator()) {
-          console.log("Form not filled");
+
           return;
         } else {
           if (newForm.value.status == "admin_response") {
@@ -468,18 +382,14 @@ export default {
         message = "Form Submitted!";
       }
       newForm.value.status = status;
-      console.log("FORM IS ");
-      console.log(newForm);
 
       await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
-          console.log("Submitted form is: ");
-          console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
-      console.log("Form Submitted");
+
       toast.success(message, {
         position: toast.POSITION.TOP_CENTER,
         pauseOnHover: false,
@@ -494,7 +404,6 @@ export default {
     var saveForm = async () => {
       await FormService.updateForm(formID.value, newForm.value)
         .then((response) => {
-          console.log(response);
           toast.success("Form Saved!", {
             position: toast.POSITION.TOP_CENTER,
             pauseOnHover: false,
@@ -516,17 +425,9 @@ export default {
     var auth = useAuthStore();
     displayRole.value = auth.user;
     var role = displayRole.value.roles;
-    // hardcoded for now
-    // var role = ref(["ROLE_USER"])
-    // var role = ref(["ROLE_USER", "ROLE_ADMIN"])
-    // var role = ref(["ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"])
-
     var loadForm = async (formID) => {
-      console.log("Loading Form");
       await FormService.getForm(formID.value)
         .then((response) => {
-          console.log("Loaded form is: ");
-          console.log(response);
           newForm.value = response;
           revNumber.value = newForm.value.revNumber;
           formContent.value = newForm.value.content.FormContent;
@@ -547,9 +448,6 @@ export default {
             if (item === "vendor") {
               for (let question of sect) {
                 if (question.required === true) {
-                  console.log("QUESTION");
-                  console.log(question);
-                  console.log(question);
                   if (question.input === "" || question.input === []) {
                     toast.error("Form Not Filled Completely!", {
                       position: toast.POSITION.TOP_CENTER,

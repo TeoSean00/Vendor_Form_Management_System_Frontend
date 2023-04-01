@@ -17,8 +17,6 @@ export default function authVerify() {
     if (jwt.exp * 1000 < Date.now()) {
       auth.logout();
     } else {
-      // console.log("currently your jwt token is", jwt);
-      // console.log("expiry is", jwt.exp);
     }
   }
 }

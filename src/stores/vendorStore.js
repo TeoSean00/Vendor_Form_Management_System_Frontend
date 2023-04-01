@@ -10,7 +10,6 @@ export const useVendorStore = defineStore("vendorStore", {
     async addVendor(vendorObject) {
       VendorService.addVendor(vendorObject)
         .then(() => {
-          console.log("updated after adding");
           this.getVendors();
         })
         .catch((error) => {
@@ -18,9 +17,7 @@ export const useVendorStore = defineStore("vendorStore", {
         });
     },
     async getVendors() {
-      console.log("get vendors called!", this.vendors);
       this.vendors = await VendorService.getVendors();
-      console.log("this.vendors is", this.vendors);
     },
   },
 });

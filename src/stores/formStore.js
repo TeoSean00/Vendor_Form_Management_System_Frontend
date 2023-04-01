@@ -10,7 +10,6 @@ export const useFormStore = defineStore("formStore", {
     async addForm(formObject) {
       FormService.addForm(formObject)
         .then(() => {
-          console.log("updated after adding");
           this.getForms();
         })
         .catch((error) => {
@@ -18,9 +17,7 @@ export const useFormStore = defineStore("formStore", {
         });
     },
     async getForms() {
-      console.log("get forms called!", this.forms);
       this.forms = await FormService.getForms();
-      console.log("this.forms is", this.forms);
     },
   },
 });

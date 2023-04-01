@@ -15,7 +15,6 @@
           <option value="h3">h3</option>
       </select>
     </div>
-  <!-- Bottom part is the delete butotn -->
   <hr>
     <div class="row">
       <div class="col-12 text-end px-5 py-1">

@@ -57,8 +57,6 @@ export default {
     var auth = useAuthStore();
     var currentUser = ref(auth.user);
     const showAdminBoard = () => {
-      console.log(currentUser);
-      console.log(currentUser.value);
       if (currentUser.value && currentUser.value.roles) {
         currentUser.value.roles.includes("ROLE_ADMIN");
       }
@@ -72,8 +70,6 @@ export default {
     };
 
     const logOut = async () => {
-      console.log("logout called");
-      console.log(auth);
       auth.logout();
     };
     return { currentUser, showAdminBoard, showModeratorBoard, logOut };
