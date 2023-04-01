@@ -7,16 +7,23 @@
 <template>
   <Navbar />
   <div class="container-fluid text-center">
-    <div class="progress mt-4 mb-4 col-8 offset-2 mx-auto shadow" style="height:25px">
-      <!-- <div class="progress" role="progressbar" aria-label="status" aria-valuemin="0" aria-valuemax="100"> -->
-      <div id="progress-bar" class="progress-bar fs-5 bg-success" :style="progressBarFill">
+    <div class="progress mt-4 col-8 offset-2 mx-auto shadow" style="height:15px; border-radius: 0.5rem 0.5rem 0px 0px">
+      <div id="progress-bar" class="progress-bar fs-5 bg-main-blue" :style="progressBarFill">
       </div>
-      <!-- </div> -->
     </div>
-    <div v-if="stage == 0" class="row col-8 offset-2 bg-white shadow rounded mt-1">
-      <div class="fw-bold fs-1 mt-3">
-        Set User Details
+    <div v-if="stage == 0" class="row col-8 offset-2 bg-white shadow rounded-bottom" >
+      <div class="row justify-content-center mt-3">
+          <div class="col-2 fw-bold text-main-blue">
+            1.Set User Details
+          </div>
+          <div class="col-2 text-dark-grey">
+            2.Set User Access
+          </div>
+          <div class="col-2 text-dark-grey">
+            3.Review
+          </div>
       </div>
+     
       <div v-if="stage == 0" class="col-8 offset-2 my-3">
         <div class="row ">
           <div class="form-group mb-3 text-start">
@@ -51,9 +58,17 @@
 
       </div>
     </div>
-    <div v-if="stage == 1" class="row col-8 offset-2 bg-white shadow rounded mt-1">
-      <div class="fw-bold fs-1 mt-3">
-        Set User Access
+    <div v-if="stage == 1" class="row col-8 offset-2 bg-white shadow rounded-bottom">
+      <div class="row justify-content-center mt-3">
+          <div class="col-2 text-dark-grey">
+            1.Set User Details
+          </div>
+          <div class="col-2 fw-bold text-main-blue">
+            2.Set User Access
+          </div>
+          <div class="col-2 text-dark-grey">
+            3.Review
+          </div>
       </div>
       <div class="row text-start mt-4 ">
         <div class="row mb-3">
@@ -107,9 +122,17 @@
         </div>
       </div>
     </div>
-    <div v-if="stage == 2" class="row col-8 offset-2 bg-white shadow rounded mt-1">
-      <div class="fw-bold fs-1 mt-3">
-        Review
+    <div v-if="stage == 2" class="row col-8 offset-2 bg-white shadow rounded-bottom ">
+      <div class="row justify-content-center mt-3 mb-3">
+          <div class="col-2 text-dark-grey">
+            1.Set User Details
+          </div>
+          <div class="col-2 text-dark-grey">
+            2.Set User Access
+          </div>
+          <div class="col-2 fw-bold text-main-blue">
+            3.Review
+          </div>
       </div>
       <div class="col-6 offset-3">
         <table class="table table-bordered table-striped text-main-blue">
@@ -132,6 +155,18 @@
               </tr>
             </thead>
           </table>
+          <div class="mb-3">
+              <input checked type="checkbox" class="form-check-input me-2" name="role" value="user" v-model="sendEmailCheck" />
+              <label class="form-check-label" for="flexRadioDefault1">
+                Send email to user
+              </label>
+            </div>
+            <button v-if="stage > 0 && !submitted" class="col-2 btn btn-secondary my-3 mx-3" @click="togglePrevious">
+              Back
+            </button>
+          <button class="btn btn-main-blue my-3" @click="toggleSubmit">
+            Create User
+          </button>
 
       </div>
 
@@ -140,7 +175,7 @@
 
 
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="class col-2"></div>
       <div class="col-8">
         <div class="card my-4 bg-light">
@@ -151,9 +186,9 @@
                 Set User Details
               </h6>
               </div>
-              <!-- <div v-if="stage == 1">
+              <div v-if="stage == 1">
                     <h6 class="text-white text-capitalize ps-3">Set User Access</h6>
-                  </div> -->
+                  </div>
               <div v-if="stage == 2">
                 <h6 class="text-white text-capitalize ps-3">
                   Review new user details
@@ -192,7 +227,7 @@
               </div>
             </div>
           </div>
-          <!-- <div v-if="stage == 1">
+          <div v-if="stage == 1">
               <div class="row">
                 <div class="col-4">
                   <label class="fw-bold" for="access">Access Type</label>
@@ -261,7 +296,7 @@
                       </div>
                     </div>
                   </div>
-                </div> -->
+                </div>
             <div v-if="stage == 2">
               <div class="row mb-3">
                 <div class="col">
@@ -319,7 +354,7 @@
         </div>
       </div>
       <div class="class col-2"></div>
-    </div>
+    </div> -->
 
   </div>
 </template>
@@ -440,7 +475,7 @@ export default {
     var toggleEmailError = ref(false);
 
     var progressBarFill = computed(() => {
-      return "width: " + ((stage.value + 1) * 33) + "%"
+      return "width: " + ((stage.value + 1) * 33) + "% ;z-index: 0; border-radius: 0.5rem  0px 0px"
     })
 
     var toggleNext = () => {
