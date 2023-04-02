@@ -1,15 +1,17 @@
 <template>
-  <div class="rounded-2 p-4 mt-3" style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
+  
+  <template v-if="sectionData.type == 'header'">
+    <p class="mt-3 fs-3 fw-bold" >{{ sectionData.label }}</p>
+  </template> 
+
+  <div v-else class="rounded-2 p-4 mt-3 shadow-sm" style="border: 1px lightgray solid">
     <div class="mb-3">
     <!-- Header -->
-    <template v-if="sectionData.type == 'header'">
-      <p :class="sectionData.style" style="text-align: center;">{{ sectionData.label }}</p>
-    </template> 
 
     <!-- Text Input -->
     <template v-if="sectionData.type == 'text'">
       <div class="row">
-        <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
+        <div class="col-10"><label for="email"><h5>{{ sectionData.label }}</h5></label></div>
 
         <div v-if="sectionData.required == true" class="col-2 text-end">
           <small style="font-style: italic">Required &nbsp; 
@@ -22,7 +24,7 @@
       <input
         :type="sectionData.type"
         id="email"
-        class="form-control form-control-sm"
+        class="form-control form-control-sm border border-secondary"
         :placeholder="sectionData.label"
         required
         v-model="sectionData.input"
@@ -48,7 +50,7 @@
       <template v-for="(data, index) in sectionData.options" :key="index">
         <div class="form-check">
           <input
-            class="form-check-input"
+            class="form-check-input border border-secondary"
             :type="sectionData.type"
             :value="index"
             id="flexCheckDefault"
@@ -59,13 +61,14 @@
           <!-- v-if short answer is true -->
           <template v-if="sectionData.shortAnswer">
             <span class=" mx-3">
-              Input:
+              :
               <input  v-if="sectionData.input.includes(index)" type="text" 
               v-model="sectionData.shortAnswerArr[index]"
               :disabled="disabled"
-              class=" border border-1"
+              class=" border border-1 border border-secondary"
               >
               <input  v-else type="text" 
+              class="border border-secondary"
               value=""
               disabled
               >
@@ -110,7 +113,7 @@
       <input
         :type="sectionData.type"
         id="email"
-        class="form-control form-control-sm"
+        class="form-control form-control-sm border border-secondary"
         :placeholder="sectionData.label"
         required
         v-model="sectionData.input"
@@ -134,7 +137,7 @@
       <template v-for="(data, index) in sectionData.options" :key="index">
         <div class="form-check">
           <input
-            class="form-check-input"
+            class="form-check-input border border-secondary"
             type="radio"
             :value="data"
             id="flexCheckDefault"
@@ -164,7 +167,7 @@
       <input
         :type="sectionData.type"
         id="email"
-        class="form-control"
+        class="form-control border border-secondary"
         :placeholder="sectionData.label"
         required
         v-model="sectionData.input"
@@ -212,6 +215,7 @@
               <td>{{ data }} : {{ sectionData.input[index] }} </td>
               <td>
                 <input
+                  class="border border-secondary"
                   type="radio"
                   value="1"
                   :name="data"
@@ -222,6 +226,7 @@
               </td>
               <td>
                 <input
+                  class=" border border-secondary"
                   type="radio"
                   value="2"
                   :name="data"
@@ -232,6 +237,7 @@
               </td>
               <td>
                 <input
+                  class=" border border-secondary"
                   type="radio"
                   value="3"
                   :name="data"
@@ -242,6 +248,7 @@
               </td>
               <td>
                 <input
+                  class=" border border-secondary"
                   type="radio"
                   value="4"
                   :name="data"
@@ -252,6 +259,7 @@
               </td>
               <td>
                 <input
+                  class=" border border-secondary"
                   type="radio"
                   value="5"
                   :name="data"
