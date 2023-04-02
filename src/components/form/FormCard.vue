@@ -8,7 +8,7 @@
           </div>
           <div class="col-4">
             <button
-              class="btn bg-light"
+              class="btn bg-light border"
               data-bs-toggle="modal"
               data-bs-target="#remindModal"
             >
@@ -55,21 +55,11 @@
         >
           <button class="btn btn-link btn-block" @click="generatePdf">
             <span>PDF </span>
-            <font-awesome-icon
-              icon="file-pdf"
-              class=""
-              data-bs-toggle="modal"
-              data-bs-target="#remindModal"
-            />
+            <font-awesome-icon icon="file-pdf" class="" />
           </button>
           <button class="btn btn-link btn-block" @click="generateWord">
             <span>Word </span>
-            <font-awesome-icon
-              icon="file-word"
-              class=""
-              data-bs-toggle="modal"
-              data-bs-target="#remindModal"
-            />
+            <font-awesome-icon icon="file-word" class="" />
           </button>
         </div>
         <div class="row" v-else>
