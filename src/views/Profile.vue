@@ -26,10 +26,6 @@
         </div>
       </div>
     </div>
-
-  
-
-
   </div>
 </template>
 
@@ -44,7 +40,6 @@ export default {
     var router = useRouter();
 
     var currentUser = auth.user;
-    console.log("currentUser is ,", currentUser);
 
     if (!auth.user) {
       router.push("/login");

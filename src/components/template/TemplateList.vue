@@ -15,7 +15,6 @@ export default {
   props: ["list"],
   setup(props, context) {
     var addTemplate = (selectedTemplate) => {
-      console.log("selected template is", selectedTemplate);
       context.emit(addTemplate, selectedTemplate);
     };
     return { addTemplate };

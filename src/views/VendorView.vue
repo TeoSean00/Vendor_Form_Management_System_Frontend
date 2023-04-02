@@ -235,7 +235,6 @@ export default {
     var vendorInfo = ref(null);
     var getVendorInfo = async () => {
       vendorInfo.value = await VendorService.getVendor(vendorId.value);
-      console.log(vendorInfo.value);
     };
     getVendorInfo();
 
@@ -254,7 +253,6 @@ export default {
     var getAllForms = async () => {
       allForms.value = await FormService.getVendorForms(vendorId.value);
       if (allForms.value) {
-        // console.log(allForms.value[0].vendorId);
         for (var i = 0; i < allForms.value.length; i++) {
           if (allForms.value[i].status == "vendor_response") {
             vendorAssignedForms.value.push(allForms.value[i]);
@@ -275,7 +273,6 @@ export default {
 
     const router = useRouter();
     function enterForm(vendorFormId) {
-      console.log("enter form is " + vendorFormId);
       router.push({
         path: "/vendorForm",
         query: {

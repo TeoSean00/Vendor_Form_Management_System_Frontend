@@ -45,7 +45,6 @@ export default {
   setup() {
     // Method to process overall form status data, to break them down into their respective staus and increment its count accordingly
     const filteredFormData = computed(() => {
-      // console.log("Overall form status data pulled, processing into respective status now, current data: ", formData.value);
       let newValues = [0, 0, 0, 0];
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
@@ -135,11 +134,9 @@ export default {
     var formData = ref(null);
 
     var getFormInfo = async () => {
-      // console.log("getForms() Backend API call is invoked! Before Value: ", formData.value);
       formData.value = await FormService.getForms().then((response) => {
         return response;
       });
-      // console.log("After retrieval value: ", formData.value);
     };
 
     getFormInfo();

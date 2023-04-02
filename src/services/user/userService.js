@@ -1,4 +1,3 @@
-import { def } from "@vue/shared";
 import axios from "axios";
 import authHeader from "../authHeader";
 
@@ -9,7 +8,6 @@ class UserService {
     const response = axios
       .get(API_URL + "all", { headers: authHeader() })
       .then((response) => {
-        console.log("get request successful!", response);
         return response.data;
       })
       .catch((error) => {
@@ -23,7 +21,6 @@ class UserService {
     const response = axios
       .get(API_URL + vendorId, { headers: authHeader() })
       .then((response) => {
-        console.log("get request successful!", response);
         return response.data;
       })
       .catch((error) => {

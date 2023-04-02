@@ -37,8 +37,6 @@
                 >
                   View
                 </button>
-
-                <!-- <button class="btn btn-danger btn-sm mx-1" @click="deleteTemplate(template.id)">Delete</button> -->
                 <button
                   type="button"
                   class="btn btn-danger btn-sm mx-1"
@@ -114,7 +112,7 @@ import { ref } from "vue";
 export default {
   components: { Navbar },
   setup() {
-    var templatesList = ref(null);
+    var templatesList = ref('');
     var getTemplatesList = async () => {
       templatesList.value = await templateService.getTemplates();
     };

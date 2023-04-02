@@ -1,5 +1,4 @@
 <template>
-    <!-- Order No: {{ idx }} -->
 <div class="row p-3">
   <input
     type="text"

@@ -10,7 +10,7 @@
       <font-awesome-icon icon="fa-solid fa-circle-plus" />
     </button>
     <br>
-    <span v-for="i in noOfOptions">
+    <span v-for="i in noOfOptions" :key="i">
         <font-awesome-icon class="px-3" icon="fa-solid fa-square" />
           <input 
               type="text"
@@ -18,7 +18,7 @@
               class="col-6 bg-light-grey p-2 my-3 rounded"
               v-model="itemInfo.options[i-1]"
           />
-          &nbsp
+          &nbsp;
           <input 
               v-if="itemInfo.shortAnswer"
               type="text"

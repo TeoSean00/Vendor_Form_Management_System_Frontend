@@ -49,7 +49,6 @@ export default {
     const filteredVendorData = computed(() => {
       let newValues = [0, 0, 0, 0, 0];
       if (vendorData.value) {
-        // console.log('vendorData populated, filtering now', vendorData.value[year]["months"]);
         let data = vendorData.value[year]["months"];
         for (const month in data) {
           if (month == "January" || month == "February") {
@@ -71,7 +70,6 @@ export default {
       }
       return newValues;
     })
-  
 
     // metadata for vendor line chart
     const VendorLineChart = computed(() => {
@@ -132,13 +130,10 @@ export default {
 
     // async await method call to retrieve the raw overall vendor creation dates data from Backend
     var vendorData = ref(null);
-
     var getVendorInfo = async () => {
-      // console.log("before getVendorInfo invoked", vendorData.value);
       vendorData.value = await VendorService.getJoinDates().then((response) => {
         return response;
       })
-      // console.log("after getVendorInfo invoked", vendorData.value);
     }
 
     getVendorInfo();

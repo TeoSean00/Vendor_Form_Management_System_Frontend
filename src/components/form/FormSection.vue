@@ -8,12 +8,11 @@
 
     <!-- Text Input -->
     <template v-if="sectionData.type == 'text'">
-      <!-- <p>{{ sectionData }}</p> -->
       <div class="row">
         <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
 
         <div v-if="sectionData.required == true" class="col-2 text-end">
-          <small style="font-style: italic">Required &nbsp 
+          <small style="font-style: italic">Required &nbsp; 
             <span  style="color: red;">★</span>
           </small>
         </div>
@@ -35,12 +34,11 @@
     <template
       v-if="sectionData.type == 'radio' || sectionData.type == 'checkbox'"
     >
-      <!-- <p>{{ sectionData }}</p> -->
       <div class="row">
         <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
 
         <div v-if="sectionData.required == true" class="col-2 text-end">
-          <small style="font-style: italic" >Required &nbsp 
+          <small style="font-style: italic" >Required &nbsp; 
             <span  style="color: red;">★</span>
           </small>
         </div>
@@ -97,13 +95,12 @@
 
     <!-- Number input -->
     <template v-if="sectionData.type == 'number'">
-      <!-- <p>{{ sectionData }}</p> -->
 
       <div class="row">
         <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
 
         <div v-if="sectionData.required == true" class="col-2 text-end">
-          <small style="font-style: italic" >Required &nbsp 
+          <small style="font-style: italic" >Required &nbsp; 
             <span  style="color: red;">★</span>
           </small>
         </div>
@@ -123,12 +120,11 @@
 
     <!-- Boolean Input -->
     <template v-if="sectionData.type == 'boolean'">
-      <!-- <p>{{ sectionData }}</p> -->
       <div class="row">
         <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
 
         <div v-if="sectionData.required == true" class="col-2 text-end">
-          <small style="font-style: italic" >Required &nbsp 
+          <small style="font-style: italic" >Required &nbsp;;
             <span  style="color: red;">★</span>
           </small>
         </div>
@@ -154,12 +150,11 @@
 
     <!-- Date input -->
     <template v-if="sectionData.type == 'date'">
-      <!-- <p>{{ sectionData }}</p> -->
       <div class="row">
         <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
 
         <div v-if="sectionData.required == true" class="col-2 text-end">
-          <small style="font-style: italic" >Required &nbsp 
+          <small style="font-style: italic" >Required &nbsp; 
             <span  style="color: red;">★</span>
           </small>
         </div>
@@ -179,13 +174,12 @@
 
     <!-- Likert Group -->
     <template v-if="sectionData.type == 'likertGroup'">
-      <!-- <p>{{ sectionData }}</p> -->
 
       <div class="row">
         <div class="col-10"><label for="email"><h4>{{ sectionData.label }}</h4></label></div>
 
         <div v-if="sectionData.required == true" class="col-2 text-end">
-          <small style="font-style: italic" >Required &nbsp 
+          <small style="font-style: italic" >Required &nbsp; 
             <span  style="color: red;">★</span>
           </small>
         </div>

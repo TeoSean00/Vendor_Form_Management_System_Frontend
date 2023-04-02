@@ -2,7 +2,6 @@
   <div class="col my-auto">
     <div id="carouselExampleIndicators" class="carousel slide">
       <div class="carousel-inner">
-
         <!-- first page for form rejections only -->
         <div class="carousel-item active">
           <div class="card mx-auto border-secondary" style="width: 88%">
@@ -21,7 +20,7 @@
               <div v-else>
                 <ul class="list-group list-group-flush p-1">
                   <h6 class="mt-0">Forms Rejected:</h6>
-                  <div v-for="(value, index) in filteredUpdateFormData[0].rejected">
+                  <div v-for="(value, index) in filteredUpdateFormData[0].rejected" :key="index">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} rejected
                       <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
@@ -51,7 +50,7 @@
               <div v-else>
                 <ul class="list-group list-group-flush p-1">
                   <h6 class="mt-0">Forms Completed:</h6>
-                  <div v-for="(value, index) in filteredUpdateFormData[0].completed">
+                  <div v-for="(value, index) in filteredUpdateFormData[0].completed" :key="index">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       {{value[1]["content"]["FormInfo"]["formName"]}} - {{ value[0] }} completed
                       <a @click="enterForm(value[1].id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
@@ -81,7 +80,7 @@
               <div v-else>
                 <ul class="list-group list-group-flush p-1">
                   <h6 class="mt-0">Forms Assigned:</h6>
-                  <div v-for="(value, index) in filteredUpdateFormData[0].assigned">
+                  <div v-for="(value, index) in filteredUpdateFormData[0].assigned" :key="index">
                     <li v-if="index < 4" class="list-group-item d-flex justify-content-between align-items-center">
                       {{ value["content"]["FormInfo"]["formName"] }} - assigned to {{ vendorDetails ? vendorDetails.name : "" }}
                       <a @click="enterForm(value.id)" class="btn btn-sm btn-primary d-flex align-items-center">Form</a>
@@ -130,7 +129,6 @@ export default {
   setup(props) {
     const router = useRouter();
     function enterForm(vendorFormId) {
-      console.log("entering form with vendorFormId> " + vendorFormId);
       router.push({
         path: "/vendorForm",
         query: {
@@ -162,14 +160,11 @@ export default {
 
     // Method to check that vendor details have been successfully passed from parent page, to invoke specific dashboard method afterwards
     var formData = ref(null);
-
     watchEffect(async () => {
       if (props.vendorDetails != null) {
         try {
-          // console.log("Vendor Details passed from parent page successfull> ", props.vendorDetails);
           formData.value = await FormService.getVendorUpdateForms(props.vendorDetails.id)
             .then((response) => {
-              // console.log("getVendorUpdateForms successful");
               return response;
             }
           )
@@ -178,7 +173,6 @@ export default {
           console.log("getVendorUpdateForms error when called", error);
         }
       }
-      // console.log("after getVendorUpdateForms retrieval> ", formData.value);
     })
 
     // Method to filter the getVendorUpdateForms data into their respective categories to be displayed
@@ -202,7 +196,6 @@ export default {
       if (formData.value) {
         for (let i = 0; i < formData.value.length; i++) {
           if (formData.value[i].status != "deleted") {
-            console.log(formData.value[i])
             if (formData.value[i].status == "form_completed") {
                 let key = "approver"
                 let value = formData.value[i]
@@ -211,20 +204,15 @@ export default {
                 continue;
             }
             if (formData.value[i].latestRejectionDate != null && formData.value[i].latestCompletedDate != null) {
-              // console.log(formData.value[i], "rejection and completed not null")
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
               let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
-              // console.log("rejectionDate> ", rejectionDate, "completedDate> ", completedDate)
               if (rejectionDate == completedDate) {
-                // console.log(formData.value[i].latestRejectionDate.split("T")[1], formData.value[i].latestCompletedDate.split("T")[1])
                 let rejectionTime = formData.value[i].latestRejectionDate.split("T")[1]
                 let rejectionTimeList = rejectionTime.split(":")
                 let rejectionDuration = (Number(rejectionTimeList[0])*60*60) + (Number(rejectionTimeList[1])*60) + Number(rejectionTimeList[2].split(".")[0])
                 let completedTime = formData.value[i].latestCompletedDate.split("T")[1]
                 let completedTimeList = completedTime.split(":")
                 let completedDuration = (Number(completedTimeList[0])*60*60) + (Number(completedTimeList[1])*60) + Number(completedTimeList[2].split(".")[0])
-                // console.log("rejectionTime> ", rejectionTime, "completedTime> ", completedTime)
-                // console.log("rejectionDuration> ", rejectionDuration, "completedDuration> ", completedDuration)
                 if (rejectionDuration > completedDuration) {
                   let key = formData.value[i].latestRejector
                   let value = formData.value[i]
@@ -234,16 +222,13 @@ export default {
                 else if (rejectionDuration < completedDuration) {
                   let key = formData.value[i].latestCompletor
                   let value = formData.value[i]
-                  console.log(key, value)
                   filteredForms.completed.push([key, value])
                   totalUpdates += 1
                 }
               }
             }
             else if (formData.value[i].latestRejectionDate != null) {
-              // console.log(formData.value[i], "rejection not null")
               let rejectionDate = formData.value[i].latestRejectionDate.split("T")[0]
-              // console.log("rejectionDate> ", rejectionDate)
               if (rejectionDate == dateToday) {
                 let key = formData.value[i].latestRejector
                 let value = formData.value[i]
@@ -252,9 +237,7 @@ export default {
               }
             }
             else if (formData.value[i].latestCompletedDate != null) {
-              // console.log(formData.value[i], "completed not null")
               let completedDate = formData.value[i].latestCompletedDate.split("T")[0]
-              // console.log("completedDate> ", completedDate)
               if (completedDate == dateToday) {
                 let key = formData.value[i].latestCompletor
                 let value = formData.value[i]
@@ -263,7 +246,6 @@ export default {
               }
             }
             else if (formData.value[i].createDate != null) {
-              // console.log(formData.value[i], "assigned not null")
               let createDate = formData.value[i].createDate.split("T")[0]
               if (createDate == dateToday) {
                 filteredForms.assigned.push(formData.value[i])
@@ -273,7 +255,6 @@ export default {
           }
         }
       }
-      console.log("overall updateFormData> ", filteredForms)
       return [filteredForms, totalUpdates];
     })
 
