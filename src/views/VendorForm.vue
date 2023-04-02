@@ -89,8 +89,8 @@
                     <div class="rounded-2 p-4 mt-3 bg-dark-purple text-center"
                       style="border: 1px lightgray solid; box-shadow: 2px 2px 2px 2px #888888;">
                       <h2>
-                        {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section
-                      </h2>
+                        {{ i.charAt(0).toUpperCase() + i.slice(1) }} Section 
+                      </h2> 
                     </div>
                     <template v-for="sect in sectionData" :key="sect">
                       <FormSection :sectionData="sect" :disabled="false" />
@@ -146,6 +146,14 @@
 
           <template v-if="formStatus !== 'deleted'">
             <div class="row justify-content-center mt-3">
+                <div class="col-4 text-center" v-if="
+                  formStatus == 'admin_response' && role.includes('ROLE_ADMIN')
+                ">
+                  <!-- Admin response to vendor response -->
+                  <button class="btn btn-danger mx-1" data-bs-toggle="modal" data-bs-target="#setDeadline">
+                    Reject Form
+                  </button>
+                </div>
               <div class="col-4 text-center" v-if="
                 (formStatus == 'admin_response' &&
                   role.includes('ROLE_ADMIN') &&
@@ -153,7 +161,7 @@
                 (formStatus == 'vendor_response' &&
                   !role.includes('ROLE_ADMIN'))
               ">
-                <button class="btn btn-primary mx-1" @click="saveForm()" type="submit">
+                <button class="btn btn-main-blue mx-1" @click="saveForm()" type="submit">
                   Save Form
                 </button>
               </div>
@@ -174,26 +182,18 @@
                 role.includes('ROLE_MODERATOR')
               ">
                 <!-- Approver response to complete form -->
-                <button class="btn btn-primary mx-1" @click="submitForm('form_completed', 'approve')">
+                <button class="btn btn-success mx-1" @click="submitForm('form_completed', 'approve')">
                   Approve Form
                 </button>
 
               </div>
 
-              <div class="col-4 text-center" v-if="
-                formStatus == 'admin_response' && role.includes('ROLE_ADMIN')
-              ">
-                <!-- Admin response to vendor response -->
-                <button class="btn btn-danger mx-1" data-bs-toggle="modal" data-bs-target="#setDeadline">
-                  Reject Form
-                </button>
-              </div>
 
               <div class="col-4 text-center" v-if="
                 formStatus == 'admin_response' && role.includes('ROLE_ADMIN')
               ">
                 <!-- Admin response to approver response -->
-                <button class="btn btn-primary mx-1" @click="submitForm('approver_response', 'approve')">
+                <button class="btn btn-success mx-1" @click="submitForm('approver_response', 'approve')">
                   Submit for approval
                 </button>
               </div>
@@ -202,7 +202,7 @@
                 formStatus == 'vendor_response' && role.includes('ROLE_USER')
               ">
                 <!-- Vendor response to admin response    -->
-                <button class="btn btn-primary mx-1" @click="submitForm('admin_response', 'approve')">
+                <button class="btn btn-success mx-1" @click="submitForm('admin_response', 'approve')">
                   Submit to admin
                 </button>
               </div>
