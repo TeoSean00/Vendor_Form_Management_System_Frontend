@@ -60,9 +60,7 @@ export default {
       for (var i = 0; i < users.value.length; i++) {
         if (users.value[i].vendorId != null) {
           var vendorNum = users.value[i].vendorId;
-          console.log(vendorNum)
           var vendor = await VendorService.getVendor(vendorNum);
-          console.log(vendor);
           users.value[i].vendorName = vendor.name;
         }
       }

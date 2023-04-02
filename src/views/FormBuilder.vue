@@ -121,17 +121,11 @@
           <div class="modal-body">
             <label class="form-label">Select Vendor</label>
             <hr />
-            <select v-if="selectedVendor == ''" class="form-select form-select-lg mb-3"
+            <select class="form-select form-select-lg mb-3"
               aria-label=".form-select-lg example" v-model="selectedVendor">
               <template v-for="(vendor, index) in vendors" :key="index">
                 <option :value="vendor">{{ vendor.name }}</option>
               </template>
-            </select>
-            <select v-if="selectedVendor != ''" class="form-select form-select-lg mb-3"
-              aria-label=".form-select-lg example" v-model="selectedVendor">
-              <option :value="selectedVendor" selected>
-                {{ selectedVendor.name }}
-              </option>
             </select>
             <div v-if="selectedVendor" class="alert alert-warning" role="alert">
               You selected {{ selectedVendor.name }}
@@ -466,24 +460,26 @@ export default {
 
     });
 
-    var vendors = ref(null);
+    var getVendors = async () => {
+      vendors.value = await VendorService.getVendors();
+    };
+
+    var vendors = ref([]);
     var selectedVendor = ref("");
 
     const currId = ref(props.vendorId);
     var vendorInfo = ref(null);
     if (props.vendorId) {
       var getVendorInfo = async () => {
-        vendorInfo.value = await VendorService.getVendor(currId.value);
-        selectedVendor.value = vendorInfo.value;
+        var vendor = await VendorService.getVendor(currId.value);
+        vendors.value.push(vendor);
+        selectedVendor.value = vendors.value[0];
       };
       getVendorInfo();
     }
-
-    var getVendors = async () => {
-      vendors.value = await VendorService.getVendors();
-    };
-
-    getVendors();
+    else{
+      getVendors();
+    }
 
     var getDate = () => {
       const date = new Date();

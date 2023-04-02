@@ -112,7 +112,6 @@ export default {
   setup(props, context) {
     var formStatus = ref("");
     formStatus.value = props.formStatus;
-    console.log(formStatus);
     var formName = ref("");
     formName.value = props.formInfo.formName;
     var formDesc = ref("");
