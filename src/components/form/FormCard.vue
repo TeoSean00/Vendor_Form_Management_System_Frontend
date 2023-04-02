@@ -142,26 +142,11 @@ export default {
         .then((response) => response.blob())
         .then((blob) => {
           const fileURL = URL.createObjectURL(blob);
-          // Display PDF using an iframe
-          const iframe = document.createElement("iframe");
-          iframe.src = fileURL;
-          document.body.appendChild(iframe);
           // Download PDF
           const link = document.createElement("a");
           link.href = fileURL;
-          link.download = "example.pdf";
+          link.download = formName.value + ".pdf";
           link.click();
-          // var fileURL = window.URL.createObjectURL(
-          //   new Blob([response.data], { type: "application/pdf" })
-          // );
-          // var fileLink = document.createElement("a");
-          // fileLink.href = fileURL;
-          // fileLink.setAttribute("download", "file.pdf");
-          // document.body.appendChild(fileLink);
-          // fileLink.click();
-          // var file = new Blob([response.data], { type: "application/pdf" });
-          // var fileURL = URL.createObjectURL(file);
-          // window.open(fileURL);
         });
     };
 
@@ -180,26 +165,11 @@ export default {
         .then((response) => response.blob())
         .then((blob) => {
           const fileURL = URL.createObjectURL(blob);
-          // Display PDF using an iframe
-          const iframe = document.createElement("iframe");
-          iframe.src = fileURL;
-          document.body.appendChild(iframe);
           // Download PDF
           const link = document.createElement("a");
           link.href = fileURL;
-          link.download = "example.docx";
+          link.download = formName.value + ".docx";
           link.click();
-          // var fileURL = window.URL.createObjectURL(
-          //   new Blob([response.data], { type: "application/pdf" })
-          // );
-          // var fileLink = document.createElement("a");
-          // fileLink.href = fileURL;
-          // fileLink.setAttribute("download", "file.pdf");
-          // document.body.appendChild(fileLink);
-          // fileLink.click();
-          // var file = new Blob([response.data], { type: "application/pdf" });
-          // var fileURL = URL.createObjectURL(file);
-          // window.open(fileURL);
         });
     };
     return {
