@@ -49,22 +49,24 @@ export default {
     const filteredVendorData = computed(() => {
       let newValues = [0, 0, 0, 0, 0];
       if (vendorData.value) {
-        let data = vendorData.value[year]["months"];
-        for (const month in data) {
-          if (month == "January" || month == "February") {
-            newValues[0] = data[month];
-          }
-          else if (month == "March" || month == "April") {
-            newValues[1] = data[month];
-          }
-          else if (month == "May" || month == "June" || month == "July") {
-            newValues[2] = data[month];
-          }
-          else if (month == "August" || month == "September" || month == "October") {
-            newValues[3] = data[month];
-          }
-          else if (month == "November" || month == "December") {
-            newValues[4] = data[month];
+        if (Object.keys(vendorData.value).length > 0) {
+          let data = vendorData.value[year]["months"];
+          for (const month in data) {
+            if (month == "January" || month == "February") {
+              newValues[0] = data[month];
+            }
+            else if (month == "March" || month == "April") {
+              newValues[1] = data[month];
+            }
+            else if (month == "May" || month == "June" || month == "July") {
+              newValues[2] = data[month];
+            }
+            else if (month == "August" || month == "September" || month == "October") {
+              newValues[3] = data[month];
+            }
+            else if (month == "November" || month == "December") {
+              newValues[4] = data[month];
+            }
           }
         }
       }
