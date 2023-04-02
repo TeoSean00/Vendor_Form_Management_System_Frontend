@@ -7,12 +7,12 @@
             <h2 class="card-title">{{ formName }}</h2>
           </div>
           <div class="col-4">
-            <button class="btn bg-light" data-bs-toggle="modal"
-                data-bs-target="#remindModal">
-              <font-awesome-icon
-                icon="envelope"
-                class=""
-              />
+            <button
+              class="btn bg-light border"
+              data-bs-toggle="modal"
+              data-bs-target="#remindModal"
+            >
+              <font-awesome-icon icon="envelope" class="" />
             </button>
           </div>
         </div>
@@ -26,7 +26,10 @@
             Form description: <br />
             {{ formDesc }}
           </p>
-
+          <p v-if="lastReminder">
+            Last Automated Reminder Sent: <br />
+            {{ lastReminder.split("T")[0] }}
+          </p>
           <!-- {{ vendorFormId }} -->
         </div>
       </div>
@@ -52,21 +55,11 @@
         >
           <button class="btn btn-link btn-block" @click="generatePdf">
             <span>PDF </span>
-            <font-awesome-icon
-              icon="file-pdf"
-              class=""
-              data-bs-toggle="modal"
-              data-bs-target="#remindModal"
-            />
+            <font-awesome-icon icon="file-pdf" class="" />
           </button>
           <button class="btn btn-link btn-block" @click="generateWord">
             <span>Word </span>
-            <font-awesome-icon
-              icon="file-word"
-              class=""
-              data-bs-toggle="modal"
-              data-bs-target="#remindModal"
-            />
+            <font-awesome-icon icon="file-word" class="" />
           </button>
         </div>
         <div class="row" v-else>
@@ -107,6 +100,7 @@ export default {
     "deadline",
     "formStatus",
     "vendorUsers",
+    "lastReminder",
   ],
   emits: ["updateToDelete"],
   setup(props, context) {
@@ -137,26 +131,11 @@ export default {
         .then((response) => response.blob())
         .then((blob) => {
           const fileURL = URL.createObjectURL(blob);
-          // Display PDF using an iframe
-          const iframe = document.createElement("iframe");
-          iframe.src = fileURL;
-          document.body.appendChild(iframe);
           // Download PDF
           const link = document.createElement("a");
           link.href = fileURL;
-          link.download = "example.pdf";
+          link.download = formName.value + ".pdf";
           link.click();
-          // var fileURL = window.URL.createObjectURL(
-          //   new Blob([response.data], { type: "application/pdf" })
-          // );
-          // var fileLink = document.createElement("a");
-          // fileLink.href = fileURL;
-          // fileLink.setAttribute("download", "file.pdf");
-          // document.body.appendChild(fileLink);
-          // fileLink.click();
-          // var file = new Blob([response.data], { type: "application/pdf" });
-          // var fileURL = URL.createObjectURL(file);
-          // window.open(fileURL);
         });
     };
 
@@ -175,26 +154,11 @@ export default {
         .then((response) => response.blob())
         .then((blob) => {
           const fileURL = URL.createObjectURL(blob);
-          // Display PDF using an iframe
-          const iframe = document.createElement("iframe");
-          iframe.src = fileURL;
-          document.body.appendChild(iframe);
           // Download PDF
           const link = document.createElement("a");
           link.href = fileURL;
-          link.download = "example.docx";
+          link.download = formName.value + ".docx";
           link.click();
-          // var fileURL = window.URL.createObjectURL(
-          //   new Blob([response.data], { type: "application/pdf" })
-          // );
-          // var fileLink = document.createElement("a");
-          // fileLink.href = fileURL;
-          // fileLink.setAttribute("download", "file.pdf");
-          // document.body.appendChild(fileLink);
-          // fileLink.click();
-          // var file = new Blob([response.data], { type: "application/pdf" });
-          // var fileURL = URL.createObjectURL(file);
-          // window.open(fileURL);
         });
     };
     return {

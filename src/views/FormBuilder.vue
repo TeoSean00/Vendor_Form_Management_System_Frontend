@@ -56,7 +56,7 @@
               Select Template
             </button>
           </div>
-          <button @click="addVendorSection" class="col-5 meimage.png-2 btn btn-main-blue">
+          <button @click="addVendorSection" class="col-5 me-2 btn btn-main-blue">
             <font-awesome-icon icon="fa-solid fa-circle-plus" />
             Vendor Section
           </button>
