@@ -28,7 +28,7 @@ npm run dev
 npm run build
 ```
 
-### Ensure that smartform-backend is up and running on your docker container
+### Ensure that the smartform-backend repo is up and running on your docker container
 Setup instructions in README <br/>
 
-https://github.com/JosephJL/smartform-backend
+https://github.com/TeoSean00/Vendor_Form_Management_System_Backend
