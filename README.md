@@ -1,4 +1,4 @@
-# smartform-frontend
+# Vendor_Form_Management_System_Frontend
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -28,7 +28,7 @@ npm run dev
 npm run build
 ```
 
-### Ensure that the smartform-backend repo is up and running on your docker container
+### Ensure that the Vendor_Form_Management_System_Backend is up and running on your docker container as well
 Setup instructions in README <br/>
 
 https://github.com/TeoSean00/Vendor_Form_Management_System_Backend
