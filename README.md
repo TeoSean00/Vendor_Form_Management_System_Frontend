@@ -1,8 +1,16 @@
 # Vendor and Form Management System (Frontend)
 
-## Project Setup
+## Youtube Demo of the Application
+- https://youtu.be/mXnO4Y1JEVU
 
-```sh
+## Backend Setup
+- Ensure that the Vendor_Form_Management_System_Backend is up and running on your docker desktop concurrently as well
+- Setup instructions in the README file <br/>
+- https://github.com/TeoSean00/Vendor_Form_Management_System_Backend
+
+## Frontend Setup
+
+```
 npm install
 ```
 
@@ -17,8 +25,3 @@ npm run dev
 ```sh
 npm run build
 ```
-
-### Ensure that the Vendor_Form_Management_System_Backend is up and running on your docker desktop concurrently as well
-Setup instructions in the README file <br/>
-
-https://github.com/TeoSean00/Vendor_Form_Management_System_Backend
