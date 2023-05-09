@@ -1,14 +1,4 @@
-# Vendor_Form_Management_System_Frontend
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+# Vendor and Form Management System (Frontend)
 
 ## Project Setup
 
@@ -28,7 +18,7 @@ npm run dev
 npm run build
 ```
 
-### Ensure that the Vendor_Form_Management_System_Backend is up and running on your docker container as well
-Setup instructions in README <br/>
+### Ensure that the Vendor_Form_Management_System_Backend is up and running on your docker desktop concurrently as well
+Setup instructions in the README file <br/>
 
 https://github.com/TeoSean00/Vendor_Form_Management_System_Backend
