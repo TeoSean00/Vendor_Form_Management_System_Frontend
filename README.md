@@ -1,4 +1,4 @@
-# Vendor and Form Management System (Frontend)
+# GoForm (Frontend)
 
 ## Youtube Demo of the Application
 - https://youtu.be/mXnO4Y1JEVU
